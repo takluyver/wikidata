@@ -36,7 +36,7 @@
    * [Racket]()
    * [rank-n types]()
    * [Scala]()
-   * `[setjmp/longjmp]()`
+   * [setjmp/longjmp]()
    * [structural recursion]()
    * [tiered compilation]()
    * [trampoline]()
@@ -50,7 +50,7 @@
    * [applicative functors]()
    * [applicative style]()
    * [arrows]()
-   * `[call/cc]()`
+   * [call/cc]()
    * [delimited continuations]()
    * [dependent types]()
    * [functional reactive programming]()
