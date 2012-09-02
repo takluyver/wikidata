@@ -1,5 +1,4 @@
 
-
 Not long ago I set up a [BuildBot instance for wxHaskell](http://build.bimbr.com/wxhaskell) and thought about sharing my experience with configuring all the elements of the system. Johan Tibell's [commentary to the State of Haskell, 2011 survey](http://blog.johantibell.com/2011/08/results-from-state-of-haskell-2011.html), and his call for Windows bots to test Hackage libraries, prompted me to finally put my notes together into tutorial of a sort. There is nothing Haskell-specific, so if you are looking to automate Windows builds of apps written in any other language this guide should provide all the info you need.
 
 ## The Setup
@@ -51,9 +50,11 @@ fi
 ~~~
 
 Then `crontab -e` and add entry:
+
 ~~~
 0       *       *       *       *       /home/mmakowski/bin/buildbot-start-master-if-not-running &
 ~~~
+
 which will ensure that the script will run once every hour.
 
 ## The Slave
@@ -83,7 +84,7 @@ Note that so far the slave we set up is a regular (non-latent) one, i.e. master 
 
 After we are happy that the master can invoke builds, one final piece of slave configuration is ensuring that the slave process starts up automatically after the server is brought on line; on Windows this is done using services. Making slave run as a service will require a piece of custom Python code. I've used [the script by Ira Pfeifer](http://nyc-dba.blogspot.com/2008/10/running-buildbot-buildslave-as-windows.html), modified slightly to work with recent version of BuildBot. Here it is, for your convenience; make sure to update the environment variables set in the script to contain everything your build needs:
 
-<code python buidbot_slave_service.py>
+~~~ { .python }
 """ buildbot_slave_service.py
 
 Original Author: Ira Pfeifer
@@ -178,6 +179,7 @@ c['slaves'] = [EC2LatentBuildSlave('<slave name>', '<slave password>', 't1.micro
                                    identifier='<key identifier>',
                                    secret_identifier='<secret key>')]
 ~~~
+
 Where:
   * `<slave name>` and `<slave password>` are the same as the ones we used so far
   * `t1.micro` is the type of EC2 instance; change it to a bigger one if that's what you require for your build (check [the prices](http://aws.amazon.com/ec2/pricing/) before doing that though)
@@ -210,8 +212,3 @@ Two things I got bitten by and which took a little bit to investigate and fix ar
   - The `instance.stop()` issue mentioned earlier. Strangely, I would swear that my setup had been working for about a week without any patches, with instances being terminated; the "orphaned" stopped instances seemed to have started appearing suddenly and without any changes in either the slave or the server code or config. I can only assume I must have been seeing things, since `instance.stop()` has been there all the time and I'd never expect it to terminate an instance.
 
 Hopefully you won't come across any more nasty surprises. Happy building!
-
-{{tag>it buildbot aws ec2}}
-
-
-~~DISCUSSION~~
