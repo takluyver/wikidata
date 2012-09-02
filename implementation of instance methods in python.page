@@ -1,0 +1,5 @@
+Explicitly declaring ''self'' as an argument to instance methods suggests that they are implemented as functions which take additional argument representing the object they are supposed to act upon. The language reference paints a different picture though: instance methods start life as //unbound user-defined method objects// which are attributes of the class. When a method is invoked on an object, it is first searched in its class's attributes and when appropriate object is found it is transformed into //bound user-defined method object// by setting its ''im_self'' attribute to the instance on which the method is invoked.
+
+To understand it better read the section on user-defined methods in http://docs.python.org/reference/datamodel.html#objects-values-and-types.
+
+{{tag>it python}}

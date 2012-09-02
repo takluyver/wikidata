@@ -1,0 +1,3 @@
+====== Fuzzing ======
+
+(security) generating inputs to the program in order to expose bugs. In blackbox fuzzing the inputs are random, in whitebox fuzzing they are guided by the conditions on program branches, to ensure high coverage.

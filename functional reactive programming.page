@@ -1,0 +1,5 @@
+====== Functional Reactive Programming ======
+
+Modeluje wartosci zmieniajace sie w czasie (np. polozenie kursora na ekranie) jako funkcje z czasu w wartosc w danym momencie czasu. Uzywane do UI, animacji, sterowania robotami. Wymyslone przez [[http://conal.net|Conala Elliota]].
+
+TODO: Behaviors, Events.

@@ -1,0 +1,194 @@
+====== Practical Scalaz ======
+
+Chris Marshall, 14/9/2011
+
+===== How to navigate the library =====
+
+We always need these:
+
+<code scala>
+import scalaz._
+import Scalaz._
+</code>
+
+==== Where are the useful methods? ====
+
+Kinds:
+  * A ~> Identity[A]
+  * M[A] ~> MA[M, A]
+  * M[A, B] ~> MAB[M, A, B]
+
+Wrappers:
+  * OptionW
+  * ListW
+  * BooleanW
+
+Data Types:
+  * Validation
+  * NonEmptyList
+
+==== Typeclasses ====
+
+uses implicit to inject behaviour into existing types
+
+=== Example ===
+
+<code scala>
+trait Each[-E[_]] {
+	  def each[A](e: E[A], f: A => Unit): Unit
+}
+</code>
+
+and sample impl:
+
+<code scala>
+implicit def OptionEach: Each[Option] = new Each[Option] {
+	def each ...
+}
+</code>
+
+Useful typeclasses:
+
+=== Monoid ===
+
+''|+|''
+
+Why is it useful?
+  * normalises the operation (always can use ''|+|'')
+  * we can construct monoids for things which "contain" monoids (e.g. ''Option'', tuple etc.)
+<code>
+(1, "a", 4.5) |+| (3, "b", 1.1)
+> (4, "ab", 5.6)
+</code>
+
+Example:
+
+<code scala>
+trait TradingPosition {
+	def inventoryPnL(implicit pxs: Map[Ticker, Double]): Option[Double]
+	def tradingPnL(implicit pxs: Map[Ticker, Double]): Option[Double]
+	def totalPnL(implicit pxs: Map[Ticker, Double]) = inventoryPnL -> tradingPnL
+}
+
+val posns: Seq[TradingPosition] = db.latestPositions()
+positions.map(_totalPnL).asMA.sum
+</code>
+another example:
+
+totalPnL(implicit pxs: Map[Ticker, Double]) = invoentorPnL |+| tradingPnL
+
+maps are monoids if their values are monoids: allBooks.asMA.sum -- total position for the entire fund.
+
+Filters are monoids:
+
+<code scala>
+val london: Filter = (_ : TradingPosition).sym.id endsWith ".L"
+val ny: Filter = (_ : TradingPosition).sym.id endsWith ".O"
+positions filter (london |+| ny)
+</code>
+
+=== Semigroup ===
+
+The associative op part of monoid.
+
+To create a semigroup instance all we need to do is:
+<code scala>
+implicit val MoneySemigroup: Semigroup[Money] = semigroup(_ add _)
+</code>
+
+=== Identity ===
+
+The zero part of monoid.
+
+==== Wrappers ====
+
+cosistently named operations:
+''Option[A] | A'' == get/or/else
+etc.
+
+==== Endo ====
+
+<code scala>
+Endo is a function:
+A => A
+</code>
+
+Why useful?
+<code xml>
+instruments filter="incl">
+  <symbol value="VOD.L" />
+  <symbol value="MSFT.O" />
+ /
+</code>
+
+how to make a filter out of it?
+
+<code scala>
+val reverseFilter = EndoTo((_ : Filter).neg)
+
+for {
+	  e <- xml < "instruments"
+	  f <- e.attribute("filter")
+
+}
+yield  f
+</code>
+
+''!?'' -- returns natural zero if false
+
+<code scala>
+EndoTo(-(+ : Double))
+
+true ?? res0 apply 2.3
+-2.3
+</code>
+
+===== Killer app: Validation =====
+
+a version of ''Either''. But better, because if you have a method calling a method you don't end up with ''Either[Either[...]]'', it is flattened.
+
+<code scala>
+ValidationNEL[F, S] = Validation[NonEmptyList[F], S]
+</code>
+
+using:
+
+<code scala>
+val file(s: String): Validation[String, File]
+val trades(file: File): ValidationNEL(String, List[Trade]]
+
+for { 
+ f<- file("...").liftFailNel flat Map trades
+ ts < trades(f)
+} yield ts
+</code>
+
+''sequence'' (in applicative) -- swaps the types: ''Validation[..., List[...]] <-> List[Validation[..., ...]]''
+
+uses type lambda to encode partially applied types, horrible syntax (but might improve)
+
+Can be used wherever we'd use checked exceptions. The type describes everything the code can do. No need to fork program logic.
+
+more examples: https://gist.github.com/970717
+
+==== Other examples of Applicative usefulness ====
+
+* Promise (roughly equivalent to Future)
+
+===== What Else =====
+
+A lot more: Writers, REaders, IO, Typesafe equals, Lenses... not all understood, but the usefulness of the parts which we do understand bodes well.
+
+===== Questions =====
+
+Q: Converting legacy code to Validation?
+A: I don't tend to do it.
+
+Q: Comparison with exception control in Scala?
+A: matter of personal preference, I prefer Validation
+
+Q: Why use NEL in Validation
+A: Because we know we have at least one error
+
+Q: How do you go about learning?
+A: Nick Partidge's presentation "Deriving Scalaz"

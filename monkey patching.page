@@ -1,0 +1,3 @@
+====== Monkey Patching ======
+
+Modyfikowanie funkcjonalnosci klas (w tym rdzennych klas języka) przez kod niezależny od podstawowej imlpementacji klasy. Powoduje problemy takie jak niekompatybilność wielu łatek nakładanych jednocześnie i trudności w zlokalizowaniu kodu, ktory się wykonuje przy wywołaniu danej metody. Często stosowane przez programistow Ruby.

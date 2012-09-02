@@ -1,0 +1,39 @@
+====== docase ======
+
+Idea for syntax extension for [[Haskell]] by Tomas Petricek: 
+
+<code haskell>
+multiply f1 f2 = 
+  docase (f1, f2) of 
+  (0, ?) -> return 0
+  (?, 0) -> return 0
+  (a, b) -> return a * b
+</code>
+
+f1 and f2 are suspended conputations
+
+uses three additional monad operations:
+
+Parallel composition: ''m a -> m b -> m (a, b)'' (can be implemented with bind and return, but in certain interesting cases we want it customised)
+
+Monadic choice: ''m a -> m a -> m a (non-deterministic for Par)''
+
+Aliasing of computations: ''m a -> m (m a)''
+
+Examples of monads supporting them:
+
+  * ''Par''
+  * ''Parser''
+  * ''Orc'', ''Chp'' (reactive and concurrent libs)
+
+Another example of usage:
+
+<code haskell>
+valid = docase ( many (satisfies is Digit),
+                 multiple 10 character,
+                 startsWith (string "1223") )
+        of (str, _, _) -> return str 
+</code>
+
+? -- parser doesn't have to succeed
+_ -- parser has to succeed but I don't care about the result

@@ -1,0 +1,3 @@
+An implementation of MQ-like operations based on standard sockets. Is said to be extremely fast, the code quality is also reported to be very high.
+
+[[http://www.zeromq.org/]]

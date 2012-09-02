@@ -1,0 +1,9 @@
+Upload a jar + pom to a repository:
+
+<code>
+mvn deploy:deploy-file -Dfile=name.jar -DpomFile=name.xml -DgroupId=com.etc -DartifactId=name -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar -Durl=http://dsnexus.uk.hibm.hsbc:8081/nexus/content/repositories/DS-STRATCOMP-Snapshot -DrepositoryId=STRATCOMP-SNAPSHOT
+</code>
+
+add ''-DuniqueVersion=false'' if the artifacts end up with timestamps appended to the version and you don't want that.
+
+{{tag>it maven}}

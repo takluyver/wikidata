@@ -1,0 +1,334 @@
+====== Interview Questions I was Asked ======
+
+===== Technology =====
+
+==== General ====
+
+**What is the problem with recursion?**
+
+The stack can overflow.
+
+**What are the ways to deal with stack overflow in recursion?**
+
+Use tail calls.
+
+==== Java ====
+
+=== Basics ===
+
+**Why do you need to override ''hashCode()'' when you override ''equals()''?**
+
+Collection classes assume this relationship. If we had two objects for which ''equals()'' is true but ''hashCodes'' differ and one of them was stored in a BST arranged according to hash codes, a lookup using the other one could return no results even though the contract for lookup is that it succeeds if the collection contains object equal wrt. ''equals()''.
+
+**What is the difference between ''HashMap'' and ''Hashtable''?**
+
+''HashMap'' is new-style -- not synchronised and permits null keys.
+
+**What are the implementations of standard collection interfaces?**
+
+  * ''Set'': ''HashSet'', ''TreeSet'', ''LinkedHashSet''
+  * ''List'': ''ArrayList'', ''LinkedList'', ''Vector''
+  * ''Map'' (not a subclass of ''Collection''!): ''HashMap'', ''TreeMap'', ''LinkedHashMap'', ''IdentityHashMap'', ''WeakHashMap'', ''ConcurrentHashMap'', ''Hashtable''
+
+**Describe the class hierarchy of exceptions.**
+
+  * ''Object''
+    * ''Throwable'' (class, not interface)
+      * ''Error'' -- for JVM error conditions (unchecked)
+      * ''Exception''
+        * ''RuntimeException'' -- unchecked exceptions
+          * ''NullPointerException''
+          * ''IllegalArgumentException''
+          * ...
+        * ''IOException''
+        * ...
+
+**What does ''final'' mean?**
+
+When used in front of a class definition it means that the class cannot be subclassed. When used in front of a method it means that method can't be overridden. When used in front of a variable it means it can't be re-assigned. Final method calls can be inlined at run time (not compile time) so that they don't have to go through vtable. Inlining at compile time could potentially lead to errors since the implementation of class can be changed (independently of other classes) to one that with non-final method and the calling class with the call inlined at compile time might inadvertently call that method instead of a (now legal) overriding method.
+Private methods are implicitly final. All methods of a final class are implicitly final.
+
+**What is the default implementation of ''hashCode()''?**
+
+Typically it's implemented as returning internal address of the object in the memory (converted to ''int''). However, this is not required by Java language specification.
+
+**What is the difference between ''HashMap'' and ''TreeMap''?**
+
+  * cost of operations
+  * ''TreeMap'' implements ''SortedMap''
+
+**How does ''HashMap'' work?**
+
+  * put: find the location in the array corresponding to hash code of the key modulo size of array, store key and value in the list at that location
+  * get: find the location in the same way, iterate through the list until a matching key is found.
+
+**What is the advantage of using static factory method instead of a constructor?**
+
+  - Can return an appropriate subclass of the declared class,
+  - can cache returned objects to save memory/processing time.
+
+**What is immutability? What are its advantages/disadvantages?**
+
+Immutable values (object) can't be modified once constructed, i.e. there are no setters. They help in understanding the code and in a concurrent setting, where they don't have to be guarded by locks. Disadvantage is performance impact of copying which is required when a changed value needs to be created.
+
+**How do you implement an immutable class?**
+
+Make fields final, provide a constructor initialising all the fields and getters for them. In addition we might want to store a (deep) copy of mutable values in the fields and make setters return (deep) copies of them.
+
+=== Serialisation ===
+
+**How can you make an object serialisable?**
+
+By implementing ''Serializable'' (or its sub-interfaces like ''Externalizable''). Serializable is just tagging interface (no methods need to be implemented), but if the class requires non-default serialisation then we have to define ''writeObject()'' and ''readObject()'' methods.
+
+**Why doesn't ''Object'' implement ''Serializable''?**
+
+Serialization doesn't make sense for some things, like threads, streams or sockets.
+
+**What does ''Externalizable'' interface provide on top of ''Serializable''?**
+
+R: ''Externalizable'' is for cases where we want to have complete control over how the object is serialised. It provides ''writeExternal()'' and ''readExternal()'' methods.
+
+=== I/O ===
+
+**What is ''java.nio''?**
+
+New IO (in Java 5); supplements (not replaces) existing one. Provides e.g. asynchronous networking (non-blocking sockets).
+
+=== Concurrency ===
+
+**When is it desirable to have multiple threads in the application?**
+
+In GUIs; in network servers; when task can be performed more efficiently when split, although in this instance I would prefer separate processes to avoid problems with shared memory and locking.
+
+**How do you create a thread in Java?**
+
+  - by subclassing ''Thread'' and overriding ''run()'' method, or
+  - implementing ''Runnable'' interface and providing the instance to ''Thread'' constructor/''Executor'''s ''execute()'' method. 
+
+The latter is preferable because it separates the concern of concurrency from the business logic.
+
+**What is the semantics of ''synchronized'' keyword?**
+
+Requires obtaining a lock on the object (if in front of an object method) or class object (if in front of a static method) or specified object (if used as a block).
+
+**How would you implement a queue whose ''get()'' method makes caller wait if the queue is empty?**
+
+provide a lock object. In ''get()'' method (synchronised) first check if queue is empty and if so wait on the lock. In ''add()'' method (synchronised), whenever element is put on the queue, call ''notify()'' on the lock object.
+
+**What is the difference between ''Thread.sleep()'' and ''Object.wait()''?**
+
+''sleep()'' suspends current thread for supplied number of milliseconds. ''wait()'' is used to wait on a lock object, until ''notify()'' is called (or time-out expires). Thread has to hold the monitor of object on which ''wait()'' is called. Any suspending method can throw ''InterruptedException''.
+
+**What are atomic types?**
+
+Classes in ''java.util.concurrent.atomic'' support lock-free thread-safe programming on single variables by providing ''compareAndSet(expectedValue, updateValue)'' and other similar methods that are executed atomically.
+
+**What is thread local?**
+
+It's a memory area that contains per-thread data, e.g. user id of the user whose request is serviced by a particular thread can be stored there.
+
+**How do you ensure all threads have consistent view of a particular field?**
+
+Use ''volatile'' keyword for that field.
+
+**How did Java memory model change in Java 5?**
+
+Before Java 5 ''volatile'' guaranteed that reads and writes will be done directly from/to memory, not CPU cache. This prevented from reordering these operations between volatile variables, but not between volatile and non-volatile variables. In Java 5 volatile variables operations cannot be reordered at all.
+
+TODO: http://www.ibm.com/developerworks/library/j-jtp03304/#2.0
+
+**How do you make the code below thread-safe?**
+
+<code java>
+class Counter {
+  int i;
+  public void inc() {
+    ++i;
+  }
+}
+</code>
+
+It's unsafe because the increment is not atomic. Can use ''synchronized'' on the method or use ''AtomicInteger''. The latter does CAS and is much faster if there is little contention (otherwise would roll back/retry frequently).
+
+=== Garbage Collection and Heap ===
+
+**What is garbage collection and how does it work?**
+
+A service run by JVM which reclaims memory used by objects that are no longer required. On each collection objects which are reachable from roots are marked as used, other objects are known to be not used. The roots are all static fields of all loaded classes and the stacks of all live threads.
+
+** How is the heap structured**
+
+There are generations. Objects are created in Eden space, then if they don't get collected for a certain number of collection cycles, get promoted to the survivor and then tenured generations. Collection of eden is done very frequently and without any compaction, GC of tenured objects moves them around to defragment the heap so is more expensive and runs less frequently.
+
+=== Performance ===
+
+**What are the main problems with real-time processing in Java?**
+
+Lack of determinism, i.e.: 
+
+  - Garbage collection 
+  - lack of non-preemptive threads 
+  - JIT compilation. 
+
+First two have been addressed by RT Java. 
+
+=== JNI ===
+
+**What needs to be done to call native code using JNI?**
+
+  * ''System.loadLibrary(dllName)''
+  * prefix method name that is implemented in the dll with ''native'' and leave it unimplemented in Java code. 
+  * javah can be used to generate header files.
+
+=== JDBC ===
+
+**Name three ''Statement'' interfaces; what are the differences between them?**
+
+  * ''Statement''
+    * ''PreparedStatement'' -- gets compiled only once, more efficient for repeated queries
+      * ''CallableStatement'' -- used to call stored procedures; can return many ResultSets (via stored procs //out// parameters) which can be accessed by name or index.
+
+==== Databases ====
+
+=== RDBMS and SQL ===
+
+**How ''group by'' and ''having'' works (simple problem to solve).**
+
+**What are clustered indices and how do they differ from unclustered?**
+
+Clustered indices (known as //index-organised tables// in Oracle) mean row data is stored in the order imposed by the index. It makes retrieval of data in that order much faster than when rows are stored independently of the index structure. There can be only one clustered index per table.
+
+**Write a query that selects duplicates fron a table**
+
+<code sql>
+select a, b, c from (
+  select a, b, c, count(*) as cnt from tbl group by a, b ,c
+) where ctn > 1
+</code>
+
+=== Oracle ===
+
+**What is the difference between rule-based and cost-based optimisation?**
+
+For cost-based a query plan is constructed and table stats are analysed to estimate the total cost. For rule-based a set of heuristics is used without taking stats into account. Rule-based optimiser is obsolete and no longer available in Oracle 10g.
+
+**How do you refresh table stats?**
+
+''dbms_stats.gather_table_stats()'' stored proc (also ''gather_schema_stats()'' and ''gather_database_stats()''). Historically there was ''analyze'' command but ''dbms_stats'' is preferred (e.g. due to parallel execution).
+
+**How do you optimise a query?**
+
+Look at the query plan and look for full table scans, full index scans, sometimes hash joins. Then use hints to turn query plan into more efficient one. Also use autotrace to see how many consistent reads a certain query requires.
+
+**Why is it bad to have many connections to the database open at the same time?**
+
+Each connection uses system resources on the database server. In dedicated connection mode there is a separate server process running for each connection.
+
+**Would you use a fixed value (e.g. 1 Jan 4000) instead of null?**
+
+No, unless there is very good reason. If we need null, let's use null since the database engine expects these values and can optimise better using this knowledge. If we need both null and fixed value this suggests our data would be denormalised and we might be better off with additional column instead.
+
+==== Design ====
+
+**Design a journey planner website for public transport in London.**
+
+TODO
+
+**What is MVC? What are the benefits of using it?**
+
+Model-View-Controller is a OO design pattern that splits the application into three areas:
+  - the objects the represent the domain of the application (model)
+  - displaying of the information is displayed to the user (view)
+  - handling user's interaction and reflecting it in the domain (controller)
+The advantage is it makes the application more modular by decoupling these concerns. They can then be modified independently of each other.
+
+===== Business =====
+
+**What is Delta?**
+
+Sensitivity of an instrument to a change in interest rate (or, more general, in the price of underlying).
+
+**How is Delta calculated?**
+
+The yield curve is bumped by 1bp at each point, then the trade is repriced with bumped curve. Delta at each point is the difference between PV and value after bumping that point.
+
+**What is Vega?**
+
+Sensitivity of a derivative instrument to a change in volatility of the underlying.
+
+**What is Kappa?**
+
+Another name for Vega.
+
+**What is delta hedge? How would you hedge a long position in a bond?**
+
+R: Keeping total delta of a portfolio as close as possible to 0. Bond can be hedged with an interest rate swap (pay floating) or future.
+
+**What is the main difference between normal swap and a (cross) currency swap?**
+
+In case of cross-currency swap there is an exchange of notionals at the beginning and at the end.
+
+**What is an interest rate cap?**
+
+TODO
+
+**What is bond duration? Convexity? DV01?**
+
+  * Duration: a weighted average of bond's cash flows. Measures risk associated with interest rate movements. 
+  * Convexity refers to the convexity of bond price with respect to change in interest rate (i.e. yield). It measures how inaccurate DV01 is as a measure in the long term.   
+  * DV01 is the first derivative of the price with respect to change in interest rate. Measures risk.
+
+===== Problems to solve =====
+
+**Calculate the multiset intersection of two arbitrary multisets; assume input multisets are represented as an arbitrary Java collection**
+
+<code java>
+<T> Collection<T> intersection(Collection<T> a, Collection<T> b) {
+  final Map<T, Pair<Integer>> counts = new HashMap<T, Pair<Integer>>();
+  for (T t: a) inc(counts, t, 0); // increases the value of first element of 
+                                  // pair at T, or inserts (1, 0) if pair doesn't exist)
+  for (T t: b) inc(counts, t, 1); // same as above, but for the second element
+  final List<T> result = new LinkedList<T>();
+  for (Map.Entry<T, Pair<Integer>> entry: counts.entrySet() {
+    final Pair<Int> count = entry.getValue()
+    for (int i = 0; i < count.min(); i++) result.add(entry.getKey())
+  }
+  return result;
+}
+</code>
+
+**How do you reconstruct a tree from pre-order and in-order printout?**
+
+TODO (simple)
+
+**You have a robot that has a function move(direction): direction which causes it to move in specified direction with the probability P; with probability 1-P it will move in the opposite direction. The function returns the direction in which the robot moved.**
+
+  - **Write a function that guarantees that the robot moved in the required direction.**
+  - **What is the expected number of times move() will be invoked for each invocation of the guaranteed function?**
+
+1. 
+<code java>
+void guaranteedMove(int direction) {
+    if (move(direction) != direction) {
+        guaranteedMove(direction);
+        guaranteedMove(direction);   
+    }
+}
+</code>
+
+2. 
+<code>
+x = 1 + (1-p)*2*x
+x = 1 / (2p - 1)
+</code>
+
+**You can climb stairs one or two steps at the time. Write a function that returns the number of ways in which you can climb the stairs.**
+
+<code scala>
+def waysToClimb(steps: int) = steps match {
+  case 0 => 1
+  case 1 => 1
+  case _ => waysToClimb(steps - 1) + waysToClimb(steps - 2)
+}
+</code>

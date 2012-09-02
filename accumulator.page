@@ -1,0 +1,1 @@
+dodatkowy argument do procedury wywolywanej rekurencyjne umozliwiajacy napisanie jej w formie wywolan ogonowych. Czasem dla zwiekszenia wydajnosci konieczne jest uzycie kilku akumulatorow. Jest to sygnal, ze kod ten latwiej byloby napisac w stylu imperatywnym niz deklaratywnym.

@@ -1,0 +1,117 @@
+====== GridGain and Scala ======
+
+Nikita Ivanov
+
+- a framework for java/scala for distributed computing
+
+- compute grid
+- data grid: parallelising data storage; storing (partitioned) data in memory
+  - issues: how to partition, fault-tolerance, addressing etc.
+- zero deployment: no need to restart the node when the code changes
+
+No issues encoutered with interoperability between java and scala
+ease of creating DSL in scala was very important for GG
+
+===== Demo =====
+
+
+starting GG:
+ggstart.sh <config path> (there is exaple config: exampes/config/spring-cache.xml)
+
+- all subsystems are pluggable; e.g. there are many ways to share the data and discover other nodes (even SMTP)
+- many instances can be started in a single VM (unlike, e.g., JBoss)
+
+How do we make aplication to be a node:
+
+
+configure the run config in IDE to run a node
+
+<code scala>
+  import org.gridgain.scalar._
+  import org.gridgain.scalar.scalar._
+
+  object ScalaDemo {
+    def main(args: Array[String]) = scalar("exampes/config/spring-cache.xml") {
+      println("local println")
+    }
+    // everything within the brackets runs within a GG node
+  }
+</code>
+
+what can we put in main?
+
+e.g.
+
+<code scala>
+grid !!! (() => println("Broadcasting!")) 
+// broadcast the function to all nodes and run it
+// other name for it !!! is bcastRun
+
+grid remoteProjection bcastRun (<closure>)
+// broadcasts and runs to every node except itself
+</code>
+
+every closure creates a GG task wrapping it. Every task class is versioned. So when it gets recompiled remote nodes know that it needs to be reloaded.
+
+<code scala>
+def mapReduce(s: String) = grid spreadRun (for (w <- s split(" ")) yield () => println w)
+mapReduce("hello london scala user group")
+
+// spreadRun takes the closures from given sequence and spreads them between the nodes in the grid
+// GG M/R is different from Hadoop/google, which is tailored for large datasets; this is tailored for near realtime processing.
+// that was a trivial M/R, without the reduce step
+
+def mapReduceCount(s: String) = grid spreadReduce (
+    for (w <- s split(" ")) yield () => w.length,
+    (seq: Seq[Int]) => seq.sum
+)
+// returns the total number of characters in all words in s
+</code>
+
+available projections:
+-- all nodes with specified CPU utilisation
+
+failover: if a node is killed while running a task the task fails over to another node.
+- dead nodes are detected through heartbeats (by default)
+
+demo cont'd
+
+ping pong on a grid
+
+<code scala>
+import java.concurrent._
+
+def pingpong = 
+  if (grid nodes size < 2) error "I need to have a partner"
+  else {
+    val MAX = 10
+    val loc = grid localNode
+    val rmt = grid remoteNodes iterator next
+    val latch = new CuntDownLatch(MAX)
+
+    rmt remoteListenAsync(loc) new GridListenActor[String] {
+      def receive(nodeId UUID, msg: String) {
+        println msg
+	msg match {
+	  case "PING" => respond "PONG"
+          case "STOP" => stop
+        ]
+      }
+    } get
+
+    rmt listen new GridListenActor[String] {
+      def receive(nodeId UUID, msg: String) {
+        println msg
+	if (latch.getCount == 1) stop "STOP"
+	else respond "PING"
+	latch countDown
+      }
+    }
+
+    rmt !< "PING"
+    latch await
+  }
+
+// we can write different programmes for different nodes in a single class
+// the application will spread like a virus
+</code>

@@ -1,0 +1,5 @@
+====== Multiple Dispatch ======
+
+Metoda wywoływana w odpowiedzi na komunikat wybierana jest nie tylko na podstawie typu odbiorcy, ale też typów argumentów. 
+
+(overloading to mechanizm realizacji multiple dispatch?)

@@ -1,0 +1,3 @@
+====== cabal ======
+
+''ExitFailure 1'' -- a generic error message during ''cabal install''. To see the details run ''cabal install --verbose=3''.

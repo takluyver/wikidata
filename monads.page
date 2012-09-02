@@ -1,0 +1,104 @@
+====== Monads et al. ======
+
+Best explanation found on the web: [[http://bartoszmilewski.wordpress.com/2011/01/09/monads-for-the-curious-programmer-part-1/]]
+
+Also, the notes from Haskell Hoodlums session on [[monads and monad transformers]] might be helpful.
+
+===== Functors =====
+
+Functor instance is a type constructor with one type parameter (i.e. of kind ''* -> *'') that allows mapping over itself:
+
+<code haskell>
+class Functor f where  
+    fmap :: (a -> b) -> f a -> f b 
+</code>
+
+and obeys the following two laws:
+
+  - **identity<sub>F</sub>**: ''fmap id == id'' (or: ''fmap id F == F'')
+  - **composition<sub>F</sub>**: ''fmap (f . g) == fmap f . fmap g''
+
+''fmap'' works not only on //containers// (i.e. data structures) but also on //computations// (IO, (a ->)). When we write ''fmap f'' (where ''f :: a -> b'' we **lift** ''f'' to work with values of any functor ''F'' (''F a'' and ''F b'') instead of plain ''a'' and ''b''.
+
+===== Applicative Functors =====
+
+Functors which allow applying functions to values, both of which are "wrapped" by the functor, using ''<*>'' function; like ''fmap'', but operating on "functorised" functions istead of bare ones:
+
+<code haskell>
+class (Functor f) => Applicative f where  
+    pure :: a -> f a  
+    (<*>) :: f (a -> b) -> f a -> f b  
+</code>
+
+The laws are:
+
+  - **identity<sub>A</sub>**: ''pure id <*> v == v''
+  - **composition<sub>A</sub>**: ''pure (.) <*> u <*> v <*> w == u <*> (v <*> w)''
+  - **homomorphism<sub>A</sub>**: ''pure f <*> pure x == pure (f x)''
+  - **interchange<sub>A</sub>**: ''u * pure x == pure ($ x) <*> u''
+
+''<*>'' can be chained when applying fuctions of multiple arguments, like this:
+
+<code>
+ghci> pure (+) <*> Just 3 <*> Just 5  
+Just 8  
+</code>
+
+Note that ''pure f <*> x'' can be written as ''f <$> x'' so the above can be rewritten as ''(+) <$> 3 <*> 5''. [[Applicative style]], in this context, means composing applicative functors using <$> followed by a series of <*>. The idea is that a single pure function is "applied" to effectful computations (represented as functors), yielding an effectful computation as a result. 
+
+The motivation for introducing this abstraction is decribed in the [[http://www.soi.city.ac.uk/~ross/papers/Applicative.html|original paper]]; apparently it encapsulates a common pattern in functional programming. The trouble is the applicative style is not intuitive for me, hence my difficulties with comprehending the usefulness of the concept.
+
+As an aside, there are many ways in which a given data type can be ''Applicative''; for instance the default instance of ''Applicative'' for lists has ''<*>'' which produces all combinations of functions in the left list with arguments in the right one, but there is also a ''ZipList'' (in ''Control.Applicative'') which zips functions with arguments.
+
+===== Monads =====
+
+Monads are applicative functors which support the following additional operation (pronounced //bind//):
+
+<code haskell>
+(>>=) :: (Monad m) => m a -> (a -> m b) -> m b  
+</code>
+
+Applicative functors allow taking a regular function and turning it into one which takes and returns "fancy" values (ones which are associated with a context). Monad, in addition, lets us take a function which takes a regulare value and returns a fancy one and apply it to a fancy value.
+
+Full type class:
+
+<code haskell>
+class Monad m where  
+    return :: a -> m a  
+  
+    (>>=) :: m a -> (a -> m b) -> m b  
+  
+    (>>) :: m a -> m b -> m b  
+    x >> y = x >>= \_ -> y  
+  
+    fail :: String -> m a  
+    fail msg = error msg  
+</code>
+
+It does not extend ''Applicative'' for historical reasons -- there were no applicatives when monads were first introduced.
+
+Laws:
+
+  - **left identity**: ''return x >>= f == f x''
+  - **right identity**: ''m >>= return == m''
+  - **associativity**: ''m >>= f >>= g == m >>= (\x -> f x >>= g)''
+
+==== do notation ====
+
+To make writing code involving nested binds easier, Haskell provides ''do'' notation:
+
+<code haskell>
+do x <- f1
+   f2
+   y <- f3
+   f4 x y
+</code>
+
+is equivalent to
+
+<code haskell>
+f1 >>= (\x ->
+f2 >>  (\_ ->
+f3 >>= (\y ->
+f4 x y)))
+</code>

@@ -1,0 +1,5 @@
+Cliff Click [[http://www.azulsystems.com/blog/cliff-click/2010-07-16-tiered-compilation|wrote on his blog]] about different JIT compilers within Sun/Oracle's and Azul's JVMs. Initially, the bytecode is executed by an **interpreter** and call counters (both for how many times a given method was invoked and how many back-edges((it seems a back-edge is an edge in the execution graph that points to a code that was already executed (e.g. in a loop or recursion) -- need to check this)) were followed) are updated. After certain threshold is reached, a **client compiler** kicks in and compiles the method in question. Client compiler is fast but generates sub-optimal code. The counters are still being updated, and once the method gets hot enough it is compiled again, this time by a **server compiler**, which is slower but generates better native code.
+
+The compilation by both client and server (or C1 and C2, as Click calls them) compilers happens in the background, and when the native code is read it is provided to the runtime; in the meantime the method continues to be interpreted. 
+
+{{tag>it jvm jit compilation}}

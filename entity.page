@@ -1,0 +1,17 @@
+====== Entity ======
+
+!ENTITY pozwala w XML zdefiniowac stala ktora pozniej moze byc wielokrotnie wykorzystywana w pliku. Np:
+
+<code xml>
+<!DOCTYPE dtd_tim[
+  <!ENTITY systestRoot "Y:\GLB\App\FISS\London\Release\Components\DEV\">
+]>
+<settings>
+  <setting name="AppSynchSourceServer_SysTest" serializeAs="String">
+    <value>&systestRoot;FISS.FE.acf /e:Server /p:Dev /d</value>
+  </setting>
+  <setting name="MiscServer_SysTest" serializeAs="String">
+    <value>&systestRoot;misc</value>
+  </setting>
+</settings>
+</code>

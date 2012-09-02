@@ -1,0 +1,23 @@
+Old-style classes don't define types, new-style do:
+
+<code>
+>>> class OldStyle():
+...     pass
+...
+>>> class NewStyle(object):
+...     pass
+...
+>>> o = OldStyle()
+>>> o
+<__main__.OldStyle instance at 0x00C85A58>
+>>> type(o)
+<type 'instance'>
+>>> n = NewStyle()
+>>> n
+<__main__.NewStyle object at 0x00C83BB0>
+>>> type(n)
+<class '__main__.NewStyle'>
+>>>
+</code>
+
+{{tag>it python}}

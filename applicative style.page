@@ -1,0 +1,3 @@
+====== Applicative style (of programming) ======
+
+In functional programming, simply means applying functions to arguments. In [[Haskell]], [[applicative functors]] generalise it to allow applying pure functions to arguments which can be computational contexts.

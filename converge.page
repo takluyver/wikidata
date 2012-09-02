@@ -1,0 +1,5 @@
+====== Converge ======
+
+Jezyk programowania opracowany przez Laurence Tratta. Skladnia przypomina Pythona, przejal tez elementy z Icon. 
+
+Wyroznia go rozbudowane wsparcie dla osadzania w nim DSLi (artykul o compile-time meta-programming w TOPLAS 2008 30/6).

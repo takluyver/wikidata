@@ -1,0 +1,1 @@
+Filtr bitmapowy, ktory moze dawac "false positives". Uzywany m.in. przez Oracle na poziomie sprzetu, do omijania niepotrzebnych blokow przy wczytywaniu z dysku.

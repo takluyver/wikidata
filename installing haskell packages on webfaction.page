@@ -1,0 +1,12 @@
+  * follow [[http://community.webfaction.com/questions/5084/building-ghc-from-source|this]] to install GHC
+  * download sources of cabal-install from [[http://hackage.haskell.org/package/cabal-install]] and run ''bootstrap.sh''
+  * ''cabal update''
+  * try to ''cabal install'' the required package. If it or its dependencies fail to install, do
+
+<code>
+cd tmp
+tar -xzf ~/.cabal/packages/hackage.haskell.org/<package>/<version>/<tar.gz file>
+cd <package>-<version>
+cabal configure
+cabal install
+</code>

@@ -1,0 +1,20 @@
+====== fork/join ======
+
+Technika projektowania algorytmow rownoleglych typu divide-and-conquer opartych na nastepujacej strukturze: 
+
+<code>
+Result solve(Problem problem) { 
+  if (problem is small) 
+    directly solve problem 
+  else { 
+    split problem into independent parts 
+    fork new subtasks to solve each part 
+    join all subtasks 
+    compose result from subresults 
+  } 
+} 
+</code>
+
+[[http://gee.cs.oswego.edu/dl/papers/fj.pdf]]
+
+Wsparcie dla f/j wprowadzono w Sun Java 6, pozwolilo ono na przyspieszenie dzialania aktorow w Scala 2.8.

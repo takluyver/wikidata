@@ -1,0 +1,31 @@
+====== Scala ======
+
+===== Encoding Haskell Constructs =====
+
+==== Data Types ====
+
+Haskell:
+<code haskell>
+data BinaryTree a = Leaf a | InnerNode a (BinaryTree a) (BinaryTree a)
+
+-- or, using record syntax:
+
+data BinaryTree a = Leaf { value :: a }
+                  | InnerNode { value :: a
+                              , left :: BinaryTree a
+                              , right :: BinaryTree a }
+</code>
+
+Scala:
+<code scala>
+sealed trait BinaryTree[A]
+case class Leaf[A](value: A) extends BinaryTree[A]
+case class InnerNode[A](value: A, 
+                        left: BinaryTree[A], 
+                        right: BinaryTree[A]) 
+           extends BinaryTree[A]
+</code>
+
+=== Typeclasses ====
+
+TODO (see http://debasishg.blogspot.com/2010/06/scala-implicits-type-classes-here-i.html)

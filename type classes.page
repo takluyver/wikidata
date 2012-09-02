@@ -1,0 +1,15 @@
+====== Type Classes ======
+
+([[Haskell]]) zbior sygnatur funkcji. 
+
+Mozna zadeklarowac, ze typ jest instancja jakiejs klasy -- trzeba wtedy zdefiniowac funkcje pasujace do wymaganych sygnatur. 
+
+<code haskell>
+class Graph nodeType edgeType where 
+edgesFrom :: nodeType -> edgeType 
+
+instance Graph Integer (Integer, Integer) where 
+edgesFrom = ... 
+</code>
+
+Klasy typow maja o tyle troche wspolnego z klasami z OOP, ze definiuja "interfejs" dla pewnego typu (lub listy typow). Jesliby patrzec na to jako na implementacje OOP, wowczas "metody" zdefiniowane w klasie stosuja [[multiple dispatch]], gdyz to, ktora konkretna funkcja jest zostanie wywolana zalezy od typow wszystkich argumentow.

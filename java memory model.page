@@ -1,0 +1,7 @@
+====== Java memory model ======
+
+Describes the semantics of concurrent programs. Was re-defined by JSR 133 (part of Java 5). Allows operations in threads to be re-ordered, as long as certain partial ordering, //happens-before//, is followed; this ensures that the operations will appear to all threads as if they were performed serially in the order provided by the programmer.
+
+  * [[http://en.wikipedia.org/wiki/Java_Memory_Model|Wikipedia article]]
+  * [[http://www.ibm.com/developerworks/library/j-jtp03304/|Java theory and practice: Fixing the Java Memory Model, Part 2]]
+

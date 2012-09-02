@@ -1,0 +1,162 @@
+====== Encoding Unboxed Union Types in Scala ======
+
+//2011-18-16, Miles Sabin//
+
+union type: ''T v U'' -- all values in ''T'' and ''U'' are in it
+
+sample usage:
+
+<code scala>
+def size(x: Int v String) = x match {
+  case i: Int => i
+  case s: String => s.length
+}
+</code>
+
+boxed representation: Either
+
+<code scala>
+def size(x: Either[Int, String]) = x match {
+  case Left(i) => i
+  case Right(s) => s.length
+}
+</code>
+
+[[Curry-Howard isomorphism]] can give an insight on how to encode the unboxed union. Here we are only interested in the fact that related types correspond to related logical propositions.
+
+|(A with B) <: A |A n B => A |
+|(A with B) <: B |A n B => B |
+|A <: (A v B) |A => A v B |
+|B <: (A v B) |B => A v B |
+
+(''with'': type intersection)
+
+so:
+
+<code>
+with === n
+v    === v
+<:   === =>
+</code>
+
+this mechanical rewriting can be carried out in both ways and will preserve validity.
+
+Let's play with Do Morgan's laws for a while:
+
+<code>
+A v B <=> ~(~A n ~B)
+</code>
+
+translating to scala:
+
+<code scala>
+type ~[A] = ...
+type v[A, B] = ~[~[A] with ~[B]]
+</code>
+
+How do we encode negation?
+
+Normally CHI is presented in the context of languages without subtyping (e.g. Haskell) and function arrow as the implication. Conjunction is modelled with tuples, disjunction with Either:
+
+<code scala>
+(A, B) => A
+(A, B) => B
+B => Either[A, B]
+A => Either[A. B]
+</code>
+
+(trivial to implement)
+
+we can use Nothing type as false. Negation can then be expressed as:
+
+<code scala>
+A => Nothing
+</code>
+
+because 
+
+<code>
+(A => false) <=> ~A
+</code>
+
+Note: we came up with this in a non-subtyping context! Can we transfer it back to the Scala type system?
+
+So:
+
+<code scala>
+type ~[A] = A => Nothing
+type v[T, U] = ~[~[T] with ~[U]]
+</code>
+
+now try this in REPL:
+
+<code scala>
+implicitly[Int <:< (Int v String)]
+</code>
+
+to check if the complier can prove that this subtyping judgement (<:<) holds. What we get is:
+
+<code>
+cannot prove that Int <: (Int => Nothing with String => Nothing) => Nothing
+</code>
+
+(looks about right, because we have a function type on the right but int on the left
+
+footnote:
+A <:< B --> there exists a mapping from A to B (TODO: what's the difference from A => B?)
+ 
+How can we fix it? Lift the left side to functions:
+
+<code scala>
+type ~~[A] = ~[~[A]]
+</code>
+
+now:
+
+<code scala>
+implicitly[~~[Int] <:< (Int v String)]
+implicitly[~~[String] <:< (Int v String)]
+</code>
+
+should work, but
+
+<code scala>
+implicitly[~~[Double] <:< (Int v String)]
+</code>
+
+shouldn't compile.
+
+and indeed, it works as expected!
+
+how do we write size now?
+
+<code scala>
+def size[T](t: T)(implicit ev: (~~[T] <:< (Int v String))) = t match {
+  case i: Int => i
+  case s: String => s.length
+}
+</code>
+
+works as expected.
+
+Making it nicer:
+
+<code scala>
+type |v|[T, U] = { type \[X] = ~~[X] <:< (T v U) }
+def size[T: (Int |v| String)#\](t: T) = t match { ... 
+</code>
+
+\ (lambda): type function
+
+TODO: read up on <:< and type lambda
+
+Note: this representation is completely unboxed, not even primitive integer into boxed Integer (can put @specialized in front of T, it will then produce specialised methods for all primitive types)
+
+But: it can't be used as a type parameter on e.g. collection types. But we can still construct a List[T] inside our function.
+
+TODO: check what happens if we have two args of type T.
+
+Why is it worth doing?
+
+  * to prove that first-class union types are possible
+  * so that ''with'' is not a special case and correspondence to propositional logic is apparent

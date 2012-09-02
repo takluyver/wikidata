@@ -1,0 +1,3 @@
+====== kd-trees ======
+
+Struktura danych pozwalajaca szybko znalezc najblizszego sasiada danego punktu w zbiorze punktow. Uzywana m.in. w algorytmach do clusteringu.

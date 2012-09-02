@@ -1,0 +1,13 @@
+====== Message Passing ======
+
+Styl programowania polegający na implementacji polimorficznych typów danych przy pomocy procedur, które wykonują dispatch operacji do procedur specyficznych dla tej implementacji. 
+
+W pseudo-lispie: 
+
+<code lisp>
+(define (op arg) (arg `op)) 
+</code>
+
+''arg'' to wartosc zaimplementowana w postaci procedury. ''op'' to operacja, ktora chcemy wykonac na tej wartosci. 
+
+Można sobie to wyobrażać jako pewien model (albo nawet niskopoziomową implementację w języku, w którym procedury/funkcje są first class) programowania obiektowego.

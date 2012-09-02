@@ -1,0 +1,20 @@
+====== Oracle ======
+
+===== Windowing Functions =====
+
+== Selecting most recent entry for each user/IP from a log ==
+
+<code sql>
+select ip_address, user_name, access_time as latest_access_time, action
+from
+  (
+    select
+      ip_address,
+      user_name,
+      access_time,
+      action,
+      rank() over (partition by ip_address, user_name order by access_time desc) as rank
+    from core_access_log
+  )
+where rank = 1;
+</code>

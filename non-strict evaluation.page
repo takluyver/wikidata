@@ -1,0 +1,14 @@
+====== Non-strict Evaluation ======
+
+Tryb ewaluacji, ktory gwarantuje, że ewaluacja wyrażenia się zakończy o ile tylko lewniwa ewaluacja tego wyrażenia się kończy. W przeciwienstwie do [[lazy evaluation]] nie gwarantuje natomiast minimalnej liczby redukcji. 
+
+Np. 
+
+<code haskell>
+let x = infinite_loop () 
+    y = other_call () 
+in 0 
+</code>
+W trybie non-strict ta funkcja zakonczy sie i da 0 -- choc nie ma gwarancji, czy np. ''other_call ()'' sie nie wykona. 
+
+[[Haskell]] jest jezykiem non-strict.

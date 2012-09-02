@@ -1,0 +1,46 @@
+<code>
+Python 2.6.4 (r264:75708, Oct 26 2009, 08:23:19) [MSC v.1500 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> def f(a): return a * b
+...
+>>> f(2)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 1, in f
+NameError: global name 'b' is not defined
+>>> f.func_globals
+{'__builtins__': <module '__builtin__' (built-in)>, '__name__': '__main__', 'f': <function f at 0x00C86230>, '__doc__': None, '__package__': None}
+>>> b = 3
+>>> f(2)
+6
+>>> f.func_globals
+{'b': 3, 'f': <function f at 0x00C86230>, '__builtins__': <module '__builtin__' (built-in)>, '__package__': None, '__name__': '__main__', '__doc__': None}
+>>> def g():
+...     b = 4
+...     return f(2)
+...
+>>> g()
+6
+</code>
+
+When looking for free variable values the function first looks in its [[Closures in Python|closure]] and then in definition site globals. ''f'' has an empty closure so uses globals; ''i'' has closure so uses ''b'' value bound by it:
+
+<code>
+>>> f.func_closure
+>>> def h():
+...     b = 4
+...     def i(a): return a * b
+...     print(i.func_globals)
+...     print(i.func_closure)
+...     return i(2)
+...
+>>> h()
+{'b': 3, 'g': <function g at 0x00C862B0>, 'f': <function f at 0x00C86230>, '__builtins__': <module '__builtin__' (built-in)>, 'h': <function h at 0x00C865F0>, '__package__': None, '__name__': '__main__', '__doc__': None}
+(<cell at 0x00C83B10: int object at 0x00ACE48C>,)
+8
+>>> 
+</code>
+
+More here: http://docs.python.org/reference/datamodel.html#objects-values-and-types
+
+{{tag>it python}}

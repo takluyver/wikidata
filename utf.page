@@ -1,0 +1,24 @@
+====== UTF ======
+
+Unicode: 17 planes, each with 2^16 chars
+
+Encodings for UTF:
+
+====== UTF-8 =====
+
+first bit determines length of char:
+
+0xxxxxx
+1011xxx xxxxxxxx
+(two more, for 3 and 4 bytes)
+
+===== UTF=16 =====
+
+only two cases: 16 or 32 bits
+
+simpler than 8, soe can be faster to process
+
+===== misc ======
+
+Haskell: String is a linked list of Unicode characters, each character takes a word
+(talk by Jesper van der Jeugt)

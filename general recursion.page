@@ -1,0 +1,3 @@
+====== General Recursion ======
+
+Rekursja "normalna", pozwalająca na dowolne wywołanie rekurencyjne -- w odróżnieniu od np. [[structural recursion]], która pozwala tylko na wywołania rekurencyjne spójne ze strukturą typu danych, na jakich operuje rekurencyjna funkcja.

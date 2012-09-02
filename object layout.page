@@ -1,0 +1,12 @@
+====== Object Layout ======
+
+Sposob ulozenia pol obiektu w pamieci -- zagadnienie z dziedziny kompilacji jezykow obiektowych. Problem polega na tym, zeby 
+
+  - koszt czasowy dostepu do pola byl jak najmniejszy, a jednoczesnie 
+  - pamiec nie byla marnowana. 
+   
+W celu zapewnienia 1) stosuje sie strong conformance requirement: offset danego pola jest taki sam w typie T i wszystkich podtypach T. 
+
+W przypadku jezykow z pojedynczym dziedziczeniem 1) zapewnic jest bardzo latwo. Gorzej przy wielodziedziczeniu, gdzie dwa typy T1 i T2 o tym samym przodku moga byc nadtypami T3. Trzeba wtedy zapewnic, ze offsety pol z T1 i T2 nie konfliktuja ze soba. 
+
+Problem ten rozwiazuje sie przy pomocy dwuwymiarowego ukladu dwukierunkowego: pola kolejnych typow mozna dodawac na prawo od pol nadtypow (R,T1), na lewo (T3,R,T1) lub w kolejnych warstwach (T3,R,T1/T2 -- T2 jest w drugiej warstwie). Wtedy offset pola jest staly w ramach warstwy, w czasie wykonania trzeba sprawdzic jedynie jaki jest offset warstwy.

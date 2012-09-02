@@ -1,0 +1,5 @@
+====== HaLVM ======
+
+[[http://halvm.org]]
+
+Runs [[Haskell]] apps directly on [[Xen]] virtual hardware. Similar idea to [[http://anil.recoil.org/papers/2010-hotcloud-lamp.pdf|Mirage]], which works with [[OCaml]].

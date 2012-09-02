@@ -1,0 +1,9 @@
+W latach osiemdziesiatych dostep do RAM trwal 1-2 cykle procesora. Od tego czasu procesory przyspieszyly znacznie bardziej niz pamiec, obecnie potrzebny czas to ok. 300 cykli. Biorac pod uwage, ze dostepy do pamieci to ok. 1/3 instrukcji wykonywanych przez procesor, pamiec stanowi waskie gardlo w obecnych komputerach. 
+
+Aby to rozwiazac, stosuje sie hierarchie pamieci podrecznych (cache) w procesorze. Na ogol stosowane sa dwa poziomy: L1 (kilkadziesiat KB) z ktorego odczyt zajmuje 1-2 cykle procesora i L2 (kilka MB), z ktorego odczyt trwa kilkadziesiat cykli. 
+
+L1 i L2 podzielone sa na linie -- sa to najmniejsze jednostki transferowane pomiedzy cache'ami (np. w Intel Core 2 Quad Q6600 linia l1 ma 64 bajty a L2 128). Dzieki temu wykorzystuje sie zjawisko lokalnosci -- kolejne odczyty/zapisy na ogol odbywaja sie w sasiednich miejscach pamieci. 
+
+Na ogol stosuje sie dwa odrebne cache L1 -- jeden na instrukcje (tylko do odczytu), drugi na dane (do odczytu i zapisu). L2 jest wspolny dla instrukcji i danych. 
+
+Wspolczesne procesory moga ladowac dane do cache asynchronicznie. Wykorzystywane jest to do spekulatywnego pre-fetchingu kolejnych blokow z pamieci. Ze wzgledu na ten mechanizm, dostep sekwencyjny do pamieci jest o rzad wielkosci szybszy niz dostep przypadkowy -- RAM ma podobnoa charakterystyke jak urzadzenia blokowe (np. dysk).

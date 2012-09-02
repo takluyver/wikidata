@@ -1,0 +1,15 @@
+====== JPred ======
+
+pierwsza (?) pełna implementacja [[predicate dispatch]] w Javie. 
+
+np. 
+
+<code java>
+void handle(Event e) when e@Open && !e.isHandled() { 
+  //... 
+} 
+
+void handle(Event e) when e@Save { 
+  //... 
+} 
+</code>

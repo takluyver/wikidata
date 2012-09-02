@@ -1,0 +1,7 @@
+====== Predicate Dispatch ======
+
+metoda wywolywana w odpowiedzi na komunikat wybierana jest na podstawie stanu i/lub zwiazkow miedzy argumentami (i/lub adresatem komunikatu) i ktore to zwiazki/stany zdefiniowane sa przy pomocy predykatow. 
+
+Uogolnienie [[multiple dispatch]]. 
+
+http://lambda-the-ultimate.org/node/3007

@@ -1,0 +1,5 @@
+====== Template Haskell ======
+
+A metaprogramming system in [[GHC]]: allows compile-time manipulation of the AST using in Haskell itself. Manipulation functions have to be defined in a module that does not depend on the module where they are used.
+
+[[http://www.haskell.org/ghc/docs/latest/html/users_guide/template-haskell.html|Template Haskell in GHC docs]]

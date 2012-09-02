@@ -1,0 +1,499 @@
+====== Scala Days 2012 =====
+
+===== Fortress and Scala =====
+
+Guy Steele
+
+fortress -- research language since 2003
+(intended for "scientific conputing"?)
+
+Fortress vs Scala
+
+differences:
+- fortress has both ASCII and "reference" version of lang (for typesetting)
+- BigInt ~ Z (ASCII: ZZ)
+- implicit parallelism in evaluating sub-expressions
+- no type erasure in F (encoded via interfaces)
+- F syntax strongly influenced by mathematics
+
+similarities (some examples of evolutionary convergence):
+- OO with traits and multiple inheritance
+- expression-based
+- collection libraries with functional emphasis
+- influenced by Haskell
+
+==== Syntax ====
+
+important: use of whitespace (c.f. Edward Tufte)
+- example: insignificant in Fortran, leads to
+  DO 20 I=1,125 meaning loop and
+  DO 20 I=1.125 meaning an assignment
+  NASA mission failed because of similar error.
+- example: scala support for XML -- based on whitespace sensitivity (< symbol with whitespace on the left but not right signifies start of tag)
+- example: set comprehension in F: { |a| | a <- mylist, a | b }
+- example: verifying intent of operator precedence: a + b*c + d -- OK, a+b * c+d -- rejected
+
+juxtaposition: 
+Fortress:
+3 sin pi x - log x + 5 z^2 - 7 z + 2
+or: "I found" (n+1) "errors in" j "files"
+Scala:
+x = (item.x max item.y max item.z) min upperBound
+(in F operators must be distinguishabe tokens: x - (item.x MAX item.y MAX item.z) MIN upperBound)
+
+single characters:
+_: F: formatting 
+.: field access, method call, decimal point
+,: tuples
+;: largely wasted
+:: S: typing, F: typing + sequences: 0:n-1 (to be familiar to Fortran programmers)
+
+fitting syntax to existing usage in communities:
+arrays: [ ]
+lists: <| |>
+sets: { }
+multisets: {| |}
+
+BIG SUM [p <- mylist, prime p] p+1
+BIG MAX
+BIG OPLUS
+
+==== Semantics ====
+
+=== Parallelism ===
+
+cooperative:
+
+Scala: libraries that are easy to parallelise
+Fortress: comprehensions and big operators abstractded to generators and reducers
+  generator: like an iterator, doesn't have to be sequential
+  reducer: fold
+F: compiler figures out which subexpressions are worth making into microtasks (area of research)
+
+competitive:
+F: atomic blocks  (STM) -- nesting and exceptions are difficult!
+
+=== *** ===
+
+- implicits in Scala: doing it by type is brittle
+- pattern matching: slightly different design to scala's
+- S by-name params: difficult to see at call site when it's going to be evaluated (naming conventions like ...OrElse helps somewhat)
+- F: overloaded "or" (\/) operator: gm.get(key) OR: bigDefaultValueComputation(z)
+- F: fully symmetric dynamic multimethod dispatch (removes need for visitor pattern)
+
+crunch(x: Lst[\Boolean\]) =
+crunch(x: List[\String\]) =
+crunch[\T\](x: List[\T\]) =
+
+- no higher-order type constructors in F (fascinating research problem)
+
+==== Q&A ====
+
+Q: are you tracking side-effects?
+A: simple flow analysis only. We started with Fortran and moved towards FP. Had we known 9 years ago what we know now, we'd have started with Haskell and moved towards Fortran.
+
+-------------
+
+Inspirations:
+
+aggressive implicit parallelisation: do for CPU what GC does for memory
+computers ought to serve people: notation should capture the way people communicate with each other:
+juxtaposition: both F and S approaches have advantages, can they be combined?
+system for typesetting code
+
+===== Akka 2.0 =====
+
+Jonas Boner
+
+- non-transparent distribution: network communication a first 
+- actors form hierarchies (now enforced): actor system is the root (guardian actor) and creates children
+- actor tree allows for addressing individual actors in filesystem-like manner: 
+  system.actorFor("/user/Greeter/A")
+  context.actorFor("../B")
+- routing and pooling for redundant instances
+- configuration DSL
+- routers: roundrobin, random, broadcast... WIP adaptive: leastmemory, leastcpu
+- actors are location-transparent, can run on different machines; actor reference can represent both in-process and out of process actors
+
+deployment {
+	/Greeter {
+		remote = akka://MySystem@machine1:3242
+	}
+}
+
+plans for 2.1:
+
+- automatic cluster-wide deployent
+- p2p cluster membership (gossiping protocol instead of zookeeper tried in the past; zookeeper insisted on consistent view of the world, expensive)
+- adaptive load-balancing
+- distributed failure detection and restarting of actors
+
+clustering considerations:
+
+VectorClock(timestamp, versionHistory) generates a partial oredring of events in a distributed system
+- used for detecting causality violations and reconcile and merge diffs
+Accrual Failure Detector:
+- monitoring: heartbeat
+- interpretation: gives likelihood that a node is up or down (no definitive yes or no)
+
+
+-------------
+
+Distributed computing:
+
+distribution should not be transparent, needs to be handled by programmer 
+actors addressable, location-transparent (but assume worst case, remote)
+clusters: gossiping based on Riak (Dynamo) protocol -- eventual consistency, no definitive answers (embrance uncertainity?)
+
+===== SubScript =====
+
+Andre van Delft
+
+Algebra of Communicating Processes
+- extension to boolean algebra with atomic actions, parallelism adn communication
+
+multiplication ~ sequencing (i.e. no symmetry)
+
+used for specifiction and verification of comms protocols, plants, railways, coffee machines etc
+
+DSL embedded in Scala:
+
+example: GUI app with search box -- requires comms between GUI thread, DB and app thread (SwingUtilities.invokeLater, a lot of boilerplate)
+
+live =       searchButton
+       @gui: (outputTA.text="Starting search..."}
+             {* Thread.sleep(3000) *}
+       @gui: {outputTA.text="Search finished"}
+
+
+searchCommand = searchButton + Key.Enter (either of these will trigger)
+exit = exitCommand @gui: while(!areYouSure)
+live = searchSequence ... || exit
+
+scala rendering:
+
+def _exit = _script('exit) {
+	_seq(_exitCommand,
+	     _at{gui}(_normal{exitConfirmed=confirmExit}),
+	     _while{!exitConfirmed}
+	    )
+}
+
+---------------
+
+GUIs:
+
+advanced DSLs that capture formalisms like ACP -- lots of room for experimentation with things like async
+
+
+===== Effective Scala =====
+
+Josh Suereth
+
+* use expressions, not statements
+* use REPL
+* stay immutable (can use local mutability)
+* use Option
+* use official style guide as the base
+* always use def for abstract members (most flexible, helps with binary compat)
+* annotate non-trivial return types for public methods (documentation, but also compiler speed)
+* use trait inheritance to encode composition
+* limit scope of implicits (most difficult part of programming in Scala: understanding what implicits are in scope)
+* avoid implicit views
+* use type traits: trait Encodable[T] { def encode(t: T): Array[Byte]; def decode(...) } (type classes)
+
+------------
+
+best practices
+
+...
+
+===== Habanero-Scala =====
+
+Shams Imam
+
+tiers fo developers:
+----- parallelism-oblivious
+ ---  parallelism-aware <-- Habanero is aimed at this group
+  -   parallelism experts
+
+Habanero-Java developed at Rice as a version of X10 language (fortress and Chapel are other langs founded by parallel lang research programme)
+
+basic constructs:
+
+async { ... } -- spawns a new task
+finish { ... } -- enclosing scope for asyncs (does a join)
+forall { ... }
+foreach { ... } -- forall without enclosing finish
+
+what if we need to synchronise mutations to shared state?
+
+isolated { ... } obtains a global lock
+
+data-drive futures (dataflow):
+val res = ddf[Int]()
+async { fib(N, res) }
+
+phasers:
+scenario: e.g. Conway -- where we need to ensure that all updates are done synchronously (barrier)
+asyncPhased {
+	// phase 1
+	next
+	// phase 2
+	next
+}
+-- guarantees deadlock freedom
+
+places: locality control and load balancing between worker threads
+
+actors: seemless interaction with HS
+parallel message processing inside actors
+requires an extension to actor state machine with "paused" state, where actor does not process further messages
+
+non-blocking receivers -- simulate synchronous communication without blocking
+
+actors perform better than Akka in some benchmarks
+
+--------------
+
+Parallelism:
+
+provide tools (DSLs) that allow developers to specify parallelism but not shoot themselves in the foot 
+
+===== Cloud Haskell =====
+
+serialisation
+
+===== Stackless Scala with Free Monads =====
+
+Runar Bjarnasson
+
+problem with compositionality (functions calling other functions): no tail-call elimination (other than for self-recursive calls) -> StackOverflowError
+
+trampolining: single loop (trampoline) drives the program; functions don't call each other, instead return the thing to be called to trampline and it makes the call
+
+runT in trampoline is self-tail-recursive:
+
+final def runT: A = this match {
+   case More(k) => k().runT
+   case Done(v) => v
+}
+
+even ~~> odd
+odd ~~> even
+
+even[A]: Trampoline[Boolean]
+  case Nil => Done(true)
+  case x :: xs => More(() => odd(xs))
+
+trampoline -- general tail-call elimination for Scala
+
+how can we add flatMap to Trampoline? Reify it as a constructor
+
+now:
+
+Done(a) => a
+More(k) => k().runT
+Done(a) FlatMap f -> f(a).runT
+More(k) FlatMap f => k().flatMap(f).runT
+(x FlatMap g) FlatMap f => x.flatMap((a: Any) => g(a).flatMap(f)).runT
+
+
+Drawbacks:
+- defeats JIT optimisation
+- requires monadic style
+- you have to remember to wrap recursive calls in More
+
+aside: Free monad
+
+Trapoline[A] = Free[Function0, A]
+BinTree[+A] = Free[Pair, A]
+Tree[+A] = Free[List, A]
+
+-- represents any tree-like structure withe data in the leaves
+
+
+===== Odersky =====
+
+2.10:
+- futures and promises
+- Scala reflection
+  - mirror: an object that provides reflection info as opposed to this info being embedded in values; we can have different mirrors
+  
+  structure in the compiler (cake pattern):
+
+  trait Sumbols { this: Types with Sumbols =>
+    trait Symbol {def tpe: Type }
+  }
+
+  trait Types { this: Smbols with Types =>
+    trait Type { def symbol ...
+  }
+
+  nsc.Global (scalaac cake)
+  reflect.runtime.Mirror (reflection cake)
+
+  reflect.internal.Universe (merges compiler and reflection-specific layers)
+
+- macros (enabled by reflection)
+
+  // macro definition
+  def m(x: T): R = macro impl.mi
+
+  // macro implementation
+  objecdt impl {
+    def mi(x: Expr[T]): Expr[T] = ....
+  }
+
+  Expr[A] represent expression trees that whenn run produce a value of type A
+
+  now: m(expr) causes compiler to
+  - typecheck expr
+  - make a reflectinve call to impl.mi with two args: context (call-site info), and AST of expr
+
+example:
+
+  def assert(cond: Boolean, msg: Any) = macro Asserts.assertImpl
+
+  assert(x < 10, "limit exceeded")
+  ->
+  assertImpl(ctx)(Apply(Select(Ident(newTermAnme("x")),...), Literal(Constant("limit exceeded")))
+
+how do we make macros hygienic?
+
+An important macro:
+def reify[T](expr: T): Expr[T] = macro ...
+allows to access AST at run-time, enables LINQ-like things
+
+reify helps with hygiene:
+
+def raise ...
+def assertImpl ... = 
+  if (assertionsEnabled)
+    c.reify(if (!cond.eval) raise(msg.eval))
+  else
+    c.reify(())
+
+now we can be sure that the right "raise" is being called
+
+
+some more new stuff:
+- string interpolation: 
+  def greeting(who: String) = s"hello, $who!" // simple interpolation
+  f"minimum rate ${computeRate(x, y)}%2.1f applies" // formatting
+  easy to add new interpolation methods (e.g. xml, json, scala)
+
+- implicit classes
+  implicit class JSONString(sc: StringContext) {
+    def json(args: Any*) =
+      convertToJson(sc.texts, args)
+  }
+
+  this will generate conversion method:
+
+  (implicit?) def JSONString(sc: StringContext): JsonString = new JSONString(sc)
+
+- value classes
+  classes can now extend AnyVal
+  their methods are compiled as extension methods
+
+
+  ===== Binary compat =====
+
+  trait Foo {
+    val x = "HI"
+  }
+
+->
+
+  interface Foo {
+    String x();
+    void Foo$_setter$x_eq(String);
+  }
+
+  class Foo$class {
+    static void $init$(Foo) { ... }
+  }
+
+breaking changes in traits:
+
+* val -> def
+* adding members that are not used by existing implementations 
+* removing a member that is used  
+* lazy val -> def -- silent!
+
+non-braking changes:
+- implementation of methods
+- adding private methods
+- adding overloaded constructor or method
+- adding subclasses
+
+classes/objects breaking changes:
+- adding lazy vals // initialisation bitmaps are confused
+
+lazy val x = 1
+
+->
+
+if (bitmap$0 & 2 == 0) {
+	synchronized(this) {
+		if (bitmap$0 & 2 == 0) {
+			x = 1;
+		}
+	}
+}
+
+How can we fix this?
+
+Typeclasses to the rescue!
+
+trait Serializable[T] {
+	def encode(t: T): ...
+	def decode(...): T
+}
+
+===== Zeebox =====
+
+tv apps overlay -- blocked by broadcasters
+second screen will be the way to go for the next couple of years
+
+===== Compiler Optimisations =====
+
+Miguel Garcia
+
+- big improvements in optimiser performance in 2.10 (but only for more aggressive optimisations)
+- quality of optimisations is the same
+
+
+===== Concat of Immutable Vectors =====
+
+A ++ B -- so far, linear time
+
+A.filter(x => x < 5).map(x => x * 5)
+
+when doing parallel, how do we know what is the efficient split? We'll need to concat afterwards
+
+Vector implemented as a tree, with bitmap index
+get efficient (O(log N))
+update efficient (6.2 * log N)
+optimal index size: 32 bits
+
+current impl: copy node by node from v2 to v1
+
+idea 1: use ropes: add a node at root that points to either v1 or v2 -- but this quickly degenerates to linked list
+
+idea 2: use b-trees -- but radix search becomes impossible
+
+idea 3: maintain item counts in the nodes -- but then, indexing time grows ~7x
+
+idea 4: use nodes of size m-1 or m -- this will give near-radix search and -- but this is costly to balance, concat cost is still >30x that of update
+
+idea 5: RRB-Tree: ? (rebalance only on concat)
+
+index speed constant, 60-70% slower than standard vectors
+memory overhead: 1/m
+concat cost: 7x that of update
+
+===== Rogue =====
+
+DSL for mongodb + lift

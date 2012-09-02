@@ -1,0 +1,3 @@
+Metoda tworzenia programow operujacych na polimorficznym typie danych (wielu alternatywnych implementacjach tego samego typu danych). Polega na stworzeniu macierzy, ktora na jednej wspolrzednej ma implementacje typu danych a na drugiej procedury wymagane przez interfejs. W komorkach macierzy znajduja sie implementacje poszczegolnych procedur dla poszczegolnych implementacji typu danych. 
+
+Nastepnie interfejs polimorficznego typu danych implementowany jest generycznie, przez procedury, ktore sprawdzaja ktora implementacja jest stosowana i wywoluja odpowiednia procedure z macierzy. To pozwala na dodawanie nowych implementacji typu danych bez modyfikowania genrycznych procedur -- wystarczy dodac implementacje operacji do macierzy.

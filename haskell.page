@@ -1,0 +1,35 @@
+====== Haskell ======
+
+My playground for learning: [[https://github.com/mmakowski/habaz|Habaź]]
+
+Tutorial on packaging an app: [[http://en.wikibooks.org/wiki/Haskell/Packaging]]
+
+===== IO =====
+
+  * a good explanation is on [[http://learnyouahaskell.com/input-and-output|Learn You a Haskell]]
+
+''do'' is used when the IO block consists of more than one expression
+
+These two have the same result:
+<code haskell>
+let x = pureValue 
+x <- return pureValue
+</code>
+
+===== GUI =====
+
+  * [[wxHaskell]]
+
+===== Testing =====
+
+  * [[https://bitbucket.org/dave4420/hstest/wiki/Home|hstest]] -- for running QuickCheck and HUnit
+  * HUnit: [[http://hunit.sourceforge.net/HUnit-1.0/Guide.html|a guide]] (old) and [[http://hackage.haskell.org/packages/archive/HUnit/1.2.2.3/doc/html/Test-HUnit.html|API docs]] (current)
+
+
+===== Metaprogramming =====
+
+  * [[Template Haskell]]
+
+===== Trivia =====
+
+  * ''newtype'' keyword is for defining thin wrappers for existing types (one value constructor, one field). It can be used to allow the wrapped type to have multiple instances of the same type class; see ''ZipList''. It's more efficient than ''data''.

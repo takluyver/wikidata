@@ -1,0 +1,112 @@
+====== wxHaskell ======
+
+===== Windows Installation =====
+
+[[http://haskell.org/haskellwiki/WxHaskell/Building|The official guide]]
+
+   - install [[http://wxpack.sourceforge.net/Main/Downloads|wxPack 2.8]] (MinGW GCC libs only) to  ''c:\wxWidgets'' (tried ''c:\Program Files (x86)\wxWidgets'' but some tools have trouble with spaces in paths)
+   - set ''WXWIN'' env variable to ''c:\wxWidgets'' and ''WXCFG'' to ''gcc_dll\mswu''
+   - get [[http://sites.google.com/site/wxconfig/|wx-config]] and put in ''c:\wxWidgets\bin''; add this directory to ''PATH''
+   - ''cabal install wx''
+   - add ''c:\wxWidgets\lib\gcc_dll'' and ''c:\Program Files (x86)\Haskell Platform\2011.2.0.0\mingw\bin'' (or another directory containing ''mingwm10.dll'') to ''PATH'' -- required to run .exes built with wx
+   - add ''c:\program files (x86)\MinGW\bin'' (or other directory containing ''libgcc_s_dw2-1.dll'') to ''PATH'' -- required to run .exes built with wx (?)
+
+===== Development =====
+
+==== Install darcs ====
+
+Get darcs from [[http://wiki.darcs.net/Binaries]] (''cabal install darcs'' failed on HP 2011.2.0.1 due to missing curl lib).
+
+==== Get the source ====
+
+''darcs get http://code.haskell.org/wxhaskell'' will create ''wxhaskell'' directory with source code.
+
+==== Build ====
+
+<code>
+cd wxdirect
+cabal install
+</code>
+
+worked.
+
+add ''c:\Users\mmakowski\AppData\Roaming\cabal\bin\'' to PATH.
+
+<code>
+cd ..\wxcore
+cabal install
+</code>
+
+Failed with ''Usage: wx-config [options]''. After hacking Setup.hs to remov unsupported ''wx-config'' flags and applying Dave Tapley's patch it built fine. Then:
+
+<code>
+cd ..\wx
+cabal install
+</code>
+
+An that succeeded as well.
+
+==== Wrapper design ====
+
+for now these are random notes as I'm trying to understand the way C library is wrapped.
+
+=== Example: Colour ===
+
+Everything is in ''wxcore''
+
+''WxcClassTypes.hs'' is automatically generated from ''src/include/wxc.h''.
+
+<code haskell WxcClassTypes.hs> 
+-- | Pointer to an object of type 'WxObject'.
+type WxObject a  = Object (CWxObject a)
+-- | Inheritance type of the WxObject class.
+type TWxObject a  = CWxObject a
+-- | Abstract type of the WxObject class.
+data CWxObject a  = CWxObject
+
+-- | Pointer to an object of type 'Colour', derived from 'WxObject'.
+type Colour a  = WxObject (CColour a)
+-- | Inheritance type of the Colour class.
+type TColour a  = TWxObject (CColour a)
+-- | Abstract type of the Colour class.
+data CColour a  = CColour
+</code>
+
+<code haskell WxcClassesAL.hs>
+getColourFromUser :: Window  a -> Color ->  IO (Color)
+getColourFromUser parent colInit 
+  = withRefColour $ \pref -> 
+    withObjectPtr parent $ \cobj_parent -> 
+    withColourPtr colInit $ \cobj_colInit -> 
+    wx_wxGetColourFromUser cobj_parent  cobj_colInit   pref
+foreign import ccall "wxGetColourFromUser" wx_wxGetColourFromUser :: Ptr (TWindow a) -> Ptr (TColour b) -> Ptr (TColour ()) -> IO ()
+</code>
+
+
+<code haskell WxcTypes.hs>
+withRefColour :: (Ptr (TColour a) -> IO ()) -> IO Color
+withRefColour f
+  = withManagedColourResult $
+    assignRefPtr colourCreate f
+
+withManagedColourResult :: IO (Ptr (TColour a)) -> IO Color
+withManagedColourResult io
+  = do pcolour <- io
+       color <- do ok <- colourIsOk pcolour
+                   putStrLn $ "colour is ok: " ++ (show ok)
+                   if (ok==0)
+                    then return colorNull
+                    else do rgba <- colourGetUnsignedInt pcolour
+                            return (toColor rgba)
+       colourSafeDelete pcolour
+       return color
+
+foreign import ccall "wxColour_IsOk"    colourIsOk   :: Ptr (TColour a) -> IO CInt
+</code>
+
+<code c++ eljcolour.cpp>
+EWXWEXPORT(bool,wxColour_IsOk)(wxColour* self)
+{
+	return self->IsOk();
+}
+</code>

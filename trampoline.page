@@ -1,0 +1,3 @@
+====== Trampoline ======
+
+Technika implementacji [[tail recursion|rekursji ogonowej]]. Kończąc działanie, funkcja, zamiast rekurencyjnie wywoływać samą siebie, zwraca kolejną funkcję do wywołania, która to funkcja jest wywoływana gdy bieżąca się zakończy (jej ramka zostanie zdjęta ze stosu). To pozwala na składanie wywołań "rekurencyjnych" w łańcuch bez pogłębiania stosu.

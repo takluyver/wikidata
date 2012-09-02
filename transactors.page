@@ -1,0 +1,3 @@
+A term used within [[http://akkasource.org|Akka framework]] for an actor that makes use of [[Software Transactional Memory]]. In Akka, the messages passed between actors are immutable unless they are ''Ref''s -- these can be mutated by using a ''swap()'' method. Mutation of ''Ref''s can only be done within a transaction scope, and for a transactor the ''receive'' block defines such a scope.
+
+{{tag>it}}

@@ -1,0 +1,5 @@
+====== MonetDB ======
+
+Jeden z pierwszych (jesli nie pierwszy) RDBMS w ktorym dane przechowywane sa kolumnami, nie wierszami, co poprawia wydajnosc w zastoswaniach typu data warehouse. 
+
+Artykul o MonetDB w CACM 12/2008 pokazuje na jak niski poziom schodzi sie optymalizujac DBMSy: w analizie kosztu zapytan uwzglednia sie CPU cache misses, algorytmy (np. hash join) uzywane w MonetDB sa tez optymalizowane do konkretnej architektury sprzetowej (minimalizacja cache misses).
