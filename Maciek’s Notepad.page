@@ -1,16 +1,14 @@
-# Maciek's Notepad
-
 [Scratchpad]()
 
-## Blogs 
+# Blogs 
 
 * [Tech]()
 * [Travel]()
 * [Cooking]()
 
-## Computer Science and Information Technology
+# Computer Science and Information Technology
 
-### Programming Languages and Concepts
+## Programming Languages and Concepts
 
    * [[automatic parallelisation]]
    * [[cplusplus|C++]]
@@ -49,7 +47,7 @@
    * [[variadic function]]
    * [[TXL]]
 
-#### Functional Programming 
+### Functional Programming 
    * [[accumulator]]
    * [[applicative functors]]
    * [[applicative style]]
@@ -63,42 +61,42 @@
    * [[uniqueness typing]]
    * [[logics, algebars, types]]
 
-### Hardware and Execution
+## Hardware and Execution
    * [[CPU cache]]
    * [[GPU pipeline]]
    * [[HaLVM]]
 
-### Databases 
+## Databases 
    * [[Bloom filter]]
    * [[MonetDB]]
    * [[Oracle]]
 
-### Distributed Computing 
+## Distributed Computing 
    * [[distributed hash table]]
    * [[GridGain]]
    * [[key-based routing]]
    * [[trickle]]
 
-### Data Exchange 
+## Data Exchange 
    * [[ASN.1]]
    * [[Protocol Buffers]]
    * [[XML]]
 
-### Tools 
+## Tools 
    * [[cabal]]
    * [[distributed revision control systems]]
    * [[Git]]
    * [[Maven 2]]
    * [[BuildBot]]
 
-### Web 
+## Web 
    * [[Google Maps]]
 
-### Data Mining 
+## Data Mining 
    * [[agglomerative clustering]]
    * [[kd-trees]]
 
-### Misc 
+## Misc 
    * [[Clone Cloud]]
    * [[code spelunking]]
    * [[fuzzing]]
@@ -113,17 +111,17 @@
    * [[wxHaskell]]
    * [[UTF]]
 
-## Maths
+# Maths
 
    * [[Nash equilibrium]]
    * [[Riemann series theorem]]
 
-## Music 
+# Music 
 
    * [[Marc-Antoine Charpentier]]
    * [[Germania]]
 
-## Literature
+# Literature
 
    * [[Aravind Adiga]]
    * [[Philip K. Dick]]
@@ -135,26 +133,26 @@
 
    * [[Reading Log]]
 
-## Film
+# Film
 
    * [[Inception]]
 
-## Travel 
+# Travel 
 
    * [[Z Langdon Hills do Heathrow]]
    * [[Z Bankgoku do Hanoi]]
    * [[Z Porto do Gouveia]]
 
 
-## Food 
+# Food 
 
    * [[Wine]]
 
-## Finance 
+# Finance 
 
    * [[management portfolio]]
 
-## Curious
+# Curious
 
    * [[Kuchnia angielska w epoce edwardianskiej]]
    * [[Doktor Misiak]]
