@@ -26,7 +26,7 @@ How do we make aplication to be a node:
 
 configure the run config in IDE to run a node
 
-<code scala>
+~~~ { .scala }
   import org.gridgain.scalar._
   import org.gridgain.scalar.scalar._
 
@@ -36,24 +36,24 @@ configure the run config in IDE to run a node
     }
     * everything within the brackets runs within a GG node
   }
-</code>
+~~~
 
 what can we put in main?
 
 e.g.
 
-<code scala>
+~~~ { .scala }
 grid !!! (() => println("Broadcasting!")) 
 * broadcast the function to all nodes and run it
 * other name for it !!! is bcastRun
 
 grid remoteProjection bcastRun (<closure>)
 * broadcasts and runs to every node except itself
-</code>
+~~~
 
 every closure creates a GG task wrapping it. Every task class is versioned. So when it gets recompiled remote nodes know that it needs to be reloaded.
 
-<code scala>
+~~~ { .scala }
 def mapReduce(s: String) = grid spreadRun (for (w <- s split(" ")) yield () => println w)
 mapReduce("hello london scala user group")
 
@@ -66,7 +66,7 @@ def mapReduceCount(s: String) = grid spreadReduce (
     (seq: Seq[Int]) => seq.sum
 )
 * returns the total number of characters in all words in s
-</code>
+~~~
 
 available projections:
 -- all nodes with specified CPU utilisation
@@ -78,7 +78,7 @@ demo cont'd
 
 ping pong on a grid
 
-<code scala>
+~~~ { .scala }
 import java.concurrent._
 
 def pingpong = 
@@ -114,4 +114,4 @@ def pingpong =
 
 * we can write different programmes for different nodes in a single class
 * the application will spread like a virus
-</code>
+~~~

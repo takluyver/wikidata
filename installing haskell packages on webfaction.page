@@ -3,10 +3,10 @@
   * `cabal update`
   * try to `cabal install` the required package. If it or its dependencies fail to install, do
 
-<code>
+~~~
 cd tmp
 tar -xzf ~/.cabal/packages/hackage.haskell.org/<package>/<version>/<tar.gz file>
 cd <package>-<version>
 cabal configure
 cabal install
-</code>
+~~~

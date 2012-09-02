@@ -5,18 +5,18 @@
 - took Peter a year to understand
 
 kinds:
-<code>
+~~~
 Int ::: *
 []  ::: * -> *
 Map ::: * -> * -> *
-</code>
+~~~
 
 only types of kind * are populated
 
-<code haskell>
+~~~ { .haskell }
 data Foo f a = Foo ((f a) -> a)
 Foo ::: (* -> *) -> * -> *
-</code>
+~~~
 
 type classes -- like Java interfaces. Specify signatures, but also imply (unchecked) behaviour (laws)
 
@@ -33,13 +33,13 @@ laws:
 
 #### Applicative
 
-<code haskell>
+~~~ { .haskell }
 class (Functor f) => Applicative f where
   pure  :: a -> f a
   (<*>) :: f (a -> b) -> f a -> f b
 
 (<$>) = fmap
-</code>
+~~~
 
 laws:
 * identity

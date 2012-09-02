@@ -140,14 +140,14 @@ TODO: http://www.ibm.com/developerworks/library/j-jtp03304/#2.0
 
 **How do you make the code below thread-safe?**
 
-<code java>
+~~~ { .java }
 class Counter {
   int i;
   public void inc() {
     ++i;
   }
 }
-</code>
+~~~
 
 It's unsafe because the increment is not atomic. Can use `synchronized` on the method or use `AtomicInteger`. The latter does CAS and is much faster if there is little contention (otherwise would roll back/retry frequently).
 
@@ -201,11 +201,11 @@ Clustered indices (known as *index-organised tables* in Oracle) mean row data is
 
 **Write a query that selects duplicates fron a table**
 
-<code sql>
+~~~ { .sql }
 select a, b, c from (
   select a, b, c, count(*) as cnt from tbl group by a, b ,c
 ) where ctn > 1
-</code>
+~~~
 
 #### Oracle
 
@@ -283,7 +283,7 @@ TODO
 
 **Calculate the multiset intersection of two arbitrary multisets; assume input multisets are represented as an arbitrary Java collection**
 
-<code java>
+~~~ { .java }
 <T> Collection<T> intersection(Collection<T> a, Collection<T> b) {
   final Map<T, Pair<Integer>> counts = new HashMap<T, Pair<Integer>>();
   for (T t: a) inc(counts, t, 0); * increases the value of first element of 
@@ -296,7 +296,7 @@ TODO
   }
   return result;
 }
-</code>
+~~~
 
 **How do you reconstruct a tree from pre-order and in-order printout?**
 
@@ -308,27 +308,27 @@ TODO (simple)
   - **What is the expected number of times move() will be invoked for each invocation of the guaranteed function?**
 
 1. 
-<code java>
+~~~ { .java }
 void guaranteedMove(int direction) {
     if (move(direction) != direction) {
         guaranteedMove(direction);
         guaranteedMove(direction);   
     }
 }
-</code>
+~~~
 
 2. 
-<code>
+~~~
 x = 1 + (1-p)*2*x
 x = 1 / (2p - 1)
-</code>
+~~~
 
 **You can climb stairs one or two steps at the time. Write a function that returns the number of ways in which you can climb the stairs.**
 
-<code scala>
+~~~ { .scala }
 def waysToClimb(steps: int) = steps match {
   case 0 => 1
   case 1 => 1
   case _ => waysToClimb(steps - 1) + waysToClimb(steps - 2)
 }
-</code>
+~~~

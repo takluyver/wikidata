@@ -26,15 +26,15 @@ I did make a couple of attempts at using Scala IDE for Eclipse. The last one was
 
 Scalaz provides hard-core functional programmers with the tools they are used to from Haskell: a hierarchy of type classes an their instances for standard Scala types. **Jason Zaugg**, one of the most active committers of the library, provided an overview of how type classes are encoded in Scala and how they can be used. One of the highlights was a demonstration of how type classes are useful based on well-known Java `Comparator` interface:
 
-<code java>
+~~~ { .java }
 <T> void sort(List<T> ts, Comparator<? super T> comparator)
-</code>
+~~~
 
 What was missing was a clearer explanation of motivation for the set of type classes as provided by Scalaz. It got close to a really compelling example when Jason has shown how a `Seq[Promise[Int]]` can be turned into a `Promise[Seq[Int]]`, but I can't help but feel that this example could have been presented more effectively.
 
 Referential transparency, modularity and compositionality are very nice properties indeed, but the syntax used to achieve them in Scala is somewhat unpleasant. Let's see:
 
-<code scala>
+~~~ { .scala }
 trait Monoid[A] {
   def zero: A
   def append(a1: A, a2: A): A
@@ -44,11 +44,11 @@ implict def T2Monoid[A, B](implicit ma: Monoid[A], mb: Monoid[B]): Monoid[A, B)]
   def zero = (ma.zero, mb.zero) 
   def append(a1: (A, B), a2: (A, B)) = (ma.append(a1._1, a2._1), mb.append(a1._2, a2._2))
 }
-</code>
+~~~
 
 while the equivalent Haskell code would be:
 
-<code haskell>
+~~~ { .haskell }
 class Monoid a where
   zero :: a
   append :: a -> a -> a
@@ -56,7 +56,7 @@ class Monoid a where
 instance (Monoid a, Monoid b) => Monoid (a, b) where
   zero = (zero, zero)
   (a1, b1) `append` (a2, b2) = (a1 `append` a2, b1 `append` b2)
-</code>
+~~~
 
 Furthermore, while Scalaz provides the `IO` monad to separate the side-effecting code from pure one, it is only done by convention and not enforced by the compiler -- unlike in Haskell. On the other hand, Scala's implicits are slightly more expressive than Haskell's type classes, allowing for usage of the default instance but also providing a custom one when required. All in all, the talk was a good introduction to Scalaz for those familiar with Haskell; for the others, the opaque syntax and lack of clearly defined benefit might have been off-putting.
 
@@ -65,13 +65,13 @@ Furthermore, while Scalaz provides the `IO` monad to separate the side-effecting
 After handing over the day-to-day Scala IDE development to Scala Solutions/Typesafe team, **Miles Sabin** seems to be thriving in cutting-edge type system research. His [Scrap Your boilerplate with Scala talk](tech:functional_programming_exchange_2011#scrap_your_boilerplate_with_scala) on Functional Programming Exchange, while presenting a Scala encoding of a fascinating result, left part of the audience confused, due to large amount of material being presented in a very short time. This time round the ratio was much better and we had a chance to at least understand the problem in reasonable detail. 
 
 The problem is that while Scala makes it easy to define a polymorphic *method//:
-<code scala>
+~~~ { .scala }
 object Id {
   def id[A](a: A) = a
 }
-</code>
+~~~
 when converting this method to a function value (the distiction between a method and a function is one of Scala quirks) using the trailing underscore syntax we are forced to provide a concrete type (e.g. `val fid = id[Int] _`), otherwise we'll end up with a useless function with inferred type `Nothing => Nothing`. One way to work around that would be to make use of the way Scala represents functions and provide a custom function object with polymorphic `apply` method:
-<code scala>
+~~~ { .scala }
 trait PolyFn1[M[_]] { 
   def apply[T](t: T): M[T] 
 }
@@ -79,14 +79,14 @@ trait PolyFn1[M[_]] {
 val pf = new PolyFn1[List] { 
   def apply[T](t: T) = List(t) 
 }
-</code>
+~~~
 While the "function definition" is not particularly pleasing to the eye, we can still take advantage of the standard application syntax. We can write `pf(23)` and `pf("str")` and both will typecheck -- i.e. `pf` is a parametrically polymorphic function. 
 
 But this was not sufficient for Miles; what he wanted to achieve was ad-hoc polymorphism, like the one allowed by Haskell's type classes. The solution to this problem was the centrepiece of the talk, and, sadly, the part whose details I wasn't able to follow. It seemed to boil down to using a single typeclass `TransCase[F, A, B]` whose instances represented an arbitrary function `A => B` and were selected by providing a phantom type as the first type parameter. 
 
 Below is what I hope is a faithful reproduction of one of Miles's examples. In the definition of `inc`, the actual function to run is provided via a type parameter (`Inc`):
 
-<code scala>
+~~~ { .scala }
 object IncFn {
   import PolyFun._
 
@@ -103,7 +103,7 @@ object IncFn {
   inc(23)
   inc("foo")
 }
-</code>
+~~~
 
 Finally, this mechanism was used to define a function that lifted a function of arbitrary arity to `Option` monad. Miles is planning to write a blog post on this soon so watch [http://www.chuusai.com/blog/] if you are interested in a coherent explanation.
 

@@ -4,18 +4,18 @@
 
 Spring config can be extended with custom elements -- see [Appendix D](http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/extensible-xml.html) of the docs. Spring does not normally download XSDs from the web but looks for all `META-INF/spring.schemas` files on classpath and from them extracts mappings from URLs to classpath locations. E.g. if we use the following namespaces:
 
-<code xml>
+~~~ { .xml }
 <beans xmlns="http://www.springframework.org/schema/beans" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
        xmlns:crypto="http://www.hsbc.com/schema/esf-data-crypto-1.0.0"
        xsi:schemaLocation="http://www.springframework.org/schema/beans      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.hsbc.com/schema/esf-data-crypto-1.0.0 http://www.hsbc.com/schema/esf-data-crypto-1.0.0/data-crypto-config.xsd">
-</code>
+~~~
 
 And classpath contains `META-INF/spring.schemas` with the following:
 
-<code>
+~~~
 http\://www.hsbc.com/schema/esf-data-crypto-1.0.0/data-crypto-config.xsd=data-crypto-config.xsd
-</code>
+~~~
 
 Then spring will use `data-crypto-config.xsd` from classpath for the `xmlns:crypto` schema.

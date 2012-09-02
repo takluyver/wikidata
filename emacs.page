@@ -1,9 +1,9 @@
 Remove `^M`:
-<code>
+~~~
 M-%
 C-q C-m
 
 !
-</code>
+~~~
 
 [Emacs Cheat Sheet]()

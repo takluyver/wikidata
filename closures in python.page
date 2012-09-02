@@ -1,6 +1,6 @@
 In Python, closure is a tuple of cells. Each cell contains a value:
 
-<code>
+~~~
 >>> def wrap(x):
 ...     def f(y): return x+y
 ...     return f
@@ -11,6 +11,6 @@ In Python, closure is a tuple of cells. Each cell contains a value:
 >>> a.__closure__[0].cell_contents
 1
 >>>
-</code>
+~~~
 
 {{tag>it python}}

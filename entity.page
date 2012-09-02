@@ -2,7 +2,7 @@
 
 !ENTITY pozwala w XML zdefiniowac stala ktora pozniej moze byc wielokrotnie wykorzystywana w pliku. Np:
 
-<code xml>
+~~~ { .xml }
 <!DOCTYPE dtd_tim[
   <!ENTITY systestRoot "Y:\GLB\App\FISS\London\Release\Components\DEV\">
 ]>
@@ -14,4 +14,4 @@
     <value>&systestRoot;misc</value>
   </setting>
 </settings>
-</code>
+~~~

@@ -8,10 +8,10 @@ Also, the notes from Haskell Hoodlums session on [monads and monad transformers]
 
 Functor instance is a type constructor with one type parameter (i.e. of kind `* -> *`) that allows mapping over itself:
 
-<code haskell>
+~~~ { .haskell }
 class Functor f where  
     fmap :: (a -> b) -> f a -> f b 
-</code>
+~~~
 
 and obeys the following two laws:
 
@@ -24,11 +24,11 @@ and obeys the following two laws:
 
 Functors which allow applying functions to values, both of which are "wrapped" by the functor, using `<*>` function; like `fmap`, but operating on "functorised" functions istead of bare ones:
 
-<code haskell>
+~~~ { .haskell }
 class (Functor f) => Applicative f where  
     pure :: a -> f a  
     (<*>) :: f (a -> b) -> f a -> f b  
-</code>
+~~~
 
 The laws are:
 
@@ -39,10 +39,10 @@ The laws are:
 
 `<*>` can be chained when applying fuctions of multiple arguments, like this:
 
-<code>
+~~~
 ghci> pure (+) <*> Just 3 <*> Just 5  
 Just 8  
-</code>
+~~~
 
 Note that `pure f <*> x` can be written as `f <$> x` so the above can be rewritten as `(+) <$> 3 <*> 5`. [Applicative style](), in this context, means composing applicative functors using <$> followed by a series of <*>. The idea is that a single pure function is "applied" to effectful computations (represented as functors), yielding an effectful computation as a result. 
 
@@ -54,15 +54,15 @@ As an aside, there are many ways in which a given data type can be `Applicative`
 
 Monads are applicative functors which support the following additional operation (pronounced *bind//):
 
-<code haskell>
+~~~ { .haskell }
 (>>=) :: (Monad m) => m a -> (a -> m b) -> m b  
-</code>
+~~~
 
 Applicative functors allow taking a regular function and turning it into one which takes and returns "fancy" values (ones which are associated with a context). Monad, in addition, lets us take a function which takes a regulare value and returns a fancy one and apply it to a fancy value.
 
 Full type class:
 
-<code haskell>
+~~~ { .haskell }
 class Monad m where  
     return :: a -> m a  
   
@@ -73,7 +73,7 @@ class Monad m where
   
     fail :: String -> m a  
     fail msg = error msg  
-</code>
+~~~
 
 It does not extend `Applicative` for historical reasons -- there were no applicatives when monads were first introduced.
 
@@ -87,18 +87,18 @@ Laws:
 
 To make writing code involving nested binds easier, Haskell provides `do` notation:
 
-<code haskell>
+~~~ { .haskell }
 do x <- f1
    f2
    y <- f3
    f4 x y
-</code>
+~~~
 
 is equivalent to
 
-<code haskell>
+~~~ { .haskell }
 f1 >>= (\x ->
 f2 >>  (\_ ->
 f3 >>= (\y ->
 f4 x y)))
-</code>
+~~~

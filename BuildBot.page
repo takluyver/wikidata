@@ -33,7 +33,7 @@ TODO
 
 ### process monitoring
 
-<code bash>
+~~~ { .bash }
 #!/bin/bash
 
 # starts the buildbot master if it's not running already
@@ -49,15 +49,15 @@ then
     cd sandbox
     buildbot start master
 fi
-</code>
+~~~
 
 crontab -e
 
 add entry:
 
-<code>
+~~~
 *       *       *       *       *       /home/mmakowski/bin/buildbot-start-master-if-not-running &
-</code>
+~~~
 
 ## Setting up slave on Windows
 
@@ -68,9 +68,9 @@ easy_install zope.interface
 http://twistedmatrix.com/trac/wiki/Downloads
 unzip buildbot to temp dir and run setup.py install (easy_install didn't work)
 
-<code>
+~~~
 c:\Python27\Scripts\buildslave create-slave slave buildbot.bimbr.com:9989 windows-64bit-wx2.8 pass
-</code>
+~~~
 TODO
   - set up slave on the laptop and make the two work together
   - set up slave on EC2 and make it work with the master

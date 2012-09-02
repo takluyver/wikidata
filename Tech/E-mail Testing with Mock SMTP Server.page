@@ -68,6 +68,6 @@ class MockSMTPServer(smtpd.SMTPServer, threading.Thread):
     def received_messages_count(self):
         return len(self.received_messages)
 
-</code>
+~~~
 
 {{tag>it python smtp testing}}

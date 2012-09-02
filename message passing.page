@@ -4,9 +4,9 @@ Styl programowania polegający na implementacji polimorficznych typów danych pr
 
 W pseudo-lispie: 
 
-<code lisp>
+~~~ { .lisp }
 (define (op arg) (arg `op)) 
-</code>
+~~~
 
 `arg` to wartosc zaimplementowana w postaci procedury. `op` to operacja, ktora chcemy wykonac na tej wartosci. 
 

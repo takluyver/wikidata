@@ -67,7 +67,7 @@ This, as can be expected, will print "Hi!" followed by "Ho!", both repeated twen
  
 How does it work?
 
-<code scala>
+~~~ { .scala }
 sealed trait Trampoline
 
 def coroutine(body: => Unit @cps[Trampoline]): Unit =
@@ -76,7 +76,7 @@ def coroutine(body: => Unit @cps[Trampoline]): Unit =
 def yld: Unit @cps[Trampoline] = ... * invokes shift
 
 * there is also a Scheduler object which invokes thunks
-</code>
+~~~
 
 the type of `yld` guarantees it can only be called inside coroutine -- Unit with `@cps` annotation is not a subtype of Unit without the annotation.
 
@@ -86,7 +86,7 @@ Generators encapsulate production of a sequence of values lazily. They are the p
 
 Again, Miles wrote a Scala library providing generators:
 
-<code scala>
+~~~ { .scala }
 object TestGenerators {
   import Generators._
 
@@ -103,7 +103,7 @@ object TestGenerators {
     for (i <- fibs take 10) println(i)
   }
 }
-</code>
+~~~
 
 Some interesting points:
 
@@ -118,24 +118,24 @@ Scala delimited continuations have a number of serious limitations:
 
 First of all, CPS effect types are a mixed blessing: everything along the path from `shift` to `reset` has to be CPS-aware. We can't shift from within any Java code, or in general any library which is not CPS-aware. Consider this call stack:
 
-<code>
+~~~
 scala: reset
   java lib
      scala: shift
-</code>
+~~~
 
 The `shift` produces a CPS-annotated result, but it can't pass through the Java library layer.
 
 Second, related problem is that the effect types don't play nicely with some language constructs:
 
-<code scala>
+~~~ { .scala }
   coroutine {
     for (_ <- 1 until 10) {
       println("Hi!")
       yld * <-- causes error
     }
   }
-</code>
+~~~
 
 Scala `for` is desugared into method calls, but these are not CPS-aware!
 
@@ -147,16 +147,16 @@ The limitations of JDK with respect to interesting control flows are addressed b
 
 The structure of a coroutine is similar to what Miles coded up in his library:
 
-<code scala>
+~~~ { .scala }
 class MyCoroutine extends Coroutine {
   * some code 
   `yield`()
 }
-</code>
+~~~
 
 The advantage of JVM solution is that it lets us use coroutines which interact with Java libraries. An example provided by Miles was a SAX parser handler, where a coroutine allowed to deal with the inversion of control imposed by a push parser:
 
-<code scala>
+~~~ { .scala }
 parser.parse(
   new File("contentxml"),
   DefaultHandler() {
@@ -165,7 +165,7 @@ parser.parse(
     }
   }
 )
-</code>
+~~~
 
 As mentioned before, this can't be done with Scala continuations because `startElement` is not CPS-aware.
 
@@ -184,17 +184,17 @@ The presentation relied heavily on diagrams, so sadly these textual notes do not
 
 We use 4-way branching in each tree node for illustration (in practice it will be 32). The place for a value in the tree is found by looking at the hash code. The first four bits determine the branch we take in the root node, following two specify position on the second level, etc:
 
-<code>
+~~~
 000000: [x| | | ]
 010000: [ |x| | ]
 000100: [p| | | ]; p -> [x| | | ]
-</code>
+~~~
 
 This is fast, but we end up with trees that have too many gaps and waste memory. Phil then explained a possible strategy for compression of the tree, where I got lost (did I mention the pace of the talk?). The proposed solution suffered from linear cost for finding the item at the lowest level of the trie. Solution: provide a bitmap index showing which cells are real and then compress all levels:
 
-<code>
+~~~
 [48| |57| ]   ->   1010:[48| |57| ]   ->   10:[48|57]
-</code>
+~~~
 
 Some bit-twiddling was required to interpret the bitmap.
 
@@ -206,13 +206,13 @@ In practice, 32 fan out in every node turned out to be a good match for CPU cach
 
 How do we make our trie concurrent? For scalability in the presence of massive concurrency we want to avoid locks. *Compare-and-swap* instruction is a well-known alternative: `CAS(address, expected_value, new_value): bool` is na "optimistic lock", and is available on the JVM and natively in Intel processors. Sample usage:
 
-<code scala>
+~~~ { .scala }
 def counter() = 
   do {
     a = READ(addr)
     b = a + 1
   } while (!CAS(addr, a, b))
-</code>
+~~~
 
 This can also be implemented using a spinlock -- but then, it's blocking, which we don't want.
 
@@ -238,9 +238,9 @@ Phil presented a number of plots comparing CHT with alterantive hash map impleme
 
 Additional work allowed the tries to be snapshot, in constant time:
 
-<code scala>
+~~~ { .scala }
 val sn = cht.snap
-</code>
+~~~
 
 This allows the program to carry on modifying `cht` while `sn` continues to represent the state of the trie when the snapshot was taken. Its uses involve massively parallel computations, e.g. fluid flow analysers, monte carlo simulators and resource optimisers. 
 
@@ -261,7 +261,7 @@ also useful:
 
 He started off by multiplying the input value by a magic number: `101101 * 010011`, but soon noticed a problem: the bits on the right influenced the left, but not the other way round. If the right-hand side has little entropy, clusters of hash codes are formed. A solution was to reverse the result and multiply again:
 
-<code scala>
+~~~ { .scala }
 val magic = 0x9e3775cd
 
 def bhash(i: Int) = reverseBytes(i * magic) * magic
@@ -271,7 +271,7 @@ def reverseBytes = {
   val i = (x << 16) + (x >>> 16)
   ((i & K8) << 8) + ((i >>> 8) & K8)
 }
-</code>
+~~~
 
 How do we choose magic number? It:
  

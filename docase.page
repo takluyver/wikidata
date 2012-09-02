@@ -2,13 +2,13 @@
 
 Idea for syntax extension for [Haskell]() by Tomas Petricek: 
 
-<code haskell>
+~~~ { .haskell }
 multiply f1 f2 = 
   docase (f1, f2) of 
   (0, ?) -> return 0
   (?, 0) -> return 0
   (a, b) -> return a * b
-</code>
+~~~
 
 f1 and f2 are suspended conputations
 
@@ -28,12 +28,12 @@ Examples of monads supporting them:
 
 Another example of usage:
 
-<code haskell>
+~~~ { .haskell }
 valid = docase ( many (satisfies is Digit),
                  multiple 10 character,
                  startsWith (string "1223") )
         of (str, _, _) -> return str 
-</code>
+~~~
 
 ? -- parser doesn't have to succeed
 _ -- parser has to succeed but I don't care about the result

@@ -23,26 +23,26 @@ Get darcs from [http://wiki.darcs.net/Binaries] (`cabal install darcs` failed on
 
 ### Build
 
-<code>
+~~~
 cd wxdirect
 cabal install
-</code>
+~~~
 
 worked.
 
 add `c:\Users\mmakowski\AppData\Roaming\cabal\bin\` to PATH.
 
-<code>
+~~~
 cd ..\wxcore
 cabal install
-</code>
+~~~
 
 Failed with `Usage: wx-config [options]`. After hacking Setup.hs to remov unsupported `wx-config` flags and applying Dave Tapley's patch it built fine. Then:
 
-<code>
+~~~
 cd ..\wx
 cabal install
-</code>
+~~~
 
 An that succeeded as well.
 
@@ -70,7 +70,7 @@ type Colour a  = WxObject (CColour a)
 type TColour a  = TWxObject (CColour a)
 -- | Abstract type of the Colour class.
 data CColour a  = CColour
-</code>
+~~~
 
 <code haskell WxcClassesAL.hs>
 getColourFromUser :: Window  a -> Color ->  IO (Color)
@@ -80,7 +80,7 @@ getColourFromUser parent colInit
     withColourPtr colInit $ \cobj_colInit -> 
     wx_wxGetColourFromUser cobj_parent  cobj_colInit   pref
 foreign import ccall "wxGetColourFromUser" wx_wxGetColourFromUser :: Ptr (TWindow a) -> Ptr (TColour b) -> Ptr (TColour ()) -> IO ()
-</code>
+~~~
 
 
 <code haskell WxcTypes.hs>
@@ -102,11 +102,11 @@ withManagedColourResult io
        return color
 
 foreign import ccall "wxColour_IsOk"    colourIsOk   :: Ptr (TColour a) -> IO CInt
-</code>
+~~~
 
 <code c++ eljcolour.cpp>
 EWXWEXPORT(bool,wxColour_IsOk)(wxColour* self)
 {
 	return self->IsOk();
 }
-</code>
+~~~

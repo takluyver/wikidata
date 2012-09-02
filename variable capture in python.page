@@ -1,4 +1,4 @@
-<code>
+~~~
 Python 2.6.4 (r264:75708, Oct 26 2009, 08:23:19) [MSC v.1500 32 bit (Intel)] on win32
 Type "help", "copyright", "credits" or "license" for more information.
 >>> def f(a): return a * b
@@ -21,11 +21,11 @@ NameError: global name 'b' is not defined
 ...
 >>> g()
 6
-</code>
+~~~
 
 When looking for free variable values the function first looks in its [closure](Closures in Python) and then in definition site globals. `f` has an empty closure so uses globals; `i` has closure so uses `b` value bound by it:
 
-<code>
+~~~
 >>> f.func_closure
 >>> def h():
 ...     b = 4
@@ -39,7 +39,7 @@ When looking for free variable values the function first looks in its [closure](
 (<cell at 0x00C83B10: int object at 0x00ACE48C>,)
 8
 >>> 
-</code>
+~~~
 
 More here: http://docs.python.org/reference/datamodel.html#objects-values-and-types
 

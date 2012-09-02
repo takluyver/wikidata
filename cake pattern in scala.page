@@ -6,7 +6,7 @@ Steps:
   - Wrap each class (or group of related classes) in a `Component` trait. In it declare a `val` of the type of your class and make the self-type of the trait specify the dependencies on the other `Components`.
   - Assemble your components into the *world object//, defining the `vals` from all components in it.
 
-<code scala>
+~~~ { .scala }
 trait ModelComponent { 
   val model: FullModel
   class FullModel {
@@ -34,6 +34,6 @@ object World extends ModelComponent with ControllerComponent {
   val model = new FullModel
   val controller = new FullController
 }
-</code>
+~~~
 
 Jonas Boner wrote [a good explanation](http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html) and example of how it helps in unit testing.

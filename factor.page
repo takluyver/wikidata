@@ -4,23 +4,23 @@
 
 In scratchpad:
 
-<code>
+~~~
 USE: tools.scaffold
 "resource:work" "<vocabulary name>" scaffold-vocab
 USE: <vocabulary name>
-</code>
+~~~
 
 now open `c:/program files/factor/work/<vocabulary name>/<vocabulary name>.factor` in editor and write the code. It can be tested interactively in scratchpad.
 
 ## Creating unit tests
 
 In scratchpad:
-<code>
+~~~
 "<vocabulary name>" scaffold-tests
-</code>
+~~~
 
 now open `c:/program files/factor/work/<vocabulary name>/<vocabulary name>-tests.factor` in editor and add:
-<code>
+~~~
 [ <expected stack> ] [ <sequence to test> ] unit-test
-</code>
+~~~
 `C-c C-t` in `<vocabulary name>.factor` runs the tests

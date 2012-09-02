@@ -11,10 +11,10 @@ Tutorial on packaging an app: [http://en.wikibooks.org/wiki/Haskell/Packaging]
 `do` is used when the IO block consists of more than one expression
 
 These two have the same result:
-<code haskell>
+~~~ { .haskell }
 let x = pureValue 
 x <- return pureValue
-</code>
+~~~
 
 ## GUI
 

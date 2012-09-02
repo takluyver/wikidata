@@ -4,7 +4,7 @@
 
 == Selecting most recent entry for each user/IP from a log ==
 
-<code sql>
+~~~ { .sql }
 select ip_address, user_name, access_time as latest_access_time, action
 from
   (
@@ -17,4 +17,4 @@ from
     from core_access_log
   )
 where rank = 1;
-</code>
+~~~

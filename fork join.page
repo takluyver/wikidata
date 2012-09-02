@@ -2,7 +2,7 @@
 
 Technika projektowania algorytmow rownoleglych typu divide-and-conquer opartych na nastepujacej strukturze: 
 
-<code>
+~~~
 Result solve(Problem problem) { 
   if (problem is small) 
     directly solve problem 
@@ -13,7 +13,7 @@ Result solve(Problem problem) {
     compose result from subresults 
   } 
 } 
-</code>
+~~~
 
 [http://gee.cs.oswego.edu/dl/papers/fj.pdf]
 

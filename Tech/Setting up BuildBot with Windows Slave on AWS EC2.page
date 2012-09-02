@@ -32,7 +32,7 @@ Opening the BuildBot website to the outside world depends on how our server is s
 
 Finally, we might want to set up a cron job to automatically start the master should it die for any reason; here's the script I used:
 
-<code bash>
+~~~ { .bash }
 #!/bin/bash
 
 # starts the buildbot master if it's not running already
@@ -48,12 +48,12 @@ then
     cd sandbox
     buildbot start master
 fi
-</code>
+~~~
 
 Then `crontab -e` and add entry:
-<code>
+~~~
 0       *       *       *       *       /home/mmakowski/bin/buildbot-start-master-if-not-running &
-</code>
+~~~
 which will ensure that the script will run once every hour.
 
 ## The Slave
@@ -152,7 +152,7 @@ if __name__ == '__main__':
         start_buildslave()
     else:
         win32serviceutil.HandleCommandLine(BuildSlaveService)
-</code>
+~~~
 
 Put this somewhere on the server and run `buildbot_slave_service.py install`. Then go to Services application and change the startup to `run automatically (delayed start)`, as Administrator.
 
@@ -164,7 +164,7 @@ We'll need one additional Python library to enable BuildBot master to control EC
 
 It's now time to tell master to treat our slave as latent. The setup is described in the [BuildBot docs](http://buildbot.net/buildbot/docs/current/full.html#Amazon-Web-Services-Elastic-Compute-Cloud-_0028_0022AWS-EC2_0022_0029), and it boils down to updating `c['slaves']` like this:
 
-<code python>
+~~~ { .python }
 ####### BUILDSLAVES
 
 # The 'slaves' list defines the set of recognized buildslaves. Each element is
@@ -177,7 +177,7 @@ c['slaves'] = [EC2LatentBuildSlave('<slave name>', '<slave password>', 't1.micro
                                    ami='ami-12345678',
                                    identifier='<key identifier>',
                                    secret_identifier='<secret key>')]
-</code>
+~~~
 Where:
   * `<slave name>` and `<slave password>` are the same as the ones we used so far
   * `t1.micro` is the type of EC2 instance; change it to a bigger one if that's what you require for your build (check [the prices](http://aws.amazon.com/ec2/pricing/) before doing that though)

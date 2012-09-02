@@ -8,7 +8,7 @@ Suppose we are working on a stand-alone java app (let's call it *tc-rec//, after
 
 Most of this is fairly easy to automate. The approach I chose was to have a script which grabs the built zip, extracts it to a temporary directory, runs a series of test cases, each containing input and expected output, and verifies that the output produced matches expected output. These integration test scripts are set up as a separate project –- in this way it is not tied to a particular build of a tested app and we can just drop a zip file into the test directory and have it tested. The directory structure is as follows:
 
-<code>
+~~~
 /tc-rec
   /src
   /target         <-- the build puts tc-rec-x.y.z.zip in this directory
@@ -28,7 +28,7 @@ Most of this is fairly easy to automate. The approach I chose was to have a scri
     /test-suite-1 <-- each test case has its own work area
       /test-case-1
       ...
-</code>
+~~~
 
 I decided to script it up in Python because of prior familiarity and it already having been used in our environment, but anything that can be run from TeamCity (or just a command line, for that matter) would do.
 
@@ -74,7 +74,7 @@ FAILED_TEST_CASE_TEMPLATE = `'
     </failure>
   </testcase>
 `'
-</code>
+~~~
 
 With test report files in place TeamCity will display a nice summary and track performance of the tests over subsequent builds -- as it does with standard JUnit tests:
 
