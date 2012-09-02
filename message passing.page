@@ -8,6 +8,6 @@ W pseudo-lispie:
 (define (op arg) (arg `op)) 
 </code>
 
-''arg'' to wartosc zaimplementowana w postaci procedury. ''op'' to operacja, ktora chcemy wykonac na tej wartosci. 
+`arg` to wartosc zaimplementowana w postaci procedury. `op` to operacja, ktora chcemy wykonac na tej wartosci. 
 
 Można sobie to wyobrażać jako pewien model (albo nawet niskopoziomową implementację w języku, w którym procedury/funkcje są first class) programowania obiektowego.

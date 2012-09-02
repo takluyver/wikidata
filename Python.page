@@ -2,7 +2,7 @@
 
 ## Generators
 
-Function containing ''yield'' evaluates to an iterable object. The first call to ''next'' on this object will evaluate the function until the first occurrence of ''yield'', at which point it will provide the yielded value to the caller. Then each subsequent iteration (calling ''next'') on this object will continue evaluating the body until ''yield'' is encountered. If there are no more ''yields'', a ''StopIteration'' exception is raised.
+Function containing `yield` evaluates to an iterable object. The first call to `next` on this object will evaluate the function until the first occurrence of `yield`, at which point it will provide the yielded value to the caller. Then each subsequent iteration (calling `next`) on this object will continue evaluating the body until `yield` is encountered. If there are no more `yields`, a `StopIteration` exception is raised.
 
   * http://wiki.python.org/moin/Generators
   * http://stackoverflow.com/questions/231767/the-python-yield-keyword-explained

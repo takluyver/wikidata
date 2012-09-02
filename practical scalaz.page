@@ -51,11 +51,11 @@ Useful typeclasses:
 
 #### Monoid
 
-''|+|''
+`|+|`
 
 Why is it useful?
-  * normalises the operation (always can use ''|+|'')
-  * we can construct monoids for things which "contain" monoids (e.g. ''Option'', tuple etc.)
+  * normalises the operation (always can use `|+|`)
+  * we can construct monoids for things which "contain" monoids (e.g. `Option`, tuple etc.)
 <code>
 (1, "a", 4.5) |+| (3, "b", 1.1)
 > (4, "ab", 5.6)
@@ -103,7 +103,7 @@ The zero part of monoid.
 ### Wrappers
 
 cosistently named operations:
-''Option[A] | A'' == get/or/else
+`Option[A] | A` == get/or/else
 etc.
 
 ### Endo
@@ -134,7 +134,7 @@ for {
 yield  f
 </code>
 
-''!?'' -- returns natural zero if false
+`!?` -- returns natural zero if false
 
 <code scala>
 EndoTo(-(+ : Double))
@@ -145,7 +145,7 @@ true ?? res0 apply 2.3
 
 ## Killer app: Validation
 
-a version of ''Either''. But better, because if you have a method calling a method you don't end up with ''Either[Either[...]]'', it is flattened.
+a version of `Either`. But better, because if you have a method calling a method you don't end up with `Either[Either[...]]`, it is flattened.
 
 <code scala>
 ValidationNEL[F, S] = Validation[NonEmptyList[F], S]
@@ -163,7 +163,7 @@ for {
 } yield ts
 </code>
 
-''sequence'' (in applicative) -- swaps the types: ''Validation[..., List[...]] <-> List[Validation[..., ...]]''
+`sequence` (in applicative) -- swaps the types: `Validation[..., List[...]] <-> List[Validation[..., ...]]`
 
 uses type lambda to encode partially applied types, horrible syntax (but might improve)
 

@@ -6,7 +6,7 @@ Also, the notes from Haskell Hoodlums session on [monads and monad transformers]
 
 ## Functors
 
-Functor instance is a type constructor with one type parameter (i.e. of kind ''* -> *'') that allows mapping over itself:
+Functor instance is a type constructor with one type parameter (i.e. of kind `* -> *`) that allows mapping over itself:
 
 <code haskell>
 class Functor f where  
@@ -15,14 +15,14 @@ class Functor f where
 
 and obeys the following two laws:
 
-  - **identity<sub>F</sub>**: ''fmap id == id'' (or: ''fmap id F == F'')
-  - **composition<sub>F</sub>**: ''fmap (f . g) == fmap f . fmap g''
+  - **identity<sub>F</sub>**: `fmap id == id` (or: `fmap id F == F`)
+  - **composition<sub>F</sub>**: `fmap (f . g) == fmap f . fmap g`
 
-''fmap'' works not only on //containers// (i.e. data structures) but also on //computations// (IO, (a ->)). When we write ''fmap f'' (where ''f :: a -> b'' we **lift** ''f'' to work with values of any functor ''F'' (''F a'' and ''F b'') instead of plain ''a'' and ''b''.
+`fmap` works not only on *containers* (i.e. data structures) but also on *computations* (IO, (a ->)). When we write `fmap f` (where `f :: a -> b` we **lift** `f` to work with values of any functor `F` (`F a` and `F b`) instead of plain `a` and `b`.
 
 ## Applicative Functors
 
-Functors which allow applying functions to values, both of which are "wrapped" by the functor, using ''<*>'' function; like ''fmap'', but operating on "functorised" functions istead of bare ones:
+Functors which allow applying functions to values, both of which are "wrapped" by the functor, using `<*>` function; like `fmap`, but operating on "functorised" functions istead of bare ones:
 
 <code haskell>
 class (Functor f) => Applicative f where  
@@ -32,27 +32,27 @@ class (Functor f) => Applicative f where
 
 The laws are:
 
-  - **identity<sub>A</sub>**: ''pure id <*> v == v''
-  - **composition<sub>A</sub>**: ''pure (.) <*> u <*> v <*> w == u <*> (v <*> w)''
-  - **homomorphism<sub>A</sub>**: ''pure f <*> pure x == pure (f x)''
-  - **interchange<sub>A</sub>**: ''u * pure x == pure ($ x) <*> u''
+  - **identity<sub>A</sub>**: `pure id <*> v == v`
+  - **composition<sub>A</sub>**: `pure (.) <*> u <*> v <*> w == u <*> (v <*> w)`
+  - **homomorphism<sub>A</sub>**: `pure f <*> pure x == pure (f x)`
+  - **interchange<sub>A</sub>**: `u * pure x == pure ($ x) <*> u`
 
-''<*>'' can be chained when applying fuctions of multiple arguments, like this:
+`<*>` can be chained when applying fuctions of multiple arguments, like this:
 
 <code>
 ghci> pure (+) <*> Just 3 <*> Just 5  
 Just 8  
 </code>
 
-Note that ''pure f <*> x'' can be written as ''f <$> x'' so the above can be rewritten as ''(+) <$> 3 <*> 5''. [Applicative style](), in this context, means composing applicative functors using <$> followed by a series of <*>. The idea is that a single pure function is "applied" to effectful computations (represented as functors), yielding an effectful computation as a result. 
+Note that `pure f <*> x` can be written as `f <$> x` so the above can be rewritten as `(+) <$> 3 <*> 5`. [Applicative style](), in this context, means composing applicative functors using <$> followed by a series of <*>. The idea is that a single pure function is "applied" to effectful computations (represented as functors), yielding an effectful computation as a result. 
 
 The motivation for introducing this abstraction is decribed in the [original paper](http://www.soi.city.ac.uk/~ross/papers/Applicative.html); apparently it encapsulates a common pattern in functional programming. The trouble is the applicative style is not intuitive for me, hence my difficulties with comprehending the usefulness of the concept.
 
-As an aside, there are many ways in which a given data type can be ''Applicative''; for instance the default instance of ''Applicative'' for lists has ''<*>'' which produces all combinations of functions in the left list with arguments in the right one, but there is also a ''ZipList'' (in ''Control.Applicative'') which zips functions with arguments.
+As an aside, there are many ways in which a given data type can be `Applicative`; for instance the default instance of `Applicative` for lists has `<*>` which produces all combinations of functions in the left list with arguments in the right one, but there is also a `ZipList` (in `Control.Applicative`) which zips functions with arguments.
 
 ## Monads
 
-Monads are applicative functors which support the following additional operation (pronounced //bind//):
+Monads are applicative functors which support the following additional operation (pronounced *bind//):
 
 <code haskell>
 (>>=) :: (Monad m) => m a -> (a -> m b) -> m b  
@@ -75,17 +75,17 @@ class Monad m where
     fail msg = error msg  
 </code>
 
-It does not extend ''Applicative'' for historical reasons -- there were no applicatives when monads were first introduced.
+It does not extend `Applicative` for historical reasons -- there were no applicatives when monads were first introduced.
 
 Laws:
 
-  - **left identity**: ''return x >>= f == f x''
-  - **right identity**: ''m >>= return == m''
-  - **associativity**: ''m >>= f >>= g == m >>= (\x -> f x >>= g)''
+  - **left identity**: `return x >>= f == f x`
+  - **right identity**: `m >>= return == m`
+  - **associativity**: `m >>= f >>= g == m >>= (\x -> f x >>= g)`
 
 ### do notation
 
-To make writing code involving nested binds easier, Haskell provides ''do'' notation:
+To make writing code involving nested binds easier, Haskell provides `do` notation:
 
 <code haskell>
 do x <- f1

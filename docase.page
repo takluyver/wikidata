@@ -14,17 +14,17 @@ f1 and f2 are suspended conputations
 
 uses three additional monad operations:
 
-Parallel composition: ''m a -> m b -> m (a, b)'' (can be implemented with bind and return, but in certain interesting cases we want it customised)
+Parallel composition: `m a -> m b -> m (a, b)` (can be implemented with bind and return, but in certain interesting cases we want it customised)
 
-Monadic choice: ''m a -> m a -> m a (non-deterministic for Par)''
+Monadic choice: `m a -> m a -> m a (non-deterministic for Par)`
 
-Aliasing of computations: ''m a -> m (m a)''
+Aliasing of computations: `m a -> m (m a)`
 
 Examples of monads supporting them:
 
-  * ''Par''
-  * ''Parser''
-  * ''Orc'', ''Chp'' (reactive and concurrent libs)
+  * `Par`
+  * `Parser`
+  * `Orc`, `Chp` (reactive and concurrent libs)
 
 Another example of usage:
 

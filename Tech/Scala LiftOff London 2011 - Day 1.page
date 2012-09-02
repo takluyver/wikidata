@@ -22,16 +22,16 @@ The continuations can be classified along two axes:
   * **full/delimited**: full captures the program until the very end, delimited only captures portion
   * **direct implementation/CPS transform**: direct uses stack manipulation (copying, ["spaghetti stack"](http://en.wikipedia.org/wiki/Spaghetti_stack)), CPS transformation modifies the functions to accept a continuation parameter
 
-Full continuation support is common (''call/cc'' in Lisp, ''setjmp/longjmp'' in C, also Smalltalk, ML); until recently not possible on JVM because we have not had access to the runtime. Continuations are primarily used for defining higher-level control constructs like concurrency constructs and exception handling. They offer a lot more in typed setting, but Miles didn't go into the details this time round.
+Full continuation support is common (`call/cc` in Lisp, `setjmp/longjmp` in C, also Smalltalk, ML); until recently not possible on JVM because we have not had access to the runtime. Continuations are primarily used for defining higher-level control constructs like concurrency constructs and exception handling. They offer a lot more in typed setting, but Miles didn't go into the details this time round.
 
 ### Continuations in Scala
 
-''shift''/''reset'' -- delimited continuation via localised CPS transformation; the transformation allowed it to run efficiently on a standard JVM (no longer that relevant, with JVM coroutines effort, on which later)
+`shift`/`reset` -- delimited continuation via localised CPS transformation; the transformation allowed it to run efficiently on a standard JVM (no longer that relevant, with JVM coroutines effort, on which later)
 
-  * ''reset { ... }'' delimits the continuation
-  * ''shift { (cont: ...) => ... }'' captures the continuation up to the enclosing reset
+  * `reset { ... }` delimits the continuation
+  * `shift { (cont: ...) => ... }` captures the continuation up to the enclosing reset
 
-''shift'' must be enclosed within a corresponding ''reset'' -- this is enforced by the compiler using effect system encoded in types. The entire functionality is provided by a compiler plugin which has to be explicitly enabled: ''scala -P:continuations:enable''.
+`shift` must be enclosed within a corresponding `reset` -- this is enforced by the compiler using effect system encoded in types. The entire functionality is provided by a compiler plugin which has to be explicitly enabled: `scala -P:continuations:enable`.
 
 ### Coroutines
 
@@ -73,12 +73,12 @@ sealed trait Trampoline
 def coroutine(body: => Unit @cps[Trampoline]): Unit =
   Scheduler.addThunk((Unit) => reset { body ; Done })
 
-def yld: Unit @cps[Trampoline] = ... // invokes shift
+def yld: Unit @cps[Trampoline] = ... * invokes shift
 
-// there is also a Scheduler object which invokes thunks
+* there is also a Scheduler object which invokes thunks
 </code>
 
-the type of ''yld'' guarantees it can only be called inside coroutine -- Unit with ''@cps'' annotation is not a subtype of Unit without the annotation.
+the type of `yld` guarantees it can only be called inside coroutine -- Unit with `@cps` annotation is not a subtype of Unit without the annotation.
 
 ### Generators
 
@@ -107,8 +107,8 @@ object TestGenerators {
 
 Some interesting points:
 
-  * ''fib(0, 1)'' looks like a non-terminating call -- except for the ''yld'' call
-  * ''@Gen'' is a CPS annotation -- again, protects us from using ''yld'' outside of a generator
+  * `fib(0, 1)` looks like a non-terminating call -- except for the `yld` call
+  * `@Gen` is a CPS annotation -- again, protects us from using `yld` outside of a generator
 
 The implementation is very similar to coroutines. Generators completely hide the continuations; a library can expose a generator and its user doesn't need to know anything about the CPS transformation.
 
@@ -116,7 +116,7 @@ The implementation is very similar to coroutines. Generators completely hide the
 
 Scala delimited continuations have a number of serious limitations:
 
-First of all, CPS effect types are a mixed blessing: everything along the path from ''shift'' to ''reset'' has to be CPS-aware. We can't shift from within any Java code, or in general any library which is not CPS-aware. Consider this call stack:
+First of all, CPS effect types are a mixed blessing: everything along the path from `shift` to `reset` has to be CPS-aware. We can't shift from within any Java code, or in general any library which is not CPS-aware. Consider this call stack:
 
 <code>
 scala: reset
@@ -124,7 +124,7 @@ scala: reset
      scala: shift
 </code>
 
-The ''shift'' produces a CPS-annotated result, but it can't pass through the Java library layer.
+The `shift` produces a CPS-annotated result, but it can't pass through the Java library layer.
 
 Second, related problem is that the effect types don't play nicely with some language constructs:
 
@@ -132,14 +132,14 @@ Second, related problem is that the effect types don't play nicely with some lan
   coroutine {
     for (_ <- 1 until 10) {
       println("Hi!")
-      yld // <-- causes error
+      yld * <-- causes error
     }
   }
 </code>
 
-Scala ''for'' is desugared into method calls, but these are not CPS-aware!
+Scala `for` is desugared into method calls, but these are not CPS-aware!
 
-Finally, the behaviour of transformed code can be hard to reason about: e.g. our ''fib'' looks like we should be able to annotate it with ''@tailrec'', but in fact the compiler will complain, because it doesn't look to it like it is tail-recursive after the CPS transformation is performed! This is puzzling, given the fact that by definition CPS code is tail-recursive, but shows that even the compiler can get confused by the transformation.
+Finally, the behaviour of transformed code can be hard to reason about: e.g. our `fib` looks like we should be able to annotate it with `@tailrec`, but in fact the compiler will complain, because it doesn't look to it like it is tail-recursive after the CPS transformation is performed! This is puzzling, given the fact that by definition CPS code is tail-recursive, but shows that even the compiler can get confused by the transformation.
 
 ### JVM Coroutines
 
@@ -149,7 +149,7 @@ The structure of a coroutine is similar to what Miles coded up in his library:
 
 <code scala>
 class MyCoroutine extends Coroutine {
-  // some code 
+  * some code 
   `yield`()
 }
 </code>
@@ -167,7 +167,7 @@ parser.parse(
 )
 </code>
 
-As mentioned before, this can't be done with Scala continuations because ''startElement'' is not CPS-aware.
+As mentioned before, this can't be done with Scala continuations because `startElement` is not CPS-aware.
 
 ## Phil Bagwell: Lock-Free Resizable Concurrent Tries
 
@@ -204,7 +204,7 @@ In practice, 32 fan out in every node turned out to be a good match for CPU cach
 
 #### Making it Concurrent
 
-How do we make our trie concurrent? For scalability in the presence of massive concurrency we want to avoid locks. //Compare-and-swap// instruction is a well-known alternative: ''CAS(address, expected_value, new_value): bool'' is na "optimistic lock", and is available on the JVM and natively in Intel processors. Sample usage:
+How do we make our trie concurrent? For scalability in the presence of massive concurrency we want to avoid locks. *Compare-and-swap* instruction is a well-known alternative: `CAS(address, expected_value, new_value): bool` is na "optimistic lock", and is available on the JVM and natively in Intel processors. Sample usage:
 
 <code scala>
 def counter() = 
@@ -242,7 +242,7 @@ Additional work allowed the tries to be snapshot, in constant time:
 val sn = cht.snap
 </code>
 
-This allows the program to carry on modifying ''cht'' while ''sn'' continues to represent the state of the trie when the snapshot was taken. Its uses involve massively parallel computations, e.g. fluid flow analysers, monte carlo simulators and resource optimisers. 
+This allows the program to carry on modifying `cht` while `sn` continues to represent the state of the trie when the snapshot was taken. Its uses involve massively parallel computations, e.g. fluid flow analysers, monte carlo simulators and resource optimisers. 
 
 ### Fast Hash Functions
 
@@ -259,14 +259,14 @@ also useful:
   * Chi²
   * be reversible
 
-He started off by multiplying the input value by a magic number: ''101101 * 010011'', but soon noticed a problem: the bits on the right influenced the left, but not the other way round. If the right-hand side has little entropy, clusters of hash codes are formed. A solution was to reverse the result and multiply again:
+He started off by multiplying the input value by a magic number: `101101 * 010011`, but soon noticed a problem: the bits on the right influenced the left, but not the other way round. If the right-hand side has little entropy, clusters of hash codes are formed. A solution was to reverse the result and multiply again:
 
 <code scala>
 val magic = 0x9e3775cd
 
 def bhash(i: Int) = reverseBytes(i * magic) * magic
 
-// slow version; Integer.reverseBytes does this in one x86 instruction!
+* slow version; Integer.reverseBytes does this in one x86 instruction!
 def reverseBytes = {
   val i = (x << 16) + (x >>> 16)
   ((i & K8) << 8) + ((i >>> 8) & K8)

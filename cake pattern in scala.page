@@ -3,31 +3,31 @@
 Steps:
 
   - Write your classes
-  - Wrap each class (or group of related classes) in a ''Component'' trait. In it declare a ''val'' of the type of your class and make the self-type of the trait specify the dependencies on the other ''Components''.
-  - Assemble your components into the //world object//, defining the ''vals'' from all components in it.
+  - Wrap each class (or group of related classes) in a `Component` trait. In it declare a `val` of the type of your class and make the self-type of the trait specify the dependencies on the other `Components`.
+  - Assemble your components into the *world object//, defining the `vals` from all components in it.
 
 <code scala>
 trait ModelComponent { 
   val model: FullModel
   class FullModel {
-    // ...
+    * ...
   }
   class ModelPart1 {
-    // ...
+    * ...
   }
-  // ...
+  * ...
 }
 
 trait ControllerComponent {
   this: ModelComponent =>
   val controller: FullController
   class FullController {
-    // ...
+    * ...
   }
   class ControllerPart1 {
-    // ...
+    * ...
   }
-  // ...
+  * ...
 }
 
 object World extends ModelComponent with ControllerComponent {

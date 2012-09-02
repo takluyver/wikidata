@@ -2,7 +2,7 @@
 
 //2011-18-16, Miles Sabin//
 
-union type: ''T v U'' -- all values in ''T'' and ''U'' are in it
+union type: `T v U` -- all values in `T` and `U` are in it
 
 sample usage:
 
@@ -29,7 +29,7 @@ def size(x: Either[Int, String]) = x match {
 |A <: (A v B) |A => A v B |
 |B <: (A v B) |B => A v B |
 
-(''with'': type intersection)
+(`with`: type intersection)
 
 so:
 
@@ -159,4 +159,4 @@ TODO: check what happens if we have two args of type T.
 Why is it worth doing?
 
   * to prove that first-class union types are possible
-  * so that ''with'' is not a special case and correspondence to propositional logic is apparent
+  * so that `with` is not a special case and correspondence to propositional logic is apparent

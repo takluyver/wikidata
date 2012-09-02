@@ -9,6 +9,6 @@ let x = infinite_loop ()
     y = other_call () 
 in 0 
 </code>
-W trybie non-strict ta funkcja zakonczy sie i da 0 -- choc nie ma gwarancji, czy np. ''other_call ()'' sie nie wykona. 
+W trybie non-strict ta funkcja zakonczy sie i da 0 -- choc nie ma gwarancji, czy np. `other_call ()` sie nie wykona. 
 
 [Haskell]() jest jezykiem non-strict.

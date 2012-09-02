@@ -237,9 +237,9 @@ async { fib(N, res) }
 phasers:
 scenario: e.g. Conway -- where we need to ensure that all updates are done synchronously (barrier)
 asyncPhased {
-	// phase 1
+	* phase 1
 	next
-	// phase 2
+	* phase 2
 	next
 }
 -- guarantees deadlock freedom
@@ -337,10 +337,10 @@ Tree[+A] = Free[List, A]
 
 - macros (enabled by reflection)
 
-  // macro definition
+  * macro definition
   def m(x: T): R = macro impl.mi
 
-  // macro implementation
+  * macro implementation
   objecdt impl {
     def mi(x: Expr[T]): Expr[T] = ....
   }
@@ -379,8 +379,8 @@ now we can be sure that the right "raise" is being called
 
 some more new stuff:
 - string interpolation: 
-  def greeting(who: String) = s"hello, $who!" // simple interpolation
-  f"minimum rate ${computeRate(x, y)}%2.1f applies" // formatting
+  def greeting(who: String) = s"hello, $who!" * simple interpolation
+  f"minimum rate ${computeRate(x, y)}%2.1f applies" * formatting
   easy to add new interpolation methods (e.g. xml, json, scala)
 
 - implicit classes
@@ -429,7 +429,7 @@ non-braking changes:
 - adding subclasses
 
 classes/objects breaking changes:
-- adding lazy vals // initialisation bitmaps are confused
+- adding lazy vals * initialisation bitmaps are confused
 
 lazy val x = 1
 

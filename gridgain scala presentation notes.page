@@ -34,7 +34,7 @@ configure the run config in IDE to run a node
     def main(args: Array[String]) = scalar("exampes/config/spring-cache.xml") {
       println("local println")
     }
-    // everything within the brackets runs within a GG node
+    * everything within the brackets runs within a GG node
   }
 </code>
 
@@ -44,11 +44,11 @@ e.g.
 
 <code scala>
 grid !!! (() => println("Broadcasting!")) 
-// broadcast the function to all nodes and run it
-// other name for it !!! is bcastRun
+* broadcast the function to all nodes and run it
+* other name for it !!! is bcastRun
 
 grid remoteProjection bcastRun (<closure>)
-// broadcasts and runs to every node except itself
+* broadcasts and runs to every node except itself
 </code>
 
 every closure creates a GG task wrapping it. Every task class is versioned. So when it gets recompiled remote nodes know that it needs to be reloaded.
@@ -57,15 +57,15 @@ every closure creates a GG task wrapping it. Every task class is versioned. So w
 def mapReduce(s: String) = grid spreadRun (for (w <- s split(" ")) yield () => println w)
 mapReduce("hello london scala user group")
 
-// spreadRun takes the closures from given sequence and spreads them between the nodes in the grid
-// GG M/R is different from Hadoop/google, which is tailored for large datasets; this is tailored for near realtime processing.
-// that was a trivial M/R, without the reduce step
+* spreadRun takes the closures from given sequence and spreads them between the nodes in the grid
+* GG M/R is different from Hadoop/google, which is tailored for large datasets; this is tailored for near realtime processing.
+* that was a trivial M/R, without the reduce step
 
 def mapReduceCount(s: String) = grid spreadReduce (
     for (w <- s split(" ")) yield () => w.length,
     (seq: Seq[Int]) => seq.sum
 )
-// returns the total number of characters in all words in s
+* returns the total number of characters in all words in s
 </code>
 
 available projections:
@@ -112,6 +112,6 @@ def pingpong =
     latch await
   }
 
-// we can write different programmes for different nodes in a single class
-// the application will spread like a virus
+* we can write different programmes for different nodes in a single class
+* the application will spread like a virus
 </code>

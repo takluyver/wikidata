@@ -4,22 +4,22 @@
 
 [The official guide](http://haskell.org/haskellwiki/WxHaskell/Building)
 
-   - install [wxPack 2.8](http://wxpack.sourceforge.net/Main/Downloads) (MinGW GCC libs only) to  ''c:\wxWidgets'' (tried ''c:\Program Files (x86)\wxWidgets'' but some tools have trouble with spaces in paths)
-   - set ''WXWIN'' env variable to ''c:\wxWidgets'' and ''WXCFG'' to ''gcc_dll\mswu''
-   - get [wx-config](http://sites.google.com/site/wxconfig/) and put in ''c:\wxWidgets\bin''; add this directory to ''PATH''
-   - ''cabal install wx''
-   - add ''c:\wxWidgets\lib\gcc_dll'' and ''c:\Program Files (x86)\Haskell Platform\2011.2.0.0\mingw\bin'' (or another directory containing ''mingwm10.dll'') to ''PATH'' -- required to run .exes built with wx
-   - add ''c:\program files (x86)\MinGW\bin'' (or other directory containing ''libgcc_s_dw2-1.dll'') to ''PATH'' -- required to run .exes built with wx (?)
+   - install [wxPack 2.8](http://wxpack.sourceforge.net/Main/Downloads) (MinGW GCC libs only) to  `c:\wxWidgets` (tried `c:\Program Files (x86)\wxWidgets` but some tools have trouble with spaces in paths)
+   - set `WXWIN` env variable to `c:\wxWidgets` and `WXCFG` to `gcc_dll\mswu`
+   - get [wx-config](http://sites.google.com/site/wxconfig/) and put in `c:\wxWidgets\bin`; add this directory to `PATH`
+   - `cabal install wx`
+   - add `c:\wxWidgets\lib\gcc_dll` and `c:\Program Files (x86)\Haskell Platform\2011.2.0.0\mingw\bin` (or another directory containing `mingwm10.dll`) to `PATH` -- required to run .exes built with wx
+   - add `c:\program files (x86)\MinGW\bin` (or other directory containing `libgcc_s_dw2-1.dll`) to `PATH` -- required to run .exes built with wx (?)
 
 ## Development
 
 ### Install darcs
 
-Get darcs from [http://wiki.darcs.net/Binaries] (''cabal install darcs'' failed on HP 2011.2.0.1 due to missing curl lib).
+Get darcs from [http://wiki.darcs.net/Binaries] (`cabal install darcs` failed on HP 2011.2.0.1 due to missing curl lib).
 
 ### Get the source
 
-''darcs get http://code.haskell.org/wxhaskell'' will create ''wxhaskell'' directory with source code.
+`darcs get http://code.haskell.org/wxhaskell` will create `wxhaskell` directory with source code.
 
 ### Build
 
@@ -30,14 +30,14 @@ cabal install
 
 worked.
 
-add ''c:\Users\mmakowski\AppData\Roaming\cabal\bin\'' to PATH.
+add `c:\Users\mmakowski\AppData\Roaming\cabal\bin\` to PATH.
 
 <code>
 cd ..\wxcore
 cabal install
 </code>
 
-Failed with ''Usage: wx-config [options]''. After hacking Setup.hs to remov unsupported ''wx-config'' flags and applying Dave Tapley's patch it built fine. Then:
+Failed with `Usage: wx-config [options]`. After hacking Setup.hs to remov unsupported `wx-config` flags and applying Dave Tapley's patch it built fine. Then:
 
 <code>
 cd ..\wx
@@ -52,9 +52,9 @@ for now these are random notes as I'm trying to understand the way C library is 
 
 #### Example: Colour
 
-Everything is in ''wxcore''
+Everything is in `wxcore`
 
-''WxcClassTypes.hs'' is automatically generated from ''src/include/wxc.h''.
+`WxcClassTypes.hs` is automatically generated from `src/include/wxc.h`.
 
 <code haskell WxcClassTypes.hs> 
 -- | Pointer to an object of type 'WxObject'.

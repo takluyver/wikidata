@@ -1,6 +1,6 @@
 
 
-Mechanizm nielokalnego powrotu w C, pozwala na symulowanie wyjatkow. ''setjmp'' przy wywolaniu zapamietuje glebokosc stosu i zwraca 0. ''longjmp'' przy wywolaniu nigdy nie powraca -- odtwarza zapamietana przez ''setjmp'' glebokosc stosu i kontynuuje wykonanie programu od miejsca wywolania ''setjmp'', zwracajac z ''setjmp'' wartosc rozna od 0 (w ten sposob mozna rozpoznac czy ''setjmp'' wykonalo sie na skutek normalnego przebiegu programu, czy poprzez powrot z ''longjmp''. ''longjmp'' wolno wywolywac tylko zanim funkcja, w ktorej wywolano ''setjmp'' zakonczy sie (i zarazem zwiniety zostanie jej stos). 
+Mechanizm nielokalnego powrotu w C, pozwala na symulowanie wyjatkow. `setjmp` przy wywolaniu zapamietuje glebokosc stosu i zwraca 0. `longjmp` przy wywolaniu nigdy nie powraca -- odtwarza zapamietana przez `setjmp` glebokosc stosu i kontynuuje wykonanie programu od miejsca wywolania `setjmp`, zwracajac z `setjmp` wartosc rozna od 0 (w ten sposob mozna rozpoznac czy `setjmp` wykonalo sie na skutek normalnego przebiegu programu, czy poprzez powrot z `longjmp`. `longjmp` wolno wywolywac tylko zanim funkcja, w ktorej wywolano `setjmp` zakonczy sie (i zarazem zwiniety zostanie jej stos). 
 
 Trochę podobne do scheme'owego [call/cc]().
 

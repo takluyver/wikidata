@@ -8,7 +8,7 @@ Tutorial on packaging an app: [http://en.wikibooks.org/wiki/Haskell/Packaging]
 
   * a good explanation is on [Learn You a Haskell](http://learnyouahaskell.com/input-and-output)
 
-''do'' is used when the IO block consists of more than one expression
+`do` is used when the IO block consists of more than one expression
 
 These two have the same result:
 <code haskell>
@@ -32,4 +32,4 @@ x <- return pureValue
 
 ## Trivia
 
-  * ''newtype'' keyword is for defining thin wrappers for existing types (one value constructor, one field). It can be used to allow the wrapped type to have multiple instances of the same type class; see ''ZipList''. It's more efficient than ''data''.
+  * `newtype` keyword is for defining thin wrappers for existing types (one value constructor, one field). It can be used to allow the wrapped type to have multiple instances of the same type class; see `ZipList`. It's more efficient than `data`.

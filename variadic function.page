@@ -1,4 +1,4 @@
 
-Funkcja o zmiennej liczbie argumentow (np. ''printf()'' w C). 
+Funkcja o zmiennej liczbie argumentow (np. `printf()` w C). 
 
 W [C++0x]() maja wprowadzic variadic templates, ktore pozwola np. zdefiniowac klasy krotek.

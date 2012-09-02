@@ -1,4 +1,4 @@
-Remove ''^M'':
+Remove `^M`:
 <code>
 M-%
 C-q C-m

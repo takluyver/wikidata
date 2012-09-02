@@ -4,7 +4,7 @@ A nice series of blog posts by Greg Meredith: http://biosimilarity.blogspot.com/
 
 Some concepts discussed:
 
-  * ''List[G]'' is a canonical syntactic representation (model) of monoid algebra
-  * ''Set[G]'' is a ''List[G]'' with additional restrictions given by equations
-  * A hierarchy of (progressive less) abstract concepts, each modelled by the next e.g.: Boolean logic <-modelled by-- Boolean algebra <-modelled by-- ''Set[G]'' <-modelled by-- ''List[G]''. Also applies to other logics.
+  * `List[G]` is a canonical syntactic representation (model) of monoid algebra
+  * `Set[G]` is a `List[G]` with additional restrictions given by equations
+  * A hierarchy of (progressive less) abstract concepts, each modelled by the next e.g.: Boolean logic <-modelled by-- Boolean algebra <-modelled by-- `Set[G]` <-modelled by-- `List[G]`. Also applies to other logics.
   * LBNF grammars as definitions of types (Haskell data type definition very much resembles a grammar)

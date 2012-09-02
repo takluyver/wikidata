@@ -16,48 +16,48 @@ Use tail calls.
 
 #### Basics
 
-**Why do you need to override ''hashCode()'' when you override ''equals()''?**
+**Why do you need to override `hashCode()` when you override `equals()`?**
 
-Collection classes assume this relationship. If we had two objects for which ''equals()'' is true but ''hashCodes'' differ and one of them was stored in a BST arranged according to hash codes, a lookup using the other one could return no results even though the contract for lookup is that it succeeds if the collection contains object equal wrt. ''equals()''.
+Collection classes assume this relationship. If we had two objects for which `equals()` is true but `hashCodes` differ and one of them was stored in a BST arranged according to hash codes, a lookup using the other one could return no results even though the contract for lookup is that it succeeds if the collection contains object equal wrt. `equals()`.
 
-**What is the difference between ''HashMap'' and ''Hashtable''?**
+**What is the difference between `HashMap` and `Hashtable`?**
 
-''HashMap'' is new-style -- not synchronised and permits null keys.
+`HashMap` is new-style -- not synchronised and permits null keys.
 
 **What are the implementations of standard collection interfaces?**
 
-  * ''Set'': ''HashSet'', ''TreeSet'', ''LinkedHashSet''
-  * ''List'': ''ArrayList'', ''LinkedList'', ''Vector''
-  * ''Map'' (not a subclass of ''Collection''!): ''HashMap'', ''TreeMap'', ''LinkedHashMap'', ''IdentityHashMap'', ''WeakHashMap'', ''ConcurrentHashMap'', ''Hashtable''
+  * `Set`: `HashSet`, `TreeSet`, `LinkedHashSet`
+  * `List`: `ArrayList`, `LinkedList`, `Vector`
+  * `Map` (not a subclass of `Collection`!): `HashMap`, `TreeMap`, `LinkedHashMap`, `IdentityHashMap`, `WeakHashMap`, `ConcurrentHashMap`, `Hashtable`
 
 **Describe the class hierarchy of exceptions.**
 
-  * ''Object''
-    * ''Throwable'' (class, not interface)
-      * ''Error'' -- for JVM error conditions (unchecked)
-      * ''Exception''
-        * ''RuntimeException'' -- unchecked exceptions
-          * ''NullPointerException''
-          * ''IllegalArgumentException''
+  * `Object`
+    * `Throwable` (class, not interface)
+      * `Error` -- for JVM error conditions (unchecked)
+      * `Exception`
+        * `RuntimeException` -- unchecked exceptions
+          * `NullPointerException`
+          * `IllegalArgumentException`
           * ...
-        * ''IOException''
+        * `IOException`
         * ...
 
-**What does ''final'' mean?**
+**What does `final` mean?**
 
 When used in front of a class definition it means that the class cannot be subclassed. When used in front of a method it means that method can't be overridden. When used in front of a variable it means it can't be re-assigned. Final method calls can be inlined at run time (not compile time) so that they don't have to go through vtable. Inlining at compile time could potentially lead to errors since the implementation of class can be changed (independently of other classes) to one that with non-final method and the calling class with the call inlined at compile time might inadvertently call that method instead of a (now legal) overriding method.
 Private methods are implicitly final. All methods of a final class are implicitly final.
 
-**What is the default implementation of ''hashCode()''?**
+**What is the default implementation of `hashCode()`?**
 
-Typically it's implemented as returning internal address of the object in the memory (converted to ''int''). However, this is not required by Java language specification.
+Typically it's implemented as returning internal address of the object in the memory (converted to `int`). However, this is not required by Java language specification.
 
-**What is the difference between ''HashMap'' and ''TreeMap''?**
+**What is the difference between `HashMap` and `TreeMap`?**
 
   * cost of operations
-  * ''TreeMap'' implements ''SortedMap''
+  * `TreeMap` implements `SortedMap`
 
-**How does ''HashMap'' work?**
+**How does `HashMap` work?**
 
   * put: find the location in the array corresponding to hash code of the key modulo size of array, store key and value in the list at that location
   * get: find the location in the same way, iterate through the list until a matching key is found.
@@ -79,19 +79,19 @@ Make fields final, provide a constructor initialising all the fields and getters
 
 **How can you make an object serialisable?**
 
-By implementing ''Serializable'' (or its sub-interfaces like ''Externalizable''). Serializable is just tagging interface (no methods need to be implemented), but if the class requires non-default serialisation then we have to define ''writeObject()'' and ''readObject()'' methods.
+By implementing `Serializable` (or its sub-interfaces like `Externalizable`). Serializable is just tagging interface (no methods need to be implemented), but if the class requires non-default serialisation then we have to define `writeObject()` and `readObject()` methods.
 
-**Why doesn't ''Object'' implement ''Serializable''?**
+**Why doesn't `Object` implement `Serializable`?**
 
 Serialization doesn't make sense for some things, like threads, streams or sockets.
 
-**What does ''Externalizable'' interface provide on top of ''Serializable''?**
+**What does `Externalizable` interface provide on top of `Serializable`?**
 
-R: ''Externalizable'' is for cases where we want to have complete control over how the object is serialised. It provides ''writeExternal()'' and ''readExternal()'' methods.
+R: `Externalizable` is for cases where we want to have complete control over how the object is serialised. It provides `writeExternal()` and `readExternal()` methods.
 
 #### I/O
 
-**What is ''java.nio''?**
+**What is `java.nio`?**
 
 New IO (in Java 5); supplements (not replaces) existing one. Provides e.g. asynchronous networking (non-blocking sockets).
 
@@ -103,26 +103,26 @@ In GUIs; in network servers; when task can be performed more efficiently when sp
 
 **How do you create a thread in Java?**
 
-  - by subclassing ''Thread'' and overriding ''run()'' method, or
-  - implementing ''Runnable'' interface and providing the instance to ''Thread'' constructor/''Executor'''s ''execute()'' method. 
+  - by subclassing `Thread` and overriding `run()` method, or
+  - implementing `Runnable` interface and providing the instance to `Thread` constructor/`Executor`'s `execute()` method. 
 
 The latter is preferable because it separates the concern of concurrency from the business logic.
 
-**What is the semantics of ''synchronized'' keyword?**
+**What is the semantics of `synchronized` keyword?**
 
 Requires obtaining a lock on the object (if in front of an object method) or class object (if in front of a static method) or specified object (if used as a block).
 
-**How would you implement a queue whose ''get()'' method makes caller wait if the queue is empty?**
+**How would you implement a queue whose `get()` method makes caller wait if the queue is empty?**
 
-provide a lock object. In ''get()'' method (synchronised) first check if queue is empty and if so wait on the lock. In ''add()'' method (synchronised), whenever element is put on the queue, call ''notify()'' on the lock object.
+provide a lock object. In `get()` method (synchronised) first check if queue is empty and if so wait on the lock. In `add()` method (synchronised), whenever element is put on the queue, call `notify()` on the lock object.
 
-**What is the difference between ''Thread.sleep()'' and ''Object.wait()''?**
+**What is the difference between `Thread.sleep()` and `Object.wait()`?**
 
-''sleep()'' suspends current thread for supplied number of milliseconds. ''wait()'' is used to wait on a lock object, until ''notify()'' is called (or time-out expires). Thread has to hold the monitor of object on which ''wait()'' is called. Any suspending method can throw ''InterruptedException''.
+`sleep()` suspends current thread for supplied number of milliseconds. `wait()` is used to wait on a lock object, until `notify()` is called (or time-out expires). Thread has to hold the monitor of object on which `wait()` is called. Any suspending method can throw `InterruptedException`.
 
 **What are atomic types?**
 
-Classes in ''java.util.concurrent.atomic'' support lock-free thread-safe programming on single variables by providing ''compareAndSet(expectedValue, updateValue)'' and other similar methods that are executed atomically.
+Classes in `java.util.concurrent.atomic` support lock-free thread-safe programming on single variables by providing `compareAndSet(expectedValue, updateValue)` and other similar methods that are executed atomically.
 
 **What is thread local?**
 
@@ -130,11 +130,11 @@ It's a memory area that contains per-thread data, e.g. user id of the user whose
 
 **How do you ensure all threads have consistent view of a particular field?**
 
-Use ''volatile'' keyword for that field.
+Use `volatile` keyword for that field.
 
 **How did Java memory model change in Java 5?**
 
-Before Java 5 ''volatile'' guaranteed that reads and writes will be done directly from/to memory, not CPU cache. This prevented from reordering these operations between volatile variables, but not between volatile and non-volatile variables. In Java 5 volatile variables operations cannot be reordered at all.
+Before Java 5 `volatile` guaranteed that reads and writes will be done directly from/to memory, not CPU cache. This prevented from reordering these operations between volatile variables, but not between volatile and non-volatile variables. In Java 5 volatile variables operations cannot be reordered at all.
 
 TODO: http://www.ibm.com/developerworks/library/j-jtp03304/#2.0
 
@@ -149,7 +149,7 @@ class Counter {
 }
 </code>
 
-It's unsafe because the increment is not atomic. Can use ''synchronized'' on the method or use ''AtomicInteger''. The latter does CAS and is much faster if there is little contention (otherwise would roll back/retry frequently).
+It's unsafe because the increment is not atomic. Can use `synchronized` on the method or use `AtomicInteger`. The latter does CAS and is much faster if there is little contention (otherwise would roll back/retry frequently).
 
 #### Garbage Collection and Heap
 
@@ -177,27 +177,27 @@ First two have been addressed by RT Java.
 
 **What needs to be done to call native code using JNI?**
 
-  * ''System.loadLibrary(dllName)''
-  * prefix method name that is implemented in the dll with ''native'' and leave it unimplemented in Java code. 
+  * `System.loadLibrary(dllName)`
+  * prefix method name that is implemented in the dll with `native` and leave it unimplemented in Java code. 
   * javah can be used to generate header files.
 
 #### JDBC
 
-**Name three ''Statement'' interfaces; what are the differences between them?**
+**Name three `Statement` interfaces; what are the differences between them?**
 
-  * ''Statement''
-    * ''PreparedStatement'' -- gets compiled only once, more efficient for repeated queries
-      * ''CallableStatement'' -- used to call stored procedures; can return many ResultSets (via stored procs //out// parameters) which can be accessed by name or index.
+  * `Statement`
+    * `PreparedStatement` -- gets compiled only once, more efficient for repeated queries
+      * `CallableStatement` -- used to call stored procedures; can return many ResultSets (via stored procs *out* parameters) which can be accessed by name or index.
 
 ### Databases
 
 #### RDBMS and SQL
 
-**How ''group by'' and ''having'' works (simple problem to solve).**
+**How `group by` and `having` works (simple problem to solve).**
 
 **What are clustered indices and how do they differ from unclustered?**
 
-Clustered indices (known as //index-organised tables// in Oracle) mean row data is stored in the order imposed by the index. It makes retrieval of data in that order much faster than when rows are stored independently of the index structure. There can be only one clustered index per table.
+Clustered indices (known as *index-organised tables* in Oracle) mean row data is stored in the order imposed by the index. It makes retrieval of data in that order much faster than when rows are stored independently of the index structure. There can be only one clustered index per table.
 
 **Write a query that selects duplicates fron a table**
 
@@ -215,7 +215,7 @@ For cost-based a query plan is constructed and table stats are analysed to estim
 
 **How do you refresh table stats?**
 
-''dbms_stats.gather_table_stats()'' stored proc (also ''gather_schema_stats()'' and ''gather_database_stats()''). Historically there was ''analyze'' command but ''dbms_stats'' is preferred (e.g. due to parallel execution).
+`dbms_stats.gather_table_stats()` stored proc (also `gather_schema_stats()` and `gather_database_stats()`). Historically there was `analyze` command but `dbms_stats` is preferred (e.g. due to parallel execution).
 
 **How do you optimise a query?**
 
@@ -286,9 +286,9 @@ TODO
 <code java>
 <T> Collection<T> intersection(Collection<T> a, Collection<T> b) {
   final Map<T, Pair<Integer>> counts = new HashMap<T, Pair<Integer>>();
-  for (T t: a) inc(counts, t, 0); // increases the value of first element of 
-                                  // pair at T, or inserts (1, 0) if pair doesn't exist)
-  for (T t: b) inc(counts, t, 1); // same as above, but for the second element
+  for (T t: a) inc(counts, t, 0); * increases the value of first element of 
+                                  * pair at T, or inserts (1, 0) if pair doesn't exist)
+  for (T t: b) inc(counts, t, 1); * same as above, but for the second element
   final List<T> result = new LinkedList<T>();
   for (Map.Entry<T, Pair<Integer>> entry: counts.entrySet() {
     final Pair<Int> count = entry.getValue()

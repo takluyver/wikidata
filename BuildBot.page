@@ -4,11 +4,11 @@
 
 ### virtualenv
 
-Download the tarball from [http://pypi.python.org/pypi/virtualenv/] and untar to a temporary directory; then, in that directory run ''python2.7 setup.py install --dry-run''. If it complains about missing directories create them. Continue running with ''--dry-run'' until it passes, then run without ''--dry-run''. Once done you should have ''virtualenv'' script in ''~/bin''. You can then delete the temporary directory and the tarball. 
+Download the tarball from [http://pypi.python.org/pypi/virtualenv/] and untar to a temporary directory; then, in that directory run `python2.7 setup.py install --dry-run`. If it complains about missing directories create them. Continue running with `--dry-run` until it passes, then run without `--dry-run`. Once done you should have `virtualenv` script in `~/bin`. You can then delete the temporary directory and the tarball. 
 
 ### buildbot
 
-Follow [the tutorial](http://buildbot.net/buildbot/tutorial/firstrun.html#creating-a-master). I installed BuildBot in ''~/opt/buildbot'' instead of suggested ''~/tmp/buildbot'', other that I followed it to the letter.
+Follow [the tutorial](http://buildbot.net/buildbot/tutorial/firstrun.html#creating-a-master). I installed BuildBot in `~/opt/buildbot` instead of suggested `~/tmp/buildbot`, other that I followed it to the letter.
 
 ### status website
 
@@ -21,7 +21,7 @@ In WebFaction panel create a new custom application and make note of the port as
 ^ :::         ^ subdomains | build.bimbr.com |
 ^ :::         ^ site apps  | **app**: wxhaskellbuild, **URL path**: /wxhaskell |
 
-Edit ''~/opt/buildbot/sandbox/master/master.cfg'' and change the ''http_port'' in ''c['status'].append(html.WebStatus(http_port=8010, authz=authz_cfg))'' to the port assigned to your new application (30146 in my case).
+Edit `~/opt/buildbot/sandbox/master/master.cfg` and change the `http_port` in `c['status'].append(html.WebStatus(http_port=8010, authz=authz_cfg))` to the port assigned to your new application (30146 in my case).
 
 It might take about 30 mins for your new website to become accessible. Then you should be able to access the website under http://build.bimbr.com/wxhaskell/
 
@@ -89,5 +89,5 @@ run automatically (delayed start), as administrator
 
 easy_install boto
 
-modify ''sandbox/lib/python2.7/site-packages/buildbot-0.8.4p2-py2.7.egg/buildbot/ec2buildslave.py'' to do ''instance.terminate()'' instead of ''instance.stop()'' -- otherwise the instances will be left stopped and still charging  storage to your account!
+modify `sandbox/lib/python2.7/site-packages/buildbot-0.8.4p2-py2.7.egg/buildbot/ec2buildslave.py` to do `instance.terminate()` instead of `instance.stop()` -- otherwise the instances will be left stopped and still charging  storage to your account!
 

@@ -24,8 +24,8 @@ View and Controller, with certain changes to accommodate different programming
 paradigm. Here's how these modules will be playing together:
 
   * Model defines a data type whose constructors represent states in which the model can be. It also provides functions which represent the transitions between states. Ideally it should be purely functional, with no side-effects.
-  * View defines a data type whose value contains all elements of the view that need to be acted upon by Controller. It also defines (side-effecting) functions that represent atomic GUI updates, for use by the Controller. Finally it provides a ''view'' function that constructs the GUI. No application logic is encapsulated in this module.
-  * Controller provides a ''controller'' function, that given a Model and a View ties them together and defines the application logic.
+  * View defines a data type whose value contains all elements of the view that need to be acted upon by Controller. It also defines (side-effecting) functions that represent atomic GUI updates, for use by the Controller. Finally it provides a `view` function that constructs the GUI. No application logic is encapsulated in this module.
+  * Controller provides a `controller` function, that given a Model and a View ties them together and defines the application logic.
 
 This program is an attempt to demonstrate how this could work. I wanted to 
 write it in literate style (.lhs) but it turned out that the support for 
@@ -46,7 +46,7 @@ names we want to use for our own purposes:
 <code haskell>
 import Graphics.UI.WX hiding (Menu, menu)
 </code>
-For running commands asynchronously we will need ''forkIO'' which runs an IO 
+For running commands asynchronously we will need `forkIO` which runs an IO 
 action in a new thread:
 <code haskell>
 import Control.Concurrent (forkIO)
@@ -58,8 +58,8 @@ to hold current state of the Model:
 import Control.Concurrent.STM.TVar (TVar, newTVarIO, readTVar, readTVarIO, 
                                     writeTVar)
 </code>
-Operations on ''TVar'' are modelled as STM monad. To have them actually performed
-we need ''atomically'' function which turns an STM action into an IO action:
+Operations on `TVar` are modelled as STM monad. To have them actually performed
+we need `atomically` function which turns an STM action into an IO action:
 <code haskell>
 import Control.Concurrent.STM (atomically)
 </code> 
@@ -101,7 +101,7 @@ to Model state transitions let's introduce a type alias:
 type ModelTransition = Model -> Model
 </code>
 
-We'll have ''lock'' and ''unlock'' transitions toggle between these two states:
+We'll have `lock` and `unlock` transitions toggle between these two states:
 <code haskell>
 lock :: ModelTransition
 lock (Unlocked n) = Locked n
@@ -142,7 +142,7 @@ data Menu = Menu { lockItem :: MenuItem ()
                  , modifyItem :: MenuItem ()
                  }
 </code>
-A counterpart to ''ModelTransition'' in the View is ''ViewAction'', which given a 
+A counterpart to `ModelTransition` in the View is `ViewAction`, which given a 
 Model and a View makes a change to the View:
 <code haskell>
 type ViewAction = Model -> View -> IO ()
@@ -168,7 +168,7 @@ disableModifyItem _ v = set (modifyItem $ menu v) [ enabled := False ]
 View will not have a reference to the Model. Instead it will be told by the 
 Controller when the View needs to be refreshed and the Model to be drawn
 will be provided then. Here, the function that will be invoked by the
-Controller is called ''refreshModelDisplay'' and just shows Model's textual 
+Controller is called `refreshModelDisplay` and just shows Model's textual 
 representation in the static text control:
 <code haskell>
 refreshModelDisplay :: ViewAction
@@ -176,18 +176,18 @@ refreshModelDisplay m v = set (modelDisplay v) [ text := show m ]
 </code>
 
 Finally, we'll need a device to combine these atomic actions into sequences
-that are themselves ''ViewActions''. Let's define a new operator ''>&>'' to do
+that are themselves `ViewActions`. Let's define a new operator `>&>` to do
 just that:
 <code haskell>
 (>&>) :: ViewAction -> ViewAction -> ViewAction
 a1 >&> a2 = \m v -> do a1 m v; a2 m v
 </code>
-Note that we can pass the input ''m'' and ''v'' to subsequent actions because
-they have no effect on (pure) ''m'' and any side-effects will be reflected
-in GUI elements referenced from ''v''.
+Note that we can pass the input `m` and `v` to subsequent actions because
+they have no effect on (pure) `m` and any side-effects will be reflected
+in GUI elements referenced from `v`.
 
 The function that creates the view sets up all GUI elements but does not
-define any logic. It returns a ''View'' value in the context of an ''IO'' action.
+define any logic. It returns a `View` value in the context of an `IO` action.
 <code haskell>
 view :: IO View
 view = do
@@ -229,7 +229,7 @@ http://stackoverflow.com/questions/3176682/wxhaskell-asynchronous-updates
 
 So, we now have a Model with its transitions and a View with its actions. The 
 job of Controller is to put these two together, i.e. perform Model and View 
-updates according to user actions. The ''controller'' function is, on the
+updates according to user actions. The `controller` function is, on the
 face of it, very simple, it just creates a transactional variable to hold the 
 Model, binds actions to UI elements and refreshes the View:
 <code haskell>
@@ -246,27 +246,27 @@ modified by actions running concurrently in different threads.
 
 That's it.
 
-But what exactly happens in ''bindGUIActions''? Before we get there, let's ponder
+But what exactly happens in `bindGUIActions`? Before we get there, let's ponder
 on this combining of Model transitions with View updates we just mentioned. How 
 can this be achieved? What would be the type of this combination (let's call it
-''ModelAndViewUpdate'')?
+`ModelAndViewUpdate`)?
 
 View updates are IO actions, so the result of the combination would have to 
 yield an IO action. It would act upon a View and a Model. We chose to
-store the model in a ''TVar'', so it would make sense for ''ModelAndViewUpdate'' to
-update this ''TVar'' as opposed to returning the modified Model in the context of 
-IO. It seems we arrived at the following type for ''ModelAndViewUpdate'':
+store the model in a `TVar`, so it would make sense for `ModelAndViewUpdate` to
+update this `TVar` as opposed to returning the modified Model in the context of 
+IO. It seems we arrived at the following type for `ModelAndViewUpdate`:
 <code haskell>
 type ModelAndViewUpdate = TVar Model -> View -> IO ()
 </code>
 
-We can now manufacture these ''ModelAndViewUpdates'' from ''ModelTransitions'' and
-''ViewActions'' as follows:
+We can now manufacture these `ModelAndViewUpdates` from `ModelTransitions` and
+`ViewActions` as follows:
 <code haskell>
 (<@>) :: ModelTransition -> ViewAction -> ModelAndViewUpdate
 (<@>) modelTrans viewAct modelTV view = do
 </code>  
-  * first we atomically apply the transition to the Model stored in ''modelTV'':
+  * first we atomically apply the transition to the Model stored in `modelTV`:
 <code haskell>
   atomically $ do
     model <- readTVar modelTV
@@ -277,13 +277,13 @@ We can now manufacture these ''ModelAndViewUpdates'' from ''ModelTransitions'' a
   model <- readTVarIO modelTV
   viewAct model view
 </code>
-Note we defined this function as an infix operator ''<@>'', so applying it like
-in ''modelTransition <@> viewUpdate'' will yield a ''ModelAndViewUpdate'' that is a
+Note we defined this function as an infix operator `<@>`, so applying it like
+in `modelTransition <@> viewUpdate` will yield a `ModelAndViewUpdate` that is a
 combination of these two.
 
-With this in place we can define ''ModelAndViewUpdate''s for each UI action. 
+With this in place we can define `ModelAndViewUpdate`s for each UI action. 
 First let's combine atomic UI operations into complex ones corresponding to the 
-Model transition. For ''unlock'' we will:
+Model transition. For `unlock` we will:
   * enable Lock menu item
   * disable Unlock menu item
   * enable Modify menu item
@@ -298,7 +298,7 @@ unlockVU = enableLockItem >&>
            \_ v -> infoDialog (mainWindow v) "Unlocked" 
                               "Warning: the model can now be modified!"
 </code> 
-and the ''ModelAndViewUpdate'' is now quite obvious:
+and the `ModelAndViewUpdate` is now quite obvious:
 <code haskell>
 unlockCmd :: ModelAndViewUpdate
 unlockCmd = unlock <@> unlockVU
@@ -317,10 +317,10 @@ modifyCmd :: ModelAndViewUpdate
 modifyCmd = modify <@> refreshModelDisplay
 </code>
 
-It's prefreable to have ''ModelAndViewUpdate''s defined in terms of ''<@>'', 
+It's prefreable to have `ModelAndViewUpdate`s defined in terms of `<@>`, 
 since it guarantees that the Model updates behave well in muti-threaded
 scenario, but it's not essential -- nothing stops us from defining a value
-of type ''ModelAndViewUpdate'' by hand. If we do this extra care needs to
+of type `ModelAndViewUpdate` by hand. If we do this extra care needs to
 be taken to ensure that Model updates don't suffer from race conditions.
 
 We are now ready to bind actions to UI elements.
@@ -332,10 +332,10 @@ bindGUIActions modelTV view = do
   set (modifyItem $ menu view) [ on command := run modifyCmd ]
   where
 </code>
-What should ''run'' do? Its type signature needs to be 
-''ModelAndViewUpdate -> IO ()'', i.e. ''(TVar Model -> View -> IO ()) -> IO ()''
+What should `run` do? Its type signature needs to be 
+`ModelAndViewUpdate -> IO ()`, i.e. `(TVar Model -> View -> IO ()) -> IO ()`
 which (not less than its name) suggests that it should execute supplied update
-function by passing ''modelTV'' and ''view'' to it. So we could simply do:
+function by passing `modelTV` and `view` to it. So we could simply do:
 
     run cmd = cmd modelTV view
 
@@ -343,18 +343,18 @@ and it would work as expected, with one caveat: if cmd was running for a long
 time it would freeze the UI, because the operation would be executed in the UI 
 thread.
 
-Well, we have imported ''forkIO'' for a reason:
+Well, we have imported `forkIO` for a reason:
 <code haskell>
     run cmd = do 
       forkIO $ cmd modelTV view
       return ()
 </code>
-Now, note that as a result of this ''forkIO'' we are updating the UI from a
+Now, note that as a result of this `forkIO` we are updating the UI from a
 non-UI thread. This is something most of UI toolkits prohibit. wxHaskell seems 
 more permissive in this respect, but I have not investigated this matter 
 fully. If it turns out that an update needs to be done in the UI thread then 
 it significantly complicates the pattern. A possible solution would involve 
-providing a transactional chanel (''TChan'') from the async thread to the GUI 
+providing a transactional chanel (`TChan`) from the async thread to the GUI 
 thread to which the async action would write required UI updates. These 
 updates would then be read by a timer handler and applied to the View.
 
@@ -369,10 +369,10 @@ This, obviously, was a toy example. For real-life applications there is likely
 to be a couple of things which might need to be modified.
 
 For instance, what if Model is not pure? The main thing that will break is 
-''<@>'' operator, since it executes a Model transition in STM monad, and that 
+`<@>` operator, since it executes a Model transition in STM monad, and that 
 will not be possible if transition is tainted with IO. One solution will be to 
-use a ''TMVar'' instead of ''TVar'' to store the Model. A value can be taken out
-of ''TMVar'' for the period of processing and then put back in, thus ensuring
+use a `TMVar` instead of `TVar` to store the Model. A value can be taken out
+of `TMVar` for the period of processing and then put back in, thus ensuring
 atomicity. This will increase synchronisation between threads but is unlikely 
 to be a problem in practice.
 
@@ -397,7 +397,7 @@ It's easy to see that View data type and the set of atomic ViewActions is
 going to be massive in a non-trivial app. Also all of these enable/disable 
 ViewActions look like boilerplate.
 
-The way ''<@>'' is defined, it is assumed that all UI updates take place after
+The way `<@>` is defined, it is assumed that all UI updates take place after
 Model transition has completed. Sometimes it might be difficult to model the
 domain in such a way that Model and UI updates happen one after another
 and it might be desirable to update UI as the transition happens.

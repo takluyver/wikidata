@@ -1,11 +1,11 @@
 ## In-Memory Cache
 
-Derby caches data pages in memory ''derby.storage.pageCacheSize'' setting determines how many pages should be kept in memory (1000 by default). Generic advice is that increasing this improves the performance as more data is kept in memory.
+Derby caches data pages in memory `derby.storage.pageCacheSize` setting determines how many pages should be kept in memory (1000 by default). Generic advice is that increasing this improves the performance as more data is kept in memory.
 
 ## Query Analysis
 
 http://db.apache.org/derby/docs/10.5/tuning/ttundepth34375.html
 
-alternatively, set ''derby.language.logQueryPlan'' to ''true'' and check ''derby.log'' (http://db.apache.org/derby/docs/10.5/ref/rrefproper43414.html)
+alternatively, set `derby.language.logQueryPlan` to `true` and check `derby.log` (http://db.apache.org/derby/docs/10.5/ref/rrefproper43414.html)
 
 {{tag>it db derby}}

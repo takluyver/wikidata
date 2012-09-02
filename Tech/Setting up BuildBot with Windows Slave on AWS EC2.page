@@ -18,17 +18,17 @@ We'll set up the slave on Amazon EC2. I'm not going to cover how to set up an ac
 
 ## The Master
 
-All of the steps below happen on the always-online server. They assume that ''python'' on our server runs Python version 2.7.
+All of the steps below happen on the always-online server. They assume that `python` on our server runs Python version 2.7.
 
 ### Virtualenv
 
-Download the tarball from [http://pypi.python.org/pypi/virtualenv/] and untar to a temporary directory. In there run ''python setup.py instal --dry-run''. If it complains about missing directories, create them. Continue running with --dry-run until it passe, then run without --dry-run. Once done, we should end up with ''virtualenv'' script in ''~/bin''. We can then get rid of the tarball and temporary directory.
+Download the tarball from [http://pypi.python.org/pypi/virtualenv/] and untar to a temporary directory. In there run `python setup.py instal --dry-run`. If it complains about missing directories, create them. Continue running with --dry-run until it passe, then run without --dry-run. Once done, we should end up with `virtualenv` script in `~/bin`. We can then get rid of the tarball and temporary directory.
 
 ### BuildBot
 
-Follow the [BuildBot tutorial](http://buildbot.net/buildbot/docs/current/tutorial/firstrun.html#creating-a-master). I installed BuildBot in ''~/opt/buildbot'' instead of suggested ''~/tmp/buildbot'', other than that I followed it to the letter.
+Follow the [BuildBot tutorial](http://buildbot.net/buildbot/docs/current/tutorial/firstrun.html#creating-a-master). I installed BuildBot in `~/opt/buildbot` instead of suggested `~/tmp/buildbot`, other than that I followed it to the letter.
 
-Opening the BuildBot website to the outside world depends on how our server is set up. For WebFaction it involved creating a custom web application via the control panel. This web application got assigned a port number, which then needed to be set in BuildBot's config by editing ''~/opt/buildbot/sandbox/master/master.cfg'' and changing the ''http_port'' in ''c['status'].append(html.WebStatus(http_port=8010, authz=authz_cfg))'' to the assigned port.
+Opening the BuildBot website to the outside world depends on how our server is set up. For WebFaction it involved creating a custom web application via the control panel. This web application got assigned a port number, which then needed to be set in BuildBot's config by editing `~/opt/buildbot/sandbox/master/master.cfg` and changing the `http_port` in `c['status'].append(html.WebStatus(http_port=8010, authz=authz_cfg))` to the assigned port.
 
 Finally, we might want to set up a cron job to automatically start the master should it die for any reason; here's the script I used:
 
@@ -50,7 +50,7 @@ then
 fi
 </code>
 
-Then ''crontab -e'' and add entry:
+Then `crontab -e` and add entry:
 <code>
 0       *       *       *       *       /home/mmakowski/bin/buildbot-start-master-if-not-running &
 </code>
@@ -68,8 +68,8 @@ Once logged on, we need to change the administrator password to something we'll 
   * [Pywin32](http://sourceforge.net/projects/pywin32/files/pywin32/)
   * [easy_install](http://pypi.python.org/pypi/setuptools#windows)
   * [Twisted](http://twistedmatrix.com/trac/wiki/Downloads)
-  * Using easy_install set up ''zope.interface'': ''easy_install zope.interface''
-  * unzip [BuildBot Slave](http://code.google.com/p/buildbot/downloads/list) to a temporary directory and run ''setup.py install'' in there
+  * Using easy_install set up `zope.interface`: `easy_install zope.interface`
+  * unzip [BuildBot Slave](http://code.google.com/p/buildbot/downloads/list) to a temporary directory and run `setup.py install` in there
 
 On top of that we will need to install any other software required to build the project we're setting the slave up for (VCS client, compiler, libraries etc.)
 
@@ -154,15 +154,15 @@ if __name__ == '__main__':
         win32serviceutil.HandleCommandLine(BuildSlaveService)
 </code>
 
-Put this somewhere on the server and run ''buildbot_slave_service.py install''. Then go to Services application and change the startup to ''run automatically (delayed start)'', as Administrator.
+Put this somewhere on the server and run `buildbot_slave_service.py install`. Then go to Services application and change the startup to `run automatically (delayed start)`, as Administrator.
 
-After this is done we are ready to take a snapshot of the servers hard drive, so that we can start clones later on. Once the AMI appears as //available// in AMIs section of the EC2 console we will terminate the instance we've just configured.
+After this is done we are ready to take a snapshot of the servers hard drive, so that we can start clones later on. Once the AMI appears as *available* in AMIs section of the EC2 console we will terminate the instance we've just configured.
 
 ### The Master
 
-We'll need one additional Python library to enable BuildBot master to control EC2 instances: [boto](http://code.google.com/p/boto/). On the master server, cd to ''~/opt/buildbot'', activate the sandbox (''. sandbox/bin/activate'') and run ''easy_install boto''. 
+We'll need one additional Python library to enable BuildBot master to control EC2 instances: [boto](http://code.google.com/p/boto/). On the master server, cd to `~/opt/buildbot`, activate the sandbox (`. sandbox/bin/activate`) and run `easy_install boto`. 
 
-It's now time to tell master to treat our slave as latent. The setup is described in the [BuildBot docs](http://buildbot.net/buildbot/docs/current/full.html#Amazon-Web-Services-Elastic-Compute-Cloud-_0028_0022AWS-EC2_0022_0029), and it boils down to updating ''c['slaves']'' like this:
+It's now time to tell master to treat our slave as latent. The setup is described in the [BuildBot docs](http://buildbot.net/buildbot/docs/current/full.html#Amazon-Web-Services-Elastic-Compute-Cloud-_0028_0022AWS-EC2_0022_0029), and it boils down to updating `c['slaves']` like this:
 
 <code python>
 ####### BUILDSLAVES
@@ -179,15 +179,15 @@ c['slaves'] = [EC2LatentBuildSlave('<slave name>', '<slave password>', 't1.micro
                                    secret_identifier='<secret key>')]
 </code>
 Where:
-  * ''<slave name>'' and ''<slave password>'' are the same as the ones we used so far
-  * ''t1.micro'' is the type of EC2 instance; change it to a bigger one if that's what you require for your build (check [the prices](http://aws.amazon.com/ec2/pricing/) before doing that though)
-  * ''region'' should be the region where you set up your AMI (can be seen in the AWS console)
-  * ''ami-12345678'' is the id of the AMI we have created from the slave instance
-  * ''<key identifier>'' and ''<secret key>'' can be generated and obtained from the //Security Credentials// section of your [AWS account](http://aws.amazon.com/account/).
+  * `<slave name>` and `<slave password>` are the same as the ones we used so far
+  * `t1.micro` is the type of EC2 instance; change it to a bigger one if that's what you require for your build (check [the prices](http://aws.amazon.com/ec2/pricing/) before doing that though)
+  * `region` should be the region where you set up your AMI (can be seen in the AWS console)
+  * `ami-12345678` is the id of the AMI we have created from the slave instance
+  * `<key identifier>` and `<secret key>` can be generated and obtained from the *Security Credentials* section of your [AWS account](http://aws.amazon.com/account/).
 
-Finally, in BuildBot 0.8.4 there is an [issue with EC2 instances not being terminated](http://trac.buildbot.net/ticket/1931). If left unfixed it can lead to each build's disk image being left active indefinitely and charging to our account! The bug should be fixed in BuildBot 0.8.5; in the mean time we can patch it by hand, by replacing ''instance.stop()'' with ''instance.terminate()'' in ''~/opt/buildbot/sandbox/lib/python2.7/site-packages/buildbot-0.8.4p2-py2.7.egg/buildbot/ec2buildslave.py''.
+Finally, in BuildBot 0.8.4 there is an [issue with EC2 instances not being terminated](http://trac.buildbot.net/ticket/1931). If left unfixed it can lead to each build's disk image being left active indefinitely and charging to our account! The bug should be fixed in BuildBot 0.8.5; in the mean time we can patch it by hand, by replacing `instance.stop()` with `instance.terminate()` in `~/opt/buildbot/sandbox/lib/python2.7/site-packages/buildbot-0.8.4p2-py2.7.egg/buildbot/ec2buildslave.py`.
 
-Once this is done, a ''buildbot restart master'' should provide us with a BuildBot process running with the final set up and starting up EC2 slave when required.
+Once this is done, a `buildbot restart master` should provide us with a BuildBot process running with the final set up and starting up EC2 slave when required.
 
 ### Fixing the Slave
 
@@ -207,7 +207,7 @@ While the source code of BuildBot might be a bit difficult to follow for someone
 Two things I got bitten by and which took a little bit to investigate and fix are:
 
   - AWS instance reboot on startup. The Windows box is rebooted by AWS immediately after being started; apparently this is required for some TCP/IP-related reconfiguration to take effect. As a result it is crucial that our BuildBot slave service is set up with **delayed start**. Otherwise the service will start and report to the master; it can even start running the build, when suddenly the server will reboot. After the reboot the service will come back up and try to connect again, but the master will reject this connection as unsolicited.
-  - The ''instance.stop()'' issue mentioned earlier. Strangely, I would swear that my setup had been working for about a week without any patches, with instances being terminated; the "orphaned" stopped instances seemed to have started appearing suddenly and without any changes in either the slave or the server code or config. I can only assume I must have been seeing things, since ''instance.stop()'' has been there all the time and I'd never expect it to terminate an instance.
+  - The `instance.stop()` issue mentioned earlier. Strangely, I would swear that my setup had been working for about a week without any patches, with instances being terminated; the "orphaned" stopped instances seemed to have started appearing suddenly and without any changes in either the slave or the server code or config. I can only assume I must have been seeing things, since `instance.stop()` has been there all the time and I'd never expect it to terminate an instance.
 
 Hopefully you won't come across any more nasty surprises. Happy building!
 
