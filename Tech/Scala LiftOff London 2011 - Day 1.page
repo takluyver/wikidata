@@ -1,5 +1,4 @@
 
-
 Compared to [last year's LiftOff](tech:scala_lift_off_london_2010_day_1), which was an un-conference pretty much all the way, this year's is split into morning, structured sessions, and afternoon open spaces resembling 2010 format. As usual, I tried to jot down the more interesting points from the day. The below is by no means a complete record and definitely suffers from insufficient editing and research (no time for that, sorry!). With this disclaimer out of the way:
 
 ## David Pollak's Keynote
@@ -40,7 +39,7 @@ Coroutines are an imperative control structure: subroutines with multiple entry 
 
 Miles created a library which provides coroutines in Scala. Example:
 
-<code scala>
+~~~ { .scala }
 object TestCoroutines {
   import Coroutines._
 
@@ -62,7 +61,7 @@ object TestCoroutines {
     for (_ <- 1 until 20) Scheduler.yld
   }
 }
-</code>
+~~~
 
 This, as can be expected, will print "Hi!" followed by "Ho!", both repeated twenty times.
  
