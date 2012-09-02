@@ -1,4 +1,4 @@
-====== Non-strict Evaluation ======
+
 
 Tryb ewaluacji, ktory gwarantuje, że ewaluacja wyrażenia się zakończy o ile tylko lewniwa ewaluacja tego wyrażenia się kończy. W przeciwienstwie do [[lazy evaluation]] nie gwarantuje natomiast minimalnej liczby redukcji. 
 

@@ -1,4 +1,4 @@
-====== MonetDB ======
+
 
 Jeden z pierwszych (jesli nie pierwszy) RDBMS w ktorym dane przechowywane sa kolumnami, nie wierszami, co poprawia wydajnosc w zastoswaniach typu data warehouse. 
 

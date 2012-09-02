@@ -1,4 +1,4 @@
-====== Message Passing ======
+
 
 Styl programowania polegający na implementacji polimorficznych typów danych przy pomocy procedur, które wykonują dispatch operacji do procedur specyficznych dla tej implementacji. 
 

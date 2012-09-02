@@ -1,4 +1,4 @@
-====== TXL ======
+
 
 System (jezyk) do transformacji miedzy jezykami programowania. Buduje AST i pozwala na definiowanie regul przepisywania. 
 

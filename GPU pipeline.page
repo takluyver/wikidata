@@ -1,3 +1,3 @@
-====== GPU Pipeline ======
+
 
 Sposob przetwarzania danych przez procesory graficzne. Polega na zdefiniowanych krokach, z ktorych czesc jest na sztywno zaprogramowana w GPU a czesc moze byc oprogramowywana przez programistow aplikacji. Kroki programowalne (np. operacje na brylach) latwo sie zrownoleglaja, dzieki czemu GPU moga stosowac wiele ALUs a programy korzystajace z nich nie musza explicite obslugiwac wspolbieznosci.

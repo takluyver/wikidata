@@ -1,4 +1,4 @@
-====== Key-based routing ======
+
 
 A technique used in P2P networks where each node has a unique id assigned and there is a simple function that maps every key from a given key space to a node id. Resources can in turn be associated with keys, so when a node wants to access a resource it finds the node  among its peers who is closest to the node responsible for the resource and passes the request to it. 
 

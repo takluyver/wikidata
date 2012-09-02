@@ -1,4 +1,4 @@
-====== Nash Equilibrium ======
+
 
 (teoria gier) stan w grze, w ktorej kazdy uczestnik stosuje optymalna strategie, biorac pod uwage strategie innych graczy. Innymi slowy, zaden gracz nie moze poprawic swojego wyniku zmieniajac tylko swoja strategie. Nash dowiódł, że taki stan równowagi istnieje w każdej grze -- przy założeniu, że "strategia" oznacza rozkład prawdopodobieństwa na akcjach możliwych do wykonania. 
 

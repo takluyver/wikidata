@@ -1,4 +1,4 @@
-====== Racket ======
+
 
 Odmiana lispa przystosowana do tworzenia jezykow programowania. Bardzo latwo tworzyc nowe jezyki oparte na S-expressions, mozna tez zdefiniowac wlasny parser do S-x.
 

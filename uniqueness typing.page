@@ -1,4 +1,4 @@
-====== Uniqueness Typing ======
+
 
 (w programowaniu funkcyjnym) pozwala adnotowac typy jako "unikalne" -- obiekty typu z taka adnotacja moga byc uzyte tylko raz (system typow to gwarantuje); np., zmienne tych typow przestaja byc widoczne po pierwszym uzyciu w jakims wyrazeniu. Dzieki temu obiekty takie moga byc przedmiotem efektow ubocznych, a zachowana jest referential transparency (bo nie mozna wywolac tej samej funkcji z tym samym argumentem po raz drugi).
 

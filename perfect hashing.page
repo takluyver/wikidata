@@ -1,4 +1,4 @@
-====== Perfect Hashing ======
+
 
 Haszowanie, ktore nie powoduje konfliktow (gwarantuje pesymistyczny staly czas dostepu do elementu w tablicy haszujacej). 
 

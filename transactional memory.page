@@ -1,4 +1,4 @@
-====== Transactional Memory ======
+
 
 Mechanizm synchronizacji w programowaniu wspolbieznym, bardzo obiecujacy, gdyz wydaje sie byc prostszy w stosowaniu niz standardowe blokady (locks). Polega na wykonywaniu sekwencji operacji w sposob atomowy (powszechna notacja: ''atomic { op1; op2 ... }''). W typowej implementacji kazda transakcja prowadzi dziennik dostepow do pamieci i przy commicie sprawdza, czy dziennik jest spojny z tym, co aktualnie jest w pamieci. Jesli nie, wykonuje rollback. 
 

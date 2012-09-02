@@ -1,3 +1,3 @@
-====== Future ======
+
 
 Cos pokrewnego do dataflow variable. Pierwszy raz wprowadzona w [[Multilisp|Multilispie]], stosowana w [[C++0x]]. Polega na tym, ze wywolanie ''(future E)'', gdzie E jest dowolnym wyrazeniem, uruchomi rownolegle obliczenie wartosci E. Kiedy ta wartosc bedzie potrzebna, wykonanie zatrzyma sie do czasu kiedy bedzie ona dostepna.
