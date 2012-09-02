@@ -1,32 +1,30 @@
-====== Itinerer ======
-
 Mały suplement do poprzedniego odcinka, czyli gdzie kiedy planujemy być:
 
-=== ===
-
-^ kiedy ^ co ^
-| 5-6 | lot Londyn -- Bangkok |
-| 6-7 | Bangkok |
-| 8-9 | Khao Yai |
-| 10 | w drodze do Siem Reap |
-| 11-12 | Angkor Wat |
-| 13 | w drodze do Phnom Penh |
-| 14-15 | Phnom Penh |
-| 15 | w drodze do Laosu |
-| 16-18 | 4000 wysp |
-| 19 | w drodze do Vientiane |
-| 20-22 | Vientiane |
-| 23 | w drodze do Hanoi |
-| 24-26 | zatoka Halong |
-| 27-31 | z Hanoi do Sajgonu |
-| 1-2 | loty Sajgon -- Singapur oraz Singapur -- Darwin -- Cairns |
-| 3-5 | Wielka Rafa |
-| 6-24 | z Cairns do Sydney |
-| 25 | Sydney |
-| 26 | lot Sydney -- Darwin -- Singapur |
-| 27-28 | Singapur |
-| 29-30 | lot Singapur -- Kuala Lumpur -- Londyn |
-
-{{tag>travel flights itinerary}}
-
-~~DISCUSSION~~
+<table>
+  <thead>
+    <tr><th>kiedy</th><th>co</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>5-6</td><td>lot Londyn -- Bangkok</td></tr>
+    <tr><td>6-7</td><td>Bangkok</td></tr>
+    <tr><td>8-9</td><td>Khao Yai</td></tr>
+    <tr><td>10</td><td>w drodze do Siem Reap</td></tr>
+    <tr><td>11-12</td><td>Angkor Wat</td></tr>
+    <tr><td>13</td><td>w drodze do Phnom Penh</td></tr>
+    <tr><td>14-15</td><td>Phnom Penh</td></tr>
+    <tr><td>15</td><td>w drodze do Laosu</td></tr>
+    <tr><td>16-18</td><td>4000 wysp</td></tr>
+    <tr><td>19</td><td>w drodze do Vientiane</td></tr>
+    <tr><td>20-22</td><td>Vientiane</td></tr>
+    <tr><td>23</td><td>w drodze do Hanoi</td></tr>
+    <tr><td>24-26</td><td>zatoka Halong</td></tr>
+    <tr><td>27-31</td><td>z Hanoi do Sajgonu</td></tr>
+    <tr><td>1-2</td><td>loty Sajgon -- Singapur oraz Singapur -- Darwin -- Cairns</td></tr>
+    <tr><td>3-5</td><td>Wielka Rafa</td></tr>
+    <tr><td>6-24</td><td>z Cairns do Sydney</td></tr>
+    <tr><td>25</td><td>Sydney</td></tr>
+    <tr><td>26</td><td>lot Sydney -- Darwin -- Singapur</td></tr>
+    <tr><td>27-28</td><td>Singapur</td></tr>
+    <tr><td>29-30</td><td>lot Singapur -- Kuala Lumpur -- Londyn</td></tr>
+  </tbody>
+</table>
