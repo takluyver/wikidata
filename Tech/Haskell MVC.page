@@ -8,7 +8,7 @@ experiment involves writing a [Windows client for FIBS](https://github.com/mmako
 
 It turned out to be far from easy.
 
-=== ===
+
 
 It might be down to my lack of familiarity with functional programming 
 patterns. Or perhaps, despite growing popularity, there are still no 
