@@ -1,0 +1,424 @@
+====== Haskell MVC ======
+
+//with wxHaskell and STM//
+
+With popularity of Haskell raising in recent years I have decided to have a 
+look at how suitable it is as a general-purpose programming language. The 
+experiment involves writing a [[https://github.com/mmakowski/habaz|Windows client for FIBS]].
+
+It turned out to be far from easy.
+
+=== ===
+
+It might be down to my lack of familiarity with functional programming 
+patterns. Or perhaps, despite growing popularity, there are still no 
+established FP GUI patterns yet. Either way, I struggled with structuring 
+the code in a way that would let me work on the app incrementally, 
+implementing a bit of game logic, a bit of GUI, connecting it together etc.
+
+I therefore looked for help in the more familiar territory of object-oriented 
+patterns and here's what I came up with: a Model-View-Controller for Haskell.
+
+The idea is to split the code roughly into modules corresponding to OO Model,
+View and Controller, with certain changes to accommodate different programming
+paradigm. Here's how these modules will be playing together:
+
+  * Model defines a data type whose constructors represent states in which the model can be. It also provides functions which represent the transitions between states. Ideally it should be purely functional, with no side-effects.
+  * View defines a data type whose value contains all elements of the view that need to be acted upon by Controller. It also defines (side-effecting) functions that represent atomic GUI updates, for use by the Controller. Finally it provides a ''view'' function that constructs the GUI. No application logic is encapsulated in this module.
+  * Controller provides a ''controller'' function, that given a Model and a View ties them together and defines the application logic.
+
+This program is an attempt to demonstrate how this could work. I wanted to 
+write it in literate style (.lhs) but it turned out that the support for 
+Literate Haskell among HTML pretty-printers available to me is non-existent,
+so I decided for this semi-literate style instead. 
+
+To compile it run:
+<code>
+ghc -package wx MVC.hs
+</code>
+So, let's have a look at the example.
+
+
+===== Example =====
+
+For the GUI we will use wxHaskell, hiding identifiers that will conflict with 
+names we want to use for our own purposes:
+<code haskell>
+import Graphics.UI.WX hiding (Menu, menu)
+</code>
+For running commands asynchronously we will need ''forkIO'' which runs an IO 
+action in a new thread:
+<code haskell>
+import Control.Concurrent (forkIO)
+</code>
+For communication between the UI and asynchronous processing threads we will
+use Software Transactional Memory (STM), in particular a transactional variable 
+to hold current state of the Model:
+<code haskell>
+import Control.Concurrent.STM.TVar (TVar, newTVarIO, readTVar, readTVarIO, 
+                                    writeTVar)
+</code>
+Operations on ''TVar'' are modelled as STM monad. To have them actually performed
+we need ''atomically'' function which turns an STM action into an IO action:
+<code haskell>
+import Control.Concurrent.STM (atomically)
+</code> 
+
+In the main function of the app we need to:
+
+  * create the initial Model
+  * create and start the View
+  * run the controller function, passing to it the Model and the View
+
+<code haskell>
+main :: IO ()
+main = start $ do
+  v <- view
+  controller initialModel v
+
+</code>
+
+
+==== Model ====
+
+
+Our Model will have two states: Locked and Unlocked, and a counter that counts
+the number of modifications:
+<code haskell>
+data Model = Locked Int 
+           | Unlocked Int 
+           deriving Show
+</code>
+We'll have the model start in Locked state.
+<code haskell>
+initialModel = Locked 0
+</code>
+
+Now we can define transitions between the states. Note that as long as the
+model is pure these will be pure functions. To make it obvious when we refer
+to Model state transitions let's introduce a type alias:
+<code haskell>
+type ModelTransition = Model -> Model
+</code>
+
+We'll have ''lock'' and ''unlock'' transitions toggle between these two states:
+<code haskell>
+lock :: ModelTransition
+lock (Unlocked n) = Locked n
+unlock :: ModelTransition
+unlock (Locked n) = Unlocked n
+</code>
+In addition, an Unlocked model can be modified. We intentionally make this 
+transition slow to demonstrate how asynchronous processing is handled by the 
+View and Controller:
+<code haskell>
+modify :: ModelTransition
+modify (Unlocked n) = Unlocked (slowSucc n 100000000)
+  where slowSucc n 0 = n + 1
+        slowSucc n k = slowSucc n (k - 1)
+</code>
+
+
+==== View ====
+
+We need a representation of View that exposes all its elements that Controller
+might need to access. Here the relevant elements include top-level window,
+the menu items and the model display. The menu items are nested to illustrate
+how hierarchical data structure can help in managing the view representation 
+-- in real application there will dozens of active UI elements and it would be
+awkward to have all of them listed as separate arguments to View datatype
+constructor.
+<code haskell>
+data View = View { mainWindow :: Frame ()
+                 , menu :: Menu
+</code>                 
+We will use a static text control to display the state of the mode:
+<code haskell>
+                 , modelDisplay :: StaticText () 
+                 }
+
+data Menu = Menu { lockItem :: MenuItem () 
+                 , unlockItem :: MenuItem ()
+                 , modifyItem :: MenuItem ()
+                 }
+</code>
+A counterpart to ''ModelTransition'' in the View is ''ViewAction'', which given a 
+Model and a View makes a change to the View:
+<code haskell>
+type ViewAction = Model -> View -> IO ()
+</code>
+
+The atomic view actions we will need in this example are:
+  * disabling/enabling Lock/Unlock/Modify menu items
+  * refreshing model display
+<code haskell>
+enableLockItem :: ViewAction
+enableLockItem _ v = set (lockItem $ menu v) [ enabled := True ]
+disableLockItem :: ViewAction
+disableLockItem _ v = set (lockItem $ menu v) [ enabled := False ]
+enableUnlockItem :: ViewAction
+enableUnlockItem _ v = set (unlockItem $ menu v) [ enabled := True ]
+disableUnlockItem :: ViewAction
+disableUnlockItem _ v = set (unlockItem $ menu v) [ enabled := False ]
+enableModifyItem :: ViewAction
+enableModifyItem _ v = set (modifyItem $ menu v) [ enabled := True ]
+disableModifyItem :: ViewAction
+disableModifyItem _ v = set (modifyItem $ menu v) [ enabled := False ]
+</code>                    
+View will not have a reference to the Model. Instead it will be told by the 
+Controller when the View needs to be refreshed and the Model to be drawn
+will be provided then. Here, the function that will be invoked by the
+Controller is called ''refreshModelDisplay'' and just shows Model's textual 
+representation in the static text control:
+<code haskell>
+refreshModelDisplay :: ViewAction
+refreshModelDisplay m v = set (modelDisplay v) [ text := show m ]
+</code>
+
+Finally, we'll need a device to combine these atomic actions into sequences
+that are themselves ''ViewActions''. Let's define a new operator ''>&>'' to do
+just that:
+<code haskell>
+(>&>) :: ViewAction -> ViewAction -> ViewAction
+a1 >&> a2 = \m v -> do a1 m v; a2 m v
+</code>
+Note that we can pass the input ''m'' and ''v'' to subsequent actions because
+they have no effect on (pure) ''m'' and any side-effects will be reflected
+in GUI elements referenced from ''v''.
+
+The function that creates the view sets up all GUI elements but does not
+define any logic. It returns a ''View'' value in the context of an ''IO'' action.
+<code haskell>
+view :: IO View
+view = do
+</code>
+Our user interface will consist of a window with a menu containing items
+corresponding to each of Model transitions and a text display to show the
+state of the Model.
+<code haskell>
+  mainWindow <- frame [ text := "MVC" ]
+  modelDisplay <- staticText mainWindow []
+  m <- menuPane [ text := "Transition" ]
+</code>  
+We have to ensure that the initial state of the View is consistent with the
+initial state of the Model. Model starts in Locked state, so "Lock" and
+"Modify" menu items have to be disabled:
+<code haskell>
+  lockItem <- menuItem m [ text := "Lock" 
+                         , enabled := False 
+                         ]
+  unlockItem <- menuItem m [ text := "Unlock" ]
+  modifyItem <- menuItem m [ text := "Modify"
+                           , enabled := False
+                           ]
+  set mainWindow [ menuBar := [m] ]
+</code>
+Last but not least, to allow other threads to run we need a dummy timer
+running in the GUI. This is due to a wxHaskell glitch described, among other
+places, here: 
+http://stackoverflow.com/questions/3176682/wxhaskell-asynchronous-updates
+<code haskell>
+  t <- timer mainWindow [ interval := 10, on command := return () ] 
+  return $ View mainWindow 
+                (Menu lockItem unlockItem modifyItem)
+                modelDisplay
+</code>
+
+
+==== Controller ====
+
+So, we now have a Model with its transitions and a View with its actions. The 
+job of Controller is to put these two together, i.e. perform Model and View 
+updates according to user actions. The ''controller'' function is, on the
+face of it, very simple, it just creates a transactional variable to hold the 
+Model, binds actions to UI elements and refreshes the View:
+<code haskell>
+controller :: Model -> View -> IO ()
+controller model view = do
+</code>   
+The Model reference is stored in a transactional variable so that it can be 
+modified by actions running concurrently in different threads.
+<code haskell>
+  modelTV <- newTVarIO model
+  bindGUIActions modelTV view
+  refreshModelDisplay model view
+</code>
+
+That's it.
+
+But what exactly happens in ''bindGUIActions''? Before we get there, let's ponder
+on this combining of Model transitions with View updates we just mentioned. How 
+can this be achieved? What would be the type of this combination (let's call it
+''ModelAndViewUpdate'')?
+
+View updates are IO actions, so the result of the combination would have to 
+yield an IO action. It would act upon a View and a Model. We chose to
+store the model in a ''TVar'', so it would make sense for ''ModelAndViewUpdate'' to
+update this ''TVar'' as opposed to returning the modified Model in the context of 
+IO. It seems we arrived at the following type for ''ModelAndViewUpdate'':
+<code haskell>
+type ModelAndViewUpdate = TVar Model -> View -> IO ()
+</code>
+
+We can now manufacture these ''ModelAndViewUpdates'' from ''ModelTransitions'' and
+''ViewActions'' as follows:
+<code haskell>
+(<@>) :: ModelTransition -> ViewAction -> ModelAndViewUpdate
+(<@>) modelTrans viewAct modelTV view = do
+</code>  
+  * first we atomically apply the transition to the Model stored in ''modelTV'':
+<code haskell>
+  atomically $ do
+    model <- readTVar modelTV
+    writeTVar modelTV $ modelTrans model
+</code>
+  * then invoke the View action passing to it the updated Model:
+<code haskell>
+  model <- readTVarIO modelTV
+  viewAct model view
+</code>
+Note we defined this function as an infix operator ''<@>'', so applying it like
+in ''modelTransition <@> viewUpdate'' will yield a ''ModelAndViewUpdate'' that is a
+combination of these two.
+
+With this in place we can define ''ModelAndViewUpdate''s for each UI action. 
+First let's combine atomic UI operations into complex ones corresponding to the 
+Model transition. For ''unlock'' we will:
+  * enable Lock menu item
+  * disable Unlock menu item
+  * enable Modify menu item
+  * refresh the model display
+  * display an info dialog that the model has been unlocked.
+<code haskell>
+unlockVU :: ViewAction
+unlockVU = enableLockItem >&> 
+           disableUnlockItem >&> 
+           enableModifyItem >&> 
+           refreshModelDisplay >&>
+           \_ v -> infoDialog (mainWindow v) "Unlocked" 
+                              "Warning: the model can now be modified!"
+</code> 
+and the ''ModelAndViewUpdate'' is now quite obvious:
+<code haskell>
+unlockCmd :: ModelAndViewUpdate
+unlockCmd = unlock <@> unlockVU
+</code>
+We can do the same for the remaining two actions (no dialog this time):
+<code haskell>
+lockVU :: ViewAction
+lockVU = disableLockItem >&> 
+         enableUnlockItem >&> 
+         disableModifyItem >&> 
+         refreshModelDisplay
+lockCmd :: ModelAndViewUpdate
+lockCmd = lock <@> lockVU
+
+modifyCmd :: ModelAndViewUpdate
+modifyCmd = modify <@> refreshModelDisplay
+</code>
+
+It's prefreable to have ''ModelAndViewUpdate''s defined in terms of ''<@>'', 
+since it guarantees that the Model updates behave well in muti-threaded
+scenario, but it's not essential -- nothing stops us from defining a value
+of type ''ModelAndViewUpdate'' by hand. If we do this extra care needs to
+be taken to ensure that Model updates don't suffer from race conditions.
+
+We are now ready to bind actions to UI elements.
+<code haskell>
+bindGUIActions :: ModelAndViewUpdate
+bindGUIActions modelTV view = do
+  set (lockItem $ menu view)   [ on command := run lockCmd ]
+  set (unlockItem $ menu view) [ on command := run unlockCmd ]
+  set (modifyItem $ menu view) [ on command := run modifyCmd ]
+  where
+</code>
+What should ''run'' do? Its type signature needs to be 
+''ModelAndViewUpdate -> IO ()'', i.e. ''(TVar Model -> View -> IO ()) -> IO ()''
+which (not less than its name) suggests that it should execute supplied update
+function by passing ''modelTV'' and ''view'' to it. So we could simply do:
+
+    run cmd = cmd modelTV view
+
+and it would work as expected, with one caveat: if cmd was running for a long 
+time it would freeze the UI, because the operation would be executed in the UI 
+thread.
+
+Well, we have imported ''forkIO'' for a reason:
+<code haskell>
+    run cmd = do 
+      forkIO $ cmd modelTV view
+      return ()
+</code>
+Now, note that as a result of this ''forkIO'' we are updating the UI from a
+non-UI thread. This is something most of UI toolkits prohibit. wxHaskell seems 
+more permissive in this respect, but I have not investigated this matter 
+fully. If it turns out that an update needs to be done in the UI thread then 
+it significantly complicates the pattern. A possible solution would involve 
+providing a transactional chanel (''TChan'') from the async thread to the GUI 
+thread to which the async action would write required UI updates. These 
+updates would then be read by a timer handler and applied to the View.
+
+That concludes the example. Try running it and see how the UI actions behave.
+Try, for example, invoking "Modify" or "Lock" while other "Modify" is still
+running.
+
+
+==== Discussion and Disclaimers ====
+
+This, obviously, was a toy example. For real-life applications there is likely
+to be a couple of things which might need to be modified.
+
+For instance, what if Model is not pure? The main thing that will break is 
+''<@>'' operator, since it executes a Model transition in STM monad, and that 
+will not be possible if transition is tainted with IO. One solution will be to 
+use a ''TMVar'' instead of ''TVar'' to store the Model. A value can be taken out
+of ''TMVar'' for the period of processing and then put back in, thus ensuring
+atomicity. This will increase synchronisation between threads but is unlikely 
+to be a problem in practice.
+
+What are the advantages of this pattern?
+
+To me the most immediate benefit is that it imposes a structure on the code
+and defines boundaries which determine where ceratin piece of logic should be
+put. That's the main thing I was trying to achieve in the context of my FIBS
+client app.
+
+Another "structural" benefit is that it provides a decent separation of 
+effectful, impure computations from pure functions. There is no escape from
+IO as far as GUI is concerned and the advantage of MVC is that it is 
+restricted to View and upper layers of Controller.
+
+Finally, as the example hopefully shows, the resulting structure is relatively
+easy to follow, even for FP newbies coming from OO background.
+
+Any disadvantages?
+
+It's easy to see that View data type and the set of atomic ViewActions is
+going to be massive in a non-trivial app. Also all of these enable/disable 
+ViewActions look like boilerplate.
+
+The way ''<@>'' is defined, it is assumed that all UI updates take place after
+Model transition has completed. Sometimes it might be difficult to model the
+domain in such a way that Model and UI updates happen one after another
+and it might be desirable to update UI as the transition happens.
+
+I'm sure I'll discover more once I try to apply this pattern to my app.
+
+And finally, some disclaimers:
+
+As stated, I have not investigated fully the multi-threaded behaviour of 
+wxHaskell. The FAQ at http://www.haskell.org/haskellwiki/WxHaskell/FAQ states 
+that Haskell threads do not work with wxHaskell but does not specify what 
+exactly is broken. My experiments seem to be contradicting that statement, but 
+they might not have been complex enough to expose problems.
+
+Furthermore, I'm new to Haskell and in spite of certain effort which I put 
+into learning this stuff I still don't fully grasp and lack intuition about
+some FP concepts so there might be aspects of this example which can be made 
+more idiomatic or otherwise improved.
+
+
+The raw source of this post can be found [[https://gist.github.com/850698|on Github]].
+
+
+~~DISCUSSION~~

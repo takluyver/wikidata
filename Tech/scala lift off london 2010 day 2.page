@@ -1,0 +1,170 @@
+<- [[tech:Scala Lift Off London 2010, Day 1|Day One]]
+
+====== Scala Lift Off London 2010, Day Two ======
+
+The second and last day of Scala Lift Off did not disappoint. Compared to yesterday, the sessions I attended turned out to be less focussed on presenting concrete projects or results and more on discussing the language features and tools from the position of users discovering them. Overall, less structure, more interaction. 
+
+===== Teasers =====
+
+The day started with half an hour of very short talks by authors of a number of Scala-based projects. Some of them were followed up later in the day by full sessions.
+
+=== Scala Modules by Heiko Seeberger ===
+Heiko presented an internal DSL for referencing OSGi services. It is meant to get rid of the boilerplate required in Java to invoke a service method. After setting up an OSGi ''context'' (which, admittedly, still takes a couple of calls to a factory, a framework etc.), one can invoke a ''hello'' method of a service implementing ''Hello'' interface as follows:
+<code scala>
+context findService withInterface[Hello] andApply { _.hello }
+</code>
+
+=== Lift in a Start-up by Jeppe Madsen ===
+In a short statement Jeppe mentioned the ways in which Scala and Lift proved helpful in developing a web application in a start-up he works for.
+
+=== Lifty by Mads Hartmann Jensen ===
+One of a number of Scala-related Google Summer of Code projects this year involved creating an SBT processor to perform the job similar to Ruby on Rails's ''scaffold'', i.e. to generate a rudimentary web app. Mads presented the result of his work, [[http://lifty.github.com/Lifty/|Lifty]]. In SBT console try:
+<code>
+*lifty is org.lifty lifty 1.3
+lifty create project-blank
+reload
+</code>
+And you should end up with a skeleton of a Lift web app.
+
+=== Minesweeper by Kevin Wright ===
+Indefatigable Kevin shared with us an interesting algorithm for filling in the minesweeper board with the numbers indicating neighbouring mines. The idea is to mark the cells containing mines with 1s and the rest of the board with 0s and then apply a horizontal and veritcal blur:
+<code>
+0 0 1 0
+0 1 0 0
+0 0 0 0
+0 0 0 0
+</code>
+-- horizontal blur ->
+<code>
+0 1 1 1
+1 1 1 0
+0 0 0 0
+0 0 0 0
+</code>
+-- vertical blur ->
+<code>
+1 2 2 1
+1 2 2 1
+1 1 1 0
+0 0 0 0
+</code>
+-- put the mines in ->
+<code>
+1 2 * 1
+1 * 2 1
+1 1 1 0
+0 0 0 0
+</code>
+The implementation of the blur function fitted in a single line of code, thanks to ''sliding'' function on ''Seq''. This was topped up with an [[http://minesweeper.kevwright.staxapps.net|Ajaxy GUI built in Lift]]. The source code of the entire project is [[http://github.com/kevinwright/minesweeper|available on gitHub]].
+
+=== Parboiled Parsing Library by Mathias Doenitz ===
+Mathias presented [[http://parboiled.org|Parboiled]], a parsing library he has written. Originally motivated by the difficulty of debugging ANTLR-generated grammars, Parboiled, like Scala combinator parsers, relies on an internal DSL, but unlike them separates parser construction from execution, which leads to significant speedup. The run time performance is still below that of ANTLR, but a version that will compile the rules into bytecode is being worked on. There is also a Java DSL library available.
+
+===== Session 1: Testing in Scala =====
+
+In the first part of the session Robert Wills presented two approaches he used to test a code dealing with moves of chess pieces: behaviour tests written using Specs and unit regression test taking advantage of ScalaCheck input generators. In the discussion that followed it was noted that ScalaTest offers a superset of Specs functionality with traits supporting various styles of testing.
+
+While Specs and ScalaTest provide functionality roughly corresponding to popular Java tools like JUnit or JBehave, ScalaCheck lends itself to a different style of testing: verification of function invariants. There seemed to be much less familiarity with this style -- and, as a consequence, with the tool -- among the audience.
+
+In the second part Paweł Krupiński spoke about a DSL he built for testing the behaviour of a cell in Conway's game of life:
+<code>
+Alive cell dies when there are more than 3 neighbours
+Dead cell lives when there are 2 or 3 neighbours
+// ...
+</code>
+The above naratives are expressions of the DSL. Given Scala's flexible rules for omitting dots and parentheses, a simple implicit conversion mechanism sufficed to make it work; the first sentence is equivalent to:
+<code scala>
+Alive.cell(dies).when(there).are(more).than(3).neighbours
+</code>
+Paweł mentioned that similar narrative DSL is used by his employer, youDevise, in a commercial project. When compared with approach used by e.g. JBehave, which allows free-form text between keywords, this DSL seems very restrictive, but it remains to be seen how flexible and usable it will prove in the long run.
+
+Paweł's code can be found, as usual, on [[http://github.com/pawelkrupinski/Scala-Test-Narrative|GitHub]].
+
+===== Session 2: Functional Features in Scala =====
+
+Originally entitled "WTF is a Monad?", this talk started with a list of terms, mostly related to the functional features of Scala, whose explanations were sought by the audience. The list roughly went as follows:
+  * monads
+  * partial functions
+  * partial function application and currying
+  * by-name parameters
+  * type classes
+  * self types
+  * implicit conversion
+Kevin Wright and Jon Pretty attempted to explain most of these concepts, with Robert Wills and Phil((Surname escaped me -- my apologies for this, please let me know at //maciek at mmakowski dot com// if you happen to know the full name and I will be happy to correct these notes.)) helping with Monads.
+I have to admit that none of the multitude of monad explanations I have read, heard or seen before ever managed to convey the benefits these entities provide in terms I would understand, and the attempts made here did not improve this sad state of affairs. I still have some hope ([[http://github.com/leithaus/XTrace/tree/monadic|Greg Meredith's book]] perhaps?), but for now will have to remain in the dark. As to the other features, most of them are well explained in //Programming in Scala//, but it was still good to have the memory refreshed.
+
+===== Session 3: Scala for High Performance and Grid Computing =====
+
+Unlike most of the other sessions I attended, which have been mainstream, with twenty-plus people in the audience, this one was a niche talk where Chi Lang Ngo, Olle Kullberg and myself exchanged thoughts on how Scala can help with implementing distributed calculations on a grid. An interesting application of large-scale data processing suggested by Chi Lang was mining GitHub or other source code repository data to trace how coding styles have been changing over time and where the influences came from. The ideas discussed included:
+  * a Scala-based DSL for describing computations that would lend itself to automatic parallelisation (insipired by LINQ)
+  * generalising parallel collections to distributed collections (possibly on top of Hadoop)
+  * a DSL for describing DAGs of calculation dependencies, where the code to be executed in every vertex can be defined in-line and sent over to a node in the grid
+  * using remote actors and pitfalls in hiding distribution of calculations from the programmer
+
+===== Session 4: Type Classes, Dependency Injection, Cake Pattern =====
+
+The session started with Jon Pretty showing how type classes help with code reuse. His ''Mathematics'' module contained type classes for magmas, monoids, groups, rings and fields and then defined implementations of these type classes on standard numeric types. He went on to define a ''Complex'' parameterised by a field and a function that given and evidence that type ''T'' is a field provides evidence that ''Complex[T]'' is a field:
+<code scala>
+implicit def complexIsField[T](implicit base: Field[T]): Field[Complex[T]] = 
+             new Field[Complex[T]] {
+  def add() = ...
+} 
+</code>
+Finally, he defined quaternions as ''Complex[Complex[T]]'':
+<code scala>
+class Quaternion[T](x: T, i: T, j: T, k: T)(implicit val b: Field[T]) 
+      extends Complex[Complext[T]](Complex[T](x, i), Complex[T](j, k))
+                                  (complexIsField[T])
+</code>
+The elegance of this example ows not less to the coherence of mathematical concepts being modelled than to the language they are modelled in.
+
+In the second part of the session Jon and Iulian Dragos have shown the Scala way of specifying dependencies of classes/or traits and injecting them. The approach advocated by Iulian was to have the dependencies expressed as the traits listed in the self-type. The sample below should illustrate this idea:
+<code scala>
+trait DatabaseConf
+
+trait Model { this: Model with DatabaseConf =>
+  // Model depends on DatabaseConf
+}
+
+trait View { this: View with Model => 
+  // View depends on Model
+}
+
+trait Controller { this: Controller with View with Model => 
+  // Controller depends on View and Model
+}
+
+trait LiveDatabaseConf extends DatabaseConf
+trait TestDatabaseConf extends DatabaseConf
+
+// this is where the dependency injection takes place; the required traits
+// are mixed into application instances:
+object LiveApp extends Model with View with Controller with LiveDatabaseConf
+object TestApp extends Model with View with Controller with TestDatabaseConf
+</code>
+
+This way of specifying dependencies is much closer to the module system of Standard ML than to typical Java dependency injection as done by e.g. Spring. The "cake pattern", as far as I understood the explanation, provides an alternative that would be more familiar to Java programmers. Say, ''Model'' and ''Controller'' both require an instance of a ''Database'':
+<code scala>
+trait Model {
+  val db: Database
+}
+
+trait Controller {
+  val db: Database
+}
+
+object App extends Model with Controller {
+  // the Database object is constructed here and can be used by 
+  // the code defiend in Model and Controller:
+  val db = new Database()
+}
+</code>
+(Note: the above is not a full example of cake pattern, just one of its mechanisms for injecting dependencies.)
+
+In response to questions from the audience regarding type-based auto-wiring ''implicitly[DatabaseConf]'' has been suggested as a solution but no concrete examples have been provided and it's not clear whether using it in a real-wrold application wouldn't prove cumbersome.
+
+===== Wrap Up: The Three Kings =====
+
+The conference ended in a charming little Clerkenwell pub with the first couple of rounds on SkillsMatter. Landlord and Black Sheep ales, a real jukebox playing vinyl singles and the company of fellow scalarians provided a fitting close to inspiring two days. I'm already looking forward to Scala LiftOff London 2011.
+
+{{tag>it scala conference}}
