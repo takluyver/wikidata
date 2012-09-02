@@ -1,8 +1,8 @@
-===== Explanation =====
+## Explanation
 
 TODO
 
-===== Uses =====
+## Uses
     * [Distributed computation](http://code.google.com/p/swarm-dpl/)
     * [Web interaction as easy as interactive console scripts](http://okmij.org/ftp/continuations/Fest2008-talk-notes.pdf)
 

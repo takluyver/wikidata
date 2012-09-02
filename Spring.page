@@ -1,6 +1,6 @@
 
 
-===== Namespace resolution in context XML =====
+## Namespace resolution in context XML
 
 Spring config can be extended with custom elements -- see [Appendix D](http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/extensible-xml.html) of the docs. Spring does not normally download XSDs from the web but looks for all ''META-INF/spring.schemas'' files on classpath and from them extracts mappings from URLs to classpath locations. E.g. if we use the following namespaces:
 

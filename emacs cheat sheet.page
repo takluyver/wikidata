@@ -1,16 +1,16 @@
-==== Navigation ====
+### Navigation
 
    * Go to line ''M-g-g''
 
-==== Selection ====
+### Selection
 
    * Select all ''C-x h''
 
-==== Search/Replace ====
+### Search/Replace
 
    * Regexp replace: ''M-x replace-regexp''
    * New line in search/replace string: ''C-q C-j''
 
-==== Window size ====
+### Window size
 
    * increase height: ''C-x ^''

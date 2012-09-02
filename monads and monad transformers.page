@@ -22,7 +22,7 @@ type classes -- like Java interfaces. Specify signatures, but also imply (unchec
 
 allow to have a common abstraction of a certain behaviour for various types
 
-=== Functor ===
+#### Functor
 
 class Functor f where
   fmap :: (a -> b) -> f a -> f b
@@ -31,7 +31,7 @@ laws:
 * identity
 * composition
 
-=== Applicative ===
+#### Applicative
 
 <code haskell>
 class (Functor f) => Applicative f where
@@ -52,7 +52,7 @@ choosing the implementation (e.g. ZipList vs. cross-product): newtype ZipList a 
 
 example of Functor that is not Applicative: Map String (how would we implement pure?)
 
-=== Alternative ===
+#### Alternative
 
 moverride <|> lookup k dict <|> mdefault
 parseDate <|> parseNumber   <|> parseString
@@ -65,7 +65,7 @@ laws:
 * identity
 * associativity
 
-=== Monoid ===
+#### Monoid
 
 Appending:
 
@@ -86,7 +86,7 @@ laws:
 * identity
 * associativity
 
-=== Why these particular names? ===
+#### Why these particular names?
 
 two dimensions:
 
@@ -95,7 +95,7 @@ common   <--> precise
 
 the audience for haskell were computer scientists and mathematicians, so very abstract and very precise words were chosen.
 
-=== Monad ===
+#### Monad
 
 Propagating failure:
 
@@ -155,7 +155,7 @@ eval (Add l r) = do
   return (l' + r')
 eval (Mul l r) = ...
 
-=== MonadPlus ===
+#### MonadPlus
 
 class Monad m => MonadPlus m where
   mzero :: m a
@@ -168,7 +168,7 @@ laws:
 
 -- the same as Alternative
 
-=== Calculator example ===
+#### Calculator example
 
 data Op = AC | Add Double | Sub Double | ...
 
@@ -206,7 +206,7 @@ type Calc a = StateT Double (WriterT [Double] Maybe) a
 runCalc :: Calc Double -> Maybe (Double, [Double])
 runCalc c = runWriterT (evalStateT c 0)
 
-=== Monad Transformer Library (MTL) ===
+#### Monad Transformer Library (MTL)
 
 newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
 

@@ -2,7 +2,7 @@
 
 Compared to [last year's LiftOff](tech:scala_lift_off_london_2010_day_1), which was an un-conference pretty much all the way, this year's is split into morning, structured sessions, and afternoon open spaces resembling 2010 format. As usual, I tried to jot down the more interesting points from the day. The below is by no means a complete record and definitely suffers from insufficient editing and research (no time for that, sorry!). With this disclaimer out of the way:
 
-===== David Pollak's Keynote =====
+## David Pollak's Keynote
 
 David started off by -- actually, having arrived late I'm not exactly sure what he started with, but the key points of his talk can be summarised as: 
 
@@ -12,11 +12,11 @@ David started off by -- actually, having arrived late I'm not exactly sure what 
 
 After the keynote the conference split into three tracks, of which I picked the one with what looked like the most challenging content.
 
-===== Miles Sabin: Scala Coroutines and Generators =====
+## Miles Sabin: Scala Coroutines and Generators
 
 Miles has a history of presenting interesting research results based on his in-depth understanding of the type system and language features. This time he showed an implementation of two constructs -- coroutines and generators -- using Scala's delimited continuations.
 
-==== Classification of continuations ====
+### Classification of continuations
 
 The continuations can be classified along two axes:
 
@@ -25,7 +25,7 @@ The continuations can be classified along two axes:
 
 Full continuation support is common (''call/cc'' in Lisp, ''setjmp/longjmp'' in C, also Smalltalk, ML); until recently not possible on JVM because we have not had access to the runtime. Continuations are primarily used for defining higher-level control constructs like concurrency constructs and exception handling. They offer a lot more in typed setting, but Miles didn't go into the details this time round.
 
-==== Continuations in Scala ====
+### Continuations in Scala
 
 ''shift''/''reset'' -- delimited continuation via localised CPS transformation; the transformation allowed it to run efficiently on a standard JVM (no longer that relevant, with JVM coroutines effort, on which later)
 
@@ -34,7 +34,7 @@ Full continuation support is common (''call/cc'' in Lisp, ''setjmp/longjmp'' in 
 
 ''shift'' must be enclosed within a corresponding ''reset'' -- this is enforced by the compiler using effect system encoded in types. The entire functionality is provided by a compiler plugin which has to be explicitly enabled: ''scala -P:continuations:enable''.
 
-==== Coroutines ====
+### Coroutines
 
 Coroutines are an imperative control structure: subroutines with multiple entry and exit points. They interleave computations, can replace threads in some situations, but without parallelism -- iterleaving is performed sequentially. They are an useful abstraction for event-drive, asynchronous network applications.
 
@@ -81,7 +81,7 @@ def yld: Unit @cps[Trampoline] = ... // invokes shift
 
 the type of ''yld'' guarantees it can only be called inside coroutine -- Unit with ''@cps'' annotation is not a subtype of Unit without the annotation.
 
-==== Generators ====
+### Generators
 
 Generators encapsulate production of a sequence of values lazily. They are the primary means used by Python for lazy iterators, there is even a framework, Twisted, which based its concurrency model on generators.
 
@@ -113,7 +113,7 @@ Some interesting points:
 
 The implementation is very similar to coroutines. Generators completely hide the continuations; a library can expose a generator and its user doesn't need to know anything about the CPS transformation.
 
-==== Limitations ====
+### Limitations
 
 Scala delimited continuations have a number of serious limitations:
 
@@ -142,7 +142,7 @@ Scala ''for'' is desugared into method calls, but these are not CPS-aware!
 
 Finally, the behaviour of transformed code can be hard to reason about: e.g. our ''fib'' looks like we should be able to annotate it with ''@tailrec'', but in fact the compiler will complain, because it doesn't look to it like it is tail-recursive after the CPS transformation is performed! This is puzzling, given the fact that by definition CPS code is tail-recursive, but shows that even the compiler can get confused by the transformation.
 
-==== JVM Coroutines ====
+### JVM Coroutines
 
 The limitations of JDK with respect to interesting control flows are addressed by a patch on OpenJDK created by Lukas Stadler as a part of Da Vinci Machine Project. It offers direct support for coroutines and generators through library additions and JIT-level modifications, but with no bytecode changes. This is implemented via stack manipulation -- a hybrid of stack copying and spaghetti stack.
 
@@ -170,7 +170,7 @@ parser.parse(
 
 As mentioned before, this can't be done with Scala continuations because ''startElement'' is not CPS-aware.
 
-===== Phil Bagwell: Lock-Free Resizable Concurrent Tries =====
+## Phil Bagwell: Lock-Free Resizable Concurrent Tries
 
 In an enthusiastic, crazily paced talk, Phil, who works with Alex Prokopec and Tiark Rompf at EPFL, has shown us some serious data structure/algorithm/bit twiddling results. His motivation was to create a data structure that is suitable for highly parallel:
 
@@ -179,7 +179,7 @@ In an enthusiastic, crazily paced talk, Phil, who works with Alex Prokopec and T
   * sparse arrays
   * convergence algorithms
 
-==== Hash Tries ====
+### Hash Tries
 
 The presentation relied heavily on diagrams, so sadly these textual notes do not capture his points effectively, but I'll try anyway:
 
@@ -203,7 +203,7 @@ Some bit-twiddling was required to interpret the bitmap.
 
 In practice, 32 fan out in every node turned out to be a good match for CPU cache line sizes; the trade off for the distance to go between items versus making a copy of a part of the trie gave optimal results at this node size.
 
-=== Making it Concurrent ===
+#### Making it Concurrent
 
 How do we make our trie concurrent? For scalability in the presence of massive concurrency we want to avoid locks. //Compare-and-swap// instruction is a well-known alternative: ''CAS(address, expected_value, new_value): bool'' is na "optimistic lock", and is available on the JVM and natively in Intel processors. Sample usage:
 
@@ -231,11 +231,11 @@ With that out of the way, the problem now is that deletion can't compress levels
 
 In the end, ensuring lock freedom took most of the time spent working on this data structure.
 
-=== Scalability ===
+#### Scalability
 
 Phil presented a number of plots comparing CHT with alterantive hash map implementations. While it appeared to scale very nicely on 8-way system, it really shone on a 64-core systems. In particular, it had a huge advantage over alternatives for insertions on 4x 8-core i7, this was due to peculiarities of this particular architecture.
 
-=== Snapshots ===
+#### Snapshots
 
 Additional work allowed the tries to be snapshot, in constant time:
 
@@ -245,7 +245,7 @@ val sn = cht.snap
 
 This allows the program to carry on modifying ''cht'' while ''sn'' continues to represent the state of the trie when the snapshot was taken. Its uses involve massively parallel computations, e.g. fluid flow analysers, monte carlo simulators and resource optimisers. 
 
-==== Fast Hash Functions ====
+### Fast Hash Functions
 
 The second part of Phil's talk circled around "the best function he has ever written", which turned out to be a hashing function.
 
@@ -289,15 +289,15 @@ Performance results and statistical properties are encouraging:
 
 The hypothesis on why 64 runs faster is that it is a result of the layout of registers in x86 processor.
 
-==== Kojo ====
+### Kojo
 
 With a couple of minutes left, Phil did a quick demo of [Kojo](http://kogics.net/sf:kojo) -- a learning environment, which turned out to be a very effective presentation tool for Phil's job as the marketing manager for TypeSafe. The environment indeed looks like an excellent learning aid.
 
-===== Park Bench/Fish Bowl =====
+## Park Bench/Fish Bowl
 
 After the lunch break there was a "park bench" session, where delegates took turns to sit at the centre and discuss Scala-related topics. The beer, handed out before the session, was meant to encourage more vigorous discussion, but on me it only had the effect of inducing drowsiness, which meant I have not remembered much of what has been discussed.
 
-===== Ad-hoc Sessions =====
+## Ad-hoc Sessions
 
 Finally, the delegates assembled into groups to discuss specific subjects, among them "Scala in production", "Kojo" and "parser combinators". I sat through the Kojo session presented by Phil Bagwell, and had a chance to catch up with him afterwards. Phil is a captivating speaker; it is really curious that I don't recollect his name ever being mentioned in numerous Scala discussion groups that I follow. He definitely seems to be at the centre of the Scala library optimisation work and can talk for hours about how large customers such as LinkedIn drive the optimisation effort, how distributed collections are going to differ from parallel collections, how language virtualisation enables "concurrency for the masses" and what challenges taking it further, into virtual hardware and cloud, poses. As a speaker Phil reminds me of Simon Peyton Jones, which is about as good as it can get. Another name to look for when skimming conference speaker lists.
 

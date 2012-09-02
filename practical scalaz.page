@@ -2,7 +2,7 @@
 
 Chris Marshall, 14/9/2011
 
-===== How to navigate the library =====
+## How to navigate the library
 
 We always need these:
 
@@ -11,7 +11,7 @@ import scalaz._
 import Scalaz._
 </code>
 
-==== Where are the useful methods? ====
+### Where are the useful methods?
 
 Kinds:
   * A ~> Identity[A]
@@ -27,11 +27,11 @@ Data Types:
   * Validation
   * NonEmptyList
 
-==== Typeclasses ====
+### Typeclasses
 
 uses implicit to inject behaviour into existing types
 
-=== Example ===
+#### Example
 
 <code scala>
 trait Each[-E[_]] {
@@ -49,7 +49,7 @@ implicit def OptionEach: Each[Option] = new Each[Option] {
 
 Useful typeclasses:
 
-=== Monoid ===
+#### Monoid
 
 ''|+|''
 
@@ -87,7 +87,7 @@ val ny: Filter = (_ : TradingPosition).sym.id endsWith ".O"
 positions filter (london |+| ny)
 </code>
 
-=== Semigroup ===
+#### Semigroup
 
 The associative op part of monoid.
 
@@ -96,17 +96,17 @@ To create a semigroup instance all we need to do is:
 implicit val MoneySemigroup: Semigroup[Money] = semigroup(_ add _)
 </code>
 
-=== Identity ===
+#### Identity
 
 The zero part of monoid.
 
-==== Wrappers ====
+### Wrappers
 
 cosistently named operations:
 ''Option[A] | A'' == get/or/else
 etc.
 
-==== Endo ====
+### Endo
 
 <code scala>
 Endo is a function:
@@ -143,7 +143,7 @@ true ?? res0 apply 2.3
 -2.3
 </code>
 
-===== Killer app: Validation =====
+## Killer app: Validation
 
 a version of ''Either''. But better, because if you have a method calling a method you don't end up with ''Either[Either[...]]'', it is flattened.
 
@@ -171,15 +171,15 @@ Can be used wherever we'd use checked exceptions. The type describes everything 
 
 more examples: https://gist.github.com/970717
 
-==== Other examples of Applicative usefulness ====
+### Other examples of Applicative usefulness
 
 * Promise (roughly equivalent to Future)
 
-===== What Else =====
+## What Else
 
 A lot more: Writers, REaders, IO, Typesafe equals, Lenses... not all understood, but the usefulness of the parts which we do understand bodes well.
 
-===== Questions =====
+## Questions
 
 Q: Converting legacy code to Validation?
 A: I don't tend to do it.

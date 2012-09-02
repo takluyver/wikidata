@@ -4,7 +4,7 @@ Best explanation found on the web: [http://bartoszmilewski.wordpress.com/2011/01
 
 Also, the notes from Haskell Hoodlums session on [monads and monad transformers]() might be helpful.
 
-===== Functors =====
+## Functors
 
 Functor instance is a type constructor with one type parameter (i.e. of kind ''* -> *'') that allows mapping over itself:
 
@@ -20,7 +20,7 @@ and obeys the following two laws:
 
 ''fmap'' works not only on //containers// (i.e. data structures) but also on //computations// (IO, (a ->)). When we write ''fmap f'' (where ''f :: a -> b'' we **lift** ''f'' to work with values of any functor ''F'' (''F a'' and ''F b'') instead of plain ''a'' and ''b''.
 
-===== Applicative Functors =====
+## Applicative Functors
 
 Functors which allow applying functions to values, both of which are "wrapped" by the functor, using ''<*>'' function; like ''fmap'', but operating on "functorised" functions istead of bare ones:
 
@@ -50,7 +50,7 @@ The motivation for introducing this abstraction is decribed in the [original pap
 
 As an aside, there are many ways in which a given data type can be ''Applicative''; for instance the default instance of ''Applicative'' for lists has ''<*>'' which produces all combinations of functions in the left list with arguments in the right one, but there is also a ''ZipList'' (in ''Control.Applicative'') which zips functions with arguments.
 
-===== Monads =====
+## Monads
 
 Monads are applicative functors which support the following additional operation (pronounced //bind//):
 
@@ -83,7 +83,7 @@ Laws:
   - **right identity**: ''m >>= return == m''
   - **associativity**: ''m >>= f >>= g == m >>= (\x -> f x >>= g)''
 
-==== do notation ====
+### do notation
 
 To make writing code involving nested binds easier, Haskell provides ''do'' notation:
 

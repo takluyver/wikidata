@@ -2,31 +2,31 @@
 
 After the success that [Scala LiftOff London 2010](tech:scala_lift_off_london_2010_day_1) was I didn't hesitate long before signing up for a number of other Scala amd functional programming events hosted by Skills Matter. The first of them was Functional Programming Exchange. Below are notes from most of the sessions of this one-day conference.
 
-===== Managing Parallelism - Embrace Diversity =====
+## Managing Parallelism - Embrace Diversity
 
 The event started with **Simon Peyton Jones** discussing the importance of parallel computing, how different problems call for different approaches and how functional languages (and Haskell in particular) are well suited for the task.
 
-==== Task Parallelism ====
+### Task Parallelism
 
 For applications which require not so much parallelism (i.e. usage of multiple processors to improve performance) as concurrency (the problem involves multiple threads of execution), e.g. GUIs, web servers or BitTorrent clients, shared memory and threads are a convenient model. Haskell offers "green" threads (spawned using ''forkIO'' function) which are very lightweight, allowing a commodity machine to run millions of them. The infamous difficulty of writing correct multi-threaded programs is largely due to commonly used synchronisation primitive: lock. The solution offered here is Software Transactional Memory: sections of code which operate on shared variables are wrapped in ''atomically'' function, which attempts to commit the transaction and rolls back and retries if conflicts are discovered. Transactions don't protect threads from starvation, but they prevent deadlocks and livelocks and can be composed.
 
 While the threaded model and shared memory might seem inherently imperative, Haskell shows its strength here by enforcing (by means of ''STM'' monad) separation of the state which needs to be handled in transactional manner from the rest of the program and ensures that transaction logging and rollback affects the minimal number of variables. This is key for performance; Microsoft tried to introduce STM to .Net but had to abandon the efforts because the runtime cost of transactions was too high in an imperative setting.
 
-==== Distributed Memory ====
+### Distributed Memory
 
 A parallel computation model which received a lot of attention in recent years is that of actors -- independent processes which don't share any memory and communicate via asynchronous messages. A Haskell library that implements this functionality is currently being worked on as a part of a research project. One of the obstacles that had to be overcome was determining when the function sent to remote actor for execution can be serialised, given that it can close over non-serialisable values from the enviornment. A new paper discussing the solution to this problem should appear on [Simon's web page](http://research.microsoft.com/en-us/people/simonpj/#current) shortly. Apparently the implementation already works well enough for the researchers to be able to experiment with running K-means clustering in map/reduce style on Amazon's EC2.
 
-==== Functional Parallelism ====
+### Functional Parallelism
 
 Certain functions, like ''map'', parallelise naturally. In Haskell this can be done semi-implicitly: one has to change ''map'' to ''parMap'', but that's the only change required in order to take advantage of multiple cores -- that is, assuming the program was written so that ''map'' was at the heart of processing in the first place. This approach doesn't scale beyond a single machine and the speed-ups are relatively small, but it can be achieved very cheaply, by simply replacing one function with another. In certain scenarios these modest speed-ups are worth pursuing: for example [Cryptographic Protocol Shapes Analyzer](http://hackage.haskell.org/package/cpsa) often takes hours to run, so 3x improvement is noticeable.
 
-==== Data Parallelism ====
+### Data Parallelism
 
 A property that enables ''map'' to be parallelised is independence of pieces of data on which it operates. This is a key to using multiple cores at large scale: being able to split the data into chunks and perform computations in parallel. As an illustration we have been shown an example of face-recognition software, which used a pipeline of functions to process an array of data. Using [Accelerate](http://hackage.haskell.org/package/accelerate) Haskell library then allowed to transform this program to take advantage of GPU simply by replacing type ''Array a b'' with ''Acc (Array a b)''. ''Acc (Array a b)'' represents a syntax tree of a program returning ''Array a b''. This syntax tree can be passed to ''CUDA.run :: Acc a -> a'' function that based on the syntax tree generates code that can be run on CUDA-capable NVIDIA GPUs. Fascinating as it was, the example did not make it clear how this approach differs from functional parallelism and how it enables scaling beyond what was possible with ''parMap''.
 
 In most of data-parallel solution implemented so far (map/reduce, MPI) the parallelisation takes place in a single place: the data is split into chunks and then a sequential computation is run for each chumk. Another approach would be to let the computations resulting from partitioning the data be parallelised further. The cost model for nested data parallelism is terrible, but not all hope is lost: Guy Blelloch proposed transforming nested programs to flat ones at compile time. This technique involves a number of open problems and is still an area of active research.
 
-==== Conclusion ====
+### Conclusion
 
 All succesful parallel processing solutions implemented to date have been done in a declarative fashion. Simon believes FP has a chance to become huge, because it's the only way to solve this problem. Haskell has a well-established support for threads synchronised using STM; support for other modes of parallelism is still in early phases but we can expect some new developments in the course of this year.
 
@@ -34,7 +34,7 @@ Merits of the talk aside, Simon proved that he is not only an FP legend but also
 
 [Video](http://skillsmatter.com/podcast/scala/talk-by-haskell-expert-simon-peyton-jones)
 
-===== Functional Web =====
+## Functional Web
 
 **Sadek Drobi** of [Zenexity](http://www.zenexity.fr/) presented how FP support in Scala influenced the design of [Play web framework](http://www.playframework.org/). As an example, it turned out that exceptions are not a good model for undesired HTTP responses, because these responses are valid (and frequently occuring) results as opposed to exceptional cases. A mechanism to make this explicit was a form ''Either'' type, which could then be processed using ''for'' comprehensions (a.k.a "monadic syntax") as if the desired scenario happened:
 <code scala>
@@ -50,7 +50,7 @@ Overall, while the use of ''Either'' for error processing could have been enligh
 
 [Video](http://skillsmatter.com/podcast/scala/talk-by-sadek-drobi)
 
-===== F# in the Enterprise =====
+## F# in the Enterprise
 
 After the first two talks the conference split into two tracks. Faced with a choice between **David Pollak's** //[Lift](http://liftweb.net/)// talk and **Simon Cousin's** //F# in the Enterprise//, I opted for the latter; the ways in which FP makes it's way into industry seemed more interesting than a web framework which I have already had a chance to hear about.
 
@@ -76,7 +76,7 @@ The talk was excellent. It did not assume any prior knowledge of either F# or en
 
 [Video](http://skillsmatter.com/podcast/scala/fsharp-in-the-enterprise)
 
-===== BlazeHtml =====
+## BlazeHtml
 
 The next split-track slot offered the choice between **Jonas Bonér's** and **Viktor Klang's** //[Akka](http://akka.io/)// and //[BlazeHtml](http://jaspervdj.be/blaze/)// by **Jasper van der Jeugt**. I've heard an extended version of the Akka talk the day before so went to hear Jasper explaining the challenges of HTML generation.
 
@@ -119,7 +119,7 @@ Thanks to laziness, actual computation of each representation of the HTML string
 
 [Video](http://skillsmatter.com/podcast/scala/blazehtml-a-blazingly-fast-html-combinator-library)
 
-===== Client-Based Web Apps in F# with WebSharper =====
+## Client-Based Web Apps in F# with WebSharper
 
 After two split sessions the tracks merged for **Adam Granicz's** presentation of [WebSharper](http://www.websharper.com/) -- a [GWT](http://code.google.com/webtoolkit/)-like system for developing both server and client-side web app code in F#.
 
@@ -138,7 +138,7 @@ Not working daily on web applications I might be biased against frameworks and t
 
 [Video](http://skillsmatter.com/podcast/scala/talk-by-adam-granicz)
 
-===== VSLab Plugin - Extending Visual Studio Interactively =====
+## VSLab Plugin - Extending Visual Studio Interactively
 
 A break was followed by a series of three short talks. Twenty minutes for each was very tight and all three presentations seemed rushed, with the speakers talking unusually fast and running over their allocated time slots.
 
@@ -146,26 +146,26 @@ The relay race started with **Antonio Cisternino** showing his work on a Visual 
 
 [Video](http://skillsmatter.com/podcast/scala/talk-by-antonio-cisternino-more-information-coming-soon)
 
-===== F# on the Server Side =====
+## F# on the Server Side
 
 **Tomáš Petříček** is a recognisable figure in F# community, with [a book](http://www.manning.com/petricek/) on functional .Net published by Manning and StackOverflow reputation [close to 40k](http://stackoverflow.com/users/33518/tomas-petricek). His talk focused on the features of F# which make it well suited for server-side development -- in this instance "server" meaning a "web server". Two solutions presented were asynchronous workflows, which provide a convenient syntax for event-based programming style (which seems to be another name for [continuation-passing style](http://en.wikipedia.org/wiki/Continuation-passing_style)) familiar from [Node.js](http://nodejs.org/), and Erlang-like agents -- a popular topic, mentioned earlier on the day in Simon Peyton Jones's and Jonas Bonér talks. These approaches were illustrated by a web proxy (using asynchronous workflows) and a cache (implemented as an agent).
 
 [Video](http://skillsmatter.com/podcast/scala/talk-by-tomas-more-info-coming-soon)
 
-===== Scrap Your Boilerplate with Scala =====
+## Scrap Your Boilerplate with Scala
 
 **Miles Sabin**, known mostly from his work on [Scala IDE for Eclipse](http://www.scala-ide.org/), attempted to show how a result from a [classic paper](http://research.microsoft.com/pubs/67439/gmap3.pdf) by Ralf Lämmel and Simon Peyton Jones can be translated from the setting it was originally presented in, Haskell, to Scala. It was an ambitious endavour, involving first presenting a problem which would clasically be solved using either a visitor (OO), or structural recursion and pattern matching (FP), explaining how these approaches are not extensible and lead to boilerplate code and then showing a solution based on encoding of Haskell's type classes in Scala. Despite the talk running for 45 instead of planned 20 minutes I found it difficult to follow the details of the solution. A shame, as it (undoubtedly) demonstrated the elegance afforded by expressive type systems. It seems like my "to read" list will grow by another paper.
 
 [Video](http://skillsmatter.com/podcast/scala/talk-by-scala-expert-miles-sabin)
 
-===== Pizza and Beer =====
+## Pizza and Beer
 
 <img src=":tech:fpx2011.jpg" alt="evasedropping on Simon Peyton Jones and Miles Sabin. Photo by Chi Lang Ngo" class="photo-right"></img>
 As soon as Miles finished (and half an hour after the planned end of talks) we have been treated to pizza and beer, which were, fortunately, still warm and cold (respectively). This was an excellent opportunity to evasedrop on Simon Peyton Jones and Miles Sabin discussing how type checking is the most widely applied formal method and how it is important to not discourage programmers from using it by making type systems overly complicated (read: [dependent types](http://en.wikipedia.org/wiki/Dependent_type) and variance(?) polymorphism are not coming to Haskell anytime soon).
 
 A park bench panel discussion was planned after the refreshments, but due to lack of significant interest and late hour all further discussion has been moved to
 
-===== The Crown Tavern =====
+## The Crown Tavern
 
 Skills Matter reserved an area upstairs where we could discuss the events of the day, analyse the origins of Australian animals' poisonousness, solve some circuit design problems and exercise other forms of socialising. I also had a chance to learn by the way of organoleptic testing that Sharp's I.P.A. is much better than whatever bitter they might have had at The Crown, and, trivial as it might be, to me that was the most readily applicable lesson from 2011 Functional Programming Exchange.
 

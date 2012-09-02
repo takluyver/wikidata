@@ -2,7 +2,7 @@
 
 I've attended a day full of Scala-related talks at Scala Exchange 2011, and, as was the case with the previous events organised by SkillsMatter, I felt that relating what was said and what my impressions were will help me digest all the new pieces of information. So, here it goes.
       
-===== State of Scala =====
+## State of Scala
 
 In the keynote talk **Martin Odersky** explained how his perception of usefulness of functional programming in the real world shifted from a good fit for XML manipulation to concurrent and parallel computing. Most of the time was spent on explaining how persistent (i.e. immutable) collections provide a good model for implicit parallelism. Starting from a concise solution to a [phone number to sentences encoding problem](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.113.1831&rep=rep1&type=pdf), Martin showed how the parallel collections introduced in Scala 2.9 make it possible to take advantage of multiple cores with minimal code changes; all it took was changing the type of a word list from ''List[String]''to ''ParVector[String]'' and calling ''par'' method on a range to obtaine 2.5x speed-up on a four-core machine. According to Martin, this is a major step towards solving the [Popular Parallel Programming](http://www.nitrd.gov/subcommittee/hec/materials/ACAR1_REPORT.pdf) challenge. At the first glance, it might seem like this sort of parallelisation could be done in a way that is transparent to the users of the collections. Unfortunately, this is not the case; for instance, users of ''Seq'' expect the order of processing elements to be stable, but ''ParSeq'' cannot guarantee this. Because of that, Scala's collection hierarchy has been expanded to support ''General*'' traits, which are used as a base for sequential (as in Scala 2.8) and parallle (''Par*'') collections. A natural next step for implicit parallelism would be to scale the collection operations out to multiple nodes. Arguably the most popular model for distributed computing nowadays is map/reduce, first popularised by Google and made widely available by Apache Hadoop. However, some problems require hundreds of map/reduce steps and Martin's hope is that putting collection abstractions on top of map/reduce can make distributed computation accessible to the wider developer community.
 
@@ -12,7 +12,7 @@ Carrying on the subject of parallelism, Martin accepted that neither parallel co
 
 Mentioned among other plans for the future were a common framework for querying collections and databases (Linq for Scala?), libraries for Scala reflection and for reactive programming and improvements to Scala.NET. Other ideas being explored but not being commited to yet are including scala.io in the core library, a way of encoding information about side effects in the type system and a Scala to JavaScript translator. Modularisation of Scala library is being looked at, but given past failed efforts Martin is not overly optimistic this will be delivered any time soon.
 
-===== Eclipse IDE for Scala =====
+## Eclipse IDE for Scala
 
 After the break **Martin** returned to the stage to show how his initial commercial venture, //Scala Solutions//, attempted to improve the tool support for Scala by taking over the development of Eclipse IDE for Scala. While the Scala support in IntelliJ IDEA was getting significantly better with each release, the Eclipse plug-in, suffering from lack of commercial support and limited number of contributors, was lagging behind and the popular opinion was that it is inadequate for any serious work. The involvement of Scala Solutions was meant to change this: Eugene Vigdorchik joined from JetBrains to provide IDE experience, Iulian Dragos became the project lead while Martin became involved in modifying the compiler to suit the requirements of the IDE.
 
@@ -22,7 +22,7 @@ The chosen architecture was to run the compiler in a separate thread which would
 
 I did make a couple of attempts at using Scala IDE for Eclipse. The last one was about a year ago and after another disappointment I settled on Emacs+Ensime. The result of Scala Solutions' work look promising indeed, and while it still seems to be behind IntelliJ in terms of features and reliability (Martin's demo of working with the scala compiler itself didn't go particularly smoothly, to put it mildly), it is getting there and deserves a serious look. Coming up are integration with SBT builder, an improved REPL and proper Scala debugger -- as a long time Eclipse JDT user I plan to watch the development of this plug-in closely.
 
-===== Scalaz - Get Functional =====
+## Scalaz - Get Functional
 
 Scalaz provides hard-core functional programmers with the tools they are used to from Haskell: a hierarchy of type classes an their instances for standard Scala types. **Jason Zaugg**, one of the most active committers of the library, provided an overview of how type classes are encoded in Scala and how they can be used. One of the highlights was a demonstration of how type classes are useful based on well-known Java ''Comparator'' interface:
 
@@ -60,7 +60,7 @@ instance (Monoid a, Monoid b) => Monoid (a, b) where
 
 Furthermore, while Scalaz provides the ''IO'' monad to separate the side-effecting code from pure one, it is only done by convention and not enforced by the compiler -- unlike in Haskell. On the other hand, Scala's implicits are slightly more expressive than Haskell's type classes, allowing for usage of the default instance but also providing a custom one when required. All in all, the talk was a good introduction to Scalaz for those familiar with Haskell; for the others, the opaque syntax and lack of clearly defined benefit might have been off-putting.
 
-===== Representing Polymorphic Function Values in Scala Using Type Classes ====
+=### Representing Polymorphic Function Values in Scala Using Type Classes
 
 After handing over the day-to-day Scala IDE development to Scala Solutions/Typesafe team, **Miles Sabin** seems to be thriving in cutting-edge type system research. His [Scrap Your boilerplate with Scala talk](tech:functional_programming_exchange_2011#scrap_your_boilerplate_with_scala) on Functional Programming Exchange, while presenting a Scala encoding of a fascinating result, left part of the audience confused, due to large amount of material being presented in a very short time. This time round the ratio was much better and we had a chance to at least understand the problem in reasonable detail. 
 
@@ -109,13 +109,13 @@ Finally, this mechanism was used to define a function that lifted a function of 
 
 Given conceptual difficulty, the practicality of this approach seems questionable. Miles admitted that the proposed encoding is not something he would recommend for production use; nevertheless, it was yet another demonstration of the power of Scala's type system and a number of conference attendees twitted about having their "mind blown", which I assume must be a geeky expression of utmost appreciation.
 
-===== Apache ESME - Using Scala And Lift For Social Messaging =====
+## Apache ESME - Using Scala And Lift For Social Messaging
 
 During FP Exchange back in March I disliked the Play framework and WebSharper presentations, but it clearly must be me: another web-related talk and again something I can't seem to get excited about. **Vassil Dichev** talked about an [Apache project ESME](http://esme.apache.org/), which seems to be a Twitter-like application built on Lift web framework and targeted at corporate intranets. Vassil elaborated on the advantages of Lift: Comet for server-initiated updates and abstraction of underlying communication mechanism, tight security via automatic escaping of user inputs and type-checked SQL queries and lightweight actors. The application itself seemed to provide little beyond what Twitter does.
 
 Lift is one of most widely used toolkits built on top of Scala, so I assume most of the audience was to some extent familiar with it and its advantages. The talk had the flavour of "what I liked about scala/Lift when I was implementing this project", which can be helpful, but even more helpful is sharing experiences of what works and what doesn't and some deeper reflection on how to approach introducing Scala in a "real" project.
 
-===== Stairway to Heaven or Scala in the "Real World" =====
+## Stairway to Heaven or Scala in the "Real World"
 
 Which, incidentally, was what the following talk was about. **Chris Marshall** has been working in Java for over 10 years, implementing systems in the financial sector. Like many other Java developers at some point he got fed up with the boilerplate required in Java to e.g. express simple collection transformations. His initial requirement was for "java with closures" and Scala seemed like a natural choice. Chris has now been using Scala for three years and shared a number of insights on adopting it in the workplace:
 
@@ -128,7 +128,7 @@ Which, incidentally, was what the following talk was about. **Chris Marshall** h
 
 One remark I found particularly interesting was about how programming in Scala changed the way Chris codes in Java. For example, he reconfigured his IDE so that the keywords and types are not prominent -- he found that they obscure the structure of the program.
 
-===== Fostering Scala Adoption in Your Enterprise =====
+## Fostering Scala Adoption in Your Enterprise
 
 **Glen Ford** approached the issue of Scala adoption from a different angle: selling it to the decision-makers. He stated some rules which might seem obvious in retrospect, but which are often overlooked by the developers trying to push for the introduction of a new technology from the bottom-up. For example:
 
@@ -141,11 +141,11 @@ One remark I found particularly interesting was about how programming in Scala c
   * a new language is a trade-off: it does increase the complexity of technological landscape, but also gives a chance to address technical debt, move the platform forward
   * tool chain might be a problem: managers have to deal with the lowest common denominator, and tools are very important to improve productivity of the worse programmers
 
-===== The Unfiltered Web Framework =====
+## The Unfiltered Web Framework
 
 Did I say that I don't like web framework presentations? Scratch that; **Dustin Whitney's** fifteen-minute overview of [Unfiltered](https://github.com/n8han/Unfiltered) was interesting, well paced and to the point. First of all, Unfiltered is not a "framework", but a set of libraries which can be included in an SBT project and used to implement stand-alone apps responding to HTTP requests using request matchers and response functions and combinators -- a major selling point as far as I'm concerned. The API looked lightweight, a bit like Scalatra, but -- according to the speaker -- more idiomatic to Scala. It is mature enought for Dustin to use it in production apps. Finally, in response to a question from the audience, Dustin expressed his disregard for servlet containers with which he immediately bought me over. Executable jars FTW.
 
-===== How to Build a High Performance, Scalable Infrastructure in Under 5 Minutes =====
+## How to Build a High Performance, Scalable Infrastructure in Under 5 Minutes
 
 **David Savage** attempted to explain how his employer, [Paremus](http://www.paremus.com/), deploys scalable and modular services. From what I could understand without being familiar with some of the technologies discussed, the platform consists of a minimal kernel that pulls all the dependencies in the form of OSGi modules. The system is defined as the components, transport, scaling and contract, with components and scaling requirements defined in an XML file and contracts expressed as LDAP filters. Overall Scala played a seemingly insignificant role of implementation language for one of the services -- even its interface was defined in Java -- so it felt a bit like an excuse to present an otherwise unrelated commercial product. David mentioned that Scala provided for the "high performance" part of the headline, but it was not elaborated on in any detail.
 

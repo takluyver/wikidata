@@ -4,7 +4,7 @@ My playground for learning: [Habaź](https://github.com/mmakowski/habaz)
 
 Tutorial on packaging an app: [http://en.wikibooks.org/wiki/Haskell/Packaging]
 
-===== IO =====
+## IO
 
   * a good explanation is on [Learn You a Haskell](http://learnyouahaskell.com/input-and-output)
 
@@ -16,20 +16,20 @@ let x = pureValue
 x <- return pureValue
 </code>
 
-===== GUI =====
+## GUI
 
   * [wxHaskell]()
 
-===== Testing =====
+## Testing
 
   * [hstest](https://bitbucket.org/dave4420/hstest/wiki/Home) -- for running QuickCheck and HUnit
   * HUnit: [a guide](http://hunit.sourceforge.net/HUnit-1.0/Guide.html) (old) and [API docs](http://hackage.haskell.org/packages/archive/HUnit/1.2.2.3/doc/html/Test-HUnit.html) (current)
 
 
-===== Metaprogramming =====
+## Metaprogramming
 
   * [Template Haskell]()
 
-===== Trivia =====
+## Trivia
 
   * ''newtype'' keyword is for defining thin wrappers for existing types (one value constructor, one field). It can be used to allow the wrapped type to have multiple instances of the same type class; see ''ZipList''. It's more efficient than ''data''.

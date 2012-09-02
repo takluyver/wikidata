@@ -1,6 +1,6 @@
 
 
-===== Windows Installation =====
+## Windows Installation
 
 [The official guide](http://haskell.org/haskellwiki/WxHaskell/Building)
 
@@ -11,17 +11,17 @@
    - add ''c:\wxWidgets\lib\gcc_dll'' and ''c:\Program Files (x86)\Haskell Platform\2011.2.0.0\mingw\bin'' (or another directory containing ''mingwm10.dll'') to ''PATH'' -- required to run .exes built with wx
    - add ''c:\program files (x86)\MinGW\bin'' (or other directory containing ''libgcc_s_dw2-1.dll'') to ''PATH'' -- required to run .exes built with wx (?)
 
-===== Development =====
+## Development
 
-==== Install darcs ====
+### Install darcs
 
 Get darcs from [http://wiki.darcs.net/Binaries] (''cabal install darcs'' failed on HP 2011.2.0.1 due to missing curl lib).
 
-==== Get the source ====
+### Get the source
 
 ''darcs get http://code.haskell.org/wxhaskell'' will create ''wxhaskell'' directory with source code.
 
-==== Build ====
+### Build
 
 <code>
 cd wxdirect
@@ -46,11 +46,11 @@ cabal install
 
 An that succeeded as well.
 
-==== Wrapper design ====
+### Wrapper design
 
 for now these are random notes as I'm trying to understand the way C library is wrapped.
 
-=== Example: Colour ===
+#### Example: Colour
 
 Everything is in ''wxcore''
 

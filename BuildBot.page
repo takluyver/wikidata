@@ -1,16 +1,16 @@
 
 
-===== Setting up master on WebFaction =====
+## Setting up master on WebFaction
 
-==== virtualenv ====
+### virtualenv
 
 Download the tarball from [http://pypi.python.org/pypi/virtualenv/] and untar to a temporary directory; then, in that directory run ''python2.7 setup.py install --dry-run''. If it complains about missing directories create them. Continue running with ''--dry-run'' until it passes, then run without ''--dry-run''. Once done you should have ''virtualenv'' script in ''~/bin''. You can then delete the temporary directory and the tarball. 
 
-==== buildbot ====
+### buildbot
 
 Follow [the tutorial](http://buildbot.net/buildbot/tutorial/firstrun.html#creating-a-master). I installed BuildBot in ''~/opt/buildbot'' instead of suggested ''~/tmp/buildbot'', other that I followed it to the letter.
 
-==== status website ====
+### status website
 
 In WebFaction panel create a new custom application and make note of the port assigned to it. Then set up a domain name and a website for this application. In my case:
 
@@ -25,13 +25,13 @@ Edit ''~/opt/buildbot/sandbox/master/master.cfg'' and change the ''http_port'' i
 
 It might take about 30 mins for your new website to become accessible. Then you should be able to access the website under http://build.bimbr.com/wxhaskell/
 
-==== slave connections ====
+### slave connections
 
   * Requires dedicated IP and open port for non-HTTP traffic
 
 TODO
 
-==== process monitoring ====
+### process monitoring
 
 <code bash>
 #!/bin/bash
@@ -59,7 +59,7 @@ add entry:
 *       *       *       *       *       /home/mmakowski/bin/buildbot-start-master-if-not-running &
 </code>
 
-===== Setting up slave on Windows =====
+## Setting up slave on Windows
 
 Python 2.7 64 bit
 Pywin32 
@@ -75,7 +75,7 @@ TODO
   - set up slave on the laptop and make the two work together
   - set up slave on EC2 and make it work with the master
 
-===== Setting up latent slave on EC2 =====
+## Setting up latent slave on EC2
 
 follow http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/ to set up a windws box
 install everything required to build manually and check that the build works
@@ -85,7 +85,7 @@ run as a service http://nyc-dba.blogspot.com/2008/10/running-buildbot-buildslave
 buildbot_slave_service.py install
 run automatically (delayed start), as administrator
 
-===== Configuring Master to start up the EC2 slave =====
+## Configuring Master to start up the EC2 slave
 
 easy_install boto
 

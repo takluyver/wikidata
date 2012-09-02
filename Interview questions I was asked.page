@@ -1,8 +1,8 @@
 
 
-===== Technology =====
+## Technology
 
-==== General ====
+### General
 
 **What is the problem with recursion?**
 
@@ -12,9 +12,9 @@ The stack can overflow.
 
 Use tail calls.
 
-==== Java ====
+### Java
 
-=== Basics ===
+#### Basics
 
 **Why do you need to override ''hashCode()'' when you override ''equals()''?**
 
@@ -75,7 +75,7 @@ Immutable values (object) can't be modified once constructed, i.e. there are no 
 
 Make fields final, provide a constructor initialising all the fields and getters for them. In addition we might want to store a (deep) copy of mutable values in the fields and make setters return (deep) copies of them.
 
-=== Serialisation ===
+#### Serialisation
 
 **How can you make an object serialisable?**
 
@@ -89,13 +89,13 @@ Serialization doesn't make sense for some things, like threads, streams or socke
 
 R: ''Externalizable'' is for cases where we want to have complete control over how the object is serialised. It provides ''writeExternal()'' and ''readExternal()'' methods.
 
-=== I/O ===
+#### I/O
 
 **What is ''java.nio''?**
 
 New IO (in Java 5); supplements (not replaces) existing one. Provides e.g. asynchronous networking (non-blocking sockets).
 
-=== Concurrency ===
+#### Concurrency
 
 **When is it desirable to have multiple threads in the application?**
 
@@ -151,7 +151,7 @@ class Counter {
 
 It's unsafe because the increment is not atomic. Can use ''synchronized'' on the method or use ''AtomicInteger''. The latter does CAS and is much faster if there is little contention (otherwise would roll back/retry frequently).
 
-=== Garbage Collection and Heap ===
+#### Garbage Collection and Heap
 
 **What is garbage collection and how does it work?**
 
@@ -161,7 +161,7 @@ A service run by JVM which reclaims memory used by objects that are no longer re
 
 There are generations. Objects are created in Eden space, then if they don't get collected for a certain number of collection cycles, get promoted to the survivor and then tenured generations. Collection of eden is done very frequently and without any compaction, GC of tenured objects moves them around to defragment the heap so is more expensive and runs less frequently.
 
-=== Performance ===
+#### Performance
 
 **What are the main problems with real-time processing in Java?**
 
@@ -173,7 +173,7 @@ Lack of determinism, i.e.:
 
 First two have been addressed by RT Java. 
 
-=== JNI ===
+#### JNI
 
 **What needs to be done to call native code using JNI?**
 
@@ -181,7 +181,7 @@ First two have been addressed by RT Java.
   * prefix method name that is implemented in the dll with ''native'' and leave it unimplemented in Java code. 
   * javah can be used to generate header files.
 
-=== JDBC ===
+#### JDBC
 
 **Name three ''Statement'' interfaces; what are the differences between them?**
 
@@ -189,9 +189,9 @@ First two have been addressed by RT Java.
     * ''PreparedStatement'' -- gets compiled only once, more efficient for repeated queries
       * ''CallableStatement'' -- used to call stored procedures; can return many ResultSets (via stored procs //out// parameters) which can be accessed by name or index.
 
-==== Databases ====
+### Databases
 
-=== RDBMS and SQL ===
+#### RDBMS and SQL
 
 **How ''group by'' and ''having'' works (simple problem to solve).**
 
@@ -207,7 +207,7 @@ select a, b, c from (
 ) where ctn > 1
 </code>
 
-=== Oracle ===
+#### Oracle
 
 **What is the difference between rule-based and cost-based optimisation?**
 
@@ -229,7 +229,7 @@ Each connection uses system resources on the database server. In dedicated conne
 
 No, unless there is very good reason. If we need null, let's use null since the database engine expects these values and can optimise better using this knowledge. If we need both null and fixed value this suggests our data would be denormalised and we might be better off with additional column instead.
 
-==== Design ====
+### Design
 
 **Design a journey planner website for public transport in London.**
 
@@ -243,7 +243,7 @@ Model-View-Controller is a OO design pattern that splits the application into th
   - handling user's interaction and reflecting it in the domain (controller)
 The advantage is it makes the application more modular by decoupling these concerns. They can then be modified independently of each other.
 
-===== Business =====
+## Business
 
 **What is Delta?**
 
@@ -279,7 +279,7 @@ TODO
   * Convexity refers to the convexity of bond price with respect to change in interest rate (i.e. yield). It measures how inaccurate DV01 is as a measure in the long term.   
   * DV01 is the first derivative of the price with respect to change in interest rate. Measures risk.
 
-===== Problems to solve =====
+## Problems to solve
 
 **Calculate the multiset intersection of two arbitrary multisets; assume input multisets are represented as an arbitrary Java collection**
 

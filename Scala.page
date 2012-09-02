@@ -1,8 +1,8 @@
 
 
-===== Encoding Haskell Constructs =====
+## Encoding Haskell Constructs
 
-==== Data Types ====
+### Data Types
 
 Haskell:
 <code haskell>
@@ -26,6 +26,6 @@ case class InnerNode[A](value: A,
            extends BinaryTree[A]
 </code>
 
-=== Typeclasses ====
+#### Typeclasses=
 
 TODO (see http://debasishg.blogspot.com/2010/06/scala-implicits-type-classes-here-i.html)

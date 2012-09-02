@@ -1,6 +1,6 @@
 
 
-===== Creating a vocabulary =====
+## Creating a vocabulary
 
 In scratchpad:
 
@@ -12,7 +12,7 @@ USE: <vocabulary name>
 
 now open ''c:/program files/factor/work/<vocabulary name>/<vocabulary name>.factor'' in editor and write the code. It can be tested interactively in scratchpad.
 
-===== Creating unit tests =====
+## Creating unit tests
 
 In scratchpad:
 <code>

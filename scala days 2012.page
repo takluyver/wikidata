@@ -1,6 +1,6 @@
-====== Scala Days 2012 =====
+=## Scala Days 2012
 
-===== Fortress and Scala =====
+## Fortress and Scala
 
 Guy Steele
 
@@ -22,7 +22,7 @@ similarities (some examples of evolutionary convergence):
 - collection libraries with functional emphasis
 - influenced by Haskell
 
-==== Syntax ====
+### Syntax
 
 important: use of whitespace (c.f. Edward Tufte)
 - example: insignificant in Fortran, leads to
@@ -58,9 +58,9 @@ BIG SUM [p <- mylist, prime p] p+1
 BIG MAX
 BIG OPLUS
 
-==== Semantics ====
+### Semantics
 
-=== Parallelism ===
+#### Parallelism
 
 cooperative:
 
@@ -73,7 +73,7 @@ F: compiler figures out which subexpressions are worth making into microtasks (a
 competitive:
 F: atomic blocks  (STM) -- nesting and exceptions are difficult!
 
-=== *** ===
+#### ***
 
 - implicits in Scala: doing it by type is brittle
 - pattern matching: slightly different design to scala's
@@ -87,7 +87,7 @@ crunch[\T\](x: List[\T\]) =
 
 - no higher-order type constructors in F (fascinating research problem)
 
-==== Q&A ====
+### Q&A
 
 Q: are you tracking side-effects?
 A: simple flow analysis only. We started with Fortran and moved towards FP. Had we known 9 years ago what we know now, we'd have started with Haskell and moved towards Fortran.
@@ -101,7 +101,7 @@ computers ought to serve people: notation should capture the way people communic
 juxtaposition: both F and S approaches have advantages, can they be combined?
 system for typesetting code
 
-===== Akka 2.0 =====
+## Akka 2.0
 
 Jonas Boner
 
@@ -145,7 +145,7 @@ distribution should not be transparent, needs to be handled by programmer
 actors addressable, location-transparent (but assume worst case, remote)
 clusters: gossiping based on Riak (Dynamo) protocol -- eventual consistency, no definitive answers (embrance uncertainity?)
 
-===== SubScript =====
+## SubScript
 
 Andre van Delft
 
@@ -186,7 +186,7 @@ GUIs:
 advanced DSLs that capture formalisms like ACP -- lots of room for experimentation with things like async
 
 
-===== Effective Scala =====
+## Effective Scala
 
 Josh Suereth
 
@@ -208,7 +208,7 @@ best practices
 
 ...
 
-===== Habanero-Scala =====
+## Habanero-Scala
 
 Shams Imam
 
@@ -260,11 +260,11 @@ Parallelism:
 
 provide tools (DSLs) that allow developers to specify parallelism but not shoot themselves in the foot 
 
-===== Cloud Haskell =====
+## Cloud Haskell
 
 serialisation
 
-===== Stackless Scala with Free Monads =====
+## Stackless Scala with Free Monads
 
 Runar Bjarnasson
 
@@ -313,7 +313,7 @@ Tree[+A] = Free[List, A]
 -- represents any tree-like structure withe data in the leaves
 
 
-===== Odersky =====
+## Odersky
 
 2.10:
 - futures and promises
@@ -398,7 +398,7 @@ some more new stuff:
   their methods are compiled as extension methods
 
 
-  ===== Binary compat =====
+  ## Binary compat
 
   trait Foo {
     val x = "HI"
@@ -452,12 +452,12 @@ trait Serializable[T] {
 	def decode(...): T
 }
 
-===== Zeebox =====
+## Zeebox
 
 tv apps overlay -- blocked by broadcasters
 second screen will be the way to go for the next couple of years
 
-===== Compiler Optimisations =====
+## Compiler Optimisations
 
 Miguel Garcia
 
@@ -465,7 +465,7 @@ Miguel Garcia
 - quality of optimisations is the same
 
 
-===== Concat of Immutable Vectors =====
+## Concat of Immutable Vectors
 
 A ++ B -- so far, linear time
 
@@ -494,6 +494,6 @@ index speed constant, 60-70% slower than standard vectors
 memory overhead: 1/m
 concat cost: 7x that of update
 
-===== Rogue =====
+## Rogue
 
 DSL for mongodb + lift
