@@ -36,4 +36,4 @@ object World extends ModelComponent with ControllerComponent {
 }
 </code>
 
-Jonas Boner wrote [[http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html|a good explanation]] and example of how it helps in unit testing.
+Jonas Boner wrote [a good explanation](http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di.html) and example of how it helps in unit testing.

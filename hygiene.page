@@ -2,4 +2,4 @@
 
 Okreslenie stosowane w systemach makr. Oznacza, ze zmienne z kodu, w ktorym wywolywane jest makro nie sa "captured" w makrze. Standardowy sposob na zapewnienie to alfa-konwersja zmiennych stosowanych w makrze do nowych, wczesniej nie uzywanych, nazw. 
 
-Termin wprowadzony przez [[Kohlbecker|Kohlbeckera]] w kontekscie [[Lisp|Lispowych]] makr.
+Termin wprowadzony przez [Kohlbeckera](Kohlbecker) w kontekscie [Lispowych](Lisp) makr.

@@ -1,12 +1,12 @@
 
 
-My playground for learning: [[https://github.com/mmakowski/habaz|Habaź]]
+My playground for learning: [Habaź](https://github.com/mmakowski/habaz)
 
-Tutorial on packaging an app: [[http://en.wikibooks.org/wiki/Haskell/Packaging]]
+Tutorial on packaging an app: [http://en.wikibooks.org/wiki/Haskell/Packaging]
 
 ===== IO =====
 
-  * a good explanation is on [[http://learnyouahaskell.com/input-and-output|Learn You a Haskell]]
+  * a good explanation is on [Learn You a Haskell](http://learnyouahaskell.com/input-and-output)
 
 ''do'' is used when the IO block consists of more than one expression
 
@@ -18,17 +18,17 @@ x <- return pureValue
 
 ===== GUI =====
 
-  * [[wxHaskell]]
+  * [wxHaskell]()
 
 ===== Testing =====
 
-  * [[https://bitbucket.org/dave4420/hstest/wiki/Home|hstest]] -- for running QuickCheck and HUnit
-  * HUnit: [[http://hunit.sourceforge.net/HUnit-1.0/Guide.html|a guide]] (old) and [[http://hackage.haskell.org/packages/archive/HUnit/1.2.2.3/doc/html/Test-HUnit.html|API docs]] (current)
+  * [hstest](https://bitbucket.org/dave4420/hstest/wiki/Home) -- for running QuickCheck and HUnit
+  * HUnit: [a guide](http://hunit.sourceforge.net/HUnit-1.0/Guide.html) (old) and [API docs](http://hackage.haskell.org/packages/archive/HUnit/1.2.2.3/doc/html/Test-HUnit.html) (current)
 
 
 ===== Metaprogramming =====
 
-  * [[Template Haskell]]
+  * [Template Haskell]()
 
 ===== Trivia =====
 

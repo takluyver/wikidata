@@ -1,4 +1,4 @@
-B-heap is a [[cache-oblivious algorithm|cache-oblivious]] data structure invented by Poul-Henning Kamp as a replacement for standard binary heap for use as priority queue with large number of elements. It has much better practical performance characteristics due to layout which minimises access to different memory pages when re-balancing the tree, hence reducing the need for disk access when virtual memory is in use. He argues that it offers performance up to 10x better than binary heap when applied to Varnish web cach application.
+B-heap is a [cache-oblivious](cache-oblivious algorithm) data structure invented by Poul-Henning Kamp as a replacement for standard binary heap for use as priority queue with large number of elements. It has much better practical performance characteristics due to layout which minimises access to different memory pages when re-balancing the tree, hence reducing the need for disk access when virtual memory is in use. He argues that it offers performance up to 10x better than binary heap when applied to Varnish web cach application.
 
 The basic idea is that instead of laying subsequent levels of tree out horizontally, the layout guarantees that a branch is contained in a single VM page to as deep a level as possible and that both children of every node are in the same VM page. 
 
@@ -8,6 +8,6 @@ The basic idea is that instead of laying subsequent levels of tree out horizonta
 
 (figures © 2010 ACM)
 
-The name is an analogy to how b-trees are related to binary trees. Kamp described the data structure in a quirky article printed in CACM and shown on [[http://queue.acm.org/detail.cfm?id=1814327|ACM Queue pages]].
+The name is an analogy to how b-trees are related to binary trees. Kamp described the data structure in a quirky article printed in CACM and shown on [ACM Queue pages](http://queue.acm.org/detail.cfm?id=1814327).
 
 {{tag>it}}

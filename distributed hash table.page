@@ -1,3 +1,3 @@
 
 
-A hash table whose key/value pairs are distributed among nodes of a P2P network. Typically uses [[key-based routing]] to locate the values.
+A hash table whose key/value pairs are distributed among nodes of a P2P network. Typically uses [key-based routing]() to locate the values.

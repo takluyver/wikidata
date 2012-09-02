@@ -22,7 +22,7 @@ def size(x: Either[Int, String]) = x match {
 }
 </code>
 
-[[Curry-Howard isomorphism]] can give an insight on how to encode the unboxed union. Here we are only interested in the fact that related types correspond to related logical propositions.
+[Curry-Howard isomorphism]() can give an insight on how to encode the unboxed union. Here we are only interested in the fact that related types correspond to related logical propositions.
 
 |(A with B) <: A |A n B => A |
 |(A with B) <: B |A n B => B |

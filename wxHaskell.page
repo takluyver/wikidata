@@ -2,11 +2,11 @@
 
 ===== Windows Installation =====
 
-[[http://haskell.org/haskellwiki/WxHaskell/Building|The official guide]]
+[The official guide](http://haskell.org/haskellwiki/WxHaskell/Building)
 
-   - install [[http://wxpack.sourceforge.net/Main/Downloads|wxPack 2.8]] (MinGW GCC libs only) to  ''c:\wxWidgets'' (tried ''c:\Program Files (x86)\wxWidgets'' but some tools have trouble with spaces in paths)
+   - install [wxPack 2.8](http://wxpack.sourceforge.net/Main/Downloads) (MinGW GCC libs only) to  ''c:\wxWidgets'' (tried ''c:\Program Files (x86)\wxWidgets'' but some tools have trouble with spaces in paths)
    - set ''WXWIN'' env variable to ''c:\wxWidgets'' and ''WXCFG'' to ''gcc_dll\mswu''
-   - get [[http://sites.google.com/site/wxconfig/|wx-config]] and put in ''c:\wxWidgets\bin''; add this directory to ''PATH''
+   - get [wx-config](http://sites.google.com/site/wxconfig/) and put in ''c:\wxWidgets\bin''; add this directory to ''PATH''
    - ''cabal install wx''
    - add ''c:\wxWidgets\lib\gcc_dll'' and ''c:\Program Files (x86)\Haskell Platform\2011.2.0.0\mingw\bin'' (or another directory containing ''mingwm10.dll'') to ''PATH'' -- required to run .exes built with wx
    - add ''c:\program files (x86)\MinGW\bin'' (or other directory containing ''libgcc_s_dw2-1.dll'') to ''PATH'' -- required to run .exes built with wx (?)
@@ -15,7 +15,7 @@
 
 ==== Install darcs ====
 
-Get darcs from [[http://wiki.darcs.net/Binaries]] (''cabal install darcs'' failed on HP 2011.2.0.1 due to missing curl lib).
+Get darcs from [http://wiki.darcs.net/Binaries] (''cabal install darcs'' failed on HP 2011.2.0.1 due to missing curl lib).
 
 ==== Get the source ====
 

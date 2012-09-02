@@ -1,8 +1,8 @@
 
 
-[[http://www.haskell.org/arrows/]]
+[http://www.haskell.org/arrows/]
 
 An abstraction of computations, more general than monads.
 
-[[GHC]] provides [[http://www.haskell.org/ghc/docs/7.2.1/html/users_guide/arrow-notation.html|support for the notation]] described in the link above, it can be turned on using ''-XArrows'' command-line flag.
+[GHC]() provides [support for the notation](http://www.haskell.org/ghc/docs/7.2.1/html/users_guide/arrow-notation.html) described in the link above, it can be turned on using ''-XArrows'' command-line flag.
 

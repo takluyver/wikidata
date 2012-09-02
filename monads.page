@@ -1,8 +1,8 @@
 
 
-Best explanation found on the web: [[http://bartoszmilewski.wordpress.com/2011/01/09/monads-for-the-curious-programmer-part-1/]]
+Best explanation found on the web: [http://bartoszmilewski.wordpress.com/2011/01/09/monads-for-the-curious-programmer-part-1/]
 
-Also, the notes from Haskell Hoodlums session on [[monads and monad transformers]] might be helpful.
+Also, the notes from Haskell Hoodlums session on [monads and monad transformers]() might be helpful.
 
 ===== Functors =====
 
@@ -44,9 +44,9 @@ ghci> pure (+) <*> Just 3 <*> Just 5
 Just 8  
 </code>
 
-Note that ''pure f <*> x'' can be written as ''f <$> x'' so the above can be rewritten as ''(+) <$> 3 <*> 5''. [[Applicative style]], in this context, means composing applicative functors using <$> followed by a series of <*>. The idea is that a single pure function is "applied" to effectful computations (represented as functors), yielding an effectful computation as a result. 
+Note that ''pure f <*> x'' can be written as ''f <$> x'' so the above can be rewritten as ''(+) <$> 3 <*> 5''. [Applicative style](), in this context, means composing applicative functors using <$> followed by a series of <*>. The idea is that a single pure function is "applied" to effectful computations (represented as functors), yielding an effectful computation as a result. 
 
-The motivation for introducing this abstraction is decribed in the [[http://www.soi.city.ac.uk/~ross/papers/Applicative.html|original paper]]; apparently it encapsulates a common pattern in functional programming. The trouble is the applicative style is not intuitive for me, hence my difficulties with comprehending the usefulness of the concept.
+The motivation for introducing this abstraction is decribed in the [original paper](http://www.soi.city.ac.uk/~ross/papers/Applicative.html); apparently it encapsulates a common pattern in functional programming. The trouble is the applicative style is not intuitive for me, hence my difficulties with comprehending the usefulness of the concept.
 
 As an aside, there are many ways in which a given data type can be ''Applicative''; for instance the default instance of ''Applicative'' for lists has ''<*>'' which produces all combinations of functions in the left list with arguments in the right one, but there is also a ''ZipList'' (in ''Control.Applicative'') which zips functions with arguments.
 

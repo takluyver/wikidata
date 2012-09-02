@@ -23,7 +23,7 @@ NameError: global name 'b' is not defined
 6
 </code>
 
-When looking for free variable values the function first looks in its [[Closures in Python|closure]] and then in definition site globals. ''f'' has an empty closure so uses globals; ''i'' has closure so uses ''b'' value bound by it:
+When looking for free variable values the function first looks in its [closure](Closures in Python) and then in definition site globals. ''f'' has an empty closure so uses globals; ''i'' has closure so uses ''b'' value bound by it:
 
 <code>
 >>> f.func_closure

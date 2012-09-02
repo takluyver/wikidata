@@ -4,11 +4,11 @@
 
 ==== virtualenv ====
 
-Download the tarball from [[http://pypi.python.org/pypi/virtualenv/]] and untar to a temporary directory; then, in that directory run ''python2.7 setup.py install --dry-run''. If it complains about missing directories create them. Continue running with ''--dry-run'' until it passes, then run without ''--dry-run''. Once done you should have ''virtualenv'' script in ''~/bin''. You can then delete the temporary directory and the tarball. 
+Download the tarball from [http://pypi.python.org/pypi/virtualenv/] and untar to a temporary directory; then, in that directory run ''python2.7 setup.py install --dry-run''. If it complains about missing directories create them. Continue running with ''--dry-run'' until it passes, then run without ''--dry-run''. Once done you should have ''virtualenv'' script in ''~/bin''. You can then delete the temporary directory and the tarball. 
 
 ==== buildbot ====
 
-Follow [[http://buildbot.net/buildbot/tutorial/firstrun.html#creating-a-master|the tutorial]]. I installed BuildBot in ''~/opt/buildbot'' instead of suggested ''~/tmp/buildbot'', other that I followed it to the letter.
+Follow [the tutorial](http://buildbot.net/buildbot/tutorial/firstrun.html#creating-a-master). I installed BuildBot in ''~/opt/buildbot'' instead of suggested ''~/tmp/buildbot'', other that I followed it to the letter.
 
 ==== status website ====
 

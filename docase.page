@@ -1,6 +1,6 @@
 
 
-Idea for syntax extension for [[Haskell]] by Tomas Petricek: 
+Idea for syntax extension for [Haskell]() by Tomas Petricek: 
 
 <code haskell>
 multiply f1 f2 = 

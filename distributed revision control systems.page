@@ -2,4 +2,4 @@ Roznia sie od scentralizowanych tym, ze:
    * na swoim komputerze trzyma sie cale repozytorium (dane o wszystkich galeziach) 
    * commit i publish sa rozdzielone -- commit jest lokalny, publish publikuje wersje tylko do odczytu. 
 
-Popularne to [[Git]] i Mercurial, oprocz tego warto tez pamietac o Darcs (w Haskellu, wolny, ale z ciekawa teoria latek) i Monotone.
+Popularne to [Git]() i Mercurial, oprocz tego warto tez pamietac o Darcs (w Haskellu, wolny, ale z ciekawa teoria latek) i Monotone.
