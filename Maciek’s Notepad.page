@@ -50,7 +50,7 @@
    * [applicative functors]()
    * [applicative style]()
    * [arrows]()
-   * [call/cc]()
+   * [call/cc](call cc)
    * [delimited continuations]()
    * [dependent types]()
    * [functional reactive programming]()
