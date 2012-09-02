@@ -1,6 +1,6 @@
-<- [[tech:Scala Lift Off London 2010, Day 1|Day One]]
+<- [Day One](tech:Scala Lift Off London 2010, Day 1)
 
-====== Scala Lift Off London 2010, Day Two ======
+
 
 The second and last day of Scala Lift Off did not disappoint. Compared to yesterday, the sessions I attended turned out to be less focussed on presenting concrete projects or results and more on discussing the language features and tools from the position of users discovering them. Overall, less structure, more interaction. 
 
@@ -18,7 +18,7 @@ context findService withInterface[Hello] andApply { _.hello }
 In a short statement Jeppe mentioned the ways in which Scala and Lift proved helpful in developing a web application in a start-up he works for.
 
 === Lifty by Mads Hartmann Jensen ===
-One of a number of Scala-related Google Summer of Code projects this year involved creating an SBT processor to perform the job similar to Ruby on Rails's ''scaffold'', i.e. to generate a rudimentary web app. Mads presented the result of his work, [[http://lifty.github.com/Lifty/|Lifty]]. In SBT console try:
+One of a number of Scala-related Google Summer of Code projects this year involved creating an SBT processor to perform the job similar to Ruby on Rails's ''scaffold'', i.e. to generate a rudimentary web app. Mads presented the result of his work, [Lifty](http://lifty.github.com/Lifty/). In SBT console try:
 <code>
 *lifty is org.lifty lifty 1.3
 lifty create project-blank
@@ -55,10 +55,10 @@ Indefatigable Kevin shared with us an interesting algorithm for filling in the m
 1 1 1 0
 0 0 0 0
 </code>
-The implementation of the blur function fitted in a single line of code, thanks to ''sliding'' function on ''Seq''. This was topped up with an [[http://minesweeper.kevwright.staxapps.net|Ajaxy GUI built in Lift]]. The source code of the entire project is [[http://github.com/kevinwright/minesweeper|available on gitHub]].
+The implementation of the blur function fitted in a single line of code, thanks to ''sliding'' function on ''Seq''. This was topped up with an [Ajaxy GUI built in Lift](http://minesweeper.kevwright.staxapps.net). The source code of the entire project is [available on gitHub](http://github.com/kevinwright/minesweeper).
 
 === Parboiled Parsing Library by Mathias Doenitz ===
-Mathias presented [[http://parboiled.org|Parboiled]], a parsing library he has written. Originally motivated by the difficulty of debugging ANTLR-generated grammars, Parboiled, like Scala combinator parsers, relies on an internal DSL, but unlike them separates parser construction from execution, which leads to significant speedup. The run time performance is still below that of ANTLR, but a version that will compile the rules into bytecode is being worked on. There is also a Java DSL library available.
+Mathias presented [Parboiled](http://parboiled.org), a parsing library he has written. Originally motivated by the difficulty of debugging ANTLR-generated grammars, Parboiled, like Scala combinator parsers, relies on an internal DSL, but unlike them separates parser construction from execution, which leads to significant speedup. The run time performance is still below that of ANTLR, but a version that will compile the rules into bytecode is being worked on. There is also a Java DSL library available.
 
 ===== Session 1: Testing in Scala =====
 
@@ -78,7 +78,7 @@ Alive.cell(dies).when(there).are(more).than(3).neighbours
 </code>
 Paweł mentioned that similar narrative DSL is used by his employer, youDevise, in a commercial project. When compared with approach used by e.g. JBehave, which allows free-form text between keywords, this DSL seems very restrictive, but it remains to be seen how flexible and usable it will prove in the long run.
 
-Paweł's code can be found, as usual, on [[http://github.com/pawelkrupinski/Scala-Test-Narrative|GitHub]].
+Paweł's code can be found, as usual, on [GitHub](http://github.com/pawelkrupinski/Scala-Test-Narrative).
 
 ===== Session 2: Functional Features in Scala =====
 
@@ -91,7 +91,7 @@ Originally entitled "WTF is a Monad?", this talk started with a list of terms, m
   * self types
   * implicit conversion
 Kevin Wright and Jon Pretty attempted to explain most of these concepts, with Robert Wills and Phil((Surname escaped me -- my apologies for this, please let me know at //maciek at mmakowski dot com// if you happen to know the full name and I will be happy to correct these notes.)) helping with Monads.
-I have to admit that none of the multitude of monad explanations I have read, heard or seen before ever managed to convey the benefits these entities provide in terms I would understand, and the attempts made here did not improve this sad state of affairs. I still have some hope ([[http://github.com/leithaus/XTrace/tree/monadic|Greg Meredith's book]] perhaps?), but for now will have to remain in the dark. As to the other features, most of them are well explained in //Programming in Scala//, but it was still good to have the memory refreshed.
+I have to admit that none of the multitude of monad explanations I have read, heard or seen before ever managed to convey the benefits these entities provide in terms I would understand, and the attempts made here did not improve this sad state of affairs. I still have some hope ([Greg Meredith's book](http://github.com/leithaus/XTrace/tree/monadic) perhaps?), but for now will have to remain in the dark. As to the other features, most of them are well explained in //Programming in Scala//, but it was still good to have the memory refreshed.
 
 ===== Session 3: Scala for High Performance and Grid Computing =====
 

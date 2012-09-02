@@ -1,6 +1,6 @@
-====== Scala LiftOff London 2011, Day One ======
 
-Compared to [[tech:scala_lift_off_london_2010_day_1|last year's LiftOff]], which was an un-conference pretty much all the way, this year's is split into morning, structured sessions, and afternoon open spaces resembling 2010 format. As usual, I tried to jot down the more interesting points from the day. The below is by no means a complete record and definitely suffers from insufficient editing and research (no time for that, sorry!). With this disclaimer out of the way:
+
+Compared to [last year's LiftOff](tech:scala_lift_off_london_2010_day_1), which was an un-conference pretty much all the way, this year's is split into morning, structured sessions, and afternoon open spaces resembling 2010 format. As usual, I tried to jot down the more interesting points from the day. The below is by no means a complete record and definitely suffers from insufficient editing and research (no time for that, sorry!). With this disclaimer out of the way:
 
 ===== David Pollak's Keynote =====
 
@@ -21,7 +21,7 @@ Miles has a history of presenting interesting research results based on his in-d
 The continuations can be classified along two axes:
 
   * **full/delimited**: full captures the program until the very end, delimited only captures portion
-  * **direct implementation/CPS transform**: direct uses stack manipulation (copying, [[http://en.wikipedia.org/wiki/Spaghetti_stack|"spaghetti stack"]]), CPS transformation modifies the functions to accept a continuation parameter
+  * **direct implementation/CPS transform**: direct uses stack manipulation (copying, ["spaghetti stack"](http://en.wikipedia.org/wiki/Spaghetti_stack)), CPS transformation modifies the functions to accept a continuation parameter
 
 Full continuation support is common (''call/cc'' in Lisp, ''setjmp/longjmp'' in C, also Smalltalk, ML); until recently not possible on JVM because we have not had access to the runtime. Continuations are primarily used for defining higher-level control constructs like concurrency constructs and exception handling. They offer a lot more in typed setting, but Miles didn't go into the details this time round.
 
@@ -291,7 +291,7 @@ The hypothesis on why 64 runs faster is that it is a result of the layout of reg
 
 ==== Kojo ====
 
-With a couple of minutes left, Phil did a quick demo of [[http://kogics.net/sf:kojo|Kojo]] -- a learning environment, which turned out to be a very effective presentation tool for Phil's job as the marketing manager for TypeSafe. The environment indeed looks like an excellent learning aid.
+With a couple of minutes left, Phil did a quick demo of [Kojo](http://kogics.net/sf:kojo) -- a learning environment, which turned out to be a very effective presentation tool for Phil's job as the marketing manager for TypeSafe. The environment indeed looks like an excellent learning aid.
 
 ===== Park Bench/Fish Bowl =====
 

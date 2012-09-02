@@ -1,6 +1,6 @@
-====== Functional Programming Exchange 2011 ======
 
-After the success that [[tech:scala_lift_off_london_2010_day_1|Scala LiftOff London 2010]] was I didn't hesitate long before signing up for a number of other Scala amd functional programming events hosted by Skills Matter. The first of them was Functional Programming Exchange. Below are notes from most of the sessions of this one-day conference.
+
+After the success that [Scala LiftOff London 2010](tech:scala_lift_off_london_2010_day_1) was I didn't hesitate long before signing up for a number of other Scala amd functional programming events hosted by Skills Matter. The first of them was Functional Programming Exchange. Below are notes from most of the sessions of this one-day conference.
 
 ===== Managing Parallelism - Embrace Diversity =====
 
@@ -14,15 +14,15 @@ While the threaded model and shared memory might seem inherently imperative, Has
 
 ==== Distributed Memory ====
 
-A parallel computation model which received a lot of attention in recent years is that of actors -- independent processes which don't share any memory and communicate via asynchronous messages. A Haskell library that implements this functionality is currently being worked on as a part of a research project. One of the obstacles that had to be overcome was determining when the function sent to remote actor for execution can be serialised, given that it can close over non-serialisable values from the enviornment. A new paper discussing the solution to this problem should appear on [[http://research.microsoft.com/en-us/people/simonpj/#current|Simon's web page]] shortly. Apparently the implementation already works well enough for the researchers to be able to experiment with running K-means clustering in map/reduce style on Amazon's EC2.
+A parallel computation model which received a lot of attention in recent years is that of actors -- independent processes which don't share any memory and communicate via asynchronous messages. A Haskell library that implements this functionality is currently being worked on as a part of a research project. One of the obstacles that had to be overcome was determining when the function sent to remote actor for execution can be serialised, given that it can close over non-serialisable values from the enviornment. A new paper discussing the solution to this problem should appear on [Simon's web page](http://research.microsoft.com/en-us/people/simonpj/#current) shortly. Apparently the implementation already works well enough for the researchers to be able to experiment with running K-means clustering in map/reduce style on Amazon's EC2.
 
 ==== Functional Parallelism ====
 
-Certain functions, like ''map'', parallelise naturally. In Haskell this can be done semi-implicitly: one has to change ''map'' to ''parMap'', but that's the only change required in order to take advantage of multiple cores -- that is, assuming the program was written so that ''map'' was at the heart of processing in the first place. This approach doesn't scale beyond a single machine and the speed-ups are relatively small, but it can be achieved very cheaply, by simply replacing one function with another. In certain scenarios these modest speed-ups are worth pursuing: for example [[http://hackage.haskell.org/package/cpsa|Cryptographic Protocol Shapes Analyzer]] often takes hours to run, so 3x improvement is noticeable.
+Certain functions, like ''map'', parallelise naturally. In Haskell this can be done semi-implicitly: one has to change ''map'' to ''parMap'', but that's the only change required in order to take advantage of multiple cores -- that is, assuming the program was written so that ''map'' was at the heart of processing in the first place. This approach doesn't scale beyond a single machine and the speed-ups are relatively small, but it can be achieved very cheaply, by simply replacing one function with another. In certain scenarios these modest speed-ups are worth pursuing: for example [Cryptographic Protocol Shapes Analyzer](http://hackage.haskell.org/package/cpsa) often takes hours to run, so 3x improvement is noticeable.
 
 ==== Data Parallelism ====
 
-A property that enables ''map'' to be parallelised is independence of pieces of data on which it operates. This is a key to using multiple cores at large scale: being able to split the data into chunks and perform computations in parallel. As an illustration we have been shown an example of face-recognition software, which used a pipeline of functions to process an array of data. Using [[http://hackage.haskell.org/package/accelerate|Accelerate]] Haskell library then allowed to transform this program to take advantage of GPU simply by replacing type ''Array a b'' with ''Acc (Array a b)''. ''Acc (Array a b)'' represents a syntax tree of a program returning ''Array a b''. This syntax tree can be passed to ''CUDA.run :: Acc a -> a'' function that based on the syntax tree generates code that can be run on CUDA-capable NVIDIA GPUs. Fascinating as it was, the example did not make it clear how this approach differs from functional parallelism and how it enables scaling beyond what was possible with ''parMap''.
+A property that enables ''map'' to be parallelised is independence of pieces of data on which it operates. This is a key to using multiple cores at large scale: being able to split the data into chunks and perform computations in parallel. As an illustration we have been shown an example of face-recognition software, which used a pipeline of functions to process an array of data. Using [Accelerate](http://hackage.haskell.org/package/accelerate) Haskell library then allowed to transform this program to take advantage of GPU simply by replacing type ''Array a b'' with ''Acc (Array a b)''. ''Acc (Array a b)'' represents a syntax tree of a program returning ''Array a b''. This syntax tree can be passed to ''CUDA.run :: Acc a -> a'' function that based on the syntax tree generates code that can be run on CUDA-capable NVIDIA GPUs. Fascinating as it was, the example did not make it clear how this approach differs from functional parallelism and how it enables scaling beyond what was possible with ''parMap''.
 
 In most of data-parallel solution implemented so far (map/reduce, MPI) the parallelisation takes place in a single place: the data is split into chunks and then a sequential computation is run for each chumk. Another approach would be to let the computations resulting from partitioning the data be parallelised further. The cost model for nested data parallelism is terrible, but not all hope is lost: Guy Blelloch proposed transforming nested programs to flat ones at compile time. This technique involves a number of open problems and is still an area of active research.
 
@@ -32,11 +32,11 @@ All succesful parallel processing solutions implemented to date have been done i
 
 Merits of the talk aside, Simon proved that he is not only an FP legend but also a brilliant speaker: enthusiastic, fast, but always making sure the audience follows. His presentation alone was good enough reason to attend this conference. 
 
-[[http://skillsmatter.com/podcast/scala/talk-by-haskell-expert-simon-peyton-jones|Video]]
+[Video](http://skillsmatter.com/podcast/scala/talk-by-haskell-expert-simon-peyton-jones)
 
 ===== Functional Web =====
 
-**Sadek Drobi** of [[http://www.zenexity.fr/|Zenexity]] presented how FP support in Scala influenced the design of [[http://www.playframework.org/|Play web framework]]. As an example, it turned out that exceptions are not a good model for undesired HTTP responses, because these responses are valid (and frequently occuring) results as opposed to exceptional cases. A mechanism to make this explicit was a form ''Either'' type, which could then be processed using ''for'' comprehensions (a.k.a "monadic syntax") as if the desired scenario happened:
+**Sadek Drobi** of [Zenexity](http://www.zenexity.fr/) presented how FP support in Scala influenced the design of [Play web framework](http://www.playframework.org/). As an example, it turned out that exceptions are not a good model for undesired HTTP responses, because these responses are valid (and frequently occuring) results as opposed to exceptional cases. A mechanism to make this explicit was a form ''Either'' type, which could then be processed using ''for'' comprehensions (a.k.a "monadic syntax") as if the desired scenario happened:
 <code scala>
 for (u <- getUser;
      vs <- getVideosFor(u))
@@ -44,21 +44,21 @@ for (u <- getUser;
 </code>
  In the event of ''getUser'' failing to produce a valid user the "undesired" result would be carried through and yielded as a result of this ''for'' comprehension. 
 
-Other features highlighted by Sadek were Scala's XML library (useful for parsing responses from other services on the web) and pattern matching (used for processing SQL result sets). Here the significance of functional approach was not that obvious at all -- it seemed that in the case of XML parsing the same benefit (of just updating XPaths to make the application work with other service provider's XML) could have been achieved in any mainstream OO language. Also the SQL processing did not represent the state of the art as it used strings to represent SQL queries and hence gave up all compile time checks possible with libraries like [[http://squeryl.org/|Squeryl]]. These points were raised by the audience and have not been addressed by Sadek in a satisfactory manner.
+Other features highlighted by Sadek were Scala's XML library (useful for parsing responses from other services on the web) and pattern matching (used for processing SQL result sets). Here the significance of functional approach was not that obvious at all -- it seemed that in the case of XML parsing the same benefit (of just updating XPaths to make the application work with other service provider's XML) could have been achieved in any mainstream OO language. Also the SQL processing did not represent the state of the art as it used strings to represent SQL queries and hence gave up all compile time checks possible with libraries like [Squeryl](http://squeryl.org/). These points were raised by the audience and have not been addressed by Sadek in a satisfactory manner.
 
 Overall, while the use of ''Either'' for error processing could have been enlightening for some, it wasn't exactly a cutting edge FP result and did not justify a 45 minute slot of conference's prime time.
 
-[[http://skillsmatter.com/podcast/scala/talk-by-sadek-drobi|Video]]
+[Video](http://skillsmatter.com/podcast/scala/talk-by-sadek-drobi)
 
 ===== F# in the Enterprise =====
 
-After the first two talks the conference split into two tracks. Faced with a choice between **David Pollak's** //[[http://liftweb.net/|Lift]]// talk and **Simon Cousin's** //F# in the Enterprise//, I opted for the latter; the ways in which FP makes it's way into industry seemed more interesting than a web framework which I have already had a chance to hear about.
+After the first two talks the conference split into two tracks. Faced with a choice between **David Pollak's** //[Lift](http://liftweb.net/)// talk and **Simon Cousin's** //F# in the Enterprise//, I opted for the latter; the ways in which FP makes it's way into industry seemed more interesting than a web framework which I have already had a chance to hear about.
 
 Simon works for energy trading arm of E.ON which deals with balancing the supply of and demand for electricity. The demand varies throughout the day and the characteristics of power generation units (i.e. power stations) make it difficult to fit the supply exactly to the demand curve, so the surplus has to be sold and shortfalls need to be covered for by buying from other providers. Two of the problems Simon's team had to solve were calculation of profitability, i.e. determining the order of generation units so that the least cost-effective generators are only used at peak times, and optimisation of power generation schedule to fit the demand curve.
 
-The calculator was initially written in C#, but it soon became apparent that it was an algorithmic problem not suitable for an OO representation: the program consisted of static classes with static methods. One the optimisation side, the solution has been implemented in linear integer programming language [[http://www.fico.com/en/Products/DMTools/Pages/FICO-Xpress-Optimization-Suite.aspx|Xpress-MP]] which did not integrate very well with the rest of .Net-based application and required services of experts knowledgable in this particular language, who are relatively few. Simon and the team began rewriting these components in F# and after a year, almost as soon as Microsoft released Visual Studio 2010 with F# support, put the new implementation in the production environment. The new optimiser was two orders of magnitude faster than the old one, with 1:4 reduction in lines of code and no bugs uncovered during a year of production use. How did Simon's team manage to achieve this impressive result? 
+The calculator was initially written in C#, but it soon became apparent that it was an algorithmic problem not suitable for an OO representation: the program consisted of static classes with static methods. One the optimisation side, the solution has been implemented in linear integer programming language [Xpress-MP](http://www.fico.com/en/Products/DMTools/Pages/FICO-Xpress-Optimization-Suite.aspx) which did not integrate very well with the rest of .Net-based application and required services of experts knowledgable in this particular language, who are relatively few. Simon and the team began rewriting these components in F# and after a year, almost as soon as Microsoft released Visual Studio 2010 with F# support, put the new implementation in the production environment. The new optimiser was two orders of magnitude faster than the old one, with 1:4 reduction in lines of code and no bugs uncovered during a year of production use. How did Simon's team manage to achieve this impressive result? 
 
-First of all, large parts of the system that have been written in C# and worked well have been left intact. To integrate the F# modules into the system Simon followed the advice of //[[http://www.amazon.com/exec/obidos/tg/detail/-/0321125215/qid=1075413529//ref=sr_8_xs_ap_i6_xgl14/104-7719441-3523101?v=glance&s=books&n=507846|Domain-Driven Design]]// book: define the interface in terms of the OO model and provide a stateless service implementing this interface. The C# interface was therefore implemented in F#, with a thin layer on the F# side wrapping the OO model to prepare it for use in functional code and, in addition, to take advantage of extra F# features like units of measure:
+First of all, large parts of the system that have been written in C# and worked well have been left intact. To integrate the F# modules into the system Simon followed the advice of //[Domain-Driven Design](http://www.amazon.com/exec/obidos/tg/detail/-/0321125215/qid=1075413529//ref=sr_8_xs_ap_i6_xgl14/104-7719441-3523101?v=glance&s=books&n=507846)// book: define the interface in terms of the OO model and provide a stateless service implementing this interface. The C# interface was therefore implemented in F#, with a thin layer on the F# side wrapping the OO model to prepare it for use in functional code and, in addition, to take advantage of extra F# features like units of measure:
 <code ocaml>
 type MinutePoint = PowerPoint
 
@@ -70,21 +70,21 @@ let y (p: MinutePoint): float<MW> =
 </code>
 where ''PowerPoint'' is a type from OO model.
 
-Another aspect of using F# that required some creativity was establishing coding practices. Test-Driven Development did not seem to be a good fit (kudos for saying that with [[http://www.m3p.co.uk/blog/|Steve Freeman]] in the audience); instead, Simon found exploratory programming using script file and a REPL built into Visual Studio more productive. He would write the functions in the script file, test them interactively, and once he was happy with how they worked, transfer them to the module file that formed part of the solution.
+Another aspect of using F# that required some creativity was establishing coding practices. Test-Driven Development did not seem to be a good fit (kudos for saying that with [Steve Freeman](http://www.m3p.co.uk/blog/) in the audience); instead, Simon found exploratory programming using script file and a REPL built into Visual Studio more productive. He would write the functions in the script file, test them interactively, and once he was happy with how they worked, transfer them to the module file that formed part of the solution.
 
 The talk was excellent. It did not assume any prior knowledge of either F# or energy trading, explained these concilsely and described both qualities of FP that make it a good fit for certain enterprise-type projects and practicalities of working with F# code.
 
-[[http://skillsmatter.com/podcast/scala/fsharp-in-the-enterprise|Video]]
+[Video](http://skillsmatter.com/podcast/scala/fsharp-in-the-enterprise)
 
 ===== BlazeHtml =====
 
-The next split-track slot offered the choice between **Jonas Bonér's** and **Viktor Klang's** //[[http://akka.io/|Akka]]// and //[[http://jaspervdj.be/blaze/|BlazeHtml]]// by **Jasper van der Jeugt**. I've heard an extended version of the Akka talk the day before so went to hear Jasper explaining the challenges of HTML generation.
+The next split-track slot offered the choice between **Jonas Bonér's** and **Viktor Klang's** //[Akka](http://akka.io/)// and //[BlazeHtml](http://jaspervdj.be/blaze/)// by **Jasper van der Jeugt**. I've heard an extended version of the Akka talk the day before so went to hear Jasper explaining the challenges of HTML generation.
 
-It turns out that Haskell provides a decent support for web development, with [[http://hackage.haskell.org/packages/archive/wai/0.0.0/doc/html/Network-Wai.html|WAI]] library implementing HTTP parsing and functional abstractions for a web application and middleware. Web application frameworks mentioned by Jasper were:
+It turns out that Haskell provides a decent support for web development, with [WAI](http://hackage.haskell.org/packages/archive/wai/0.0.0/doc/html/Network-Wai.html) library implementing HTTP parsing and functional abstractions for a web application and middleware. Web application frameworks mentioned by Jasper were:
 
-  * [[http://happstack.com/index.html|Happstack]] -- mature, with complete stack
-  * [[http://docs.yesodweb.com/|Yesod]] -- utilising WAI, very high level, DSL-focused
-  * [[http://snapframework.com/|Snap]] -- fast, clean, concurrent and with nearly 100% test coverage
+  * [Happstack](http://happstack.com/index.html) -- mature, with complete stack
+  * [Yesod](http://docs.yesodweb.com/) -- utilising WAI, very high level, DSL-focused
+  * [Snap](http://snapframework.com/) -- fast, clean, concurrent and with nearly 100% test coverage
 
 Each of these has to deal with generation of HTML. BlazeHtml fills this gap by providing a DSL for describing the structure of HTML document and a very fast generation engine. A HTML document description looks as follows:
 <code haskell>
@@ -106,7 +106,7 @@ includeJS source =
 </code>
 can then be invoked in the HTML definition.
 
-Transforming this structure into HTML string seemed like a straightforward job, but Jasper soon corrected this misconception. The transformation is all about string concatenation, which, when done naively, can throw performance out of the window. For this reason BlazeHtml employed a Builder pattern, which is very much like Java's ''StringBuilder'', but thanks to implementing ''Monoid'' type class can be used with all Haskell functions operating on monoids. Builders consist of functions that generate signals corresponding to buffer writing events, so that the function extracting textual data from builders knows when a fresh buffer needs to be provided. This implementation (now available as a [[http://hackage.haskell.org/packages/archive/blaze-builder/latest/doc/html/Blaze-ByteString-Builder.html|separate module]]) resulted in very high performance, with BlazeHtml beating competition by a wide margin in [[http://jaspervdj.be/blaze/benchmarks.html|Bigtable benchmark]].
+Transforming this structure into HTML string seemed like a straightforward job, but Jasper soon corrected this misconception. The transformation is all about string concatenation, which, when done naively, can throw performance out of the window. For this reason BlazeHtml employed a Builder pattern, which is very much like Java's ''StringBuilder'', but thanks to implementing ''Monoid'' type class can be used with all Haskell functions operating on monoids. Builders consist of functions that generate signals corresponding to buffer writing events, so that the function extracting textual data from builders knows when a fresh buffer needs to be provided. This implementation (now available as a [separate module](http://hackage.haskell.org/packages/archive/blaze-builder/latest/doc/html/Blaze-ByteString-Builder.html)) resulted in very high performance, with BlazeHtml beating competition by a wide margin in [Bigtable benchmark](http://jaspervdj.be/blaze/benchmarks.html).
 
 Finally, there are multiple ways to represent the generated HTML string: it could be either a ''[Char]'', or a ''ByteString'', which doesn't carry the encoding information, or a ''Text'', which uses UTF16 encoding so is wasteful for languages using Latin alphabet but very useful for other scripts. Haskell makes it easy to provide the HTML in all these formats at once:
 <code haskell>
@@ -117,11 +117,11 @@ data StaticString = { string :: String
 </code>
 Thanks to laziness, actual computation of each representation of the HTML string will only take place if the application needs to send it over the network (or use in some other form of I/O) so there is no overhead associated with carrying around all three representations.
 
-[[http://skillsmatter.com/podcast/scala/blazehtml-a-blazingly-fast-html-combinator-library|Video]]
+[Video](http://skillsmatter.com/podcast/scala/blazehtml-a-blazingly-fast-html-combinator-library)
 
 ===== Client-Based Web Apps in F# with WebSharper =====
 
-After two split sessions the tracks merged for **Adam Granicz's** presentation of [[http://www.websharper.com/|WebSharper]] -- a [[http://code.google.com/webtoolkit/|GWT]]-like system for developing both server and client-side web app code in F#.
+After two split sessions the tracks merged for **Adam Granicz's** presentation of [WebSharper](http://www.websharper.com/) -- a [GWT](http://code.google.com/webtoolkit/)-like system for developing both server and client-side web app code in F#.
 
 WebSharper was the only commercial product discussed at the conference and perhaps for that reasong the talk had a sales pitch vibe. Adam went on demonstrating how dynamic client intereface features and client-side input validation can be implemented using combinators provided by WebSharper. The UI is constructed using //formlets//, which represent UI elements and can be composed, and //flowlets//, which extend the concept of formlet by supporting sequences of forms. These are compiled to JavaScript that runs on the client. A sample WebSharper formlet can look as follows:
 <code ocaml>
@@ -136,32 +136,32 @@ Formlets can then be rendered using various JavaScript backends -- YUI, JQuery e
 
 Not working daily on web applications I might be biased against frameworks and toolkits targeted at web development, but as was the case with Sadek's talk, my impression was that this one did not deserve its 45-minute slot and the time would have been better spent by e.g. allowing Miles Sabin to expand on the problem and solution he presented in one of the short talks that followed.
 
-[[http://skillsmatter.com/podcast/scala/talk-by-adam-granicz|Video]]
+[Video](http://skillsmatter.com/podcast/scala/talk-by-adam-granicz)
 
 ===== VSLab Plugin - Extending Visual Studio Interactively =====
 
 A break was followed by a series of three short talks. Twenty minutes for each was very tight and all three presentations seemed rushed, with the speakers talking unusually fast and running over their allocated time slots.
 
-The relay race started with **Antonio Cisternino** showing his work on a Visual Studio add-in [[http://vslab.codeplex.com/|VSLab]]. Antonio was excited by introduction of F# REPL to Visual Studio, but was missing the ability to plot graphics directly from the REPL, in the spirit of Matlab and Mathematica. He decided to provided this functionality as an add-in, and in doing so had to overcome difficulties associated with the F# REPL running in a process separate from Visual Studio. Solving that required usage of win32 API for proxying draw messages and COM to get hold of the correct instance of Visual Studio in the case when many instances are started. In the end he succeeded and was able to show pretty impressive 4D function plots with DirectX animation.
+The relay race started with **Antonio Cisternino** showing his work on a Visual Studio add-in [VSLab](http://vslab.codeplex.com/). Antonio was excited by introduction of F# REPL to Visual Studio, but was missing the ability to plot graphics directly from the REPL, in the spirit of Matlab and Mathematica. He decided to provided this functionality as an add-in, and in doing so had to overcome difficulties associated with the F# REPL running in a process separate from Visual Studio. Solving that required usage of win32 API for proxying draw messages and COM to get hold of the correct instance of Visual Studio in the case when many instances are started. In the end he succeeded and was able to show pretty impressive 4D function plots with DirectX animation.
 
-[[http://skillsmatter.com/podcast/scala/talk-by-antonio-cisternino-more-information-coming-soon|Video]]
+[Video](http://skillsmatter.com/podcast/scala/talk-by-antonio-cisternino-more-information-coming-soon)
 
 ===== F# on the Server Side =====
 
-**Tomáš Petříček** is a recognisable figure in F# community, with [[http://www.manning.com/petricek/|a book]] on functional .Net published by Manning and StackOverflow reputation [[http://stackoverflow.com/users/33518/tomas-petricek|close to 40k]]. His talk focused on the features of F# which make it well suited for server-side development -- in this instance "server" meaning a "web server". Two solutions presented were asynchronous workflows, which provide a convenient syntax for event-based programming style (which seems to be another name for [[http://en.wikipedia.org/wiki/Continuation-passing_style|continuation-passing style]]) familiar from [[http://nodejs.org/|Node.js]], and Erlang-like agents -- a popular topic, mentioned earlier on the day in Simon Peyton Jones's and Jonas Bonér talks. These approaches were illustrated by a web proxy (using asynchronous workflows) and a cache (implemented as an agent).
+**Tomáš Petříček** is a recognisable figure in F# community, with [a book](http://www.manning.com/petricek/) on functional .Net published by Manning and StackOverflow reputation [close to 40k](http://stackoverflow.com/users/33518/tomas-petricek). His talk focused on the features of F# which make it well suited for server-side development -- in this instance "server" meaning a "web server". Two solutions presented were asynchronous workflows, which provide a convenient syntax for event-based programming style (which seems to be another name for [continuation-passing style](http://en.wikipedia.org/wiki/Continuation-passing_style)) familiar from [Node.js](http://nodejs.org/), and Erlang-like agents -- a popular topic, mentioned earlier on the day in Simon Peyton Jones's and Jonas Bonér talks. These approaches were illustrated by a web proxy (using asynchronous workflows) and a cache (implemented as an agent).
 
-[[http://skillsmatter.com/podcast/scala/talk-by-tomas-more-info-coming-soon|Video]]
+[Video](http://skillsmatter.com/podcast/scala/talk-by-tomas-more-info-coming-soon)
 
 ===== Scrap Your Boilerplate with Scala =====
 
-**Miles Sabin**, known mostly from his work on [[http://www.scala-ide.org/|Scala IDE for Eclipse]], attempted to show how a result from a [[http://research.microsoft.com/pubs/67439/gmap3.pdf|classic paper]] by Ralf Lämmel and Simon Peyton Jones can be translated from the setting it was originally presented in, Haskell, to Scala. It was an ambitious endavour, involving first presenting a problem which would clasically be solved using either a visitor (OO), or structural recursion and pattern matching (FP), explaining how these approaches are not extensible and lead to boilerplate code and then showing a solution based on encoding of Haskell's type classes in Scala. Despite the talk running for 45 instead of planned 20 minutes I found it difficult to follow the details of the solution. A shame, as it (undoubtedly) demonstrated the elegance afforded by expressive type systems. It seems like my "to read" list will grow by another paper.
+**Miles Sabin**, known mostly from his work on [Scala IDE for Eclipse](http://www.scala-ide.org/), attempted to show how a result from a [classic paper](http://research.microsoft.com/pubs/67439/gmap3.pdf) by Ralf Lämmel and Simon Peyton Jones can be translated from the setting it was originally presented in, Haskell, to Scala. It was an ambitious endavour, involving first presenting a problem which would clasically be solved using either a visitor (OO), or structural recursion and pattern matching (FP), explaining how these approaches are not extensible and lead to boilerplate code and then showing a solution based on encoding of Haskell's type classes in Scala. Despite the talk running for 45 instead of planned 20 minutes I found it difficult to follow the details of the solution. A shame, as it (undoubtedly) demonstrated the elegance afforded by expressive type systems. It seems like my "to read" list will grow by another paper.
 
-[[http://skillsmatter.com/podcast/scala/talk-by-scala-expert-miles-sabin|Video]]
+[Video](http://skillsmatter.com/podcast/scala/talk-by-scala-expert-miles-sabin)
 
 ===== Pizza and Beer =====
 
 {{ :tech:fpx2011.jpg|evasedropping on Simon Peyton Jones and Miles Sabin. Photo by Chi Lang Ngo}}
-As soon as Miles finished (and half an hour after the planned end of talks) we have been treated to pizza and beer, which were, fortunately, still warm and cold (respectively). This was an excellent opportunity to evasedrop on Simon Peyton Jones and Miles Sabin discussing how type checking is the most widely applied formal method and how it is important to not discourage programmers from using it by making type systems overly complicated (read: [[http://en.wikipedia.org/wiki/Dependent_type|dependent types]] and variance(?) polymorphism are not coming to Haskell anytime soon).
+As soon as Miles finished (and half an hour after the planned end of talks) we have been treated to pizza and beer, which were, fortunately, still warm and cold (respectively). This was an excellent opportunity to evasedrop on Simon Peyton Jones and Miles Sabin discussing how type checking is the most widely applied formal method and how it is important to not discourage programmers from using it by making type systems overly complicated (read: [dependent types](http://en.wikipedia.org/wiki/Dependent_type) and variance(?) polymorphism are not coming to Haskell anytime soon).
 
 A park bench panel discussion was planned after the refreshments, but due to lack of significant interest and late hour all further discussion has been moved to
 

@@ -1,10 +1,10 @@
-====== Haskell MVC ======
+
 
 //with wxHaskell and STM//
 
 With popularity of Haskell raising in recent years I have decided to have a 
 look at how suitable it is as a general-purpose programming language. The 
-experiment involves writing a [[https://github.com/mmakowski/habaz|Windows client for FIBS]].
+experiment involves writing a [Windows client for FIBS](https://github.com/mmakowski/habaz).
 
 It turned out to be far from easy.
 
@@ -418,7 +418,7 @@ some FP concepts so there might be aspects of this example which can be made
 more idiomatic or otherwise improved.
 
 
-The raw source of this post can be found [[https://gist.github.com/850698|on Github]].
+The raw source of this post can be found [on Github](https://gist.github.com/850698).
 
 
 ~~DISCUSSION~~

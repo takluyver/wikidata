@@ -1,6 +1,6 @@
-====== E-mail Testing with Mock SMTP Server ======
 
-If our application can send e-mail (and, according to [[http://www.natpryce.com/articles/000749.html|Letts' Law]], it eventually will), we would want our [[tech:integration_testing_with_teamcity|integration tests]] to verify that the e-mail has indeed been sent, and that its contents are as expected. If we have written the integration tests in Python this will be pretty straightforward: Python library provides ''smtpd'' package with an implementation of SMTP server class, all we need to do is extend it to store the received messages and provide a way for the test code to verify that message has indeed been received. The Mock server class presented below runs in a separate thread and can be started and interrogated from existing test scripts.
+
+If our application can send e-mail (and, according to [Letts' Law](http://www.natpryce.com/articles/000749.html), it eventually will), we would want our [integration tests](tech:integration_testing_with_teamcity) to verify that the e-mail has indeed been sent, and that its contents are as expected. If we have written the integration tests in Python this will be pretty straightforward: Python library provides ''smtpd'' package with an implementation of SMTP server class, all we need to do is extend it to store the received messages and provide a way for the test code to verify that message has indeed been received. The Mock server class presented below runs in a separate thread and can be started and interrogated from existing test scripts.
 
 === ===
 <code python smtpmock.py>

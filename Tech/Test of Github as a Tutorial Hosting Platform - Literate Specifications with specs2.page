@@ -1,4 +1,4 @@
-====== Test of Github as a Tutorial Hosting Platform: Literate Specifications with specs2 ======
+
 
 This is an experiment with how well Github is suited to host coding tutorials. Turns out that the navigation and presentation could be a bit better, but overall it seems to be fairly usable. And since the tutorial has the form of a git repository, we are not restricted to using Github, but can come up with software that is specifically designed to present the subsequent commits as steps of a tutorial... clearly, DVCS and self-contained repositories are very powerful ideas.
 
@@ -6,7 +6,7 @@ This is an experiment with how well Github is suited to host coding tutorials. T
 
 Instructions:
 
-  * go to [[https://github.com/mmakowski/literate-specs-tutorial/commits/|the commit history of the repo]]
+  * go to [the commit history of the repo](https://github.com/mmakowski/literate-specs-tutorial/commits/)
   * starting from the bottom, click on the commit id button to see the description of the step and the code changes introduced in it
   * when finished with the step, go back to the list of commits to see the next one.
 

@@ -1,10 +1,10 @@
-====== Setting up a BuildBot with Windows Slave on AWS EC2 ======
 
-Not long ago I set up a [[http://build.bimbr.com/wxhaskell|BuildBot instance for wxHaskell]] and thought about sharing my experience with configuring all the elements of the system. Johan Tibell's [[http://blog.johantibell.com/2011/08/results-from-state-of-haskell-2011.html|commentary to the State of Haskell, 2011 survey]], and his call for Windows bots to test Hackage libraries, prompted me to finally put my notes together into tutorial of a sort. There is nothing Haskell-specific, so if you are looking to automate Windows builds of apps written in any other language this guide should provide all the info you need.
+
+Not long ago I set up a [BuildBot instance for wxHaskell](http://build.bimbr.com/wxhaskell) and thought about sharing my experience with configuring all the elements of the system. Johan Tibell's [commentary to the State of Haskell, 2011 survey](http://blog.johantibell.com/2011/08/results-from-state-of-haskell-2011.html), and his call for Windows bots to test Hackage libraries, prompted me to finally put my notes together into tutorial of a sort. There is nothing Haskell-specific, so if you are looking to automate Windows builds of apps written in any other language this guide should provide all the info you need.
 
 ===== The Setup =====
 
-[[http://trac.buildbot.net|BuildBot]] is a build server designed specifically for automating builds of software that targets multiple platforms. The central server (master) sends build requests to multiple slaves, each of which can be configured differently. The server receives the build results from slaves, aggregates them and displays via a web interface. While the server should be accessible at all times, the slaves are only required when there is something to build. 
+[BuildBot](http://trac.buildbot.net) is a build server designed specifically for automating builds of software that targets multiple platforms. The central server (master) sends build requests to multiple slaves, each of which can be configured differently. The server receives the build results from slaves, aggregates them and displays via a web interface. While the server should be accessible at all times, the slaves are only required when there is something to build. 
 
 In order for the build to be repeatable and to avoid random errors introduced by unrelated configuration changes, it would be nice for the slaves to be dedicated machines with a known initial configurations. This sounds like an ideal setting for using virual servers created from a disk image specifically for the build. Thanks to services like Amazon EC2 it is relatively easy and inexpensive to set up such a box.
 
@@ -12,7 +12,7 @@ Helpfully, BuildBot supports so called "latent slaves", which are started by the
 
 ===== What we will need =====
 
-For the BuildBot master, we'll need a server with shell access, which is permanently online and where you can open a port to a non-HTTP traffic (this is required for accepting slave connections). I've used a [[http://webfaction.com|WebFaction]] shared hosting with a dedicated IP (additional 5$ per month), which is required for the aforementioned port.
+For the BuildBot master, we'll need a server with shell access, which is permanently online and where you can open a port to a non-HTTP traffic (this is required for accepting slave connections). I've used a [WebFaction](http://webfaction.com) shared hosting with a dedicated IP (additional 5$ per month), which is required for the aforementioned port.
 
 We'll set up the slave on Amazon EC2. I'm not going to cover how to set up an account there as the process is straightforward and there are numerous resources on how to do this. Hosting of the disk image (AMI) will set us back a couple of dollars per month; on top of that we'll need to pay for the time our slave is running, which for typical builds that take less than an hour and one build every day running on a micro instance will add another couple of dollars.
 
@@ -22,11 +22,11 @@ All of the steps below happen on the always-online server. They assume that ''py
 
 ==== Virtualenv ====
 
-Download the tarball from [[http://pypi.python.org/pypi/virtualenv/]] and untar to a temporary directory. In there run ''python setup.py instal --dry-run''. If it complains about missing directories, create them. Continue running with --dry-run until it passe, then run without --dry-run. Once done, we should end up with ''virtualenv'' script in ''~/bin''. We can then get rid of the tarball and temporary directory.
+Download the tarball from [http://pypi.python.org/pypi/virtualenv/] and untar to a temporary directory. In there run ''python setup.py instal --dry-run''. If it complains about missing directories, create them. Continue running with --dry-run until it passe, then run without --dry-run. Once done, we should end up with ''virtualenv'' script in ''~/bin''. We can then get rid of the tarball and temporary directory.
 
 ==== BuildBot ====
 
-Follow the [[http://buildbot.net/buildbot/docs/current/tutorial/firstrun.html#creating-a-master|BuildBot tutorial]]. I installed BuildBot in ''~/opt/buildbot'' instead of suggested ''~/tmp/buildbot'', other than that I followed it to the letter.
+Follow the [BuildBot tutorial](http://buildbot.net/buildbot/docs/current/tutorial/firstrun.html#creating-a-master). I installed BuildBot in ''~/opt/buildbot'' instead of suggested ''~/tmp/buildbot'', other than that I followed it to the letter.
 
 Opening the BuildBot website to the outside world depends on how our server is set up. For WebFaction it involved creating a custom web application via the control panel. This web application got assigned a port number, which then needed to be set in BuildBot's config by editing ''~/opt/buildbot/sandbox/master/master.cfg'' and changing the ''http_port'' in ''c['status'].append(html.WebStatus(http_port=8010, authz=authz_cfg))'' to the assigned port.
 
@@ -60,20 +60,20 @@ which will ensure that the script will run once every hour.
 
 If we have a Windows box handy we might want to test the slave setup on it before playing with AWS instance, which is billed by the hour.
 
-Log on to [[https://console.aws.amazon.com/ec2|AWS Management Console]] and set up a Windows instance using one of the Windows AMIs provided by Amazon((I'll assume we used a 64-bit OS in the instructions that follow; if not, 32 bit versions of relevant software should be used instead of the ones mentioned)) (see [[http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/|EC2 Gettings Started guide]] for step-by-step instructions). After a couple of minutes we will be able to retrieve the administrator password and connect using Remote Desktop Connection (if on Windows) or rdesktop (on Linux or Mac).
+Log on to [AWS Management Console](https://console.aws.amazon.com/ec2) and set up a Windows instance using one of the Windows AMIs provided by Amazon((I'll assume we used a 64-bit OS in the instructions that follow; if not, 32 bit versions of relevant software should be used instead of the ones mentioned)) (see [EC2 Gettings Started guide](http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/) for step-by-step instructions). After a couple of minutes we will be able to retrieve the administrator password and connect using Remote Desktop Connection (if on Windows) or rdesktop (on Linux or Mac).
 
 Once logged on, we need to change the administrator password to something we'll remember and install the following software:
 
-  * [[http://www.python.org/getit/releases/2.7/|Python 2.7]] (64 bit)
-  * [[http://sourceforge.net/projects/pywin32/files/pywin32/|Pywin32]]
-  * [[http://pypi.python.org/pypi/setuptools#windows|easy_install]]
-  * [[http://twistedmatrix.com/trac/wiki/Downloads|Twisted]]
+  * [Python 2.7](http://www.python.org/getit/releases/2.7/) (64 bit)
+  * [Pywin32](http://sourceforge.net/projects/pywin32/files/pywin32/)
+  * [easy_install](http://pypi.python.org/pypi/setuptools#windows)
+  * [Twisted](http://twistedmatrix.com/trac/wiki/Downloads)
   * Using easy_install set up ''zope.interface'': ''easy_install zope.interface''
-  * unzip [[http://code.google.com/p/buildbot/downloads/list|BuildBot Slave]] to a temporary directory and run ''setup.py install'' in there
+  * unzip [BuildBot Slave](http://code.google.com/p/buildbot/downloads/list) to a temporary directory and run ''setup.py install'' in there
 
 On top of that we will need to install any other software required to build the project we're setting the slave up for (VCS client, compiler, libraries etc.)
 
-Once it is done, we can follow [[http://buildbot.net/buildbot/docs/current/tutorial/firstrun.html#creating-a-slave|the slave part of the BuildBot tutorial]] to make sure that the slave can communicate with the master and can handle build requests.
+Once it is done, we can follow [the slave part of the BuildBot tutorial](http://buildbot.net/buildbot/docs/current/tutorial/firstrun.html#creating-a-slave) to make sure that the slave can communicate with the master and can handle build requests.
 
 Note that so far the slave we set up is a regular (non-latent) one, i.e. master will assume that it is always online and available to handle build requests. We'll address this shortly; for now it's important to make sure that the builds work as expected on our newly set up server.
 
@@ -81,7 +81,7 @@ Note that so far the slave we set up is a regular (non-latent) one, i.e. master 
 
 ==== The Slave ====
 
-After we are happy that the master can invoke builds, one final piece of slave configuration is ensuring that the slave process starts up automatically after the server is brought on line; on Windows this is done using services. Making slave run as a service will require a piece of custom Python code. I've used [[http://nyc-dba.blogspot.com/2008/10/running-buildbot-buildslave-as-windows.html|the script by Ira Pfeifer]], modified slightly to work with recent version of BuildBot. Here it is, for your convenience; make sure to update the environment variables set in the script to contain everything your build needs:
+After we are happy that the master can invoke builds, one final piece of slave configuration is ensuring that the slave process starts up automatically after the server is brought on line; on Windows this is done using services. Making slave run as a service will require a piece of custom Python code. I've used [the script by Ira Pfeifer](http://nyc-dba.blogspot.com/2008/10/running-buildbot-buildslave-as-windows.html), modified slightly to work with recent version of BuildBot. Here it is, for your convenience; make sure to update the environment variables set in the script to contain everything your build needs:
 
 <code python buidbot_slave_service.py>
 """ buildbot_slave_service.py
@@ -160,9 +160,9 @@ After this is done we are ready to take a snapshot of the servers hard drive, so
 
 ==== The Master ====
 
-We'll need one additional Python library to enable BuildBot master to control EC2 instances: [[http://code.google.com/p/boto/|boto]]. On the master server, cd to ''~/opt/buildbot'', activate the sandbox (''. sandbox/bin/activate'') and run ''easy_install boto''. 
+We'll need one additional Python library to enable BuildBot master to control EC2 instances: [boto](http://code.google.com/p/boto/). On the master server, cd to ''~/opt/buildbot'', activate the sandbox (''. sandbox/bin/activate'') and run ''easy_install boto''. 
 
-It's now time to tell master to treat our slave as latent. The setup is described in the [[http://buildbot.net/buildbot/docs/current/full.html#Amazon-Web-Services-Elastic-Compute-Cloud-_0028_0022AWS-EC2_0022_0029|BuildBot docs]], and it boils down to updating ''c['slaves']'' like this:
+It's now time to tell master to treat our slave as latent. The setup is described in the [BuildBot docs](http://buildbot.net/buildbot/docs/current/full.html#Amazon-Web-Services-Elastic-Compute-Cloud-_0028_0022AWS-EC2_0022_0029), and it boils down to updating ''c['slaves']'' like this:
 
 <code python>
 ####### BUILDSLAVES
@@ -180,12 +180,12 @@ c['slaves'] = [EC2LatentBuildSlave('<slave name>', '<slave password>', 't1.micro
 </code>
 Where:
   * ''<slave name>'' and ''<slave password>'' are the same as the ones we used so far
-  * ''t1.micro'' is the type of EC2 instance; change it to a bigger one if that's what you require for your build (check [[http://aws.amazon.com/ec2/pricing/|the prices]] before doing that though)
+  * ''t1.micro'' is the type of EC2 instance; change it to a bigger one if that's what you require for your build (check [the prices](http://aws.amazon.com/ec2/pricing/) before doing that though)
   * ''region'' should be the region where you set up your AMI (can be seen in the AWS console)
   * ''ami-12345678'' is the id of the AMI we have created from the slave instance
-  * ''<key identifier>'' and ''<secret key>'' can be generated and obtained from the //Security Credentials// section of your [[http://aws.amazon.com/account/|AWS account]].
+  * ''<key identifier>'' and ''<secret key>'' can be generated and obtained from the //Security Credentials// section of your [AWS account](http://aws.amazon.com/account/).
 
-Finally, in BuildBot 0.8.4 there is an [[http://trac.buildbot.net/ticket/1931|issue with EC2 instances not being terminated]]. If left unfixed it can lead to each build's disk image being left active indefinitely and charging to our account! The bug should be fixed in BuildBot 0.8.5; in the mean time we can patch it by hand, by replacing ''instance.stop()'' with ''instance.terminate()'' in ''~/opt/buildbot/sandbox/lib/python2.7/site-packages/buildbot-0.8.4p2-py2.7.egg/buildbot/ec2buildslave.py''.
+Finally, in BuildBot 0.8.4 there is an [issue with EC2 instances not being terminated](http://trac.buildbot.net/ticket/1931). If left unfixed it can lead to each build's disk image being left active indefinitely and charging to our account! The bug should be fixed in BuildBot 0.8.5; in the mean time we can patch it by hand, by replacing ''instance.stop()'' with ''instance.terminate()'' in ''~/opt/buildbot/sandbox/lib/python2.7/site-packages/buildbot-0.8.4p2-py2.7.egg/buildbot/ec2buildslave.py''.
 
 Once this is done, a ''buildbot restart master'' should provide us with a BuildBot process running with the final set up and starting up EC2 slave when required.
 
@@ -200,7 +200,7 @@ If it turns out that our slave configuration needs an update, here is what we do
 
 ==== Debugging the Master ====
 
-While the source code of BuildBot might be a bit difficult to follow for someone not versed in Twisted, I found the [[http://buildbot.net/buildbot/docs/current/tutorial/tour.html#debugging-with-manhole|manhole interface]] invaluable in tracking down what turned out to be a trivial config issue.
+While the source code of BuildBot might be a bit difficult to follow for someone not versed in Twisted, I found the [manhole interface](http://buildbot.net/buildbot/docs/current/tutorial/tour.html#debugging-with-manhole) invaluable in tracking down what turned out to be a trivial config issue.
 
 ===== Gotchas =====
 

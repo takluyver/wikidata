@@ -1,6 +1,6 @@
-====== Integration Testing with TeamCity ======
 
-Inspired by a recent seminar [[http://en.wikipedia.org/wiki/Ken_Schwaber|Ken Schwaber]] presented at the company I work for, I decided to provide the means for ensuring that the high-level functionality of an application package built in our continuous integration environment (we use TeamCity) can be tested automatically. 
+
+Inspired by a recent seminar [Ken Schwaber](http://en.wikipedia.org/wiki/Ken_Schwaber) presented at the company I work for, I decided to provide the means for ensuring that the high-level functionality of an application package built in our continuous integration environment (we use TeamCity) can be tested automatically. 
 
 ===== The Context =====
 
