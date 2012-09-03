@@ -1,32 +1,23 @@
 ---
 toc: no
 ...
-# Technology
-
-## [Test of Github as a Tutorial Hosting Platform - Literate Specifications with specs2](Tech/Test of Github as a Tutorial Hosting Platform - Literate Specifications with specs2)
-
-This is an experiment with how well Github is suited to host coding tutorials. Turns out that the navigation and presentation could be a bit better, but overall it seems to be fairly usable. And since the tutorial has the form of a git repository, we are not restricted to using Github, but can come up with software that is specifically designed to present the subsequent commits as steps of a tutorial… clearly, DVCS and self-contained repositories are very powerful ideas.
-
-[complete article](Tech/Test of Github as a Tutorial Hosting Platform - Literate Specifications with specs2)
-
-[more technology entries](Tech)
-
-# Travel
-
-## [Dziennik islandzki](Travel/Dziennik islandzki)
-
-Tyle się teraz wozi ze sobą dupereli, że co i rusz zapomni się o czymś ważnym. Powtarzam sobie, że grunt, żeby paszport i pieniądze były, resztę się da zorganizować na miejscu, a tu bach – zapominam karty PADI (Ania też nie wzięła), i główny punkt programu stoi pod dużym znakiem zapytania. Przypomniałem sobie w autobusie z lotniska w Keflavik do Reykjaviku, i natychmiast wysłałem maila do firmy organizującej nurkowania w Silfra. Pół godziny później wszystko było załatwione – znaleźli nasze dane w bazie nurków, i nic nie stało na przeszkodzie, żeby kolejnego dnia rano zażyć lodowatej kąpieli. Jak myśmy sobie radzili bez smartfonów?
-
-[pełen tekst](Travel/Dziennik islandzki)
-
-[więcej wpisów podróżniczych](Travel)
-
-# Cooking
+# [Cooking]()
 
 ## [Tesco Finest Salad](Cooking/Tesco Finest Salad)
 
 After moving to London to live on my own, I rented a one bed flat located on the top floor of a 16-story high tower block. It was a 1970s, local authority building, and the unquestionable advantages of awesome view over the city, proximity to work and affordability were somewhat counterbalanced by extreme heat in the summer, biting cold in the winter and the council tenants taking their bull terriers to relieve themselves in the lift. I sustained on spaghetti with tomato sauce: dice a couple of tomatoes, add *Herbes de Provence//, a lot of pressed garlic and chopped parsley, and a spoon of tomato puree – these Lidl tomatoes could lie months on a shelf without going off, but flavour they had none; fry for a couple of minutes, meanwhile cooking the pasta *al dente//. Finally mix it all and add a decent amount of grated parmesan on top, plus some extra chopped parsley. Quick, cheap and delicious – I could gobble up a kilo of this stuff, so that I literally couldn’t move, that’s how I liked it.
 
-[complete article](Cooking/Tesco Finest Salad)
 
-[more cooking entries](Cooking)
+
+# [Travel]()
+
+## [Dziennik islandzki](Travel/Dziennik islandzki)
+
+Tyle się teraz wozi ze sobą dupereli, że co i rusz zapomni się o czymś ważnym. Powtarzam sobie, że grunt, żeby paszport i pieniądze były, resztę się da zorganizować na miejscu, a tu bach – zapominam karty PADI (Ania też nie wzięła), i główny punkt programu stoi pod dużym znakiem zapytania. Przypomniałem sobie w autobusie z lotniska w Keflavik do Reykjaviku, i natychmiast wysłałem maila do firmy organizującej nurkowania w Silfra. Pół godziny później wszystko było załatwione – znaleźli nasze dane w bazie nurków, i nic nie stało na przeszkodzie, żeby kolejnego dnia rano zażyć lodowatej kąpieli. Jak myśmy sobie radzili bez smartfonów?
+
+# [Technology](Tech)
+
+## [Test of Github as a Tutorial Hosting Platform - Literate Specifications with specs2](Tech/Test of Github as a Tutorial Hosting Platform - Literate Specifications with specs2)
+
+This is an experiment with how well Github is suited to host coding tutorials. Turns out that the navigation and presentation could be a bit better, but overall it seems to be fairly usable. And since the tutorial has the form of a git repository, we are not restricted to using Github, but can come up with software that is specifically designed to present the subsequent commits as steps of a tutorial… clearly, DVCS and self-contained repositories are very powerful ideas.
+
