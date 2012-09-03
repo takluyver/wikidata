@@ -38,7 +38,7 @@ Wydatki przed wyjazdem pochłonęły około £6000. W kwocie tej znalazły się 
 
 System, który zastosowaliśmy, polegał na podzieleniu kasy na dwie części. Jedna, na codzienne wydatki, wynosiła liczbę dni w drodze pomnożoną przez przyjętą dzienną stawkę. Druga, na wydatki niecodzienne, zawierała kwotę, która pokryć miała duże koszty, o których wiedzieliśmy z góry -- nurkowanie na Wielkiej Rafie, 4x4 na Fraser Island, wynajęcie campera w Australii -- oraz zawierać rezerwę na nieprzewidziane wypadki. Jako dzienną stawkę przyjęliśmy £50, co pomnożone przez 56 dni wynisło około £3000. Na nurkowanie przeznaczyliśmy £500, na samochód £1500, na Fraser Island £300, do tego £700 rezerwy -- razem kolejne £3000. W trakcie podróży na bieżąco analizowaliśmy nasze wydatki i gdy w pewnym momencie okazało się, że nasza dzienna stawka przekroczy założone £50 podbiliśmy ją do £64, przesuwając £600 z kasy specjalnej do codziennej. Wyzbywanie się środków przebiegało następująco:
 
-{{ :travel:budget_sea_au.png }}
+<img src="/Travel/Wyprawa 2010-11/budget_sea_au.png" class="plot-centre"></img>
 
 Gruba czerwona kreska to stan kasy codziennej, niebieska to kasa specjalna. Cienka czerwona linia pokazuje jak wyglądałaby kasa codzienna gdybyśmy każdego dnia wydawali dokładnie tyle, ile wynosi dzienna stawka. Wykres pokazuje kwoty już po przesunięciu środków, czyli kasa codzienna startuje z poziomu £3600 zaś specjalna z £2400.
 
