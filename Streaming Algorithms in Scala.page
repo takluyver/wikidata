@@ -55,4 +55,25 @@ Optimisation: use MH3 and run the hash function twice, with different seeds; the
 
 #### k-Min Values
 
-_index = hash(data) / maxHash_ gives us a point in 0..1 range. Then calculate average distance between the points. 
+_index = hash(data) / maxHash_ gives us a point in 0..1 range. Then calculate average distance between the points. But: storing all points would be pointless! So: just store a subset, e.g. just the minimum value, and check its distance from 0. This, however, is very noisy, so we can improve on this by storing k smallest values; then the average distance is _largest value stored/k_.
+
+For k = 1024 the error is in the order of 2.5%. It also has the nice properties of Bloom Filter: we can do union, intersection and difference in the natural manner!
+
+### Frequent Items
+
+(i.e. who are the most active users?)\
+
+#### Space Saver
+
+* store _k_ tuples (item, count)
+* when item is observed:
+    - if in set, increase the count
+    - if not, replace the lowest-count item with observed item
+
+There's high error rate for uniform data, but there this kind of data is not interesting for this type of analysis.
+
+### Libraries and Resources
+
+* [Clearstream stream-lib](https://github.com/clearspring/stream-lib)
+* [Noel's Scala library](https://github.com/noelwelsh/fleet)
+* [Alex Smola's course](http://alex.smola.org/teaching/berkeley2012/streams.html)
