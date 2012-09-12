@@ -41,3 +41,18 @@ _i<sub>1</sub> = h<sub>1</sub>(data) mod m_
 _i<sub>2</sub> = h<sub>2</sub>(data) mod m_
 
 More hashing functions -> better chance of no false positives. We can adjust the probability by setting the size of bit array, i.e. bits per element. E.g. to get 0.05 probability of false positive we need 6.2 bits/element.
+
+Nice properties: union is a bitwise or, intersection an and, trivial to parallelise and distribute.
+
+Optimisation: use MH3 and run the hash function twice, with different seeds; then interpolate k values between the obtained values.
+
+### Distinct Values
+
+(i.e.: how many distinct users do we have?)
+
+* Flajolet-Martin sketches (LogLog, HyperLogLog)
+* optimal algorithm published in 2010, but is complex
+
+#### k-Min Values
+
+_index = hash(data) / maxHash_ gives us a point in 0..1 range. Then calculate average distance between the points. 
