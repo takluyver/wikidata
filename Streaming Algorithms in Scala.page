@@ -1,0 +1,33 @@
+# Making Big Data Small: Streaming Algorithms in Scala
+
+2012-09-12, Noel Welsh
+
+**B**ig **D**ata? That is Hadoop and map/reduce. We're talking here about something different: data sets bigger than our resources can handle in one go.
+
+### Demands
+
+* scalable
+* reak time (not batch, like Hadoop)
+* simple to implement
+
+### Streaming Algorithms
+
+* process data in one pass
+* have small space requirements (e.g. O(log(log n)))
+* limited computation requirements per item (typically O(1))
+
+But:
+
+* give approximate answers
+
+### Hash Functions
+
+* deterministic
+* uniform distribution
+* bit values are independent (any subset of bits is equally good approximation)
+
+In practice, use Murmur Hash 3. Scala 2.10 provides `scala.util.hashing`, look into Guava if we more algorithms are needed.
+
+
+
+
