@@ -28,7 +28,7 @@ But:
 
 In practice, use Murmur Hash 3. Scala 2.10 provides `scala.util.hashing`, look into Guava if we more algorithms are needed.
 
-### [Bloom Filters]()
+### [Bloom Filters](Bloom filter)
 
 * a set (i.e. have I seen this user before?)
 * ~5 times smaller than corresponding hash set
