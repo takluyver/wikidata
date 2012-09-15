@@ -112,7 +112,7 @@ object IncFn {
 }
 ~~~
 
-Finally, this mechanism was used to define a function that lifted a function of arbitrary arity to `Option` monad. Miles is planning to write a blog post on this soon so watch [http://www.chuusai.com/blog/] if you are interested in a coherent explanation.
+Finally, this mechanism was used to define a function that lifted a function of arbitrary arity to `Option` monad. Miles is planning to write a blog post on this soon so watch [http://www.chuusai.com/blog/](http://www.chuusai.com/blog/) if you are interested in a coherent explanation.
 
 Given conceptual difficulty, the practicality of this approach seems questionable. Miles admitted that the proposed encoding is not something he would recommend for production use; nevertheless, it was yet another demonstration of the power of Scala's type system and a number of conference attendees twitted about having their "mind blown", which I assume must be a geeky expression of utmost appreciation.
 
