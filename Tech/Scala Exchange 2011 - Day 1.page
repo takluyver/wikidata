@@ -65,7 +65,7 @@ Furthermore, while Scalaz provides the `IO` monad to separate the side-effecting
 
 ## Representing Polymorphic Function Values in Scala Using Type Classes
 
-After handing over the day-to-day Scala IDE development to Scala Solutions/Typesafe team, **Miles Sabin** seems to be thriving in cutting-edge type system research. His [Scrap Your boilerplate with Scala talk](tech:functional_programming_exchange_2011#scrap_your_boilerplate_with_scala) on Functional Programming Exchange, while presenting a Scala encoding of a fascinating result, left part of the audience confused, due to large amount of material being presented in a very short time. This time round the ratio was much better and we had a chance to at least understand the problem in reasonable detail. 
+After handing over the day-to-day Scala IDE development to Scala Solutions/Typesafe team, **Miles Sabin** seems to be thriving in cutting-edge type system research. His [Scrap Your boilerplate with Scala talk](Functional Programming Exchange 2011#scrap-your-boilerplate-with-scala) on Functional Programming Exchange, while presenting a Scala encoding of a fascinating result, left part of the audience confused, due to large amount of material being presented in a very short time. This time round the ratio was much better and we had a chance to at least understand the problem in reasonable detail. 
 
 The problem is that while Scala makes it easy to define a polymorphic _method_:
 
