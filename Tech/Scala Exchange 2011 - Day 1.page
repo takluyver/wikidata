@@ -1,4 +1,7 @@
-
+---
+title: Scala Exchange 2011 -- Day 1
+categories: it blog scala conference
+...
 
 I've attended a day full of Scala-related talks at Scala Exchange 2011, and, as was the case with the previous events organised by SkillsMatter, I felt that relating what was said and what my impressions were will help me digest all the new pieces of information. So, here it goes.
       
@@ -60,7 +63,7 @@ instance (Monoid a, Monoid b) => Monoid (a, b) where
 
 Furthermore, while Scalaz provides the `IO` monad to separate the side-effecting code from pure one, it is only done by convention and not enforced by the compiler -- unlike in Haskell. On the other hand, Scala's implicits are slightly more expressive than Haskell's type classes, allowing for usage of the default instance but also providing a custom one when required. All in all, the talk was a good introduction to Scalaz for those familiar with Haskell; for the others, the opaque syntax and lack of clearly defined benefit might have been off-putting.
 
-=### Representing Polymorphic Function Values in Scala Using Type Classes
+### Representing Polymorphic Function Values in Scala Using Type Classes
 
 After handing over the day-to-day Scala IDE development to Scala Solutions/Typesafe team, **Miles Sabin** seems to be thriving in cutting-edge type system research. His [Scrap Your boilerplate with Scala talk](tech:functional_programming_exchange_2011#scrap_your_boilerplate_with_scala) on Functional Programming Exchange, while presenting a Scala encoding of a fascinating result, left part of the audience confused, due to large amount of material being presented in a very short time. This time round the ratio was much better and we had a chance to at least understand the problem in reasonable detail. 
 
@@ -148,8 +151,3 @@ Did I say that I don't like web framework presentations? Scratch that; **Dustin 
 ## How to Build a High Performance, Scalable Infrastructure in Under 5 Minutes
 
 **David Savage** attempted to explain how his employer, [Paremus](http://www.paremus.com/), deploys scalable and modular services. From what I could understand without being familiar with some of the technologies discussed, the platform consists of a minimal kernel that pulls all the dependencies in the form of OSGi modules. The system is defined as the components, transport, scaling and contract, with components and scaling requirements defined in an XML file and contracts expressed as LDAP filters. Overall Scala played a seemingly insignificant role of implementation language for one of the services -- even its interface was defined in Java -- so it felt a bit like an excuse to present an otherwise unrelated commercial product. David mentioned that Scala provided for the "high performance" part of the headline, but it was not elaborated on in any detail.
-
-{{tag>it conference scala}}
-
-
-~~DISCUSSION~~
