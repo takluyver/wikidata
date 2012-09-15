@@ -1,3 +1,7 @@
+---
+title: Setting up BuildBot with Windows Slave on AWS EC2
+categories: it blog ci buildbot
+...
 
 Not long ago I set up a [BuildBot instance for wxHaskell](http://build.bimbr.com/wxhaskell) and thought about sharing my experience with configuring all the elements of the system. Johan Tibell's [commentary to the State of Haskell, 2011 survey](http://blog.johantibell.com/2011/08/results-from-state-of-haskell-2011.html), and his call for Windows bots to test Hackage libraries, prompted me to finally put my notes together into tutorial of a sort. There is nothing Haskell-specific, so if you are looking to automate Windows builds of apps written in any other language this guide should provide all the info you need.
 
