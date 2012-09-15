@@ -1,5 +1,9 @@
+---
+title: Scala LiftOff London 2011 -- Day 1
+categories: it scala conference
+...
 
-Compared to [last year's LiftOff](tech:scala_lift_off_london_2010_day_1), which was an un-conference pretty much all the way, this year's is split into morning, structured sessions, and afternoon open spaces resembling 2010 format. As usual, I tried to jot down the more interesting points from the day. The below is by no means a complete record and definitely suffers from insufficient editing and research (no time for that, sorry!). With this disclaimer out of the way:
+Compared to [last year's LiftOff](Scala LiftOff London 2010 - Day 1), which was an un-conference pretty much all the way, this year's is split into morning, structured sessions, and afternoon open spaces resembling 2010 format. As usual, I tried to jot down the more interesting points from the day. The below is by no means a complete record and definitely suffers from insufficient editing and research (no time for that, sorry!). With this disclaimer out of the way:
 
 ## David Pollak's Keynote
 
@@ -73,9 +77,9 @@ sealed trait Trampoline
 def coroutine(body: => Unit @cps[Trampoline]): Unit =
   Scheduler.addThunk((Unit) => reset { body ; Done })
 
-def yld: Unit @cps[Trampoline] = ... * invokes shift
+def yld: Unit @cps[Trampoline] = ... // invokes shift
 
-* there is also a Scheduler object which invokes thunks
+// there is also a Scheduler object which invokes thunks
 ~~~
 
 the type of `yld` guarantees it can only be called inside coroutine -- Unit with `@cps` annotation is not a subtype of Unit without the annotation.
@@ -132,7 +136,7 @@ Second, related problem is that the effect types don't play nicely with some lan
   coroutine {
     for (_ <- 1 until 10) {
       println("Hi!")
-      yld * <-- causes error
+      yld // <-- causes error
     }
   }
 ~~~
@@ -149,7 +153,7 @@ The structure of a coroutine is similar to what Miles coded up in his library:
 
 ~~~ { .scala }
 class MyCoroutine extends Coroutine {
-  * some code 
+  // some code 
   `yield`()
 }
 ~~~
@@ -198,7 +202,7 @@ This is fast, but we end up with trees that have too many gaps and waste memory.
 
 Some bit-twiddling was required to interpret the bitmap.
 
-//TODO: look up the details of this structure//
+_TODO: look up the details of this structure_
 
 In practice, 32 fan out in every node turned out to be a good match for CPU cache line sizes; the trade off for the distance to go between items versus making a copy of a part of the trie gave optimal results at this node size.
 
@@ -281,10 +285,15 @@ How do we choose magic number? It:
 
 Performance results and statistical properties are encouraging:
 
-^ Algorithm              ^ time ^ statistical properties ^
-| Murmur hash (baseline) | 16 ns | poor |
-| Bhash32                | 16 ns | good |
-| Bhash64                | 14 ns | good |
++------------------------+-------+------------------------+
+| algorithm              | time  | statistical properties |
++========================+=======+========================+
+| Murmur hash (baseline) | 16 ns | poor                   |
++------------------------+-------+------------------------+
+| Bhash32                | 16 ns | good                   |
++------------------------+-------+------------------------+
+| Bhash64                | 14 ns | good                   |
++------------------------+-------+------------------------+
 
 The hypothesis on why 64 runs faster is that it is a result of the layout of registers in x86 processor.
 
@@ -299,8 +308,3 @@ After the lunch break there was a "park bench" session, where delegates took tur
 ## Ad-hoc Sessions
 
 Finally, the delegates assembled into groups to discuss specific subjects, among them "Scala in production", "Kojo" and "parser combinators". I sat through the Kojo session presented by Phil Bagwell, and had a chance to catch up with him afterwards. Phil is a captivating speaker; it is really curious that I don't recollect his name ever being mentioned in numerous Scala discussion groups that I follow. He definitely seems to be at the centre of the Scala library optimisation work and can talk for hours about how large customers such as LinkedIn drive the optimisation effort, how distributed collections are going to differ from parallel collections, how language virtualisation enables "concurrency for the masses" and what challenges taking it further, into virtual hardware and cloud, poses. As a speaker Phil reminds me of Simon Peyton Jones, which is about as good as it can get. Another name to look for when skimming conference speaker lists.
-
-{{tag>it scala conference}}
-
-
-~~DISCUSSION~~
