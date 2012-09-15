@@ -222,13 +222,13 @@ This can also be implemented using a spinlock -- but then, it's blocking, which 
 
 It turned out that making tries concurrent presented a number of challenges, a solution of each leading to the next problem.
 
-== Inserting into a trie concurrently ==
+##### Inserting into a trie concurrently
 
 We can allocate the new/updated node, then do a CAS on the cell in the parent node where the reference to our updated node needs to be inserted. This can immediately lead to a data race, because the node we are CAS-ing on might have been modified already, hence removed from the trie. According to Phil, after three weeks of pondering on this issue, and some beers the night before, he came up with a solution: introduce intermeidate I-nodes between the nodes containing data and perform CAS on them.
 
 It turned out that the speed was not impaired; as a metter of fact, good properties of the new structure wrt. caching outweighted the overhead of additional node hops.
 
-== Deleting from a trie ==
+##### Deleting from a trie
 
 With that out of the way, the problem now is that deletion can't compress levels when only a single item is left in a leaf; if it did that, we could lose an insertion to that leaf which happened concurrently. The solution involved disallowing insertion during compression. How can this be achieved without a lock? It turns out that if a special cell ("T-node") is attached to the leaf to be compressed, and the threads are instructed to do their best to get rid of that node, it results in the expected behaviour; many threads might be compressing the same node in parallel and race for whose result will make it to the trie, but in the end the results of their work are the same, so it doesn't matter which one wins. While it was not immediately obvious that this algorithm was in fact lock-free, Alex Prokopec proved it.
 
