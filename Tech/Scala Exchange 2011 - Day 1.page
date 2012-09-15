@@ -63,7 +63,7 @@ instance (Monoid a, Monoid b) => Monoid (a, b) where
 
 Furthermore, while Scalaz provides the `IO` monad to separate the side-effecting code from pure one, it is only done by convention and not enforced by the compiler -- unlike in Haskell. On the other hand, Scala's implicits are slightly more expressive than Haskell's type classes, allowing for usage of the default instance but also providing a custom one when required. All in all, the talk was a good introduction to Scalaz for those familiar with Haskell; for the others, the opaque syntax and lack of clearly defined benefit might have been off-putting.
 
-### Representing Polymorphic Function Values in Scala Using Type Classes
+## Representing Polymorphic Function Values in Scala Using Type Classes
 
 After handing over the day-to-day Scala IDE development to Scala Solutions/Typesafe team, **Miles Sabin** seems to be thriving in cutting-edge type system research. His [Scrap Your boilerplate with Scala talk](tech:functional_programming_exchange_2011#scrap_your_boilerplate_with_scala) on Functional Programming Exchange, while presenting a Scala encoding of a fascinating result, left part of the audience confused, due to large amount of material being presented in a very short time. This time round the ratio was much better and we had a chance to at least understand the problem in reasonable detail. 
 
