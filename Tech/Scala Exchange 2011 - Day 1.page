@@ -67,13 +67,16 @@ Furthermore, while Scalaz provides the `IO` monad to separate the side-effecting
 
 After handing over the day-to-day Scala IDE development to Scala Solutions/Typesafe team, **Miles Sabin** seems to be thriving in cutting-edge type system research. His [Scrap Your boilerplate with Scala talk](tech:functional_programming_exchange_2011#scrap_your_boilerplate_with_scala) on Functional Programming Exchange, while presenting a Scala encoding of a fascinating result, left part of the audience confused, due to large amount of material being presented in a very short time. This time round the ratio was much better and we had a chance to at least understand the problem in reasonable detail. 
 
-The problem is that while Scala makes it easy to define a polymorphic *method//:
+The problem is that while Scala makes it easy to define a polymorphic _method_:
+
 ~~~ { .scala }
 object Id {
   def id[A](a: A) = a
 }
 ~~~
+
 when converting this method to a function value (the distiction between a method and a function is one of Scala quirks) using the trailing underscore syntax we are forced to provide a concrete type (e.g. `val fid = id[Int] _`), otherwise we'll end up with a useless function with inferred type `Nothing => Nothing`. One way to work around that would be to make use of the way Scala represents functions and provide a custom function object with polymorphic `apply` method:
+
 ~~~ { .scala }
 trait PolyFn1[M[_]] { 
   def apply[T](t: T): M[T] 
@@ -83,6 +86,7 @@ val pf = new PolyFn1[List] {
   def apply[T](t: T) = List(t) 
 }
 ~~~
+
 While the "function definition" is not particularly pleasing to the eye, we can still take advantage of the standard application syntax. We can write `pf(23)` and `pf("str")` and both will typecheck -- i.e. `pf` is a parametrically polymorphic function. 
 
 But this was not sufficient for Miles; what he wanted to achieve was ad-hoc polymorphism, like the one allowed by Haskell's type classes. The solution to this problem was the centrepiece of the talk, and, sadly, the part whose details I wasn't able to follow. It seemed to boil down to using a single typeclass `TransCase[F, A, B]` whose instances represented an arbitrary function `A => B` and were selected by providing a phantom type as the first type parameter. 
