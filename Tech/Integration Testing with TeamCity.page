@@ -1,4 +1,7 @@
-
+---
+title: Integration Testing with TeamCity
+categories: it blog testing teamcity
+...
 
 Inspired by a recent seminar [Ken Schwaber](http://en.wikipedia.org/wiki/Ken_Schwaber) presented at the company I work for, I decided to provide the means for ensuring that the high-level functionality of an application package built in our continuous integration environment (we use TeamCity) can be tested automatically. 
 
@@ -50,8 +53,8 @@ Assuming we are using command line runner (as I do for running the Python script
 
 Even more helpful would be the ability to tell which exact test failed and what the reason was. Printing out diagnostics to stdout/stderr can help -- all these messages will end up in the build log displayed in one of TeamCity's tabs, and which can be looked at to determine the reason for failure. There is a more practical solution though: command line runner can be set up to watch for test result files in common formats (Ant's JUnit, Maven's Surefire) and nothing prevents us from writing these from the test scripts. I decided on Surefire XML, which can be generated using these templates:
 
-<code python surefire.py>
-REPORT_TEMPLATE = `'
+~~~ { .python }
+REPORT_TEMPLATE = '''
 <testsuite name="%s"
            errors="0"
            skipped="0"
@@ -59,21 +62,21 @@ REPORT_TEMPLATE = `'
            failures="%s"
            time="%s">
 %s
-</testsuite>`'
+</testsuite>'''
 
-SUCCESSFUL_TEST_CASE_TEMPLATE = `'
+SUCCESSFUL_TEST_CASE_TEMPLATE = '''
   <testcase name="%s"
             time="%s"/>
-`'
+'''
 
-FAILED_TEST_CASE_TEMPLATE = `'
+FAILED_TEST_CASE_TEMPLATE = '''
   <testcase name="%s"
             time="%s">
     <failure type="failure">
         %s
     </failure>
   </testcase>
-`'
+'''
 ~~~
 
 With test report files in place TeamCity will display a nice summary and track performance of the tests over subsequent builds -- as it does with standard JUnit tests:
@@ -91,5 +94,3 @@ we can browse the output directly from TeamCity's web page.
 {{:tech:teamcity-inttest-artifacts.png|}}
 
 Now we are all set for quick feedback on the build health. All that remains is writing some meaningful integration test cases.
-
-{{tag>it teamcity integration_testing}}
