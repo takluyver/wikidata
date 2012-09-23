@@ -38,3 +38,10 @@ WHERE
   end_ts    < :query_time
 ~~~
 
+at the cost of making updates slightly more complicated: whenever a new fact is recorded, the currently-valid record needs to be found and have its `end_ts` udpated to be the same as `start_ts` of the newly-observed value. Typically a certain time far in the future is chosen to represent "forever", i.e. the latest known fact; in our example it's 9999-12-31T23:59:59.999.
+
+This schema makes it possible to query for historical data. It is important to note, however, that the `start_ts` and `end_ts` represent real-world observation times, not the times the data was recorded in the database. Because of this our database does not support auditing use-case: responding to queries that ask what the system knew as of a given point in time.
+
+## Bi-temporal
+
+TODO
