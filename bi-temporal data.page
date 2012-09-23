@@ -1,0 +1,40 @@
+Example: stock price that changes continuously. 
+
+## Non-temporal
+
+Simplest storage schema: 
+
++--------+---------+
+| ticker | price   |
++========+=========+
+| BARC.L | 223.75  |
++--------+---------+
+
+`ticker` is the primary key. Whenever a new piece of data arrives, the price is overwritten. This means historical querying is impossible; if we wanted to know what the price was yesterday noon, we won't be able to tell.
+
+## (Uni-)Temporal
+
++--------+-------------------------+---------+
+| ticker | timestamp               | price   |
++========+=========================+=========+
+| BARC.L | 2012-09-21T16:35:00.000 | 223.75  |
++--------+-------------------------+---------+
+
+`timestamp` shows the time when fact was observed and is added to the primary key. We can now tell what the historical price was by ordering the records by timestamp and for a given time finding the record with larges timestamp that is less then the time asked for. In practice the start and end of the validity period is recorded:
+
++--------+-------------------------+-------------------------+---------+
+| ticker | start_ts                | end_ts                  | price   |
++========+=========================+=========================+=========+
+| BARC.L | 2012-09-21T16:35:00.000 | 9999-12-31T23:59:59.999 | 223.75  |
++--------+-------------------------+-------------------------+---------+
+
+`end_ts` is not a part of primary key, but allows to easily express a historical data query in SQL: 
+
+~~~ {.sql}
+SELECT price FROM stock_prices 
+WHERE 
+  ticker    = 'BARC.L'
+  start_ts >= :query_time AND 
+  end_ts    < :query_time
+~~~
+
