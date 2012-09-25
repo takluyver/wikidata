@@ -1,6 +1,9 @@
+
 ---
 categories: it scala
 ...
+
+_presentation by Trond Bjerkestrand from Typesafe; chaotic, not well thought out and rehearsed_
 
 Scala's answer to [LINQ](). Originated with ScalaQuery and borrowed from Scala Integrated Query.
 
@@ -17,7 +20,9 @@ objet RawSql {
   implicit val session: Session = db.createSession
 
   // we can use string interpolation to create a SQL statement
-  sqlu"CREATE TABLE Test()" execute
+  sqlu"CREATE TABLE user(username, email)" execute
+
+  sql"select * from user".as[(String, String)] list
 }
 ~~~
 
@@ -34,11 +39,39 @@ object User extends Table[User]("user") {
   val uniqueUsername = index("uniqueUsername", username, unique = true)
   val * = id ~ username ~ email <> (User.apply _, User.unapply _) // can provide arbitrary construction/deconstruction functions
 
-  def byId(id: Int)(implicit session: Session) = createFinderBy(_.id).firstOption
+  def byId(id: Int)(implicit session: Session) = createFinderBy(_.id).firstOption(id)
+}
+
+object Queries {
+  // print out DDL
+  User.ddl.createStatements.foreach(println)
+
+  // insert
+  User.insert(User("trond", "trond@typesafe.com")) // TODO: do we need to call anything else to have this execute?
+
+  // select
+  val query = for { user <- User if user.email is "trond@typesafe.com" } yield user
+  query.selectStatement // this didn't work in the demo
 }
 ~~~
 
-Now: 
+## Mapping enums
 
-* `User.ddl.createStatements` gives us DDL CREATEs
-* `User.insert(user)` will insert data
+~~~ {.scala}
+trait DBEnum {
+  val ordered: Seq[EnuerationValue]
+  lazy val toDbType: String = s"ENUM${ordered.mkString("('", "', '")}
+}
+
+object UserType extends Enumeration with DBEnum {
+  // ... ?
+}
+
+object User extends Table[User] {
+  // ...
+  val userType = column[String]("level", O.DBType(UserType.toDbType))
+  // ...	
+}
+~~~
+
+Seems like there is a lot of features, but the talk does not sell them well at all. The [website](http://slick.typesafe.com/) looks like a better introduction.
