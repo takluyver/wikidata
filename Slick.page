@@ -1,0 +1,44 @@
+---
+categories: it scala
+...
+
+Scala's answer to [LINQ](). Originated with ScalaQuery and borrowed from Scala Integrated Query.
+
+## Convenient execution of arbitrary SQL
+
+~~~ {.scala}
+import scala.slic.driver.MySQLDriver.simple._
+import scala.slick.jdbc._
+import Q.interpolation
+import scala.slick.session.Database
+
+objet RawSql {
+  val db = Database.forUrl("...")
+  implicit val session: Session = db.createSession
+
+  // we can use string interpolation to create a SQL statement
+  sqlu"CREATE TABLE Test()" execute
+}
+~~~
+
+## Type-safe table definitions
+
+~~~ {.scala}
+case class User(username: String, email: String /*...*/ )
+
+object User extends Table[User]("user") {
+  val id = column[Int]("id", O.AutoInc, O.PrimaryKey)
+  val username = column[String]("username")
+  val email = 
+  // ...
+  val uniqueUsername = index("uniqueUsername", username, unique = true)
+  val * = id ~ username ~ email <> (User.apply _, User.unapply _) // can provide arbitrary construction/deconstruction functions
+
+  def byId(id: Int)(implicit session: Session) = createFinderBy(_.id).firstOption
+}
+~~~
+
+Now: 
+
+* `User.ddl.createStatements` gives us DDL CREATEs
+* `User.insert(user)` will insert data
