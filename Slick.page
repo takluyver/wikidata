@@ -2,7 +2,7 @@
 categories: it scala
 ...
 
-Scala's answer to [LINQ](). Originated with ScalaQuery and borrowed from Scala Integrated Query.
+Scala's answer to [LINQ](). Originated with ScalaQuery and borrowed from Scala Integrated Query. Currently covers relation databases, there are plans to support NoSQL in the future.
 
 _presentation by Trond Bjerkestrand from Typesafe; chaotic, not well thought out and rehearsed_
 
