@@ -1,9 +1,8 @@
-
 ---
 categories: it scala
 ...
 
-_presentation by Trond Bjerkestrand from Typesafe; chaotic, not well thought out and rehearsed_
+presentation by Trond Bjerkestrand from Typesafe; chaotic, not well thought out and rehearsed
 
 Scala's answer to [LINQ](). Originated with ScalaQuery and borrowed from Scala Integrated Query.
 
