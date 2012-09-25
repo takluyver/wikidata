@@ -1,10 +1,12 @@
-
+---
+categories: it blog python testing
+...
 
 If our application can send e-mail (and, according to [Letts' Law](http://www.natpryce.com/articles/000749.html), it eventually will), we would want our [integration tests](tech:integration_testing_with_teamcity) to verify that the e-mail has indeed been sent, and that its contents are as expected. If we have written the integration tests in Python this will be pretty straightforward: Python library provides `smtpd` package with an implementation of SMTP server class, all we need to do is extend it to store the received messages and provide a way for the test code to verify that message has indeed been received. The Mock server class presented below runs in a separate thread and can be started and interrogated from existing test scripts.
 
 
-<code python smtpmock.py>
-`'
+~~~ {.python}
+'''
 Provides a mock SMTP server implementation, MockSMTPServer.
 
 Sample usage:
@@ -30,17 +32,17 @@ assert(mock_server.received_message_matching("From: .*\\nTo: .*\\n+.+tent"))
 mock_server.reset()
 assert(mock_server.received_messages_count() == 0)
 ----
-`'
+'''
 import asyncore
 import re
 import smtpd
 import threading
 
 class MockSMTPServer(smtpd.SMTPServer, threading.Thread):
-    `'
+    '''
     A mock SMTP server. Runs in a separate thread so can be started from
     existing test code.
-    `'
+    '''
 
     def __init__(self, hostname, port):
         threading.Thread.__init__(self)
@@ -69,5 +71,3 @@ class MockSMTPServer(smtpd.SMTPServer, threading.Thread):
         return len(self.received_messages)
 
 ~~~
-
-{{tag>it python smtp testing}}
