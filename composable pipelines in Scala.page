@@ -38,15 +38,162 @@ def filter(p: T => Boolean): Try[T] // returns this or Failure if predicate is n
 
 What about `Throwables` that should cause a shutdown of JVM (OOM etc.)? These are not caught.
 
-What can we do with `Try`?
+What else can we do with `Try`?
 
 ~~~ {.scala}
 // "catch block" that provides value in place of Failure:
 def recover[U >: T](f: PartialFunction[Throwable, U]): Try[U]
+def transform[U](s: T => Try[U], f: Throwable => Try[U]): Try[U]
 ~~~
+
+Sample usage:
+
+~~~ {.scala}
+val in = Try(getAccout)
+
+val withdrawalResult = in map { (x: Account) => 
+  x.copy(balance = x.balance - withdrawal)
+} filter { (x: Account) => 
+  x.balance > 12000
+} flatMap { (x: Account) => 
+  Try(updateAccount(x.copy(interestRate = x.interestRate - adjustment))
+} recover {
+  case _: NoSuchElementException => // handle somehow
+}
+~~~
+
+### Q&A
+
+Q: How does this differ from `catching` and `allCatch`? 
+
+A: They compose computations, `Try` is a container. There are plans to integrate the two mechanisms better.
+
+Q: Why do we need this if we have `Either`? 
+
+A: It's left-biased, also simpler for this application -- provides combinators that are specific to `Throwable`. Also, even the creator of `Either` is not happy with it, there is talk of deprecation.
+
+Q: How can we print out/log the `Throwable` prior to `get`?
+
+A: you can do `recover` and then `get`.
+
+Q: Can it be used to combine exceptions from multiple threads?
+
+A: Not really but `Futures` are good way to handle this...
 
 ## Asynchronicity
 
+A lot of future implementations:
 
+* java.util.concurrent.Future
+* scala.actors.Future
+* com.twitter.util.Future
+* akka.dispatch.Future
+* scalaz.concurrent.Promise
+* net.liftweb.actor.LAFuture
+
+Default Java futures are neither efficient nor composable. Akka 2.0 is the predecessor of unified Scala futures.
+
+Future/Promise can be thought of as a single concurrency abstraction:
+
+* Promise: write-once
+* Future: read-many
+
+They can be used to write deterministic concurrent programs (dataflow; see van Roy and Haridi).
+
+Promise completion:
+
+~~~ {.scala}
+p.success(result)
+p.failure(errorValue)
+~~~
+
+In s.u.concurrent, it's common to call `get` on future, which blocks the calling thread. Ideally, we'd like the thread to do some work. How can we achieve this? Typically tasks use worker thread pool, so it can execute other tasks while waiting. This can be done through callbacks. The user doesn't have to manage them though. Callbacks require a lot of management because it's not guaranteed on which thread they are going to run. Instead, users can use higher-order functions and standard monadic combinators:
+
+~~~ {.scala}
+val purchase: Future[Int] = rateQuote map { q => connection.buy(amount, q) }
+val postBySmith: Future[Post] = post.filter(_.author == "Smith") // produces a Future with NoSuchElementException if predicate returns false
+~~~
+
+some more operations:
+
+~~~ {.scala}
+def fallbackTo[ U >: T](that: Future[U]): Future[U]
+val fut: Future[T] = Future.firstCompletedOf[T](futures) // non-deterministic
+~~~
 
 ## Execution Contexts
+
+Goal: provide thread pool as a platfomr service to be shared by all parallel frameworks. 
+
+`scala.concurrent.ExecutionContext` -- default is backed by [fork/join]() pool -- much faster than `ThreadExecutor`.
+
+Async computations are executed on an ExecutionContext which is provided implicitly. However, if required, `ExecutionContext` can be slected (Twitter's Finagle uses it). In Scala 2.10 parallel collections and Futures share the same context.
+
+Example of how it is used in `Future.map`:
+
+~~~ {.scala}
+def map[S](f: T => S)(implicit executor: ExecutionContext): Future[S] = {
+  val p = Promise[S]()
+
+  onComplete {
+    case result =>
+      try {
+        result match {
+          case Success(r) => p success f(r)
+          case f: Failure[_] => p complete f.asInstanceOf[Failure[S]]
+        }
+      } catch {
+        case t: NonFatal(t) => p failure t
+      }
+  }
+  p.future
+}
+~~~
+
+The real work is done in `Promise` -- it has list of callbacks to run once completed.
+
+~~~ {.scala}
+def complete(result: Try[T]): this.type =
+  if (tryComplete(result)) this
+  else throw new IllegalStateException("Promise already completed")
+
+def tryComplete(value: Try[T]): Boolean = {
+  // ...
+  try {
+    @tailrec
+    def tryComplete(v: Try[T]): List[CallbackRunnable[T]] = {
+      getState match {
+        case raw: List[_] =>
+          val cur = //...
+          if (updateState(cur, v)) cur else tryComplete(v)
+        case _ => null
+      }
+    }
+    tryComplete(resolved)
+  } catch {
+    // ...
+  }
+}
+~~~
+
+Promise then gets hairy:
+
+~~~ {.java}
+abstract class AbstractPromise {
+  private volatile Object _ref;
+  final static long _refoffset;
+
+  static {
+    // try { ...
+    _refoffset = Unsafe.instance.objectFieldOffset(AbstractPromise.class.getDelcaredField("_ref"));
+  }
+
+  protected boolean updateState(Object oldState, Object newState) {
+    return Unsafe.instance.compreAndSwapbject(this, _refoffset, oldState, newState);
+  }
+
+  protected final Object getState() {
+    return _ref;
+  }
+}
+~~~
