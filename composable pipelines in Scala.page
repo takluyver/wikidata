@@ -1,0 +1,34 @@
+---
+categories: it scala
+...
+
+a talk by Philipp Haller about Futures, Promises and Try.
+
+~~~ {.scala}
+val avgRetweet twts.map(_.retweets).reduce(_ + _) / twts.length
+~~~
+
+* How do we deal in exceptions in this sequence of method calls?
+* How do we deal with asynchronicity?
+* How do we make it parallel? (this we won't discuss)
+
+## Exception handling
+
+`scala.util.Try` is a simple data container which is composable and provides comibnators for exceptions. Traditionally we used `try ... catch ... finally`, which is installed on the stack as opposed to being first-class values. Scala allows to install custom partial function in `catch`, which helps with code reuser somewhat. `Try` allows us to handle exceptions in completely different context, e.g. in another thread.
+
+~~~ {.scala}
+sealed abstract class Try[+T]
+
+final case class Success[+T](value: T) extends Try[T]
+final case class Failure[+T](exception: Throwable) extends Try[T]
+~~~
+
+_Aside: havaing sealed abstract class helps the compiler check for exhaustivity of pattern matching._
+
+
+
+## Asynchronicity
+
+
+
+## Execution Contexts
