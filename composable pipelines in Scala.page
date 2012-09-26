@@ -201,3 +201,7 @@ abstract class AbstractPromise {
 ## Combining Try and Futures
 
 Done through `onComplete`; actually, `Promise` internally stores its state as a `Try`.
+
+## References
+
+SIP is outdated!
