@@ -18,4 +18,4 @@ walk mn (Node t1 t2) = (n1 `min` n2, Node tr1 tr2 )
 
 For a given tree the function computes a tree of the same shape with all leaves containing the minimum value from the original tree, while traversing the original once only. When `walk` is invoked originally, the un-evaluated `mn` is put in the newly created leaves. the actual value for `mn` is computed during the same traversal; once traversal completes, the value of mn will be know and will be provided when a leaf of resulting tree is accessed. Lazy evalution is indispensable for this technique.
 
-After [the yield paper](http://www.cs.indiana.edu/~sabry/papers/yield-pp.pdf).
+While elegant, it is very fragile, which is illustrated in [the yield paper](http://www.cs.indiana.edu/~sabry/papers/yield-pp.pdf): if we try to use the value of `mn` in the body of `walk`, depending on the exact position in which it is used we might end up with divergent function.
