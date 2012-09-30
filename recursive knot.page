@@ -2,7 +2,7 @@
 categories: it fp haskell
 ...
 
-A construct where seemingly mutually-recursive definition is made possible by non-strict evaluation, such as in Richard Bird's `repmin`:
+"Tying the knot" is a technique where seemingly mutually-recursive definition is made possible by non-strict evaluation, such as in Richard Bird's `repmin`:
 
 ~~~ {.haskell}
 data Tree = Leaf Int | Node Tree Tree
@@ -16,8 +16,6 @@ walk mn (Node t1 t2) = (n1 `min` n2, Node tr1 tr2 )
         (n2, tr2) = walk mn t2
 ~~~
 
-For a given tree the function computes a tree of the same shape with all leaves containing the minimum value from the original tree, while traversing the original once only. It works as follows:
-
-TODO
+For a given tree the function computes a tree of the same shape with all leaves containing the minimum value from the original tree, while traversing the original once only. When `walk` is invoked originally, the un-evaluated `mn` is put in the newly created leaves. the actual value for `mn` is computed during the same traversal; once traversal completes, the value of mn will be know and will be provided when a leaf of resulting tree is accessed. Lazy evalution is indispensable for this technique.
 
 After [the yield paper](http://www.cs.indiana.edu/~sabry/papers/yield-pp.pdf).
