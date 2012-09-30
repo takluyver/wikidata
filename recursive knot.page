@@ -1,0 +1,23 @@
+---
+categories: it fp haskell
+...
+
+A construct where seemingly mutually-recursive definition is made possible by non-strict evaluation, such as in Richard Bird's `repmin`:
+
+~~~ {.haskell}
+data Tree = Leaf Int | Node Tree Tree
+repmin :: Tree -> Tree
+repmin t = tr where (mn, tr) = walk mn t
+
+walk :: Int -> Tree -> (Int, Tree)
+walk mn (Leaf n)     = (n,           Leaf mn)
+walk mn (Node t1 t2) = (n1 `min` n2, Node tr1 tr2 )
+  where (n1, tr1) = walk mn t1
+        (n2, tr2) = walk mn t2
+~~~
+
+For a given tree the function computes a tree of the same shape with all leaves containing the minimum value from the original tree, while traversing the original once only. It works as follows:
+
+TODO
+
+After [the yield paper](http://www.cs.indiana.edu/~sabry/papers/yield-pp.pdf).
