@@ -2,4 +2,22 @@
 categories: it haskell
 ...
 
-Binding special keys: [https://wiki.archlinux.org/index.php/Extra_Keyboard_Keys_in_Xorg]()
+## Suspend the system with keyboard key
+
+Create `/home/mmakowski/.xmonad/suspend` script that can suspend without sudo:
+
+~~~ {.shell}
+#!/bin/sh
+
+dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+~~~
+
+And add the following binding to `xmonad.hs`:
+
+~~~ {.haskell}
+((0, 0x1008FF2F), spawn "/home/mmakowski/.xmonad/suspend")
+~~~
+
+## References
+
+* Binding special keys: [https://wiki.archlinux.org/index.php/Extra_Keyboard_Keys_in_Xorg]()
