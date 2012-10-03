@@ -21,6 +21,7 @@ And add the following binding to `xmonad.hs`:
 ## Outstanding issues
 
 * skype is invisible
+* empathy doesn't like gtalk cert
 * run programs on start up (xroot, mouse button mappings etc.)
 
 ## References
