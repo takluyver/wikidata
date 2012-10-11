@@ -1,0 +1,1 @@
+Function `f` is pure if for every [referentially transparent](referential transparency) `x` `f(x)` is referentially transparent. See [Runar's blog entry]() where he explains various misconceptions regarding purity. 
