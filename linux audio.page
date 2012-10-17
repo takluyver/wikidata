@@ -1,0 +1,7 @@
+## Recording from seq24
+
+* using QjackCtl connect the Midi Through port to synth inputs
+* run `ecasound -i:jack -o:foo.wav`
+* again, in QjackCtl connect the outputs of the synths to ecasound's `in_1` and `in_2`
+* play the song in seq24
+* stop ecasound
