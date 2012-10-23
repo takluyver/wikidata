@@ -1,0 +1,9 @@
+~~~
+Server app ---[TLS/SSL]---> gateway.push.apple.com ---> Phone
+~~~
+
+Some docs are available at [Apple developer's website][A] and some at [javapns][J].
+
+[A]: http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingWIthAPS/CommunicatingWIthAPS.html
+
+[J]: http://code.google.com/p/javapns/wiki/GeneralRequirements
