@@ -43,9 +43,13 @@ Messages can be in simple or enhanced format.
 
 Feedback service is available at `feedback.[sandbox.].push.apple.com`. When connected to it streams a list of device tokens for MAs that are no longer reachable. Apple requires that it is periodically checked and that notifications are stopped for these tokens.
 
-### Libraries
+## Libraries
 
 * [JavaPNS](http://code.google.com/p/javapns/)
+
+## Push Notifications and Passbook
+
+See the [passbook web service guide](https://developer.apple.com/library/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html#//apple_ref/doc/uid/TP40011988) for description of the REST endpoints that need to be supported by a service that handles [Passbook](Apple Passbook) passes
 
 ## Third-party providers
 
