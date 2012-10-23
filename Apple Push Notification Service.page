@@ -3,7 +3,7 @@
 ### Parties
 
 * Mobile App (MA) -- app that receives notifications
-* Apple Push Notification service (APNs) -- a server controlled by Apple (`gateway.push.apple.com`) that delivers notifications to devices
+* Apple Push Notification service (APNs) -- a server controlled by Apple that delivers notifications to devices. Provides two environments: live (`gateway.push.apple.com`) and sandbox (`gateway.sandbox.push.apple.com`)
 * Notification Provider (NP) -- an application that sends notifications to instances of Mobile App
 * Feedback Service (FS) -- a service associated with APNs that provides status of past deliveries
 
@@ -33,14 +33,23 @@ Described in [Provider Communication][PC] doc on Apple website.
 
 The stack:
 
-TLS/SSL
-TCP
+* binary protocol
+* TLS/SSL
+* TCP
+
+Messages can be in simple or enhanced format.
 
 binary
 
 ### Feedback
 
+Feedback service is available at `feedback.[sandbox.].push.apple.com`.
+
 TODO
+
+### Libraries
+
+* [JavaPNS](http://code.google.com/p/javapns/)
 
 ## Third-party providers
 
