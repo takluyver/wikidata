@@ -39,13 +39,9 @@ The stack:
 
 Messages can be in simple or enhanced format.
 
-binary
-
 ### Feedback
 
-Feedback service is available at `feedback.[sandbox.].push.apple.com`.
-
-TODO
+Feedback service is available at `feedback.[sandbox.].push.apple.com`. When connected to it streams a list of device tokens for MAs that are no longer reachable. Apple requires that it is periodically checked and that notifications are stopped for these tokens.
 
 ### Libraries
 
