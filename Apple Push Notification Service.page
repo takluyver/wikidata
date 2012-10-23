@@ -1,5 +1,13 @@
 ## Design
 
+### Parties
+
+* Mobile App (MA) -- app that receives notifications
+* Apple Push Notification service (APNs) -- a server controlled by Apple (`gateway.push.apple.com`) that delivers notifications to devices
+* Notification Provider (NP) -- an application that sends notifications to instances of Mobile App
+
+### Subscription and notifications
+
 ~~~
 MA            APNs               NP
  |--register-->|                 |
@@ -7,15 +15,10 @@ MA            APNs               NP
  |--------subscibe(DTKN)-------->|
  |             |                 |
               ...
+ |             |                 |
  |             |<--notify(DTKN)--|
  |<---notify---|                 |
 ~~~
-
-### Parties
-
-* Mobile App -- app that receives notifications
-* APNs -- a server controlled by Apple (`gateway.push.apple.com`) that delivers notifications to devices
-* Notification Provider -- an application that sends notifications to instances of Mobile App
 
 ### Device Token
 
