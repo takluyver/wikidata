@@ -174,7 +174,7 @@ _Andrew Gordon, Microsoft_
 Alice murdered with prob 30%, Bob 90%. Alice uses gun 3% of time and pipe 97%
 
 ~~~ {.fsharp}
-let mstery () =
+let mystery () =
   let aliceDunnit = random (Bernoulli 0.30)
   let withGun =
     if aliceDunnit
@@ -189,9 +189,183 @@ Now, we found pipe at the scene:
 
 ~~~ {.fsharp}
 let piepFoundAtScene () =
-  let aliceDunnit, withGun = myster ()
+  let aliceDunnit, withGun = mystery ()
   observe(withGun = false)
   aliceDunnit, withGun
 ~~~
 
+### Graphical Models
+
 by rejection sampling, we only leave the samples that match observations. This is typically very inefficient. Infer.Net uses techniques pioneered by Judea Pearl and his graphical models.
+
+* Bayes Networks (Pearl 1988)
+* going from observed to unobserved data
+* graphical notations capture dependence
+
+Uses in Microsoft:
+
+* TrueSkill -- player skill matching
+* AdSelect -- how likely users are to click on an add
+
+### Infer.Net
+
+since 2006
+
+* .Net library for probabilistic inference, with multiple algorithms, for large scale inference
+* repr## Functional Pragmatism
+
+_Michael Brunton-Spall, Guardian_
+
+### Scientists vs Engineers vs Pragmatists
+
+Scientist    Engineer         Pragmatist
+-----------  ---------------  --------------------
+long term    short term       today
+...          ...              ...
+Certainity   risk management  suck it and see
+perfection                    min valuable product
+originality  best practice    individuality
+
+
+Scientist view: mathematical approach to development
+
+Most people at Google would rather create a programming language that lets them solve a problem than solve a problem itself -- a very engineering approach.
+
+### Pragmatism
+
+* writing minimal readable code (not factory factories)
+* using frameworks that fit the problem and are easy to hack on(not Spring everywhere, not Lift)
+* don't try to solve solved problems, use libraries
+* move fast and break stuff
+* deployed code is more valuable than perfect code
+
+(a bit like architect/hacker dichotomy)
+
+### What functional pragmatism isn't?
+
+* using type tehory to ensure fewer bugs
+* using immutability to ensure easy concurrancy
+* writing monadic code because it's conceptually elegant
+
+
+### Scala is good for
+
+* team building and morale
+* hiring filter
+
+### Best functional (Scala) bits for pragmatist
+
+* readability, less boilerplate
+* can code without nulls
+* immutability
+* collections
+* processing sequences of data structure (map/filter/fold)
+
+
+## Clojure
+
+_Samuel Aaron_
+
+* Music systems are complex, with realtime requirements
+* Lisp -- timeless programming style: using data structures of the language to describe the language itself
+* Clojure -- sets, vectors and maps have explicit syntax
+* Clojure is designed to be hosted
+* Design patterns in software are not what the architectural ones represented; they are about how to build, not "intention"; intention would be e.g. "modularity", "islation", "reduction of states".
+* Software design patterns contribute to accidental complexity
+* in Emacs paredit mode the editor works with code structore, not text: C-k deletes not to the end of the line, but to the enclosing parenthesis
+
+## Atomic Data types
+
+~~~ {.clojure}
+(type "asdf")
+
+(type \a)
+
+(type (/ 1 3))
+
+(type (+ 3N Long/MAX_VALUE))
+
+(type true)
+~~~
+
+### Reader macros
+
+~~~
+(type #"[ac]+")
+~~~
+
+~~~
+text -> reader -------> data structures
+            |                  ^ 
+            |                  |
+            +---> #"foo" -> program
+~~~
+
+### Symbols
+
+variables:
+
+~~~ {.clojure}
+(def foo 1)
+(+ foo 1)
+~~~
+
+### Keywords
+
+(type :foo)
+
+:foo -- constant for the entire system
+
+## Aggregate Data Types
+
+List: `'(1 2 3 4 5)`
+Vector: `[1 2 3 4 5]`
+
+Most data structures are represented as trees, which allows persistence and sharing.
+
+Maps: `{:foo 1 : bar 3}`
+
+~~~ {.clojure}
+(get {:foo 1 : bar 3} : foo "not found")
+~~~esenting model as code is natural for language geeks who are not necessarily expert on stats!
+* Infer.Net Fun allows writing models in F#
+* Runs forwards to synthesise data or backwards to infer parameters
+
+### Linear Regression
+
+(trying to find a linear function that best fits data points)
+
+~~~ {.fsharp}
+let prior () =
+  let a = random(Gaussian(0.0, 1.0))
+  let b = random(Gaussian(5.0, 0.3))
+  let noise = random(Gamma(1.0, 1.0))
+  a, b, noise
+
+let point x a b noise =
+  random(Gaussian(a* x + b, noise))
+
+let model data =
+  let a, b, noise = prior() 
+  observe (data =
+    [| for x,_ in data ->. point x a b noise |])
+  // data is actual data
+  a, b, noise
+
+// gives us distributions
+let aD, bD, noiseD = inferFun3 <@ model @> data
+~~~
+
+* `random` and `observe` are the main language contributions
+
+### Demo
+
+* 2-means clustering
+
+
+### Q&A
+
+* Research result: only one observe is required (and can be elided!)
+* Result of function is always a distribution
+
+## core.logic
