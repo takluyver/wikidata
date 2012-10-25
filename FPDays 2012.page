@@ -105,13 +105,93 @@ variables:
 
 ## Aggregate Data Types
 
-List: `'(1 2 3 4 5)`
-Vector: `[1 2 3 4 5]`
+* List: `'(1 2 3 4 5)`
+* Vector: `[1 2 3 4 5]`
 
 Most data structures are represented as trees, which allows persistence and sharing.
 
-Maps: `{:foo 1 : bar 3}`
+* Map: `{:foo 1 : bar 3}`
 
 ~~~ {.clojure}
 (get {:foo 1 : bar 3} : foo "not found")
 ~~~
+
+functions like `first` and `rest` work on all of them.
+
+* Set: `#{1 2 3 4}`
+
+## Functions
+
+~~~ {.clojure}
+(defn foo [a] (+ a 2))
+~~~
+
+## JVM interop
+
+~~~ {.clojure}
+Math/PI
+
+(.toUpperCase "foo")
+~~~
+
+
+Emacs setup:
+github/overtone/emacs-live
+nRepl
+paredit
+accomplete gives autocompletion
+
+Use [clojure cheat sheets](http://clojure.org/cheatsheet) -- once you memorise them, you're a fantastic clojure programmer
+
+## Namespaces
+
+~~~ {.clojure}
+(ns intro.core) ;; works for entire file
+(def x "hello")
+~~~
+
+~~~
+symbol (x) -> var -> value ("hello")
+~~~
+
+we can write 
+
+~~~ {.clojure}
+(var foo "sam")
+(deref (var foo))
+~~~
+
+## Machine Learning and F#
+
+_Andrew Gordon, Microsoft_
+
+* Infer.Net -- not yet available for commercial use, research project
+* Bayesian statistics as unifying principle
+* lots of libraries for classification, regression etc -- but a lot of problemms don't fit into this abstraction, e.g. matching players with similar abilities given history of matches
+
+### Murder Mystery
+
+Alice murdered with prob 30%, Bob 90%. Alice uses gun 3% of time and pipe 97%
+
+~~~ {.fsharp}
+let mstery () =
+  let aliceDunnit = random (Bernoulli 0.30)
+  let withGun =
+    if aliceDunnit
+    then random (Bernoulli 0.03)
+    else random (Bernoulli 0.80)
+  aliceDUnnit, withGun
+~~~
+
+This is a subset of F# called "fun".
+
+Now, we found pipe at the scene:
+
+~~~ {.fsharp}
+let piepFoundAtScene () =
+  let aliceDunnit, withGun = myster ()
+  observe(withGun = false)
+  aliceDunnit, withGun
+~~~
+
+by rejection sampling, we only leave the samples that match observations. This is typically very inefficient. Infer.Net uses techniques pioneered by Judea Pearl and his graphical models.
