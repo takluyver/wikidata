@@ -1,0 +1,59 @@
+
+## Functional Pragmatism
+
+_Michael Brunton-Spall, Guardian_
+
+### Scientists vs Engineers vs Pragmatists
+
+Scientist    Engineer         Pragmatist
+===========  ===============  ============
+long term    short term       today
+...          ...              ...
+Certainity   risk management  suck it and see
+perfection                    min valuable product
+originality  best practice    individuality
+
+
+Scientist view: mathematical approach to development
+
+Most people at Google would rather create a programming language that lets them solve a problem than solve a problem itself -- a very engineering approach.
+
+### Pragmatism
+
+* writing minimal readable code (not factory factories)
+* using frameworks that fit the problem and are easy to hack on(not Spring everywhere, not Lift)
+* don't try to solve solved problems, use libraries
+* move fast and break stuff
+* deployed code is more valuable than perfect code
+
+(a bit like architect/hacker dichotomy)
+
+### What functional pragmatism isn't?
+
+* using type tehory to ensure fewer bugs
+* using immutability to ensure easy concurrancy
+* writing monadic code because it's conceptually elegant
+
+
+### Scala is good for
+
+* team building and morale
+* hiring filter
+
+### Best functional (Scala) bits for pragmatist
+
+* readability, less boilerplate
+* can code without nulls
+* immutability
+* collections
+* processing sequences of data structure (map/filter/fold)
+
+
+## Clojure
+
+_Samuel Aaron_
+
+* Music systems are complex, with realtime requirements
+* Lisp -- timeless programming style: using data structures of the language to describe the language itself
+* Clojure -- sets, vectors and maps have explicit syntax
+* Clojure is designed to be hosted
