@@ -254,3 +254,54 @@ let aD, bD, noiseD = inferFun3 <@ model @> data
 * Result of function is always a distribution
 
 # core.logic
+
+_Edmund Jackson_
+
+(TODO: replace ' with sup o)
+
+~~~ {.clojure}
+(f &args)
+(f' &args) ;; goal -- assertion on arguments, #s or #f
+(cons' :a [] [:a]) ;; #s
+(perm' [:a :b :c] [:b :c :a]) ;; #s
+
+(cons' q [] :a)
+(run* [q])      ;; finds all values of q that match assertions
+
+(run* [q]
+  (member' :b [:a :b :c])) ;; gives q -> [_]
+
+(run* [q]
+  (member' q [:b :c])
+  (member' :a [:b q]))     ;; gives q -> []
+
+(run* [q]
+  (conde
+    (member' q [:b :c])
+    (member' :a [:b q])))     ;; gives q -> [:a :b :c]
+
+~~~
+
+* `fresh` -- introduces variable within new lexical scope
+* `infd` -- "in final domain"
+
+~~~ {.clojure}
+(run* [q]
+  (infd q (domain 1 2 3))) ;; q -> [1 2 3]
+
+(run* [q]
+  (fresh [a b]
+    (infd a b (domain 1 2 3))
+    (+fd a b q)))          ;; q -> [2 3 4 5 6]
+~~~
+
+* cascalog: executes Datalog queries on EC2 cluster using map/reduce
+
+We can go in both directions:
+
+~~~ {.clojure}
+(run* [q] (foo' q D))
+(run* [D] (foo' q D))
+~~~
+
+* Sudoku example
