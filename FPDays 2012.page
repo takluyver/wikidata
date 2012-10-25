@@ -1,9 +1,9 @@
 
-## Functional Pragmatism
+# Functional Pragmatism
 
 _Michael Brunton-Spall, Guardian_
 
-### Scientists vs Engineers vs Pragmatists
+## Scientists vs Engineers vs Pragmatists
 
 Scientist    Engineer         Pragmatist
 -----------  ---------------  --------------------
@@ -18,7 +18,7 @@ Scientist view: mathematical approach to development
 
 Most people at Google would rather create a programming language that lets them solve a problem than solve a problem itself -- a very engineering approach.
 
-### Pragmatism
+## Pragmatism
 
 * writing minimal readable code (not factory factories)
 * using frameworks that fit the problem and are easy to hack on(not Spring everywhere, not Lift)
@@ -28,19 +28,19 @@ Most people at Google would rather create a programming language that lets them 
 
 (a bit like architect/hacker dichotomy)
 
-### What functional pragmatism isn't?
+## What functional pragmatism isn't?
 
 * using type tehory to ensure fewer bugs
 * using immutability to ensure easy concurrancy
 * writing monadic code because it's conceptually elegant
 
 
-### Scala is good for
+## Scala is good for
 
 * team building and morale
 * hiring filter
 
-### Best functional (Scala) bits for pragmatist
+## Best functional (Scala) bits for pragmatist
 
 * readability, less boilerplate
 * can code without nulls
@@ -49,7 +49,7 @@ Most people at Google would rather create a programming language that lets them 
 * processing sequences of data structure (map/filter/fold)
 
 
-## Clojure
+# Clojure
 
 _Samuel Aaron_
 
@@ -161,7 +161,7 @@ we can write
 (deref (var foo))
 ~~~
 
-## Machine Learning and F#
+# Machine Learning and F#
 
 _Andrew Gordon, Microsoft_
 
@@ -169,7 +169,7 @@ _Andrew Gordon, Microsoft_
 * Bayesian statistics as unifying principle
 * lots of libraries for classification, regression etc -- but a lot of problemms don't fit into this abstraction, e.g. matching players with similar abilities given history of matches
 
-### Murder Mystery
+## Murder Mystery
 
 Alice murdered with prob 30%, Bob 90%. Alice uses gun 3% of time and pipe 97%
 
@@ -194,7 +194,7 @@ let piepFoundAtScene () =
   aliceDunnit, withGun
 ~~~
 
-### Graphical Models
+## Graphical Models
 
 by rejection sampling, we only leave the samples that match observations. This is typically very inefficient. Infer.Net uses techniques pioneered by Judea Pearl and his graphical models.
 
@@ -207,7 +207,7 @@ Uses in Microsoft:
 * TrueSkill -- player skill matching
 * AdSelect -- how likely users are to click on an add
 
-### Infer.Net
+## Infer.Net
 
 since 2006
 
@@ -216,7 +216,7 @@ since 2006
 * Infer.Net Fun allows writing models in F#
 * Runs forwards to synthesise data or backwards to infer parameters
 
-### Linear Regression
+## Linear Regression
 
 (trying to find a linear function that best fits data points)
 
@@ -243,14 +243,14 @@ let aD, bD, noiseD = inferFun3 <@ model @> data
 
 * `random` and `observe` are the main language contributions
 
-### Demo
+## Demo
 
 * 2-means clustering
 
 
-### Q&A
+## Q&A
 
 * Research result: only one observe is required (and can be elided!)
 * Result of function is always a distribution
 
-## core.logic
+# core.logic
