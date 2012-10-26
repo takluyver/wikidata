@@ -305,3 +305,11 @@ We can go in both directions:
 ~~~
 
 * Sudoku example
+
+# Panel
+
+## Performance
+
+* Erlang is not meant for number crunching 
+* in FP: supercompilation, e.g. list fusion (one f produces a list, another consumes, list gets eliminated) -- this is only tractable in FP
+* The goal of strong typing effort is to ensure that the set of programs accepted by the compiler conincides with the set of programs we want to write
