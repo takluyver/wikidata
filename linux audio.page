@@ -5,3 +5,7 @@
 * again, in QjackCtl connect the outputs of the synths to ecasound's `in_1` and `in_2`
 * play the song in seq24
 * stop ecasound
+
+## Overtone
+
+TODO
