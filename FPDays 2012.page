@@ -310,8 +310,8 @@ We can go in both directions:
 # Panel
 
 ## Performance
-
-* Erlang is not meant for number crunching 
+ bes
+* Erlang is not meant for number crunching  build y
 * in FP: supercompilation, e.g. list fusion (one f produces a list, another consumes, list gets eliminated) -- this is only tractable in FP
 * The goal of strong typing effort is to ensure that the set of programs accepted by the compiler conincides with the set of programs we want to write
 
@@ -335,3 +335,22 @@ _Francesco Cesarini_
 * relationship with customer is not just about getting them to pay; both of you need to realise you are in it together and help each other
 * exit strategy: if you want to be acquired, don't worry about profitability, just grow as quickly as possible
 * at certain size you need dedicated salespeople
+
+# Live Programming
+
+_Sam Aaron_
+
+* Artists try to find new abstractions, new approaches to talking about things
+* read "The Timeless Way of Building" by Christopher Alexader
+* best chess player in the world: human + computer (Kasparov's "advanced chess"); even further: weak human + strong software beats strong human + weak software
+* Emacs live FTW
+* Overtone: writing DSL for music is incredibly difficult
+* customise your tools to suit you, helps flow
+
+## Overtone Demo
+
+* samples from freesound
+* grid controller for drum loop
+* everything programmed in a couple dozen lines of Clojure
+
+# Leiningen 2
