@@ -77,7 +77,7 @@ _Samuel Aaron_
 
 ### Reader macros
 
-~~~
+~~~ {.clojure}
 (type #"[ac]+")
 ~~~
 
@@ -99,9 +99,10 @@ variables:
 
 ### Keywords
 
+~~~ {.clojure}
 (type :foo)
-
-:foo -- constant for the entire system
+:foo ;; constant for the entire system
+~~~
 
 ## Aggregate Data Types
 
@@ -313,3 +314,24 @@ We can go in both directions:
 * Erlang is not meant for number crunching 
 * in FP: supercompilation, e.g. list fusion (one f produces a list, another consumes, list gets eliminated) -- this is only tractable in FP
 * The goal of strong typing effort is to ensure that the set of programs accepted by the compiler conincides with the set of programs we want to write
+
+# Running a consultancy business
+
+_Francesco Cesarini_
+
+* don't name a company after yourself -- clients will want you personally to work
+* don't name a company after services it provides -- you might want to exapand or change!
+* don't name a company after a programming language
+* have a number of clients, don't put all eggs in one basket; even better: no client should account for more than 50% of turnover
+* business plans are not normally followed, but they are still worth doing, because they force us to think, do cash flow analysis
+* cash flow analysis is critical -- if the revenue line shifts to the right, the area in red (between expenses and revenue line) becomes larger than green
+* loans and overdrafts are needed in bad times, but they might be difficult to secure
+* you need to be passionate about what you're doing
+* pick your business partner with care -- it's like marriage; clearly define responsibilities and pick someone who complements your skill set
+* employees are the most important asset; they need to understand and share the vision of the company (talking of which, the company should have a vision, which ties back to the passion)
+* company changes a lot as it grows (and, presumably, as it contracts); you have to explain to employees that the change is for the better
+* at certain size and number of customers you have to start modeling the cashflow and utilisation, not rely on gut feeling
+* transition from services to product company is very hard; best spin-off products into separate companies
+* relationship with customer is not just about getting them to pay; both of you need to realise you are in it together and help each other
+* exit strategy: if you want to be acquired, don't worry about profitability, just grow as quickly as possible
+* at certain size you need dedicated salespeople
