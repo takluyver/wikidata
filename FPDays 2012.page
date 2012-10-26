@@ -370,6 +370,15 @@ _Sam Aaron_
 # Functional DSLs for biocomputation
 
 * applications to medicine (e.g. targeted cancer treatment based on understanding how cells work)
-* lepton.research.microsoft.com/webgec/
+* http://research.microsoft.com/en-us/projects/dna/
+* http://research.microsoft.com/en-us/projects/gec/
 * Microsoft Research employs biologists
 * Parser combinators and active patterns (F#) nicer than traditional lexer/parser
+
+Simulator in the browser:
+
+~~~
+init Rabbit [2]
+
+Rabbit -> Rabbit + Rabbit
+~~~
