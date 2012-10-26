@@ -382,3 +382,110 @@ init Rabbit [2]
 
 Rabbit -> Rabbit + Rabbit
 ~~~
+
+# Concurrent Haskell
+
+## Primitives
+
+* Parallelism vs concurrency
+* `forkIO` to fork a thread
+* `GHC.Conc.threadStatus` is useful for debugging
+* `MVar` -- basic communication primitive
+* GHC runtime detects deadlocks ("thread blocked indefinitely in an MVar operation")
+* `killThread` kills a thread (surprise, surprise)
+* `+RTS -s -K32m` will print out runtime stats
+* thread creation takes 1 microsecond (very cheap)
+* for large number of threads (e.g. 1m) it makes a large difference whether threads can run immediately and be GCd, or if they block on MVar
+
+## Example: overlapping IO
+
+e.g. downloading multiple web pages simultaneously
+
+~~~ {.haskell}
+getURL :: String -> IO String
+
+do
+  m1 <- newEmptyMVar
+  m2 <- newEmptyMVar
+
+  forkIO $ getURL "http://1" >>= putMVar m1
+  forkIO $ getURL "http://2" >>= putMVar m2
+  
+  r1 <- getMVar m1
+  r2 <- getMVar m2
+
+  return (r1, r2)
+~~~
+
+can we abstract out this pattern?
+
+~~~ {.haskell} 
+newtype Async a = ASync (Var a)
+
+async :: IO a -> IO (Async a)
+asyyc io = do
+  m <- newEmptyMVar
+  forkIO $  io >>= putMVar m
+  return (ASync m)
+
+wait :: Async a -> a
+-- ...
+~~~
+
+Now we can map over asyncs.
+
+## Stopping threads
+
+~~~ {.haskell}
+logger (Logger m) = forever $ do
+  cmd <- takeMVar m
+  case cmd of
+    Message msg -> do
+      putStrLn msg
+    Stop s -> do
+      putMVar s ()
+
+logStop m = do
+  s <- newEmptyMVar
+  putMVar m $ Stop s
+  getMVar s
+  return ()
+~~~
+
+## Channels
+
+* MVars are 1-place queues so can cause contention
+* Chans are two MVars: one points to the head (for reading), the other to the last element (for writing). They can be mutated independently, so are good for concurrency
+
+## Cancellation
+
+~~~ {.haskell}
+throwTo :: Exception e -> ThreadId -> e -> IO ()
+
+cancel (Async t _) = throwTo t ThreadKilled
+~~~
+
+There are ways to protect critical sections (`Control.Exception`).
+
+## Linking processes together
+
+In Erlang we have a way of collapsing entire tree of processes if one fails. There is a Haskell pattern that can be used for it
+
+~~~ {.haskell}
+withAsync :: IO a -> (Async a -> IO b) -> IO b
+
+do
+  withAsync (getURL "....") $ \a1 -> do
+  withAsync (getURL "...")  $ \a2 -> do
+  r1 <- wait a1
+  r2 <- wait a2
+  return (a1, a2)
+~~~
+
+`withAsync` can be implemented using `bracket`
+
+~~~ {.haskell}
+bracket :: IO a -> (a -> IO b) -> (a -> IO c) -> IO c
+
+withAsync io f = bracket (async io) cancel f
+~~~
