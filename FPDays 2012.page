@@ -354,3 +354,22 @@ _Sam Aaron_
 * everything programmed in a couple dozen lines of Clojure
 
 # Leiningen 2
+
+* uses .m2 as local cache
+* pallet for deployment tasks
+
+# Clojure at uSwitch
+
+* started from .Net stack
+* confounded storage and processing of data; because of cost it was impossible to store data in raw form, it had to be continuously aggregated and processed. History was lost.
+* Storing all data (domain-specific, personal, log) in uniform way allows to run interesting analysis, like predictions of what the users want to see
+* Kafka for intermediate persistence (100 GB), then HDFS
+* Esper for real-time processing
+* Storm might be interesting, but haven't had need for it
+
+# Functional DSLs for biocomputation
+
+* applications to medicine (e.g. targeted cancer treatment based on understanding how cells work)
+* lepton.research.microsoft.com/webgec/
+* Microsoft Research employs biologists
+* Parser combinators and active patterns (F#) nicer than traditional lexer/parser
