@@ -1,0 +1,45 @@
+
+~~~ {.clojure}
+(ns overtone.core)
+
+(use 'overtone.live)
+
+;; simple ugen
+(definst foo [] (saw 110))
+(foo)
+
+;; changing parameters on the fly
+(definst quux [freq 440] (* 0.3 (saw freq)))
+(quux)
+(ctl quux :freq 660)
+
+(definst trem [freq 440 depth 10 rate 6 length 3]
+  (* 0.3
+     (line:kr 0 1 length FREE)
+     (saw (+ freq (* depth (sin-osc:kr rate))))))
+(trem)
+
+;; show doc for line:kr
+(odoc line:kr)
+
+;; panning
+(odoc pan2)
+
+(definst leftsaw []
+	(pan2 (saw 220) -1))
+(leftsaw)
+
+(definst spooky-house [freq 440 width 0.2 
+                         attack 0.3 sustain 4 release 0.3 
+                         vol 0.4] 
+  (* (env-gen (lin-env attack sustain release) 1 1 0 1 FREE)
+     (sin-osc (+ freq (* 20 (lf-pulse:kr 0.5 0 width))))
+     vol))
+(spooky-house)
+
+;; mouse controlling parameters of ugens
+(demo 10 (lpf (saw 100) (mouse-x 40 5000 EXP)))
+
+(stop)
+
+~~~
