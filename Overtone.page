@@ -1,4 +1,3 @@
-
 ~~~ {.clojure}
 (ns overtone.core)
 
@@ -8,7 +7,7 @@
 (definst foo [] (saw 110))
 (foo)
 
-;; changing parameters on the fly
+;; changing parameters on the fly with ctl
 (definst quux [freq 440] (* 0.3 (saw freq)))
 (quux)
 (ctl quux :freq 660)
@@ -40,6 +39,29 @@
 ;; mouse controlling parameters of ugens
 (demo 10 (lpf (saw 100) (mouse-x 40 5000 EXP)))
 
-(stop)
+;; samples
+(def kick (sample "/home/mmakowski/Music/samples/drums/777__vitriolix__808-kick.wav"))
+(kick)
 
+;; sample buffers allow to use samples as signal generators in more complex synthesis, 
+;; and view the waveform
+(def kick-buf (load-sample "/home/mmakowski/Music/samples/drums/777__vitriolix__808-kick.wav"))
+(scope :buf kick-buf)
+(defsynth reverb-on-left []
+  (let [dry (play-buf 1 kick-buf)
+	    wet (free-verb dry 1)]
+    (out 0 [wet dry])))
+(reverb-on-left)
+
+;; samples from freesound.org
+(def snare (sample (freesound-path 26903))) 
+(def water-drops (sample (freesound-path 50623))) 
+(def close-hat (sample (freesound-path 802))) 
+(def open-hat (sample (freesound-path 26657))) 
+(snare)
+(water-drops)
+(close-hat)
+(open-hat)
+
+(stop)
 ~~~
