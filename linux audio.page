@@ -1,3 +1,7 @@
+## Setting up Jack to suspend PulseAudio
+
+In `QjackCtl`, in _Setup..._ set _server prefix_ to `pasuspender -- /usr/bin/jackd`. But does it help that much?
+
 ## Recording from seq24
 
 * using QjackCtl connect the Midi Through port to synth inputs
@@ -8,4 +12,5 @@
 
 ## Overtone
 
-TODO
+* set up a project as per [instructions](https://github.com/overtone/overtone/wiki/Installing-overtone)
+* set up Sublime Text to use Sublime REPL and Ctrl+Enter to evaluate current block in REPL (this is in my checked-in Sublime config)
