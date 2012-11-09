@@ -2,7 +2,7 @@
 
 Mostly based on [app engine SBT plug-in readme](https://github.com/sbt/sbt-appengine) and [sample](https://github.com/sbt/sbt-appengine/tree/master/src/sbt-test/sbt-appengine/simple).
 
-1. create a new sbt project:
+### create a new sbt project
 
 `build.sbt`
 
@@ -39,7 +39,7 @@ resolvers ++= Seq(
 
 ---------------------------------------
 
-2. set APPENGINE_SDK_HOME env var:
+### set APPENGINE_SDK_HOME env var
 
 `setenv`
 
@@ -52,3 +52,9 @@ export APPENGINE_SDK_HOME=/Applications/appengine-java-sdk-1.6.2.1
 ~~~
 
 ---------------------------------------
+
+now, after running `. setenv`, `sbt` should start succesfully.
+
+### create directory structure
+
+TODO
