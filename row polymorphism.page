@@ -1,0 +1,17 @@
+Record subtyping provides a way to formalise type system for OO languages, but leads to information loss:
+
+~~~
+f: {a: int} -> int x {a: int}
+
+f {a = 12, b = true} ==> (12, {a = 12})
+~~~
+
+Row polymorphism addresses that, thus providing a way to infer types in OO:
+
+~~~
+f: forall r/a.{a: int, r} -> int x {a: int, r}
+~~~
+
+`forall r/a` means "for all rows `r` that don't contain field `a`". Row is a set of record fields (?)
+
+Ocaml supports row polymorphism; it also supports subclassing, but for code reuse only (not subtyping).
