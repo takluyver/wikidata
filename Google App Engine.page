@@ -6,6 +6,8 @@ Mostly based on [app engine SBT plug-in readme](https://github.com/sbt/sbt-appen
 
 `build.sbt`
 
+---------------------------------------
+
 ~~~ { .scala }
 import sbtappengine.Plugin.{AppengineKeys => gae}
 
@@ -19,7 +21,12 @@ libraryDependencies ++= Seq(
 seq(appengineSettings: _*)
 ~~~
 
+---------------------------------------
+
 `project/plugins.sbt`
+
+---------------------------------------
+
 
 ~~~ { .scala }
 addSbtPlugin("com.eed3si9n" % "sbt-appengine" % "0.4.0")
@@ -30,12 +37,18 @@ resolvers ++= Seq(
 )
 ~~~
 
+---------------------------------------
+
 2. set APPENGINE_SDK_HOME env var:
 
 `setenv`
+
+---------------------------------------
 
 ~~~
 #!/bin/sh
 
 export APPENGINE_SDK_HOME=/Applications/appengine-java-sdk-1.6.2.1
 ~~~
+
+---------------------------------------
