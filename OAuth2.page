@@ -1,0 +1,85 @@
+## Sample session 
+
+with [https://developers.google.com/oauthplayground]():
+
+### select and authorise APIs:
+
+Request
+
+    HTTP/1.1 302 Found
+    Location: https://accounts.google.com/o/oauth2/auth?redirect_uri=https%3A%2F%2Fdevelopers.google.com%2Foauthplayground&response_type=code&client_id=407408718192.apps.googleusercontent.com&approval_prompt=force&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&access_type=offline
+
+Response
+
+    GET /oauthplayground/?code=4/7Km1Udcj3xX0ARWY8KpWGdeJCUrv.Us_UgtHgHe0XOl05ti8ZT3aJoh7gdQI HTTP/1.1
+    Host: developers.google.com
+
+
+### exchange auth code for tokens:
+
+Request
+
+    POST /o/oauth2/token HTTP/1.1
+    Host: accounts.google.com
+    Content-length: 250
+    content-type: application/x-www-form-urlencoded
+    user-agent: google-oauth-playground
+    code=4%2F7Km1Udcj3xX0ARWY8KpWGdeJCUrv.Us_UgtHgHe0XOl05ti8ZT3aJoh7gdQI&redirect_uri=https%3A%2F%2Fdevelopers.google.com%2Foauthplayground&client_id=407408718192.apps.googleusercontent.com&scope=&client_secret=************&grant_type=authorization_code
+
+Response
+
+    HTTP/1.1 200 OK
+    Content-length: 816
+    X-xss-protection: 1; mode=block
+    X-content-type-options: nosniff
+    X-google-cache-control: remote-fetch
+    -content-encoding: gzip
+    Server: GSE
+    Reason: OK
+    Via: HTTP/1.1 GWA
+    Pragma: no-cache
+    Cache-control: no-cache, no-store, max-age=0, must-revalidate
+    Date: Sun, 11 Nov 2012 15:21:30 GMT
+    X-frame-options: SAMEORIGIN
+    Content-type: application/json
+    Expires: Fri, 01 Jan 1990 00:00:00 GMT
+    {
+      "access_token" : "ya29.AHES6ZRNrwmfbr-uSsO4teOimj4SYM-Y9qmkKeb37Jf4fQ",
+      "token_type" : "Bearer",
+      "expires_in" : 3600,
+      "id_token" : "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFhMWI0MzczOWIzZGQ5MWU3YTk1ZDZlZTk3NmQyNGY3OGNkZWI0MWUifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiZW1haWwiOiJtYWNpZWsubWFrb3dza2lAZ21haWwuY29tIiwiYXVkIjoiNDA3NDA4NzE4MTkyLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwidmVyaWZpZWRfZW1haWwiOiJ0cnVlIiwidG9rZW5faGFzaCI6IjNZN2FVN2pHQy1wZVpvenhmUHVaNWciLCJjaWQiOiI0MDc0MDg3MTgxOTIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJpYXQiOjEzNTI2NDY5OTEsImV4cCI6MTM1MjY1MDg5MX0.ZUr15kiZ741T-4TJbEXsjmE9AKgHU-yddVrOGLIkLIUSTZvGe8ftZSc8f0FFSC0LbjIzPDuL0x6X8ATdWyOZfsFdikGgpGn9i9AoqXphZVCFxX-Q1CLL-MD_0ocqW_Wa82zXgdWErH-CusXXlAZSzF2kBZXPDm87NN5G0p0UtBY",
+      "refresh_token" : "1/wt9sNR1SDOqzOgYodilRIVQbTFUxbfj1LQksbRw8kIY"
+    }
+
+### Invoke protected service
+
+Request
+
+    GET /oauth2/v2/userinfo HTTP/1.1
+    Host: www.googleapis.com
+    Content-length: 0
+    Authorization: OAuth ya29.AHES6ZRNrwmfbr-uSsO4teOimj4SYM-Y9qmkKeb37Jf4fQ
+
+Response
+
+    HTTP/1.1 200 OK
+    Content-length: 67
+    X-xss-protection: 1; mode=block
+    Content-location: https://www.googleapis.com/oauth2/v2/userinfo
+    X-content-type-options: nosniff
+    Expires: Fri, 01 Jan 1990 00:00:00 GMT
+    X-google-cache-control: remote-fetch
+    Server: GSE
+    Reason: OK
+    Via: HTTP/1.1 GWA
+    Pragma: no-cache
+    Cache-control: no-cache, no-store, max-age=0, must-revalidate
+    Date: Sun, 11 Nov 2012 15:23:35 GMT
+    X-frame-options: SAMEORIGIN
+    Content-type: application/json; charset=UTF-8
+    -content-encoding: gzip
+    {
+     "email": "maciek.makowski@gmail.com",
+     "verified_email": true
+    }
+
