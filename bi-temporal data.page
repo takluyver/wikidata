@@ -50,3 +50,4 @@ This schema makes it possible to query for historical data. It is important to n
 TODO
 
 - transactional timeline and PKs?
+- milestoning/slicing
