@@ -1,0 +1,130 @@
+_Derek Wright, 24/10/2012_
+
+based on blog by cdsmith
+
+Functions compose:A
+
+~~~
+A -> B
+     B -> C
+~~~
+
+Problem with "functions" in programming:
+
+1. Failure
+2. Dependence ("global", application settings)
+3. Uncertainity
+4. Destruction (changing the world; order matters)
+
+Solutions:
+
+1. Extend range with error value: A -> Err(B) 
+2. Add an argument to the function: A -> Pref(B)
+3. A -> B ---> A -> P(B)
+4. Function returns a list of actions that produce B: A -> IO(B)
+
+Have we lost composition?
+
+~~~
+A -> Err(B)
+       B    -> Err(C)
+~~~
+
+Kleisli found a solution: use Kleisli arrows and Kleisli composition, done in Kleisli category.
+
+...
+
+## Code examples
+
+### Failure
+
+~~~ { .haskell }
+
+-- blows up with error and "end" doesn't get printed
+divBy :: Integer -> Integer -> Integer
+
+main = do
+  print (divBy 0 . divBy 1) 2
+  print "end"
+
+-- we can do:
+
+data Err a = Error | OK a
+divBy :: Integer -> Integer -> Err Integer
+
+main = print (divBy 0 `composeErr` divBy 1) 2
+
+composeErr :: (b -> Err c) -> (a -> Err b) -> (a -> Err c)
+composeErr f g x = case g x of
+  OK y  -> f y
+  Error -> Error
+
+~~~
+
+### Dependence
+
+~~~ { .haskell }
+type Pref a = (Config -> a)
+
+composePref :: (b -> Pref c) -> (a -> Pref b) -> a -> Pref c
+composePref f g x = \c -> f (g c x) c
+
+idPref :: a -> Pref a
+idPref a _ = a
+
+~~~
+
+### Uncertainity
+
+~~~ { .haskell }
+type P a = [a]
+
+composeP :: (b -> P c) -> (a -> P b) -> a -> P c
+composeP f g x = [ f y | y <- g x ]
+
+idP :: a -> P a
+idP x = [x]
+
+~~~
+
+### Destruction
+
+~~~ { .haskell }
+data IOAction a = Output String (IOAction a)
+                | Wait (String -> IOAction a)
+                | Return a
+
+runIO :: IOAction a -> IO a
+runIO (Output s a) = do { putStrLn s; runIO a }
+runIO (Wait c) = do { s <- getLine ; runIO $ c s }
+runIO (Return x) = return x
+
+composeIO :: (b -> IOAction c) -> (a -> IOAction b) -> a -> IOAction c
+composeIO f g x = case g x of
+  Output s a -> Output s (composeIO f (\_ -> a) ())
+  Wait c     -> Wait (\s -> composeIO f c s)
+  Return a   -> f a
+
+idIO :: a -> IOAction a
+idIO x = Return x
+
+~~~
+
+## Are these monads?
+
+We can implement the interface:
+
+~~~ { .haskell }
+bindP e f = composeP f id
+
+instance Monad P where
+  return = idP
+  (>==) = bindP
+
+~~~
+
+Conventionally, we'd first prove they are functors, applicative, and then the remaining monad laws. Kleisli said, that if we build our composition and identity correctly, we'll get a monad for free (TODO: read up on this; is it related to Scala's flatMap by any chance?).
+
+In the past, languages had Kleisli arrows baked into the language. But, if we want to deal with Purity, Parallelism, Non-determinism etc. we need different implementations!
+
+
