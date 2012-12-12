@@ -1,79 +1,102 @@
-# Making Big Data Small: Streaming Algorithms in Scala
+2012-12-12, Philipp Haller
 
-2012-09-12, Noel Welsh
+## The problem
 
-**B**ig **D**ata? That is Hadoop and map/reduce. We're talking here about something different: data sets bigger than our resources can handle in one go.
+* we mix actors, futures, threads, latches...
+* poor tool support for diagnosing concurrency issues
 
-### Demands
+## Actors + X
 
-* scalable
-* reak time (not batch, like Hadoop)
-* simple to implement
+### X = futures
 
-### Streaming Algorithms
+#### State Capture
 
-* process data in one pass
-* have small space requirements (e.g. O(log(log n)))
-* limited computation requirements per item (typically O(1))
+~~~ { .scala }
+var state = 0
 
-But:
+def receive = {
+  case Request(x) => future {
+    handleRequest(x, state) // 1. race condition between this and ChangeState
+                            // 2. state is not correctly published for transfer between threads
+  }
+  case ChangeState(newState) =>
+    state = newState
+}
+~~~
 
-* give approximate answers
+How do we fix it?
 
-### Hash Functions
+~~~ { .scala }
+  case Request(x) => 
+    // recommended pattern: store all state for the future in vals
+    val currentState = state
+    future {
+      handleRequest(x, currentState)
+    }
+~~~
 
-* deterministic
-* uniform distribution
-* bit values are independent (any subset of bits is equally good approximation)
+#### Sender Capture
 
-In practice, use Murmur Hash 3. Scala 2.10 provides `scala.util.hashing`, look into Guava if we more algorithms are needed.
+~~~ { .scala }
+def receive = {
+  case Request(x) => future {
+    val res = handleRequest(x)
+    sender ! Response(res) // sender might have changed by the time we send response
+  }
+}
+~~~
 
-### [Bloom Filters](Bloom filter)
+Solution:
 
-* a set (i.e. have I seen this user before?)
-* ~5 times smaller than corresponding hash set
-* there is a chance of false positives ("in set" answer even though item is not in set), but guarantee of no false negatives
+we can capture the sender before forking off future, but there is also another pattern:
 
-Idea: bit set. _index = hash(data) mod m_; bit at index represents the item. But: there will be many ccllisions. How do we improve the confidence? Use multiple has functions:
+~~~ { .scala }
+def receive = {
+  case Request(x) => future {
+    val res = handleRequest(x)
+    Response(res)
+  } pipeTo sender
+}
+~~~
 
-_i<sub>1</sub> = h<sub>1</sub>(data) mod m_
+### X = threads
 
-_i<sub>2</sub> = h<sub>2</sub>(data) mod m_
+#### Exchanging data between Actors and Threads
 
-More hashing functions -> better chance of no false positives. We can adjust the probability by setting the size of bit array, i.e. bits per element. E.g. to get 0.05 probability of false positive we need 6.2 bits/element.
+  * `Promise` -> `Future`
+  * Blocking queue
+  * ask pattern: `val fut = actor ? msg` (uses `Future`)
+  * `akka.actor.ActorDSL.Inbox`:
 
-Nice properties: union is a bitwise or, intersection an and, trivial to parallelise and distribute.
+~~~ { .scala }
+// in our thread:
+implicit val i = ActorDSL.inbox()
+someActor ! someMsg // replies will go to 'i'
+val reply = i.receive() // blocks
+val doubleReply = i.select(5.seconds) { case x: Int => 2 * x } // blocks, but times out
+~~~
 
-Optimisation: use MH3 and run the hash function twice, with different seeds; then interpolate k values between the obtained values.
+#### Thread-safe map
 
-### Distinct Values
+~~~ { .scala }
+var state = Map[K, V]()
 
-(i.e.: how many distinct users do we have?)
+def receiv = {
+  case Put(k, v) =>
+    state += (k -> v)
+    sender ! AckPut
+  case Get(k) =>
+    sender ! state.get(k)
+}
+~~~
 
-* Flajolet-Martin sketches (LogLog, HyperLogLog)
-* optimal algorithm published in 2010, but is complex
+Why wrap map in an actor? Use `ConcurrentHashMap` instead, it's more efficient. Or, even better `ParTrieMap`, which is non-blocking, does snapshotting and supports parallel operations.
 
-#### k-Min Values
+#### Thread locals
 
-_index = hash(data) / maxHash_ gives us a point in 0..1 range. Then calculate average distance between the points. But: storing all points would be pointless! So: just store a subset, e.g. just the minimum value, and check its distance from 0. This, however, is very noisy, so we can improve on this by storing k smallest values; then the average distance is _largest value stored/k_.
+Work with threads, but not with actors or futures which are not bound to a single thread.
 
-For k = 1024 the error is in the order of 2.5%. It also has the nice properties of Bloom Filter: we can do union, intersection and difference in the natural manner!
+### X = Shared memory
 
-### Frequent Items
-
-(i.e. who are the most active users?)
-
-#### Space Saver
-
-* store _k_ tuples (item, count)
-* when item is observed:
-    - if in set, increase the count
-    - if not, replace the lowest-count item with observed item
-
-There's high error rate for uniform data, but there this kind of data is not interesting for this type of analysis.
-
-### Libraries and Resources
-
-* [Clearstream stream-lib](https://github.com/clearspring/stream-lib)
-* [Noel's Scala library](https://github.com/noelwelsh/fleet)
-* [Alex Smola's course](http://alex.smola.org/teaching/berkeley2012/streams.html)
+* prefer sharing immutable data
+* for mutable adhere to Java Memory Model
