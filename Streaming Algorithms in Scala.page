@@ -149,7 +149,7 @@ trait Awaitable[+T] {
 }
 
 package concurrent {
-  @implicitNotFound("Use the 'Await' object")
+  @implicitNotFound("Use the 'Await' object") // provides a helpful error message to the user
   sealed trait CanAwait
 
   private[concurrent] object AwaitPermission extends CanAwait
