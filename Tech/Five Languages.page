@@ -13,7 +13,7 @@ Let's start with the paradigms. It's not a very clear term; is object orientatio
 * functional
 * object-oriented
 * logic
-* lisp-like
+* Lisp-like
 
 What languages should represent them? Given the limit of five languages, it might seem that multi-paradigm ones suche as C++, Oz or Scala would offer the biggest bang for the buck. However, given that the purpose is _teaching_, we will be better off with smaller languages; ideas can be better appreciated and internalised when presented in a context of a language that was specifically designed around them. So, the our criteria for choice will be:
 
@@ -23,54 +23,60 @@ What languages should represent them? Given the limit of five languages, it migh
 * practical: the language is used in the "real world", there exists a community, tutorials, libraries and other resources
 * influential: other languages have been designed after features introduced first in this language
 
-
 ## Imperative
 
-The way contemparary computers work is inherently imperative: code is simply a list of instructions for the CPU. It therefore is fitting to pick for the representative of imperative family a language that makes this connection tangible -- a low-level, systems programming language such as **C**. C is perhaps better known for its [obfuscability](http://ioccc.org) than for the didactic virtues, but appears to be fitting our criteria fairly well: it is small, doesn't really support any other style than imperative, has a huge codebase written in it and its syntax influenced most of todays mainstream languages. Studends learning C will be exposed to:
-- manual memory management
-- pointers and pointer arithmetic
-- machine code
+The way contemparary computers work is inherently imperative: code is simply a list of instructions for the CPU. It therefore is fitting to pick for the representative of imperative family a language that makes this connection tangible -- a low-level, systems programming language such as **C**. C is perhaps better known for its [obfuscability](http://ioccc.org) than for the didactic virtues, but appears to match our criteria fairly well: it is small, doesn't support any other style than imperative, has a huge codebase written in it and its syntax influenced most of todays mainstream languages. Studends learning C will be exposed to:
 
-contenders: Assembly, Pascal, Python
+* manual memory management
+* pointers and pointer arithmetic
+* control flow instructions
+
+Contenders: Assembly, Pascal, Python
 
 ## Functional
 
 Since we are aiming for paradigmatic purity and try to avoid obscurity, **Haskell** is a natural choice. Syntactic sugar notwithstanding, the core is very small and can be boiled down to lambda abstraction and function application. It provides excellent platform to explain concepts such as
-- lambda calculus
-- laziness
-- strong typing
-- type inference
-- side-effect isolation
-- tail call optimisation
-- REPL
-contenders: StandardML, OCaml, Common Lisp, Clojure
+
+* lambda calculus
+* laziness
+* strong typing
+* type inference
+* side-effect isolation
+* tail call optimisation
+* REPL
+
+Contenders: StandardML, OCaml or Common Lisp and Clojure, if we didn't have a separate category for them
 
 ## Object-oriented
 
+TODO
 **Smalltalk**
-- class hierarchy
-- unityped 
-- image-based development environment
-contenders: Python, Io, Eiffel
+* class hierarchy
+* unityped 
+* image-based development environment
+contenders: Python, Io, Eiffel, Javascript
 
 ## Logic
 
+TODO
 **Prolog**
-- term unification
+* term unification
 Contenders: none
 
 ## Lisp-like
 
-Lisp-likeness is not a paradigm by a long shot; Lisp is usually considered a functional language, and we have already covered this paradigm. The temptation to instead include a concatenative language was high, but the historical importance and influentiality of Forth pales in comparison with Lisp. Lisp, with its homoiconicity, flexible (some say non-existent) syntax and macro system is a platform of choice for many programming language researchers for a reason. From the implementations we will pick **Clojure**, since it 
-- abstract syntax trees
-- macros
-- homoiconicity
-- continuations
-- REPL
-- JVM
-- software transactional memory
-contenders: Common Lisp, and Factor or Forth -- if we went for concatenative instead.
+Lisp-likeness is not a paradigm by a long shot; Lisp is usually considered a functional language, and we have already covered this paradigm. The temptation to instead include a concatenative language was high, but the historical importance and influentiality of Forth pales in comparison with Lisp. Lisp, with its homoiconicity, flexible (some say non-existent) syntax and macro system is a platform of choice for many programming language researchers for a reason. From the countless dialects that mushroomed over the years we will pick **Clojure**, since beside being a modern language with strong and growing community it will also expose our students to one of the major contemporary runtime platforms -- the Java Virtual Machine. So, here's what they will learn about:
 
-Missing
-Module system (StandardML)
-More exotic paradigms and styles (concatenative, array-orientation, TODO)
+* abstract syntax trees
+* macros
+* homoiconicity
+* continuations
+* REPL
+* JVM
+* software transactional memory
+
+Contenders: Common Lisp, and Factor or Forth -- if we went for concatenative instead.
+
+## What is missing?
+
+A lot, obviously, especially in the more exotic end of paradigm spectrum, such as concatenative or array-based languages. It would have been nice to include at least one language with advanced module system (e.g. Standard ML) to demonstrate features that help to build programs in-the-large. That said, we managed to cover an impressive list of features and someone who learns these five languages in reasonable depth can definitely be called a programming erudite.
