@@ -5,7 +5,7 @@ categories: blog it programming_languages
 
 <img src="rosetta_tweet.png" alt="@rosettacode: Pick three to five programming languages for teaching orthogonal programming paradigms. Which did you choose? Why? Blog and I'll share." />
 
-Interesting you should ask that, Rosetta Code. I've been pondering similar questions before, most recently inspired by Bruce Tate's "Seven Languages in Seven Weeks", whose languages of choice were sometimes overlapping (e.g. Io and Ruby) while leaving certain areas, such as concatenative languages, unexplored. What languages would I have chosen? 
+Interesting you should ask that, Rosetta Code. I've been pondering similar questions before, most recently inspired by Bruce Tate's _[Seven Languages in Seven Weeks](http://pragprog.com/book/btlang/seven-languages-in-seven-weeks)_, whose languages of choice were sometimes overlapping (e.g. Io and Ruby) while leaving certain areas, such as concatenative languages, unexplored. What languages would I have chosen? 
 
 Let's start with the paradigms. It's not a very clear term; is object orientation a paradigm or just a technique that can be applied to programs written in both imperative and declarative style? Is _imperative programming_ a paradigm? If so, what is _procedural programming_? The orthogonality requirement complicates things further. Functional programming is not orthogonal to procedural programming, but OO is to both, so how do we choose which features to represent? We are going to just gloss over these formal problems and arbitrarily select five diverse families of programming languages:
 
