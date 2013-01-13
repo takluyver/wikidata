@@ -87,4 +87,4 @@ Contenders: Scheme, Emacs Lisp, also Factor and Forth -- if we went for concaten
 
 ## What is missing?
 
-A lot, obviously, especially in the more exotic end of paradigm spectrum, such as concatenative or array-based languages. It would have been nice to include at least one language with advanced module system (e.g. Standard ML) to demonstrate features that help to build programs in-the-large. That said, we managed to cover an impressive list of concepts and someone who learns these five languages in reasonable depth can definitely be called a programming erudite.
+A lot, obviously, especially in the more exotic end of paradigm spectrum, such as concatenative or array-based languages. It would have been nice to include at least one language with advanced module system (e.g. Standard ML) to demonstrate features that help build programs in-the-large. That said, we managed to cover an impressive list of concepts and someone who learns these five languages in reasonable depth can definitely be called a programming erudite.
