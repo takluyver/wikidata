@@ -27,7 +27,7 @@ What languages should represent them? Given the limit of five, it might seem tha
 
 ## Imperative
 
-The way contemparary computers work is inherently imperative: code is simply a list of instructions for the CPU. It therefore is fitting to pick for the representative of imperative family a language that makes this connection tangible -- a low-level, systems programming language such as **C**. C is perhaps better known for its [obfuscability](http://ioccc.org) than for the didactic virtues, but appears to match our criteria fairly well: it is small, doesn't support any other style than imperative, has a huge codebase written in it and its syntax influenced most of today's mainstream languages. Studends learning C will be exposed to:
+The way contemparary computers work is inherently imperative: code is simply a list of instructions for the CPU. It therefore is fitting to pick for the representative of imperative family a language that makes this connection tangible -- a low-level, systems programming language such as **C**. C is perhaps better known for its [obfuscability](http://ioccc.org) than for the didactic virtues, but appears to match our criteria fairly well: it is small, doesn't support any other style than imperative, has a huge codebase written in it and its syntax influenced most of today's mainstream languages. Students learning C will be exposed to:
 
 * control flow instructions
 * manual memory management
