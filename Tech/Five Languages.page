@@ -17,7 +17,7 @@ Let's start with the paradigms. It's not a very clear term; is object orientatio
 
 and then try to cover as many different features within each family, as practical.
 
-What languages should represent them? Given the limit of five languages, it might seem that multi-paradigm ones suche as C++, Oz or Scala would offer the biggest bang for the buck. However, considering that the purpose is teaching, we will be better off with smaller languages; ideas can be better appreciated and internalised when presented in a context of a language that was specifically designed around them. As a result our criteria for choice will be:
+What languages should represent them? Given the limit of five, it might seem that multi-paradigm ones suche as C++, Oz or Scala would offer the biggest bang for the buck. However, considering that the purpose is teaching, we will be better off with smaller languages; ideas can be better appreciated and internalised when presented in a context of a language that was specifically designed around them. As a result our criteria for choice will be:
 
 * small -- both conceptually and syntactically: can be learned faster
 * "there is only one way": a paradigm or feature is represented clearly, preferably in its pure form
