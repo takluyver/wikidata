@@ -1,0 +1,62 @@
+Five Languages
+
+""" """
+
+Interesting that you ask, Rosetta Code. I've been pondering similar questions before, most recently inspired by Bruce Tate's "Seven Languages in Seven Weeks", whose languages of choice were sometimes heavily overlapping (e.g. python and ruby) while leaving certain areas unexplored (e.g. concatenative). Granted, Tate's goal was different: instead of paradigms, he attempted to cover features that are relevant to today's programming practice, such as actors, software transactional memory TODO
+
+What is a paradigm, anyway? And which ones are orthogonal?
+
+As an example of orthogonality, take object orientation. It can be found in both OO
+
+Paradigms: imperative/declarative. Imperative, object-oriented, functional, logic, concatenative. Applications
+There is no such thing as a complete orthogonality of these features; some play together nicely with each other, others seem at odds -- e.g. subtyping, commonly used to model class hierarchies in class-based object orientation, and type inference functional programmers are used to.
+
+C++, OZ, Scala can be confusing due to the mixture of concepts
+
+Criteria: 
+size (smaller better) -- both conceptual and syntactical; facilitates learning
+"there is only one way" -- a paradigm or feature is represented clearly, preferably in its pure form.
+representative: contain constructs that are commonly found in other languages representing the same paradigm
+practical: community, libraries
+influential: other languages have been designed after it
+
+imperative
+object-oriented
+function
+
+## Imperative
+C
+The way contemparary computers work is inherently imperative: code is simply a list of instructions for the CPU. It therefore is fitting to pick for the representative of imperative family a language that makes this connection tangible (?vTODO) -- a low-level, systems programming language such as *C*. C is perhaps better known for its [obfuscability](http://ioccc.org) than for the didactic virtues, but appears to be fitting our criteria fairly well: it is small, doesn't really support any other style than imperative, has a huge codebase written in it and its syntax influenced most of todays mainstream languages.
+contenders: Assembly, Pascal, Python
+
+## Functional
+Since we are aiming for paradigmatic purity and try to avoid obscurity, *Haskell* is a natural choice. Syntactic sugar notwithstanding, the core is very small and can be boiled down to lambda abstraction and function application. It provides excellent platform to explain concepts such as
+- lambda calculus
+- laziness
+- strong typing
+- type inference
+- side-effect isolation
+- REPL
+
+contenders: StandardML, OCaml, Common Lisp, Clojure
+
+## Object-oriented
+Smalltalk
+- unityped (dynamic)
+- image-based
+contenders: Python, Io
+
+## Logic
+Prolog
+- unification
+Contenders: ?
+
+## Concatenative
+
+Forth
+contenders: Factor
+
+Missing
+Lisp-like (Clojure)
+Module system (StandardML)
+More exotic pardigms (array-orientation, TODO)
