@@ -78,6 +78,7 @@ Lisp-likeness is not a paradigm by a long shot; Lisp is usually considered a fun
 * macros
 * homoiconicity
 * lambda calculus
+* dynamic typing
 * continuations
 * REPL
 * JVM
