@@ -7,13 +7,15 @@ categories: blog it programming_languages
 
 Interesting you should ask that, Rosetta Code. I've been pondering similar questions before, most recently inspired by Bruce Tate's _[Seven Languages in Seven Weeks](http://pragprog.com/book/btlang/seven-languages-in-seven-weeks)_, whose languages of choice were sometimes overlapping (e.g. Io and Ruby) while leaving certain areas, such as concatenative languages, unexplored. What languages would I have chosen? 
 
-Let's start with the paradigms. It's not a very clear term; is object orientation a paradigm or just a technique that can be applied to programs written in both imperative and declarative style? Is _imperative programming_ a paradigm? If so, what is _procedural programming_? The orthogonality requirement complicates things further. Functional programming is not orthogonal to procedural programming, but OO is to both, so how do we choose which features to represent? We are going to just gloss over these formal problems and arbitrarily select five diverse families of programming languages:
+Let's start with the paradigms. It's not a very clear term; is object orientation a paradigm, or just a technique that can be applied to programs written in both imperative and declarative style? Is imperative programming a paradigm? If so, what is procedural programming? The orthogonality requirement complicates things further. Functional programming is not orthogonal to procedural programming, but OO is to both, so how do we choose which features to represent? We are going to just gloss over these formal problems and arbitrarily select five diverse families of programming languages:
 
 * imperative
 * functional
 * object-oriented
 * logic
 * Lisp-like
+
+and then try to cover as many different features within each family, as practical.
 
 What languages should represent them? Given the limit of five languages, it might seem that multi-paradigm ones suche as C++, Oz or Scala would offer the biggest bang for the buck. However, given that the purpose is _teaching_, we will be better off with smaller languages; ideas can be better appreciated and internalised when presented in a context of a language that was specifically designed around them. So, the our criteria for choice will be:
 
@@ -25,17 +27,18 @@ What languages should represent them? Given the limit of five languages, it migh
 
 ## Imperative
 
-The way contemparary computers work is inherently imperative: code is simply a list of instructions for the CPU. It therefore is fitting to pick for the representative of imperative family a language that makes this connection tangible -- a low-level, systems programming language such as **C**. C is perhaps better known for its [obfuscability](http://ioccc.org) than for the didactic virtues, but appears to match our criteria fairly well: it is small, doesn't support any other style than imperative, has a huge codebase written in it and its syntax influenced most of todays mainstream languages. Studends learning C will be exposed to:
+The way contemparary computers work is inherently imperative: code is simply a list of instructions for the CPU. It therefore is fitting to pick for the representative of imperative family a language that makes this connection tangible -- a low-level, systems programming language such as **C**. C is perhaps better known for its [obfuscability](http://ioccc.org) than for the didactic virtues, but appears to match our criteria fairly well: it is small, doesn't support any other style than imperative, has a huge codebase written in it and its syntax influenced most of today's mainstream languages. Studends learning C will be exposed to:
 
+* control flow instructions
 * manual memory management
 * pointers and pointer arithmetic
-* control flow instructions
+* undefined behaviour
 
 Contenders: Assembly, Pascal, Python
 
 ## Functional
 
-Since we are aiming for paradigmatic purity and try to avoid obscurity, **Haskell** is a natural choice. Syntactic sugar notwithstanding, the core is very small and can be boiled down to lambda abstraction and function application. It provides excellent platform to explain concepts such as
+Since we aim for paradigmatic purity and try to avoid obscurity, **Haskell** -- a purely functional language with a large, active community is a natural choice. Syntactic sugar notwithstanding, the core is very small and can be boiled down to lambda abstraction and function application. It provides excellent platform to explain concepts such as
 
 * lambda calculus
 * laziness
@@ -45,16 +48,18 @@ Since we are aiming for paradigmatic purity and try to avoid obscurity, **Haskel
 * tail call optimisation
 * REPL
 
-Contenders: StandardML, OCaml or Common Lisp and Clojure, if we didn't have a separate category for them
+Contenders: StandardML, OCaml also Common Lisp and Clojure, if we didn't have a separate category for them
 
 ## Object-oriented
 
-TODO
-**Smalltalk**
-* class hierarchy
-* unityped 
+There are two main flavours of object orientation: object-based and class-based. While the former requires fewer concepts to explain, the latter is much more common in the industry and has an excellent, dogmatic representative: **Smalltalk**. In Smalltalk everything is an object, event conditional instructions are in fact messages sent to Boolean objects. Exactly the conceptual minimalism we have been looking for, at the same time introducing new features such as:
+
+* objects responding to messages
+* class inheritance
+* dynamic typing
 * image-based development environment
-contenders: Python, Io, Eiffel, Javascript
+
+Contenders: Python, Io, Eiffel, Ruby
 
 ## Logic
 
