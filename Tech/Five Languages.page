@@ -17,10 +17,10 @@ Let's start with the paradigms. It's not a very clear term; is object orientatio
 
 and then try to cover as many different features within each family, as practical.
 
-What languages should represent them? Given the limit of five languages, it might seem that multi-paradigm ones suche as C++, Oz or Scala would offer the biggest bang for the buck. However, given that the purpose is _teaching_, we will be better off with smaller languages; ideas can be better appreciated and internalised when presented in a context of a language that was specifically designed around them. So, the our criteria for choice will be:
+What languages should represent them? Given the limit of five languages, it might seem that multi-paradigm ones suche as C++, Oz or Scala would offer the biggest bang for the buck. However, considering that the purpose is teaching, we will be better off with smaller languages; ideas can be better appreciated and internalised when presented in a context of a language that was specifically designed around them. As a result our criteria for choice will be:
 
-* size - both conceptual and syntactical; the smaller, the better, since can be learned faster
-* "there is only one way" -- a paradigm or feature is represented clearly, preferably in its pure form
+* small -- both conceptually and syntactically: can be learned faster
+* "there is only one way": a paradigm or feature is represented clearly, preferably in its pure form
 * representative: contain constructs that are commonly found in other languages representing the same paradigm
 * practical: the language is used in the "real world", there exists a community, tutorials, libraries and other resources
 * influential: other languages have been designed after features introduced first in this language
@@ -48,7 +48,7 @@ Since we aim for paradigmatic purity and try to avoid obscurity, **Haskell** -- 
 * tail call optimisation
 * REPL
 
-Contenders: StandardML, OCaml also Common Lisp and Clojure, if we didn't have a separate category for them
+Contenders: StandardML, OCaml, also Common Lisp and Clojure, if we didn't have a separate category for them
 
 ## Object-oriented
 
@@ -63,24 +63,26 @@ Contenders: Python, Io, Eiffel, Ruby
 
 ## Logic
 
-TODO
-**Prolog**
+Logic programming's heyday seems to have passed with the 1970s and 80s, but certains concepts are very relevant today. Want to understand how generic Scala collection methods return the most specific type in a given context? Lear about Horn clauses and unification! **Prolog** is by far the most popular language in this paradigm, so we don't really have much choice if we want a language built around
+
+* logic programming
 * term unification
+
 Contenders: none
 
 ## Lisp-like
 
-Lisp-likeness is not a paradigm by a long shot; Lisp is usually considered a functional language, and we have already covered this paradigm. The temptation to instead include a concatenative language was high, but the historical importance and influentiality of Forth pales in comparison with Lisp. Lisp, with its homoiconicity, flexible (some say non-existent) syntax and macro system is a platform of choice for many programming language researchers for a reason. From the countless dialects that mushroomed over the years we will pick **Clojure**, since beside being a modern language with strong and growing community it will also expose our students to one of the major contemporary runtime platforms -- the Java Virtual Machine. So, here's what they will learn about:
+Lisp-likeness is not a paradigm by a long shot; Lisp is usually considered a functional language, and we have already covered this paradigm. The temptation to instead include a concatenative language was high, but the historical importance and influentiality of Forth pales in comparison with Lisp. Lisp, with its homoiconicity, flexible (some say non-existent) syntax and macro system is a platform of choice for many programming language researchers for a reason. From the countless dialects that mushroomed over the years we will pick **Clojure**, which, beside being a modern language with strong and growing community, will also expose our students to one of the major contemporary runtime platforms -- the Java Virtual Machine. So, here's what they can learn about:
 
 * abstract syntax trees
 * macros
 * homoiconicity
+* lambda calculus
 * continuations
 * REPL
 * JVM
-* software transactional memory
 
-Contenders: Common Lisp, and Factor or Forth -- if we went for concatenative instead.
+Contenders: Common Lisp, Emacs Lisp, also Factor and Forth -- if we went for concatenative instead.
 
 ## What is missing?
 
