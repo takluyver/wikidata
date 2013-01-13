@@ -1,12 +1,15 @@
-Five Languages
+---
+title: Five Languages
+categories: blog it programming_languages
+toc: no
+...
 
-""" """
+<img src="rosetta_tweet.png"/>
 
-Interesting that you ask, Rosetta Code. I've been pondering similar questions before, most recently inspired by Bruce Tate's "Seven Languages in Seven Weeks", whose languages of choice were sometimes heavily overlapping (e.g. python and ruby) while leaving certain areas unexplored (e.g. concatenative). Granted, Tate's goal was different: instead of paradigms, he attempted to cover features that are relevant to today's programming practice, such as actors, software transactional memory TODO
+Interesting you should ask that, Rosetta Code. I've been pondering similar questions before, most recently inspired by Bruce Tate's "Seven Languages in Seven Weeks", whose languages of choice were sometimes overlapping (e.g. Io and Ruby) while leaving certain areas, such as concatenative languages, unexplored. What languages would I have chosen? 
 
-What is a paradigm, anyway? And which ones are orthogonal?
+Let's start with the paradigms. It's not a very clear term (is object orientation a paradigm or just a technique that can be applied to programs written in both imperative and declarative style?), so we're going to 
 
-As an example of orthogonality, take object orientation. It can be found in both OO
 
 Paradigms: imperative/declarative. Imperative, object-oriented, functional, logic, concatenative. Applications
 There is no such thing as a complete orthogonality of these features; some play together nicely with each other, others seem at odds -- e.g. subtyping, commonly used to model class hierarchies in class-based object orientation, and type inference functional programmers are used to.
@@ -20,13 +23,12 @@ representative: contain constructs that are commonly found in other languages re
 practical: community, libraries
 influential: other languages have been designed after it
 
-imperative
-object-oriented
-function
-
 ## Imperative
 C
 The way contemparary computers work is inherently imperative: code is simply a list of instructions for the CPU. It therefore is fitting to pick for the representative of imperative family a language that makes this connection tangible (?vTODO) -- a low-level, systems programming language such as *C*. C is perhaps better known for its [obfuscability](http://ioccc.org) than for the didactic virtues, but appears to be fitting our criteria fairly well: it is small, doesn't really support any other style than imperative, has a huge codebase written in it and its syntax influenced most of todays mainstream languages.
+- manual memory management
+- pointers and pointer arithmetic
+
 contenders: Assembly, Pascal, Python
 
 ## Functional
@@ -37,14 +39,14 @@ Since we are aiming for paradigmatic purity and try to avoid obscurity, *Haskell
 - type inference
 - side-effect isolation
 - REPL
-
 contenders: StandardML, OCaml, Common Lisp, Clojure
 
 ## Object-oriented
 Smalltalk
-- unityped (dynamic)
-- image-based
-contenders: Python, Io
+- class hierarchy
+- unityped 
+- image-based development environment
+contenders: Python, Io, Eiffel
 
 ## Logic
 Prolog
