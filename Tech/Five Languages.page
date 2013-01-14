@@ -72,7 +72,7 @@ Contenders: none
 
 ## Lisp-like
 
-Lisp-likeness is not a paradigm by a long shot; Lisp is usually considered a functional language, and we have already covered that paradigm. The temptation to instead include a concatenative language was high, but the historical importance and influence of Forth pales in comparison with Lisp. Lisp, with its homoiconicity, flexible (some say non-existent) syntax and macro system is a platform of choice for many programming language researchers for a reason. From the countless dialects that mushroomed over the years we will pick **Clojure**, which, beside being a modern language with strong and growing community, will also expose our students to one of the major contemporary runtime platforms -- the Java Virtual Machine. So, here's what they can learn about:
+Lisp-likeness is not a paradigm by a long shot; Lisp is usually considered a functional language, and we have already covered that paradigm. The temptation to instead include a concatenative language was high, but the historical importance and influence of Forth pales in comparison with Lisp. Lisp, with its homoiconicity, flexible (some say non-existent) syntax and macro system is a platform of choice for many programming language researchers for a reason. From the countless dialects that mushroomed over the years we will pick **Clojure**, which, beside being a modern language with strong and growing community, will also expose our students to one of the major contemporary runtimes -- the Java Virtual Machine. So, here's what they can learn about:
 
 * abstract syntax trees
 * macros
