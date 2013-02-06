@@ -1,0 +1,245 @@
+Andres Loeh, Duncan Coutts
+
+6-7 Feb 2013
+
+## Internals and Performance
+
+### Language Extensions
+
+* Current version: Haskell 2010 (that's what current version of GHC gives out of the box)
+* Language extensions: GHC supports over a hundred, there is a consensus in community which ones are standard and stable and which ones experimental
+* Recommended way of enabling: `{-# LANGUAGE xxx #-} pragma (also declare in cabal file as "enabled extensions")
+
+### Data Structures
+
+#### Lists
+
+Imperative: destructive update (ephemeral data structures); functinal: creation of a new value (persistent data structures).
+
+`[1,2,3,4]` is syntactic sugar for `1:(2:(3:(4:[])))`
+
+when we do let y =0:x, the x is reused (it's safe to share it, because it's immutable); same when we do `drop 3 y`, it's pointer. However, when we do `take 2`, we have
+to copy the cons `(:)` cells (see slides).
+
+#### In-memory representation
+
+Words of memory:
+
+* first identifies the constructor
+* other ones contain payload (pointers to constructor args)
+
+~~~
++---+----------+----------+
+|(:)|hd ptr -> |tl ptr -> |
++---+----------+----------+
+~~~
+
+Thunks are represented similarly, as heap objects:
+
+~~~
++---+----------+----------+
+|fn |arg 1 ->  |arg 2 ->  |
++---+----------+----------+
+~~~
+
+The first field indicates whether it's a thunk or constructor. If thunk, it can be replaced by evaluated value (one of very few cases where in Haskell something gets changed destructively). The benefit is that if a shared thunk is evaluated, the value will be available to all places pointing to it.
+
+##### Tools
+
+* vacuum -- older, shows evaluated values
+* ghc-vis/ghc-heap-view -- lets see the thunks and prod them
+
+useful for visualisation, not so useful for large program debugging
+
+ghc-vis in ghci:
+
+~~~
+let x = [1,2,3,4]; w = take 2 x
+:vis
+:view x
+:view w
+:switch
+-- now we can prod thunks!
+:clear
+let x = cycle [1,2] -- shows how infinite structures like this are represented
+let y = take 5 x -- we need 5 real conses!
+let z = drop 3 x
+~~~
+
+AP - unevaluated thunk
+BCO - bytecode of function
+Thunk - another type of thunk (the difference doesn't really matter)
+
+#### Trees
+
+There is a lot of syntactic sugar for lists, but only very few operations on them are efficient. `snoc`, `reverse`, `elem`, `splitAt`, `union` are all linear. They are suitable if all we need are stack operations, if data is small (in the order of hundreds) or if we don't care about performance (data is small). Problematic case: `String` -- it's a list of chars, convenient, but unsuitable for large pieces of text.
+
+Trees are very suitable for persistent, functional setting. Most of persistent data structures are internally represented as trees (cf. binary tries in Scala). Balanced search tree is a sensible representation for data structure that involves lookups.
+
+* `Data.Map`
+* `Data.IntMap` (special, efficient case for `Int` keys)
+* `Data.Set` (note: values need to be instances of `Ord`)
+
+##### A glimpse at implementation of `Map`
+
+~~~ {.haskell}
+data Map k a = Tip
+             | Bin {-# UNPACK #-} !Size
+                   (Map k a) k a (Map k a)
+type Size = Int
+~~~
+
+`!` means size will never be a thunk; `UNPACK` changes in-memory representation so that Size is not a pointer, but is stored unboxed.
+
+The library uses *smart constructors* -- wrappers around constructors that maintain invariants (e.g. size)
+
+~~~ {.haskell}
+bin :: Map k a -> a -> Map k a -> Map k a
+bin l kx x r = Bin (size l + size r + 1) l kx x r
+~~~
+
+We have to remember to use smart constructor, not the regular one -- can be ensured by exporting only smart constructors.
+
+~~~ {.haskell}
+size Tip              = 0
+size (Bin sz _ _ _ _) = sz
+
+insert kx x Tim = singleton kx x
+insert kx x (Bin sz l ky y r) =
+  case compare kx ky of
+    LT -> balance (insert kx x l) ky y
+    GT -> balance              l  ky y (insert kx x r)
+    EQ > Bin sz l kx x r
+~~~
+
+`balance` is another type of smart constructor, even smarter than bin, because it does the balancing. Bonus: rotation (`singleL` and `doubleL`) is easy to write in Haskell!
+
+#### Sequences
+
+* efficient random access
+* efficient access to both ends
+* efficient concatenation and splitting
+
+e.g. queueus, pattern matching, search and replace etc.
+
+Solution: `Data.Sequence`. Slightly underused, better list. List still has its uses due to syntax, conceptual simplicity and adequacy for small data sets and possibilit to be infinite.
+
+How is it implemented? Take a tree with sequence elements in leaves; then invert it so that start and end are treated as "roots" of the tree, and the pointers are reversed. In the end we get finger tree, with strong trunk a lot of branches (start and end are on the first level).
+
+Check ghc-viz :view `Data.Sequence.fromList([1..30])` -- note that we can see unpacked values in constructor nodes, not as pointers
+
+~~~ {.haskell}
+newtype Seq a = Seq (FingerTree a)
+data FingerTree a = Empty
+                  | Single a
+                  | Deep {-# UNPACK #-} !Int
+                         !(Digit a) (FingerTree (Node a)) !(Digit a)
+
+data Node a = Node2 {-# UNPACK #-} !Int a a
+            | Node3 {-# UNPACK #-} !Int a a a
+
+data Digit a = One a | Two a a | Three a a a | Four a a a a
+~~~
+
+#### Arrays
+
+Constant time access to data and compact storage. `array` package is the old solution, `vector` is new favourite.
+
+`let x = fromList [1,2,3,4,5] in x // [(2,13)]`
+
+The price to pay is that we need to copy the entire array on update -- that's why we can do bulk updates, `(//)` where updated values are specified as list. Because of this arrays are used much less in functional languages than in imperative languages. Ideal use cases: 
+
+1. construct once, use many times
+2. update all elements at once
+
+`Data.Vector` operations: `slice` is constant time, but `(++)` is linear. Vectors can be constructed `fromList` and using generating function (`generate`).
+
+Arrays are special in that we can't define them using `data`, they have to be built into the compiler. In GHC it's a heap object consisting of descriptor, length and a number of words containing data (see in ghc-vis, we'll see that actual sizes are powers of 2).
+
+#### Unboxed Types
+
+ghci:
+
+~~~
+> :i Int
+data Int = GHC.Types.I# GHC.Prim.Int#
+~~~
+
+what is `Int#`?
+
+~~~
+> :i GHC.Prim.Int#
+data GHC.Prim.Int# -- Defined in `GHC.Prim'
+~~~
+
+`#` is to scare people. To get names like these to parse we need `MagicHash` extension. `Int#` is real machine integer. So Int has a tag I# and unpacked machine integer. Heap representation:
+
+~~~
+           +----+----+
+x: Int ->  | I# | 3# |
+           +----+----+
+~~~
+
+x is a boxed integer; 3# is unboxed integer. By default everything is boxed, compiler will unbox if possible and appropriate. We can force unpacked values to be stored in our data structure using the pragma `{-# UNPACK #-}` and strictness annotation -- see earlier examples. Pragma and annotations are separate because pragma should not introduce sematic changes and strictness is a semantic change. There's a flag `-funbox-strict-fields` that will attempt to unbox all strict fields.
+
+Why do we want to box? It admits laziness and polymorphism. Unboxed ints are good when we just use them in comparison, but stop to be an optimisation when we later use them in operation that would need to re-box them.
+
+Aside: specialisation is normally done explicitly (`Map` and `IntMap`), but there are advanced techniques for implicit specialisation (used e.g. in `Vectors`).
+
+~~~ {.haskell}
+3#    :: Int#
+3##   :: Word#
+3.0#  :: Float# 
+3.0## :: Double#
+'c'#  :: Char#
+~~~
+
+also functions, e.g. `(+##)` for doubles.
+
+Kinds are also incompatible:
+
+~~~ {.haskell}
+Int :: *
+[] :: * -> *
+Int# :: #
+~~~
+
+so we can't have a list of `Int#`s. Fortunately, we very rarely use unboxed types directly, GHC deals with it for us. We can tell what unpacking was applied by looking at core. Any type that has a *single* data constructor can be unpacked; this can affect how we choose to represent data, if we care about low-level efficiency.
+
+`Data.Vector.Unboxed` provides more compact and more local storage, but restricts the types of elements we can store. There is a type class `Unbox` that describe things that can be stored in it. Interesting case:
+
+~~~ {.haskell}
+instance (Unbox a, Unbox b) => Unbox (a, b)
+~~~
+
+The vector representation in this case is actually a pair of vectors instead of vector of pairs!
+
+Interesting trick with normal arrays: values can depend on each other, like in a spreadsheet -- a way to do dynamic programming. Not feasible in case of unboxed vectors. That's why compiler will not change the type of compiler for us -- it changes the semantics.
+
+#### Mutable Vectors
+
+There are (few) algorithms that can be implemented more efficiently with destructive updates (e.g. DFS). Haskell offers mutable arrays and most oprations on them are in `IO`. Packages: `Data.Vector.Mutable` and `Data.Vector.Unboxed.Mutable`.
+
+~~~ {.haskell}
+data IOVector -- abstract
+
+new :: Int -> IO (IOVector a)
+read :: IOVector a -> Int -> IO a
+write :: IOVector a -> Int -> a -> IO ()
+~~~
+
+#### Strings
+
+~~~ {.haskell}
+type String = [Char]
+~~~
+
+"foo" takes 15 words to represent in memory (see list representation).
+
+`ByteString` and `Text` (newer) offer compact representations, like unboxed vectors. There are also lazy versions of these, suitable for huge strings that should not be held in memory completely. `Text` is UTF16, `ByteString` is a byte array, without encoding implied. `ByteString ` is appropraite for ASCII, `Text` for Unicode.
+
+#### Summary
+
+* sets, maps and sequences are good general-purpose structures
+* lists are good for small data and incremental streaming
+* vectors and arrays are useful in some cases, but need to be careful (copying) 
