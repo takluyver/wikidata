@@ -703,3 +703,392 @@ Very similar in style to `Par` monad, but in `IO`:
 * `get` -> `wait`
 
 In addition, we can `poll`, `cancel` asyncs and tell what should happen when it gets cancelled. `concurrently` takes two asyncs and gives us back a pair of results once both finish.
+
+### Monads and More
+
+`Monad` is a type class. `>>=` is powerful because it lets to determine the next step completely by the results of previous one. Some interesting monads I didn't know about:
+
+* `ST` -- provides local mutable variables, can be executed with `runST` and the code will still be pure
+* `Signal` -- time-changing value (useful for FRP)
+
+What when we want to use a couple of these in one place? We can define our own data type and write monad instance for it, but it doesn't feel very compositional. That's where monad transformers come into the picture.
+
+Let's consider that we want to use state as such an aspect.
+
+~~~ {.haskell}
+newtype State s a = State { runState :: s -> (a,s) }
+~~~
+
+the kind of state is `* -> * -> *`.
+
+~~~ {.haskell}
+instance Monad (State s) where
+  return x = State (\s -> (x, s))
+  m >>= f = State (\s -> case runState m s of (x, s') -> ...)
+~~~
+
+Monads typically come int with additional interface:
+
+~~~ {.haskell}
+get :: State s s
+put :: s -> State s ()
+~~~ 
+
+This lets us forget about the implementation of State, we can just use this interface.
+
+Example: 
+
+~~~ {.haskell}
+data Expr = Num Int
+          | Add Expr Expr
+          | Var Name
+type Name = String
+
+type Env = Map Name Int
+
+eval :: Expr -> Env -> Int
+~~~ 
+
+1. in the simple implementation lookup can fail
+2. if we use Maybe (`eval :: Expr -> Env -> Maybe Int`), add case gets ugly because it has to deal with env and Maybe
+3. if we just use State (`eval :: Expr -> State Env Int`), we don't have explicit state, but still have to deal with lookup error:
+
+~~~ {.haskell}
+eval :: Expr -> State Env Int
+eval (Num n)     = return n
+eval (Add e1 e2) = (+) <$> eval e1 <*> eval e2
+eval (Var x)     = (! x) <$> get
+-- or we can use liftM2 and liftM
+~~~
+
+Exercise: how do we define `Applicative` instance for an instance of `Monad`?
+
+~~~ {.haskell}
+mf <*> ma = do
+  f <- mf
+  a <- ma
+  return (f a)
+~~~
+
+Application to DSL: if we represent user's programs as data, we can then inspect them, optimise and transform. This is much easier done with Applicative than with Monad.
+
+Back to the example -- we don't really need State, Reader is sufficient:
+
+~~~ {.haskell}
+eval :: Expr -> Reader Env Int
+eval (Num n)     = return n
+eval (Add e1 e2) = (+) <$> eval e1 <*> eval e2
+eval (Var x)     = (! x) <$> ask
+~~~
+
+But what about the errors from lookup? We could define `MaybeReader` as a monad, but then we have to redefine `ask` as well -- not very modular. Monad transformers to the rescue: we start with the simplest monad (`Identity`) and build on top of it.
+
+`Identity`: return -- just wraps; bind -- function application.
+
+~~~ {.haskell}
+newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a}
+
+instance Monad m => Monad (ReaderT r m) where
+  return x = ReaderT (\_ -> return x)
+  m >>= f = ReaderT (\r -> do
+    a <- runReaderT m r
+    runReaderT (f a) r)
+~~~
+
+Kind of ReaderT: `* -> (* -> *) -> * -> *`
+
+Now, `Reader a` is just `ReaderT a Identity`. With that, we can do:
+
+~~~ {.haskell}
+eval :: Expr -> ErrorT String (Reader Env) Int
+eval (Num n)     = return n
+eval (Add e1 e2) = (+) <$> eval e1 <*> eval e2
+eval (Var x)     = ...
+~~~
+
+how do we define `ask` for all monad stacks that contain `ReaderT`?
+
+#### Multi-parameter type classes
+
+Normal type-classes relate two types to each other. Multi-parameter type classes are relations of higher arity.
+
+~~~ {.haskell}
+class Monad m => MonadReader r m where
+  ask :: m r
+  ...
+
+instance Monad m => MonadReader (ReaderT) where
+  ask = ...
+~~~
+
+but with this we could define both `instance MonadReader Int (Reader Int)` and `instance MonadReader Char (Reader Int)` and the compiler wouldn't allow it. To solve it, we use another language extension:
+
+#### Functional Dependencies
+
+~~~ {.haskell}
+class Monad m => MonadReader r m | m -> r where
+  ...
+~~~
+
+This says that we can't define multiple instances with the same `m` but different `r`
+
+Another way to look at it is that there is a function from a monad to its reader type (type-level function): given a particular monad, we can compute the type of state.
+
+#### Type Families
+
+~~~ {.haskell}
+class Monad m => MonadReader m where
+  type EnvType m
+  ...
+~~~
+
+Now we have to specify `EnvType m` for every instance of `MonadReader`. This now plays the role of `r` in previous definition. All monad transformers could be defined using type families instead of functional dependencies. Type families are more recent. There is still a discussion about whether both are needed and which one should make it to the standard. The majority of the community likes type families better.
+
+Why called type families? Because it can be alternatively defined outside of type class:
+
+~~~ {.haskell}
+type family EnvType m
+...
+type instance EnvType (ReaderT r m) ...
+~~~
+
+Use case for type families: use a library, but replace all uses of list with dense vector.
+
+#### Defining Monad Transformers
+
+Now we can lift a monad through a transformer:
+
+~~~ {.haskell}
+instance
+TODO
+~~~ 
+
+Issue: we need to define lifting for every pair of transformers!
+
+And finally complete our evaluator:
+
+~~~ {.haskell}
+eval (Var x) = do
+  env <-ask
+  case lookup x env of
+    Nothing -> throwError "unknown var"
+    Just v  -> return v
+~~~
+
+Note: no transformer for IO, but IO can be used as the base of transformer stack.
+
+Conclusions: defining a monad transformer is not trivial, but it's good that we can define our own. Good examples: haskelline (readline implementation, provides `InputT` that can be used on top of `IO`); Parsec.
+
+#### Phantom Types 
+
+Let's consider a variant of our simple language that adds booleans:
+
+~~~ {.haskell}
+data Expr = Int n
+          | Bool b
+          | IsZero Expr
+
+data Val = VInt Int
+         | VBool Bool
+
+eval :: Expr -> Val
+eval (IsZero e) = case eval e of
+  VInt n -> ...
+  _      -> error "type error"
+~~~
+
+Not nice: a lot of type checking in evaluation, we also carry run-time type tags. This is equivalent to dynamically typed language. What if we wanted a static type checker and have Haskell compiler help us with that?
+
+~~~ {.haskell}
+data Expr a = Int Int
+            | Bool Bool
+            | IsZero (Expr Int)
+            | Plus (Expr Int) (Expr Int)
+            | If   (Expr Bool) (Expr a) (Expr a)
+
+-- Plus :: Expr Int -> Expr Int -> Expr a
+plus :: Expr Int -> Expr Int -> Expr Int -- smart constructor that restricts type
+plus = Plus
+~~~
+
+Phantom types such as this are useful to impose more rigid typing when binding to C libraries; used eg. for pointers in FFI.
+
+Unfortuantely, this still doesn't let us write `eval :: Expr a -> a`:
+
+~~~ {.haskell}
+eval :: Expr a -> a
+eval (Int n)  = n
+eval (Bool b) = b
+-- error: Haskell doesn't know that we used our smart constructor and 
+~~~
+
+We can achieve this using another feature of Haskell.
+
+### GADTs
+
+~~~ {.haskell}
+data Tree a = Leaf a
+            | Node (Tree a) (Tree a)
+~~~
+
+alternative formulation:
+
+~~~ {.haskell}
+data Tree :: * -> * where
+  Leaf :: a -> Tree a
+  Node :: Tree a -> Tree a -> Tree a
+~~~
+
+This allows us to restrict the result types of constructors.
+Note: we can also write `data Tree a where`, but it's misleading, because the type variable a isn't scoped over constructors, each is typed independently and can introduce its own variables.
+
+~~~ {.haskell}
+data Expr * -> * where
+  Int  :: Int -> Expr Int
+  Bool :: Bool -> Expr Bool
+  If   :: Expr Bool -> Expr a -> Expr a -> Expr a
+  ...
+~~~
+
+Now the evaluator is a piece of cake and doesn't require type tags!
+
+~~~ {.haskell}
+eval (Int n) = n
+eval (Bool b) = b
+...
+eval (If e1 e2 e3) = if eval e1 then eval e2 else eval e3
+~~~
+
+GADT syntax is better in almost every respect (expect perhaps for trivial enum types) and provides more power.
+
+If we wanted to write acutal DSL, we could parse into the untyped (initial datatype), then have a type checker that constructs the typed data type.
+
+#### Principle Types Property
+
+We lose an important property with GADTs: principle types property, i.e. each expression having a single most-generic type.
+
+~~~ {.haskell}
+data X :: * -> * where
+  C :: Int -> X Int
+  D :: X a
+
+f (C n) = [n]
+f D     = []
+~~~~
+
+here `f` can have type `X a -> [a]` as well as `X a -> [Int]`, which are incomparable! This prevents compiler from doing local type inference. As a result, if we pattern-match on a GADT we have to write a type signature. It's not a very high price to pay.
+
+#### Existential Types
+
+~~~ {.haskell}
+...
+Fst :: Expr (a, b) -> Expr a
+Snd :: Expr (a, b) -> Expr b
+~~~~
+
+`Fst` hides type `b` -- `b` is existentially quantified.
+
+A (somewhat) useful example:
+
+~~~ {.haskell}
+data Stepper :: * -> * where
+  Stepper : s -> (s -> (a,s)) -> Stepper a
+
+counter :: Stepper Int
+counter = Stepper 0 (\n -> (n, n+1))
+
+fibs :: Stepper Int
+fibs = Stepper (0, 1) (\(x, y) -> (x, (y, x + y)))
+~~~
+
+Actually Stepper is a different representataion of an infinite stream.
+
+#### Other Type of Vectors
+
+Name "vector" is also used for lists with fixed length, known statically. Can we encode it in type system?
+
+How do we encode natural numbers in type system?
+
+~~~ {.haskell}
+data Zero
+data Suc n
+type One = Suc Zero
+~~~
+
+We could do `Suc Char`, GHC folks are working on providing specific kinds for our types (DataKinds, KindPolymorphism).
+
+Now:
+
+~~~ {.haskell}
+data Vec :: * -> * -> * where
+  Nil  :: Vec a Zero
+  Cons :: a -> Vec a n -> Vec a (Suc n)
+~~~
+
+Now, if `map :: (a -> b) -> Vec a n -> Vec b n`, we can't write an incorrect clause for Nil.
+
+How do we deal with `(++)`? We need to add numbers on the type level, i.e. have a type-level function.
+
+~~~ {.haskell}
+type family Add (m :: *) (n :: *) :: *
+type instance Add Zero n = n
+type instance Add (Suc m) n = Suc (Add m n)
+
+(++) :: Vec a m -> Vec a n -> Vec a (Add m n)
+~~~
+
+Note: this works nicely, because the recursion on value level matches the recursion on type level. But GHC e.g. doesn't know that Add is symmmetric and commutative.
+
+From list doesn't work:
+
+~~~ {.haskell}
+fromList :: [a] -> Vec a n -- what is n?
+~~~
+
+We can specify the length as an input or hide the length using an existential type. To do the former, we specify a singleton type:
+
+~~~ {.haskell}
+data SNat :: * -> * where
+  SZero :: Nat Zero
+  SSucc :: SNat n -> SNat (Suc n)
+
+fromList :: SNat n -> [a] -> Vec a n
+~~~
+
+For the latter:
+
+~~~ {.haskell}
+data VecAny :: * -> * where
+  VeAny :: Vec a n -> VecAny a
+
+fromList :: [a] -> VecAny a
+~~~
+
+How about `equalLength :: Vec a m -> Vec b n -> Bool`? Not useful, because:
+
+~~~ {.haskell}
+if equalLength v w then head (zipWith (,) v, w) else ...
+~~~
+
+Doesn't compile, because compiler still doesn't know that lengths of `v` and `w`. 
+
+Lesson: write informative tests in the code; e.g. pattern matching is superior to boolean tests, because the former informs compiler, while the other requires us to keep the result of the test in our head when coding.
+
+In this scenario, we need some sort of evidence that we can provide to the compiler that the values were equal:
+
+~~~ {.haskell}
+data Equal :: * -> * -> * where
+  Refl :: Equal a a
+
+equalLength :: Vec a m -> Vec b n -> Maybe (Equal m n)
+equalLength Nil Nil = Just Refl
+equalLength (Cons x xs) (Cons y ys) =
+  case equalLength xs ys of
+    Just Refl -> Just Refl
+    Nothing   -> Nothing
+equalLength _ _ = Nothing
+~~~
+
+Our method produces a proof of equality.
+
+Lessons: with GADTs and type families we can express advanced contraints on type level. Typically, we start by trying to eliminate certain classes of errors, not with the proof as a goal.
