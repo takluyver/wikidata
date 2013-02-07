@@ -517,3 +517,189 @@ Be careful with `deepseq` -- unlike `seq`, it can be expensive to run when unnec
 
 Advice: make accummulating args strict, otherwise don't worry about strictness of arguments. When necessary, use strict data structures instead. Certainly don't sprinkle bangs everywhere, it can make matters worse!
 
+
+### Parallelism and Concurrency
+
+*Paralleism* is about speed.
+
+On paper, Haskell (and GHC) should be great at parallelism, because function applications are side-effect free: in `f x` in theory it's safe to evaluate `f` and `x` in parallel (even if `f` doesn't need `x`, we have plenty of cores so no harm is done by evaluating `x`). This is particularly attractive if `x` is a producer and `f` a consumer. However:
+
+* there is an overhead in parallelism
+* number of cores is limited
+* GC is difficult to parallelise (at the moment it's almost stop-the-world)
+* non-strictness: it's not clear how to evaluate speculatively
+
+Conclusion: fully automatic parallelism is still an area of research.
+
+*Concurrency* is about having many threads of control and is a goal in its own. This is where Haskell shines.
+
+Unlike most other languages, Haskell offers many approaches to parallelism. 
+
+Deterministic:
+
+* Data-Parallel Haskell (dph) -- experimental, about to be released
+* flat data parallelism (repa) -- also accellerate, which runs on GPU
+* evaluation strategies (parallel) -- part of Haskell Platform
+* safe dataflow specification (monad-par)
+
+Data parallelism is restricted to same operation modifying array of data; with nested we can also process arrays of arrays, even if the inner arrays have different lengths.
+
+Non-deterministic:
+
+* concurrency primitives (`forkIO`, `MVar`)
+* software transactional memory (stm)
+* high-level async computations (async) -- in Haskell Platform, similar to monad-par, offers futures
+
+#### Evaluation Strategies
+
+`collatz` -- a function that even for small inputs can take long to compute, not proven to terminate for all inputs. A good representative of a function we might want to run in parallel.
+
+~~~ {.haskell}
+maxC lo hi = maximum (map (collatz . fromIntegral) [lo..hi])
+~~~
+
+Eval monad lets us evaluate safely: `runEval :: Eval a -> a`; we can think of it as an expression with evaluation annotations attached.
+
+~~~ {.haskell}
+partest1 n = runEval $ do
+    r1 <- rpar $ maxC 1 h
+    r2 <- rpar $ maxC (h+1) n
+    return (r1 `max` r2)
+  where h = n `div` 2
+~~~
+
+`rpar` is an evaluation strategy.
+
+Compile with `-O -threaded -rtsopts`, run with `+RTS -s -N2`. If we use `-N`, it will attempt to use all available cores.
+
+#### Eventlog and Threadscope
+
+Event log is an easier to use alternative to profiling. Compile with `-eventlog`, run with `-l`, then read with `ghc-events` or display with `threadscope`. Observe that GC stops the threads.
+
+#### Sparks
+
+`rpar` creates a spark. It says that "this is something I'd like to evaluate to WHNF, but elsewhere". The runtime system creates a spark pointing to that expression and will put it on a spark queue. Whenever there are CPUs that are idle, they will pick up a spark and evaluate (_convert_) it. Note that if main thread evaluates one of sparked expression, the spark will not count as converted, but as _fizzled_. If there is a lot of fizzling it means we don't get as much parallelism as we were hoping for.
+
+The limit of spark queue is 8000. if we create more sparks, they are lost (_overflow_) if we create a spark for something already evaluated, it's _dud_. Sparks can also be garbage collected.
+
+#### Pitfalls of `rpar`
+
+Let's modify our program to also report sum:
+
+~~~ {.haskell}
+maxC lo hi = let xs = (map (collatz . fromIntegral) [lo..hi])
+             in (maximum xs, sum xs)
+
+partest2 n = runEval $ do
+    (max1, sum1) <- rpar $ maxC 1 h
+    (max2, sum2) <- rpar $ maxC (h+1) n
+    return (max1 `max` max2, sum1 + sum2)
+  where h = n `div` 2
+~~~
+
+This one, run on two cores, runs longer and converts no sparks. Why? Because pattern matching drives evaluation, we are demanding result immediately. Fix:
+
+~~~ {.haskell}
+partest3 n = runEval $ do
+    ~(max1, sum1) <- rpar $ maxC 1 h
+    ~(max2, sum2) <- rpar $ maxC (h+1) n
+    return (max1 `max` max2, sum1 + sum2)
+  where h = n `div` 2
+~~~
+
+This lets one spark convert, but the time is still long! Looking at spark creation and conversion graphs in threadscope, we see that the spark gets converted immediately at the beginning. Why? Because `rpar` says "evaluate to WHNF"; previously these were ints, which meant fully evaluated. Now, with pair, it's sufficient for it to produce (_thunk_, _thunk_). How do we fix it?
+
+Strategies:
+
+* `r0` -- none (default)
+* `rseq` -- WHNF
+* `rpar` -- WHNF in parallel
+* `rdeepseq` -- annotates for complete evaluation (NF)
+* `dot :: Strategy a -> Strategy a -> Strategy a` -- strategy composition (like function composition)
+
+~~~ {.haskell}
+partest4 n = runEval $ do
+    ~(max1, sum1) <- rpar `dot` rdeepseq $ maxC 1 h
+    ~(max2, sum2) <- rpar `dot` rdeepseq $ maxC (h+1) n
+    return (max1 `max` max2, sum1 + sum2)
+  where h = n `div` 2
+~~~
+
+Conclusions: 
+
+* most of the time we want to use `rpar` with `rdeepseq`; monad-par will do this by default. 
+* if our parallel program runs slower than non-parallel, we either have not enough parallelism or the overhead is too large -- typically when parallel tasks are too small. 
+* Chunks of work should be of reasonable tasks, if something takes just a couple of milliseconds it's usually not worth running in parallel.
+
+#### Dynamic Partitioning
+
+Our example so far used static partitioning that could only use two cores and could lead to imbalance of work between the threads. Recall that `Strategy a` is `a -> Eval a`. We can define a strategy to evaluate elements of list in parallel:
+
+~~~ {.haskell}
+evalList s [] = return []
+evalList s (x:xs) = do
+  r <- s x
+  rs <- evalList s xs
+  return (r:rs)
+parList s = evalList (rpar `dot` s)
+~~~
+
+Note that this forces the spine, so might not be ideal for very long lists! 
+
+Note: library already defines this, as well as `evalTraversable` and `parTraversable`, which are more generic.
+
+Now:
+
+~~~ {.haskell}
+partest5 n = let cs = map (collatz . fromIntegral) [1..n] `using` parList rdeepseq
+             in (maximum cs, sum cs)
+~~~
+
+`using` applies a strategy and immediately runs it. When we run it, we get 100000 sparks, with 90% overflowing. How do we fix this? By making individual tasks larger (chunking). There is a strategy for this already defined: `parListChunk`. A problem with this is that we still have to tranverse the entire initial list in order to chunk. This shows that lists are not a great structure for parallelism; trees are better for parallelisation!
+
+~~~ {.haskell}
+partest6 n = let cs = map (collatz . fromIntegral) [1..n] `using` parListChunk 500 rdeepseq
+             in (maximum cs, sum cs)
+~~~
+
+We can define our own map/reduce abstraction (TODO: see slides).
+
+~~~ {.haskell}
+combine = ...
+threshold = 1000 
+partest7 n = mapReduce threshold 1 n rdeepseq
+                       ((\x -> (x, x)) . collatz . fromIntegral)
+                       (foldl1' combine)
+~~~
+
+That's even better, because we don't force spine of the list. We can adapt the threashold (size of chunks) to the number of cores: `GHC.Conc.numCapabilities :: Int`.
+
+#### `Control.Monad.Par`
+
+~~~ {.haskell}
+partest 1 n = runPar $ do
+    v1 <- spawnP $ maxC 1 h
+    v2 <- spawnP $ maxC (h+1) n
+    r1 <- get v1
+    r2 <- get v2
+    return (r1 `max r2)
+  where h = n `div` 2
+~~~
+
+`spawnP` produces a future (`IVar`), which we retrieve result from using `get`. It applies `deepseq` by default. `IVar` can be written to only once.
+
+What are the advantages of explicit synchronisation using `get`? It makes it easier to structure the flow of parallelism, e.g. control that we don't too many things in parallel. Also lets us express data-dependency graph.
+
+On top of `Par` monad we can create pretty much te same abstractions as for `Eval`; the code will look pretty much the same as with evaluation strategies, we'll just use `runPar`. 
+
+Note: `Par` monad doesn't use sparks, so threadscope feedback is slightly less insightful.
+
+#### `Control.Concurrent.Async`
+
+Very similar in style to `Par` monad, but in `IO`:
+
+* `IVar` -> `Async`
+* `spawn` -> `async`
+* `get` -> `wait`
+
+In addition, we can `poll`, `cancel` asyncs and tell what should happen when it gets cancelled. `concurrently` takes two asyncs and gives us back a pair of results once both finish.
