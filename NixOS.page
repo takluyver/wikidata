@@ -12,3 +12,4 @@ After http://nixos.org/wiki/Installing_NixOS_from_a_USB_stick
 * write iso to USB stick with unetbootin. Gotchas: didn't work on desktop with USB3 (no files were written)
 * in EeePC: make sure that USB drive appears before internal HDD in bios hard drives list
 * reboot, start NixOs install, login as root with empty password
+* on EeePC: can't use wifi, Broadcom BCM4313 requires `wl` kernel module, but no such module is available in NixOS install
