@@ -9,5 +9,5 @@ After http://nixos.org/wiki/Installing_NixOS_from_a_USB_stick
 * download the mini .iso
 * install unetbootin
 * find USB stick with sufficient capacity and format it to FAT32 (gparted)
-* write iso to USB stick with unetbootin
+* write iso to USB stick with unetbootin. Gotchas: didn't work on desktop with USB3 (no files were written)
  
