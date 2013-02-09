@@ -72,3 +72,7 @@ systemctl restart wpa_supplicant.service
 ~~~
 
 See [the wiki page](http://nixos.org/wiki/Wireless_networking) for more details.
+
+### xmonad
+
+Install as per the instructions in [the wiki](http://nixos.org/wiki/Haskell).
