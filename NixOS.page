@@ -80,7 +80,7 @@ Install as per the instructions in [the wiki](http://nixos.org/wiki/Haskell).
 In addition, to be able to recompile config (`~/.xmonad/xmonad.hs`), we'll need:
 
 ~~~
-nix-env -i xmessage haskell-xmonad-ghc7.4.2
+nix-env -i xmessage haskell-xmonad-ghc7.4.2 haskell-xmonad-contrib-ghc7.4.2
 nix-env -iA nixos.pkgs.haskellPackages_ghc742_profiling.haskellPlatform
 ~~~
 
@@ -95,3 +95,14 @@ Build of Chromium 25.0.1364.68 fails with `undefined reference to __stack_chk_gu
 * `sublimetext`
 * `git`
 * _consolas_ font
+
+### XTerm Configuration
+
+add the following to `~/.Xresources`:
+
+~~~
+XTerm*faceName: Consolas
+XTerm*faceSize: 10
+~~~
+
+then run `xrdb -merge ~/.Xresources`.
