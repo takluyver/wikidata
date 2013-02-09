@@ -90,4 +90,8 @@ nix-env -iA nixos.pkgs.haskellPackages_ghc742_profiling.haskellPlatform
 
 Build of Chromium 25.0.1364.68 fails with `undefined reference to __stack_chk_guard`. Work-around: install `chromium-24.0.1312.69-with-plugins`.
 
+### More software
 
+* `sublimetext`
+* `git`
+* _consolas_ font
