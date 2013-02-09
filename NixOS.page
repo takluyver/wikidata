@@ -2,7 +2,7 @@ Andres Löh used on his netbook, so must be usable.
 
 ## Installation
 
-### Via USB
+### Prepare USB
 
 After http://nixos.org/wiki/Installing_NixOS_from_a_USB_stick
 
@@ -12,4 +12,63 @@ After http://nixos.org/wiki/Installing_NixOS_from_a_USB_stick
 * write iso to USB stick with unetbootin. Gotchas: didn't work on desktop with USB3 (no files were written)
 * in EeePC: make sure that USB drive appears before internal HDD in bios hard drives list
 * reboot, start NixOs install, login as root with empty password
+
+### Basic Installation
+
 * on EeePC: can't use wifi, Broadcom BCM4313 requires `wl` kernel module, but no such module is available in NixOS install
+* use parted to set up two primary partitions, one for os, one for swap
+
+Then:
+
+~~~
+mkfs.ext4 -j -L nixos /dev/sda1`
+mkswap -L swap /dev/sda2`
+mount /dev/sda1 /mnt`
+nixos-option --install
+vi /mnt/etc/nixos/configuration.nix
+~~~
+
+Uncomment a number of lines in the config: 
+* `boot.loader.grub.device`
+* `networking.wireless.enable`
+* `fileSystems."/".device`
+* `swapDevices` -> `device`
+
+~~~
+nixos-install
+reboot
+~~~
+
+After reboot, login as root (no password) and:
+
+~~~
+passwd root
+useradd -d /home/mmakowski -U mmakowski
+passwd mmakowski
+mkdir /home/mmakowski
+chown mmakowski:mmakowski /home/mmakowski
+~~~
+
+### Wifi Configuration
+
+* EeePC: to set up wifi, `nix-env -i broadcom-sta`, then update `/etc/nixos/configuration.nix` to contain:
+
+~~~
+boot.extraModulePackages = [
+  config.boot.kernelPackages.broadcom_sta
+];
+boot.initrd.kernelModules = [
+  "wl
+];
+~~~
+
+And do `nixos-rebuild switch`.
+
+On any box install `wpa_supplicant`, then
+
+~~~
+wpa_passphrase Allemande "password" > /etc/wpa_supplicant.conf
+systemctl restart wpa_supplicant.service
+~~~
+
+See [the wiki page](http://nixos.org/wiki/Wireless_networking) for more details.
