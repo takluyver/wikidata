@@ -1,0 +1,10 @@
+A "functional" package manager.
+
+How are binaries found for a given user?
+
+~~~
+> echo $PATH
+...:/home/mmakowski/.nix-profile/bin:...
+> ls -l /home/mmakowski/.nix-profile/bin
+lrwxrwxrwx 1 root nixbld   67 Jan  1  1970 sublime -> /nix/store/7npfiweroafjawoeifp32r3ppjp2-sublimetext-2.0.1/bin/sublime
+~~~
