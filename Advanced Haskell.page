@@ -963,9 +963,9 @@ GADT syntax is better in almost every respect (expect perhaps for trivial enum t
 
 If we wanted to write acutal DSL, we could parse into the untyped (initial datatype), then have a type checker that constructs the typed data type.
 
-#### Principle Types Property
+#### Principal Types Property
 
-We lose an important property with GADTs: principle types property, i.e. each expression having a single most-generic type.
+We lose an important property with GADTs: principal types property, i.e. each expression having a single most-generic type.
 
 ~~~ {.haskell}
 data X :: * -> * where
