@@ -164,6 +164,7 @@ type ViewAction = Model -> View -> IO ()
 ~~~
 
 The atomic view actions we will need in this example are:
+
 * disabling/enabling Lock/Unlock/Modify menu items
 * refreshing model display
 
@@ -320,6 +321,7 @@ combination of these two.
 With this in place we can define `ModelAndViewUpdate`s for each UI action. 
 First let's combine atomic UI operations into complex ones corresponding to the 
 Model transition. For `unlock` we will:
+
 * enable Lock menu item
 * disable Unlock menu item
 * enable Modify menu item
