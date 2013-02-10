@@ -21,3 +21,7 @@ What if we upgrade a package and the old version is not used any more? It's left
 
 Default deployment model is building from source; however, Nix channels can provide pre-built binaries.
 
+## Documentation
+
+* Eelco Dolstra's [PhD thesis](http://nixos.org/~eelco/pubs/phd-thesis.pdf)
+* [manual](http://hydra.nixos.org/job/nix/trunk/tarball/latest/download-by-type/doc/manual)
