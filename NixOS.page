@@ -106,3 +106,7 @@ XTerm*faceSize: 10
 ~~~
 
 then run `xrdb -merge ~/.Xresources`.
+
+## Extending
+
+A good example of a module that provides an os service (actually, a cron task) is in [the documentation](http://hydra.nixos.org/build/4019735/download/1/nixos/manual.html#idp305088).
