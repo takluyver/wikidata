@@ -1,10 +1,23 @@
 A "functional" package manager.
 
-How are binaries found for a given user?
+## Basics
+
+Packages are stored in `/nix/store`, each in directory whose name contains the hash of all its dependencies. This ensures that different versions of libraries and apps can be installed alongside each other.
+
+Since applications are not stored in the usual locations such as `/usr/local/bin`, how are binaries found for a given user?
 
 ~~~
 > echo $PATH
 ...:/home/mmakowski/.nix-profile/bin:...
 > ls -l /home/mmakowski/.nix-profile/bin
+...
 lrwxrwxrwx 1 root nixbld   67 Jan  1  1970 sublime -> /nix/store/7npfiweroafjawoeifp32r3ppjp2-sublimetext-2.0.1/bin/sublime
+...
 ~~~
+
+How do these applications in turn find the libraries they depend on? TODO
+
+What if we upgrade a package and the old version is not used any more? It's left there inc case we wanted to roll back, but can be removed if we run `nix-collect-garbage`.
+
+Default deployment model is building from source; however, Nix channels can provide pre-built binaries.
+
