@@ -1,4 +1,3 @@
-
 _with wxHaskell and STM_
 
 With popularity of Haskell raising in recent years I have decided to have a 
@@ -408,7 +407,7 @@ That concludes the example. Try running it and see how the UI actions behave.
 Try, for example, invoking "Modify" or "Lock" while other "Modify" is still
 running.
 
-### Discussion and Disclaimers
+## Discussion and Disclaimers
 
 This, obviously, was a toy example. For real-life applications there is likely
 to be a couple of things which might need to be modified.
