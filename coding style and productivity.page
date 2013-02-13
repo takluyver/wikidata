@@ -1,3 +1,4 @@
 * time to comprehend is propotional to the number of tokens, according to a (statistically insignificant) [study by Gilles Dubochet](http://infoscience.epfl.ch/record/138586).
 * horizontal alignment?
 * vertical whitespace?
+* camel case and underscores: some contradicting ICPC papers pointed to in a [Stack Overflow answer](http://stackoverflow.com/a/7962652/424978)
