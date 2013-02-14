@@ -24,4 +24,65 @@ PANIC: Could not open: AVD_for_Galaxy_Nexus_by_Google
 
 ## Eclipse
 
-TODO
+Create the Eclipse project files by hand:
+
+`.project`
+
+~~~ {.xml}
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>myproject</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.android.ide.eclipse.adt.ResourceManagerBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.android.ide.eclipse.adt.PreCompilerBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.scala-ide.sdt.core.scalabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.android.ide.eclipse.adt.ApkBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
+		<nature>org.scala-ide.sdt.core.scalanature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+</projectDescription>
+~~~
+
+`.classpath`
+
+~~~ {.xml}
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/scala"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+	<classpathentry kind="src" path="target/scala-2.10/src_managed/main/java"/>
+	<classpathentry kind="src" path="target/scala-2.10/src_managed/main/scala"/>
+	<classpathentry kind="src" path="target/scala-2.10/resource_managed/main"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
+~~~
+
+Copy `AndroidManifest.xml` to root directory of the project. Then after some fiddling with dummy file changes the sources should compile, but the project will still be in error due to missing resources files.
+
+TODO: experiment some more
