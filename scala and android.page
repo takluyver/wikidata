@@ -1,0 +1,27 @@
+## SBT
+
+Follow the [instructions on github](https://github.com/jberkel/android-plugin/wiki/getting-started). As of writing this (0.6.2) the plugin uses ProGuard 4.6 which does not work with JDK 7, so need to do:
+
+~~~
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+~~~
+
+and choose JDK 6.
+
+### Troubleshooting:
+
+#### PANIC: Could not open: <AVD>
+
+**Problem:**
+
+~~~
+> android:emulator-start AVD_for_Galaxy_Nexus_by_Google
+PANIC: Could not open: AVD_for_Galaxy_Nexus_by_Google
+~~~
+
+**Work-around:** start the emulator using Eclipse (or stand-alonge GUI tool, if available)
+
+## Eclipse
+
+TODO
