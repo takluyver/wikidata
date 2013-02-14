@@ -87,4 +87,4 @@ Copy `AndroidManifest.xml` to root directory of the project. Then after some fid
 
 TODO: experiment some more
 
-There is a slightly old example of configured project, that uses the NDK as a bonus: [https://github.com/ezh/HelloWorldAndroidJNI].
+There is a slightly old example of configured project, that uses the NDK as a bonus: [https://github.com/ezh/HelloWorldAndroidJNI]().
