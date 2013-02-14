@@ -86,3 +86,5 @@ Create the Eclipse project files by hand:
 Copy `AndroidManifest.xml` to root directory of the project. Then after some fiddling with dummy file changes the sources should compile, but the project will still be in error due to missing resources files.
 
 TODO: experiment some more
+
+There is a slightly old example of configured project, that uses the NDK as a bonus: [https://github.com/ezh/HelloWorldAndroidJNI].
