@@ -9,7 +9,7 @@ sudo update-alternatives --config javac
 
 and choose JDK 6.
 
-### Troubleshooting:
+### Troubleshooting
 
 #### PANIC: Could not open: <AVD>
 
