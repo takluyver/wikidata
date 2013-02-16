@@ -4,7 +4,7 @@ Andres Löh used on his netbook, so must be usable.
 
 ### Prepare USB
 
-After http://nixos.org/wiki/Installing_NixOS_from_a_USB_stick
+After [http://nixos.org/wiki/Installing_NixOS_from_a_USB_stick]()
 
 * download the mini .iso
 * install unetbootin
@@ -29,6 +29,7 @@ vi /mnt/etc/nixos/configuration.nix
 ~~~
 
 Uncomment a number of lines in the config: 
+
 * `boot.loader.grub.device`
 * `networking.wireless.enable`
 * `fileSystems."/".device`
