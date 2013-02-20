@@ -1,2 +1,2 @@
 * used for [efficient serialisation](http://mechanical-sympathy.blogspot.com.br/2012/07/native-cc-like-performance-for-java.html)
-* used for [efficient promise value propagation](composable pipelines in Scala)
+* used for [efficient promise value propagation](composable%20pipelines%20in%20Scala#execution-contexts)
