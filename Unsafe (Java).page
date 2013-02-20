@@ -1,0 +1,2 @@
+* used for [efficient serialisation](http://mechanical-sympathy.blogspot.com.br/2012/07/native-cc-like-performance-for-java.html)
+* used for [efficient promise value propagation](TODO)
