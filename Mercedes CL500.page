@@ -1,3 +1,8 @@
+## Issues
+
+* First two weeks after purchase: engine management light went on, but then went off on its own.
+* The brake pads stuck to the disks -- that was after it had been parked for a couple of days after being driven in snow -- and the car wasn't moving despite being in gear; I had to rev up the engine quite a bit before it moved.
+
 ## Playing mp3
 
 Playing mp3 files from SD card requires a PCMCIA adapter. I tried a random one bought from Maplin, but it was not recognised at all. Finally decided to buy an (expensive) Mercedes-branded one on EBay. That worked, but the playback skipped in a very annoying way, and sometimes just stopped and reset to the first track on the SD card. It turned out that the player doesn't cope with the 320 kbps bitrate I had been ripping to. After reducing the bitrate to ~256 kbps (variable) it seems to be playing mostly fine -- skips are infrequent. I suspect it would be completely fine at 192 kbps, but I'd rather not reduce the quality further, because I listen to the same mp3 files at work, on good equipment.
