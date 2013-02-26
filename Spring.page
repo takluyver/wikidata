@@ -1,4 +1,3 @@
-
 ## Namespace resolution in context XML
 
 Spring config can be extended with custom elements -- see [Appendix D](http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/extensible-xml.html) of the docs. Spring does not normally download XSDs from the web but looks for all `META-INF/spring.schemas` files on classpath and from them extracts mappings from URLs to classpath locations. E.g. if we use the following namespaces:
@@ -23,7 +22,7 @@ Then spring will use `data-crypto-config.xsd` from classpath for the `xmlns:cryp
 
 When multiple `context:property-placeholder` entries are used in different XML files assembled into a single context, each of these entries needs to have `ignore-unresolvable` set to `true`:
 
-~~~
+~~~ {.xml}
 <context:property-placeholder location="classpath:config/h2.properties" 
                               system-properties-mode="OVERRIDE"
                               ignore-unresolvable="true"/>
