@@ -1,0 +1,111 @@
+_Peter Marks, 27/02/2013_
+
+How can we use laziness to allow us to write programs differently?
+
+Power of Haskell comes from a number of things, foremost of them: purity, type system and laziness. 
+
+## Uses
+
+### Avoiding unnecessary work
+
+~~~ {.haskell}
+sum . take 50 . sort $ [1..500000] -- this is much faster than sum . sort $ [1..500000]
+~~~
+
+### Cyclic definitions
+
+~~~ {.haskell}
+-- recursive function:
+doubling a = a : doubling (a * 2)
+powersOf2 = doubling 1
+
+-- or cyclic value (corecursion?):
+powersOf2 = 1 : map (* 2) powersOf2
+~~~
+
+~~~ {.haskell}
+data Cat = Cat String Mouse
+data Mouse = Mouse String Cat
+
+tom = Cat "Tom" jerry
+jerry = Mouse "Jerry" tom
+~~~
+
+### IO
+
+~~~ {.haskell}
+main = do
+  i <- readFile "input"
+  let o = unlines . map reverse . lines $ i
+  writeFile "output" o
+~~~
+
+This will not need to load entire file to memory, will process in chunks.
+
+## Pitfalls
+
+* debugging
+* performance analysis -- common intuitions do not apply
+* resource management (e.g. with lazy IO)
+* exceptions escaping -- not being raised where expected, so handlers are not applied
+* space leaks -- unevaluated thunks staying in memory
+
+### Too much laziness
+
+~~~ {.haskell}
+foldl (+) 0 [1..1000000]  -- 1.7 MB
+foldl' (+) 0 [1..1000000] -- strict version, 3.5 KB
+~~~
+
+Enabling strictness analysis optimisation (-O2) makes `foldl` behave as `foldl'`
+
+### Too little laziness
+
+~~~ {.haskell}
+f = ("Report\n" ++) . unlines . map show
+
+if length xs > 0 then f (tail xs) else f xs -- if xs is infinite length will not work
+
+if not (null xs) then f (tail xs) else f xs -- this will not produce anything until data is available
+                                            -- (e.g. if reading from a file)
+
+f $ if not (null xs) then tail xs else xs -- this will give us Report header straight away
+~~~
+
+## Code example
+
+Mastermind.
+
+* generating permutations by filtering subsequences: doesn't require calculation of all subsequences
+* picking a random element from the universe of permutations: doesn't require calculation of all permutations
+* filtering the universe for guesses that give us the scores in our history
+
+~~~ {.haskell}
+guessSecret :: [Score] -> [String] -> [String]
+guessSecret _ [] = []
+guessSecret ~(s:h) (g:u) = g: guessSecret h [g' | g' <- u, calcScore g' g == s]
+
+-- ...
+let
+  guesses = guessSecret scores universe
+  scores  = map (CalcScore secret) guesses
+  history = zip guesses scores
+-- ...
+~~~
+
+if we wanted to score ourselves, it's enough to change:
+
+~~~ {.haskell}
+scores  = map read $ lines input
+history = zip' guesses scores
+
+zip' -- lazy zip which we have to write ourselves, with irrefutable pattern on the second arg.
+~~~
+
+we can also do it without our own zip, by rearranging the loop.
+
+## Q&A
+
+Q: when are strictness annotations useful?
+
+A: should always be used on (non-recursive) fields of records
