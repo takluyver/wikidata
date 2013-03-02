@@ -1,4 +1,4 @@
-Andres Loeh, Duncan Coutts
+Andres Löh, Duncan Coutts
 
 6-7 Feb 2013
 
@@ -66,9 +66,9 @@ let y = take 5 x -- we need 5 real conses!
 let z = drop 3 x
 ~~~
 
-AP - unevaluated thunk
-BCO - bytecode of function
-Thunk - another type of thunk (the difference doesn't really matter)
+* AP - unevaluated thunk
+* BCO - bytecode of function
+* Thunk - another type of thunk (the difference doesn't really matter)
 
 #### Trees
 
