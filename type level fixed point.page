@@ -1,0 +1,15 @@
+[Value-leve fixed point](fixed-point operator) lets us construct functions that would normally need to be defined recursively from non-recursive definitions. We can use similar trick with types:
+
+~~~
+Prelude> data List a = Nil | Cons a (List a)
+Prelude> -- we can un-fix this type (remove recursion) by introducing
+Prelude> -- type parameter that represents the type we want:
+Prelude> data ListF a self = Nil | Cons a self
+Prelude> -- now we can get the fixed point using newtype:
+Prelude> newtype List a = MkList (ListF a (List a))
+Prelude> :t MkList Nil
+MkList Nil :: List a
+Prelude> :t MkList $ Cons 1 $ MkList Nil
+MkList $ Cons 1 $ MkList Nil :: Num a => List a
+~~~
+
