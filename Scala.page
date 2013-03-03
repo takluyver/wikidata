@@ -1,10 +1,10 @@
 
-
 ## Encoding Haskell Constructs
 
 ### Data Types
 
 Haskell:
+
 ~~~ { .haskell }
 data BinaryTree a = Leaf a | InnerNode a (BinaryTree a) (BinaryTree a)
 
@@ -17,6 +17,7 @@ data BinaryTree a = Leaf { value :: a }
 ~~~
 
 Scala:
+
 ~~~ { .scala }
 sealed trait BinaryTree[A]
 case class Leaf[A](value: A) extends BinaryTree[A]
