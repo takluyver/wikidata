@@ -13,3 +13,6 @@ Prelude> :t MkList $ Cons 1 $ MkList Nil
 MkList $ Cons 1 $ MkList Nil :: Num a => List a
 ~~~
 
+TODO: `Fix` is the exact parallel to `fix` but on the type level; `fix :: (a -> a) -> a`, `Fix :: (* -> *) -> *`
+
+(after [http://mainisusuallyafunction.blogspot.co.uk/2010/12/type-level-fix-and-generic-folds.html]())
