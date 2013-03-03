@@ -1,3 +1,4 @@
+A very clear derivation of `fix` in Haskell is in [http://www.vex.net/~trebla/haskell/fix.xhtml](). An exercise after it:
 
 ~~~
 Prelude Data.Function> let fac n = if n == 0 then 1 else n * fac (n - 1)
@@ -14,4 +15,6 @@ Prelude Data.Function> fac 3
 6
 ~~~
 
-Very clear derivation of `fix` in Haskell: [http://www.vex.net/~trebla/haskell/fix.xhtml]().
+So, any recursive function definition can be transformed to an application of `fix` by wrapping it in additional lambda abstraction that takes the function being defined, and then applying `fix` to the new, wrapped function. However, this seems pointless. So, what is the real use of `fix`?
+
+
