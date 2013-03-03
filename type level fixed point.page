@@ -1,4 +1,4 @@
-[Value-leve fixed point](fixed-point operator) lets us construct functions that would normally need to be defined recursively from non-recursive definitions. We can use similar trick with types:
+[Value-level fixed point](fixed-point combinator) lets us construct functions that would normally need to be defined recursively from non-recursive definitions. We can use similar trick with types:
 
 ~~~
 Prelude> data List a = Nil | Cons a (List a)
