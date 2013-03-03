@@ -88,7 +88,7 @@ guessSecret ~(s:h) (g:u) = g: guessSecret h [g' | g' <- u, calcScore g' g == s]
 -- ...
 let
   guesses = guessSecret scores universe
-  scores  = map (CalcScore secret) guesses
+  scores  = map (calcScore secret) guesses
   history = zip guesses scores
 -- ...
 ~~~
