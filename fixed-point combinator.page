@@ -1,1 +1,17 @@
+
+~~~
+Prelude Data.Function> let fac n = if n == 0 then 1 else n * fac (n - 1)
+Prelude Data.Function> let fac = \n -> if n == 0 then 1 else n * fac (n - 1)
+Prelude Data.Function> -- we can treat the body of `fac` as some function that takes `fac` as an argument:
+Prelude Data.Function> let fac = (\fac' -> \n -> if n == 0 then 1 else n * fac' (n - 1)) fac
+Prelude Data.Function> :t fac
+fac :: Integer -> Integer
+Prelude Data.Function> -- the pattern `let x = f x in x` is captured by `fix` function:
+Prelude Data.Function> let fac = fix (\fac' -> \n -> if n == 0 then 1 else n * fac' (n - 1))
+Prelude Data.Function> :t fac
+fac :: Integer -> Integer
+Prelude Data.Function> fac 3
+6
+~~~
+
 Very clear derivation of `fix` in Haskell: [http://www.vex.net/~trebla/haskell/fix.xhtml]().
