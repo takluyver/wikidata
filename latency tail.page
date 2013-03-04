@@ -1,0 +1,5 @@
+The high-latency part of latency distribution. When multiple services depend on each other the latency tails compound meaning that high latency occurs relatively frequently.
+
+### References
+
+* [article in CACM 02/2013](http://cacm.acm.org/magazines/2013/2/160173-the-tail-at-scale/fulltext)
