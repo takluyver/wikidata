@@ -1,0 +1,5 @@
+A testing, or more generally, program analysis technique, which relies on execution where instead of concrete values the program is supplied with *symbolic values*, and have program variables contain *symbolic expressions*. This leads to output values being represented as functions of inputs. This allows identification of all relevant conditions and generating sets of inputs that exercise all desired branches. 
+
+### References 
+
+* CACM 02/2013
