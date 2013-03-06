@@ -1,1 +1,17 @@
-http://zookeeper.apache.org/
+A distributed directory service. Each node in the directory is identified by a path (`/node1/node2/.../nodeN`) and has some data associated with it. There's a hard limit of 1MB per node, typically it's meant to be much less. Each server holds a copy of the entire directory in memory. Clients connect to one of the servers and deal only with it, unless it goes offline. The service insists on a consistent view of the data held.
+
+TODO: the role of the leader
+
+## Running a server
+
+TODO
+
+[http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html#sc_InstallingSingleMode]()
+
+## Connecting from a client
+
+TODO
+
+## References
+
+* [website](http://zookeeper.apache.org/)
