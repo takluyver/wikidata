@@ -1,6 +1,5 @@
 
-
-Best explanation found on the web: [http://bartoszmilewski.wordpress.com/2011/01/09/monads-for-the-curious-programmer-part-1/]
+Best explanation found on the web: [http://bartoszmilewski.wordpress.com/2011/01/09/monads-for-the-curious-programmer-part-1/]()
 
 Also, the notes from Haskell Hoodlums session on [monads and monad transformers]() might be helpful.
 
@@ -52,7 +51,7 @@ As an aside, there are many ways in which a given data type can be `Applicative`
 
 ## Monads
 
-Monads are applicative functors which support the following additional operation (pronounced *bind//):
+Monads are applicative functors which support the following additional operation (pronounced *bind*):
 
 ~~~ { .haskell }
 (>>=) :: (Monad m) => m a -> (a -> m b) -> m b  
