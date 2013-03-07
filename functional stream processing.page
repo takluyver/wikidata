@@ -1,3 +1,7 @@
+## Process FSM
+
+A model presented by Paul Chiusano, where transformation between streams is represented as a `Process`, which can be in one of three states: `Halt`, `Emit` or `Await`. Parameterising `Await` by type of request it can make allows to define complex networks of processors.
+
 ## References
 
 * [a talk by Paul Chiusano](http://www.youtube.com/watch?v=8fC2V9HX_m8)
