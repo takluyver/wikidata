@@ -1,4 +1,6 @@
-
+---
+categories: scala conference
+...
 
 The first day of this year's Scala Lift Off London exceeded my modest expectations. It was full of excellent presentations and interesting discussions attended by very friendly folk. I trust tomorrow will not be worse; in the mean time here are some notes from the sessions I attended. 
 
@@ -23,6 +25,7 @@ I have been some ten minutes late to this session due to an unfortunate chain of
 ## Session 4: Scala 2.8 Collections
 
 The final session of the day was somewhat whimsically named "Scala Wizardry" and was meant to discuss more exotic features of the language like implicits, higher-kinded types, cake pattern and explicit self-typing. However, it has been swiftly taken over by Mr. Odersky who covered the re-design of collections in Scala 2.8 while touching upon most of these advanced subjects. He described how the requirement for methods like `filter` to return the type of collection it was invoked on led to a lot of code duplication and unsightly type casts in Scala 2.7. The initial attempt to tackle it in 2.8 involved higher-kinded types:
+
 ~~~ { .scala }
 trait TraversableLike[A, CC[_]] {
   def filter(p: A => Boolean): CC[A]
@@ -31,29 +34,37 @@ trait TraversableLike[A, CC[_]] {
 
 trait Traversable[A] extends TraversableLike[A, Traversable]
 ~~~
+
 `TraversableLike` is a higher-kinded type because its second parameter is not a type but a *type constructor//. When `Traversable[A]` is defined, `Traversable` (without type parameters) denotes said type constructor.
 
 This initial design dealt with 90%+ of cases, but there were still some issues remaining; one of them was that `map` needs to change the type of the collection when the return type of supplied function requires it. For example:
+
 ~~~ { .scala }
 val bits = BitSet(1, 2, 4)
-bits map (_.toString)  * should return Set[String]
+bits map (_.toString)  // should return Set[String]
 ~~~
+
 This required some sort of rule engine to work out the appropriate type in each case. One can imagine a predicate `CanBuildFrom[From, Elem, To]` where `From` and `To` are collection types and `Elem` is the return type of the function passed to `map`. The rules could then be expressed as:
-~~~
+
+~~~ { .scala }
 CanBuildFrom[BitSet, Int, BitSet]
 CanBuildFrom[BitSet, B, Set[B]]
 ...
 ~~~
+
 We would also like to be able to express constraints like this (in Prolog-like notation):
-~~~
+
+~~~ { .scala }
 CanBuildFrom[SortedSet[A], B, SortedSet[B]] :- Ordering[B]
 ~~~
+
 It turns out these rules can be encoded in Scala using implicits. I've taken the below snippet from my notes and it might lack necessary details (or be partially incorrect, for that matter), but it should give an idea of the sort of machinery that is involved -- and sophistication of the language that allows this to work:
+
 ~~~ { .scala }
 implicit def bf1[A, B]: CanBuildFrom[Set[A], B, Set[B]]
 implicit def bf2: CanBuildFrom[Set[
 implicit def bf3[A]: CanBuildFrom[BitSet, A, Set[A]]
-* ...
+// ...
 implicit def bfn[A, B](implicit ord: Ordering[B]): 
 	        CanBuildFrom[SortedSet[A], B, SortedSet[B]]
 
@@ -65,7 +76,7 @@ trait TraversableLike[A, Coll] { this: Coll =>
     b.result
   }
 
-  * ...
+  // ...
 }
 ~~~
 
@@ -74,4 +85,4 @@ Martin did admit that these weird method signatures can scare people off and whi
 The collections re-design is described in a [paper](http://lampwww.epfl.ch/~odersky/papers/fsttcs2009.pdf) written by Odersky and Adriaan Moors.
 
 [Day Two](tech:Scala Lift Off London 2010, Day 2) ->
-{{tag>scala conference}}
+
