@@ -1,8 +1,6 @@
 ## Lazy IO
 
-Part of `System.IO`, e.g. `hGetContents`.
-
-Criticised for lack of control over resource usage. However, Andres Löh said it might be OK for simple network apps.
+The default approach to IO in Haskell, part of [`System.IO`](http://hackage.haskell.org/packages/archive/base/latest/doc/html/System-IO.html) (`hGetContents`, `hPutStr` etc.). Criticised for lack of control over resource usage. However, Andres Löh said it might be OK for simple network apps.
 
 ## Iteratees
 
