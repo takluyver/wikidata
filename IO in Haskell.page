@@ -4,7 +4,7 @@ The default approach to IO in Haskell, part of [`System.IO`](http://hackage.hask
 
 ## Iteratees
 
-Concept by [Oleg Kiselyov](http://okmij.org/ftp/Streams.html). Difficult to understand. There is a couple of implementations on Hackage. 
+Concept by [Oleg Kiselyov](http://okmij.org/ftp/Streams.html), meant to address difficulties in reasoning about resource usage that plague lazy IO. Difficult to understand. There is a couple of implementations on Hackage. 
 
 * [Hoodlums homework](https://gist.github.com/mmakowski/1397756)
 
