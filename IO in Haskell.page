@@ -8,9 +8,13 @@ Concept by [Oleg Kiselyov](http://okmij.org/ftp/Streams.html), meant to address 
 
 * [Hoodlums homework](https://gist.github.com/mmakowski/1397756)
 
-## Pipes
+## Proxies (Pipes)
 
-TODO
+[Tutorial](http://hackage.haskell.org/packages/archive/pipes/latest/doc/html/Control-Proxy-Tutorial.html)
+
+## Conduits 
+
+[Tutorial](https://www.fpcomplete.com/user/snoyberg/library-documentation/conduit-overview)
 
 ## IO Streams
 
