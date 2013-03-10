@@ -1,0 +1,15 @@
+## Lazy IO
+
+Part of `System.IO`
+
+`hGetContents`
+
+Criticised for lack of control over resource usage; Andres Löh said it might be OK for simple network apps.
+
+## Iteratees
+
+TODO
+
+## Stream IO
+
+TODO
