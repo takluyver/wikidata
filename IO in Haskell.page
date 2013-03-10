@@ -1,15 +1,24 @@
 ## Lazy IO
 
-Part of `System.IO`
+Part of `System.IO`, e.g. `hGetContents`.
 
-`hGetContents`
-
-Criticised for lack of control over resource usage; Andres Löh said it might be OK for simple network apps.
+Criticised for lack of control over resource usage. However, Andres Löh said it might be OK for simple network apps.
 
 ## Iteratees
 
+Concept by [Oleg Kiselyov](http://okmij.org/ftp/Streams.html). Difficult to understand. There is a couple of implementations on Hackage. 
+
+* [Hoodlums homework](https://gist.github.com/mmakowski/1397756)
+
+## Pipes
+
 TODO
 
-## Stream IO
+## IO Streams
 
-TODO
+Released in [March 2013](http://snapframework.com/blog/2013/03/05/announcing-io-streams) by the authors of Snap web framework. Advertised as simple and efficient. 
+
+Criticised by Paul Chiusano:
+
+<blockquote class="twitter-tweet" data-conversation="none"><p>@<a href="https://twitter.com/pelotom">pelotom</a> They decided existing stream processing libraries too complex but then just implemented something ad hoc and specialized to IO!</p>— Paul Chiusano (@pchiusano) <a href="https://twitter.com/pchiusano/status/309225338842513408">March 6, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
