@@ -1,0 +1,9 @@
+## Troubleshooting
+
+### Low graphics mode
+
+Intermittent "low graphics mode" after restart on desktop with Ubuntu 12.10 (might have been happening with 12.06 as well). No reliable solution found so far, reinstalling NVidia drivers or rebooting until it starts up seemed the only things that worked so far. Things to try (after [launchpad](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1070150)):
+
+* Log in with CTRL+ALT+F1 and issue command "sudo service lightdm restart"
+* Add some sleep to /etc/init/lightdm.conf
+* Install and use GDM instead of lightdm
