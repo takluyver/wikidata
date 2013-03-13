@@ -1,8 +1,7 @@
 
-
 ## Windowing Functions
 
-== Selecting most recent entry for each user/IP from a log ==
+Selecting most recent entry for each user/IP from a log:
 
 ~~~ { .sql }
 select ip_address, user_name, access_time as latest_access_time, action
