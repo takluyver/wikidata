@@ -1,0 +1,3 @@
+Extract data from wiki git repo, animate keywords by having the displaying them as the time progresses at e.g. 1 week a second.
+
+Could use FRP for that? Haskell DSL for creating animation, something like [Processing]()?
