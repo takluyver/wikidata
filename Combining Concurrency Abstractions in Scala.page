@@ -58,3 +58,105 @@ def receive = {
   } pipeTo sender
 }
 ~~~
+
+### X = threads
+
+#### Exchanging data between Actors and Threads
+
+  * `Promise` -> `Future`
+  * Blocking queue
+  * ask pattern: `val fut = actor ? msg` (uses `Future`)
+  * `akka.actor.ActorDSL.Inbox`:
+
+~~~ { .scala }
+// in our thread:
+implicit val i = ActorDSL.inbox()
+someActor ! someMsg // replies will go to 'i'
+val reply = i.receive() // blocks
+val doubleReply = i.select(5.seconds) { case x: Int => 2 * x } // blocks, but times out
+~~~
+
+#### Thread-safe map
+
+~~~ { .scala }
+var state = Map[K, V]()
+
+def receiv = {
+  case Put(k, v) =>
+    state += (k -> v)
+    sender ! AckPut
+  case Get(k) =>
+    sender ! state.get(k)
+}
+~~~
+
+Why wrap map in an actor? Use `ConcurrentHashMap` instead, it's more efficient. Or, even better `ParTrieMap`, which is non-blocking, does snapshotting and supports parallel operations.
+
+#### Thread locals
+
+Work with threads, but not with actors or futures which are not bound to a single thread.
+
+### X = Shared memory
+
+* don't do it, but if you need to:
+* prefer sharing immutable data
+* for mutable adhere to Java Memory Model
+
+## Async + Blocking APIs
+
+### Scala + Java futures
+
+~~~ { .scala }
+val futs: List[JFuture[String]] = // list of 4000 Java futures
+
+val upperCased = for (fut <- futs) yield future {
+  fut.get(10, TimeUnit.SECONDS).toUpperCase // blocks threads in thread pool
+}
+~~~
+
+The thread pool to run these futures has 4 threads on 4-core machine, if 2000 of these take 10 secs each, we'll block for 1.5h.
+
+How do we fix it?
+
+~~~ { .scala }
+val futs: List[JFuture[String]] = // list of 4000 Java futures
+
+val upperCased = for (fut <- futs) yield future {
+  // scala.concurrent.blocking tells the thread pool that we are running 
+  // code that can block indefinitely, so thread pool will leave (or spin off) 
+  // some spare worker threads to handle non-blocking work
+  blocking {
+    fut.get(10, TimeUnit.SECONDS).toUpperCase
+  }
+}
+~~~
+
+With scala 2.10 or Akka 2.0, if we use Scala futures, this is not a problem:
+
+~~~ { .scala }
+val futs: List[Future[String]] = // list of 4000 Scala futures
+val upperCased = for (fut <- futs) yield fut.map(_.toUpperCase) // runs fine
+~~~
+
+### Forcing managed blocking from implementers of our API
+
+API design trick (requires scala 2.10):
+
+~~~ { .scala }
+trait Awaitable[+T] {
+  def result(atMost: Duration)
+            (implicit permit: CanAwait): T
+}
+
+package concurrent {
+  @implicitNotFound("Use the 'Await' object") // provides a helpful error message to the user
+  sealed trait CanAwait
+
+  private[concurrent] object AwaitPermission extends CanAwait
+
+  object Await {
+    def result[T](awaitable: Awaitable[T], ...): T = 
+      blocking(awaitable.result(atMost)(awaitPermission))
+  }
+}
+~~~
