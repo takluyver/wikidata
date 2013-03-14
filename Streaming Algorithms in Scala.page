@@ -1,162 +1,79 @@
-2012-12-12, Philipp Haller
+# Making Big Data Small: Streaming Algorithms in Scala
 
-## The problem
+2012-09-12, Noel Welsh
 
-* we mix actors, futures, threads, latches...
-* poor tool support for diagnosing concurrency issues
+**B**ig **D**ata? That is Hadoop and map/reduce. We're talking here about something different: data sets bigger than our resources can handle in one go.
 
-## Actors + X
+### Demands
 
-### X = futures
+* scalable
+* reak time (not batch, like Hadoop)
+* simple to implement
 
-#### State Capture
+### Streaming Algorithms
 
-~~~ { .scala }
-var state = 0
+* process data in one pass
+* have small space requirements (e.g. O(log(log n)))
+* limited computation requirements per item (typically O(1))
 
-def receive = {
-  case Request(x) => future {
-    handleRequest(x, state) // 1. race condition between this and ChangeState
-                            // 2. state is not correctly published for transfer between threads
-  }
-  case ChangeState(newState) =>
-    state = newState
-}
-~~~
+But:
 
-How do we fix it?
+* give approximate answers
 
-~~~ { .scala }
-  case Request(x) => 
-    // recommended pattern: store all state for the future in vals
-    val currentState = state
-    future {
-      handleRequest(x, currentState)
-    }
-~~~
+### Hash Functions
 
-#### Sender Capture
+* deterministic
+* uniform distribution
+* bit values are independent (any subset of bits is equally good approximation)
 
-~~~ { .scala }
-def receive = {
-  case Request(x) => future {
-    val res = handleRequest(x)
-    sender ! Response(res) // sender might have changed by the time we send response
-  }
-}
-~~~
+In practice, use Murmur Hash 3. Scala 2.10 provides `scala.util.hashing`, look into Guava if we more algorithms are needed.
 
-Solution:
+### [Bloom Filters](Bloom filter)
 
-we can capture the sender before forking off future, but there is also another pattern:
+* a set (i.e. have I seen this user before?)
+* ~5 times smaller than corresponding hash set
+* there is a chance of false positives ("in set" answer even though item is not in set), but guarantee of no false negatives
 
-~~~ { .scala }
-def receive = {
-  case Request(x) => future {
-    val res = handleRequest(x)
-    Response(res)
-  } pipeTo sender
-}
-~~~
+Idea: bit set. _index = hash(data) mod m_; bit at index represents the item. But: there will be many ccllisions. How do we improve the confidence? Use multiple has functions:
 
-### X = threads
+_i<sub>1</sub> = h<sub>1</sub>(data) mod m_
 
-#### Exchanging data between Actors and Threads
+_i<sub>2</sub> = h<sub>2</sub>(data) mod m_
 
-  * `Promise` -> `Future`
-  * Blocking queue
-  * ask pattern: `val fut = actor ? msg` (uses `Future`)
-  * `akka.actor.ActorDSL.Inbox`:
+More hashing functions -> better chance of no false positives. We can adjust the probability by setting the size of bit array, i.e. bits per element. E.g. to get 0.05 probability of false positive we need 6.2 bits/element.
 
-~~~ { .scala }
-// in our thread:
-implicit val i = ActorDSL.inbox()
-someActor ! someMsg // replies will go to 'i'
-val reply = i.receive() // blocks
-val doubleReply = i.select(5.seconds) { case x: Int => 2 * x } // blocks, but times out
-~~~
+Nice properties: union is a bitwise or, intersection an and, trivial to parallelise and distribute.
 
-#### Thread-safe map
+Optimisation: use MH3 and run the hash function twice, with different seeds; then interpolate k values between the obtained values.
 
-~~~ { .scala }
-var state = Map[K, V]()
+### Distinct Values
 
-def receiv = {
-  case Put(k, v) =>
-    state += (k -> v)
-    sender ! AckPut
-  case Get(k) =>
-    sender ! state.get(k)
-}
-~~~
+(i.e.: how many distinct users do we have?)
 
-Why wrap map in an actor? Use `ConcurrentHashMap` instead, it's more efficient. Or, even better `ParTrieMap`, which is non-blocking, does snapshotting and supports parallel operations.
+* Flajolet-Martin sketches (LogLog, HyperLogLog)
+* optimal algorithm published in 2010, but is complex
 
-#### Thread locals
+#### k-Min Values
 
-Work with threads, but not with actors or futures which are not bound to a single thread.
+_index = hash(data) / maxHash_ gives us a point in 0..1 range. Then calculate average distance between the points. But: storing all points would be pointless! So: just store a subset, e.g. just the minimum value, and check its distance from 0. This, however, is very noisy, so we can improve on this by storing k smallest values; then the average distance is _largest value stored/k_.
 
-### X = Shared memory
+For k = 1024 the error is in the order of 2.5%. It also has the nice properties of Bloom Filter: we can do union, intersection and difference in the natural manner!
 
-* don't do it, but if you need to:
-* prefer sharing immutable data
-* for mutable adhere to Java Memory Model
+### Frequent Items
 
-## Async + Blocking APIs
+(i.e. who are the most active users?)
 
-### Scala + Java futures
+#### Space Saver
 
-~~~ { .scala }
-val futs: List[JFuture[String]] = // list of 4000 Java futures
+* store _k_ tuples (item, count)
+* when item is observed:
+    - if in set, increase the count
+    - if not, replace the lowest-count item with observed item
 
-val upperCased = for (fut <- futs) yield future {
-  fut.get(10, TimeUnit.SECONDS).toUpperCase // blocks threads in thread pool
-}
-~~~
+There's high error rate for uniform data, but there this kind of data is not interesting for this type of analysis.
 
-The thread pool to run these futures has 4 threads on 4-core machine, if 2000 of these take 10 secs each, we'll block for 1.5h.
+### Libraries and Resources
 
-How do we fix it?
-
-~~~ { .scala }
-val futs: List[JFuture[String]] = // list of 4000 Java futures
-
-val upperCased = for (fut <- futs) yield future {
-  // scala.concurrent.blocking tells the thread pool that we are running 
-  // code that can block indefinitely, so thread pool will leave (or spin off) 
-  // some spare worker threads to handle non-blocking work
-  blocking {
-    fut.get(10, TimeUnit.SECONDS).toUpperCase
-  }
-}
-~~~
-
-With scala 2.10 or Akka 2.0, if we use Scala futures, this is not a problem:
-
-~~~ { .scala }
-val futs: List[Future[String]] = // list of 4000 Scala futures
-val upperCased = for (fut <- futs) yield fut.map(_.toUpperCase) // runs fine
-~~~
-
-### Forcing managed blocking from implementers of our API
-
-API design trick (requires scala 2.10):
-
-~~~ { .scala }
-trait Awaitable[+T] {
-  def result(atMost: Duration)
-            (implicit permit: CanAwait): T
-}
-
-package concurrent {
-  @implicitNotFound("Use the 'Await' object") // provides a helpful error message to the user
-  sealed trait CanAwait
-
-  private[concurrent] object AwaitPermission extends CanAwait
-
-  object Await {
-    def result[T](awaitable: Awaitable[T], ...): T = 
-      blocking(awaitable.result(atMost)(awaitPermission))
-  }
-}
-~~~
+* [Clearstream stream-lib](https://github.com/clearspring/stream-lib)
+* [Noel's Scala library](https://github.com/noelwelsh/fleet)
+* [Alex Smola's course](http://alex.smola.org/teaching/berkeley2012/streams.html)
