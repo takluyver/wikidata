@@ -391,6 +391,75 @@ Why Scala is good for addressing (some of) these issuess?
 
 *Greg Young*
 
+* cross-pollenation between NoSQL, FRP, DDD and event-sourcing communities
+* FRP is really good for processing events that are correlated temporally
+* Event sourcing -- functional data storage; instead of storing state we are storing events
+* actually, we are storing function calls; when we repay from the store, we define what these calls mean to me right now
+* there are lots of ways to interpret these calls!
+* use: temporal correlation query: find all people who have tweeted "Starbucks" and then within 4 mins tweeted "Happy" nad "Coffee" 
+* with event sourcing we have a time machine
+* Mongo, CouchDB, Cassandra etc all store state -- there is impedance mismatch with functional
+* event sourcing does not have that mismatch
+* Scala: look at eventsourced library
+* event sourcing: current state is left fold of previous events over `f(state, event) => state`
+* event is something that has happened in the past; reactive code doesn't care when exactly, if run a year later the code will give the same results as if run now
+
+### Querying
+
+`filter(f(f1(f2(init(), e), e), e)) => Result` -- generic version of the simples form of queries we can write in FRP
+
+mapping events to functions:
+
+~~~ {.javascript}
+.when({
+	  Event1: function(s,e) {},
+	  Event2: function(s,e) {}
+})
+~~~
+
+~~~ {.javascript}
+.when({
+	  $any: function(s,e) {},
+	  $init: function(s,e) {}
+})
+~~~
+
+~~~ {.javascript}
+fromStream("s") => stream
+fromStreams("s1", "s2") => stream // join -- interleaves two streams
+window(stream, params) => stream  // filtering
+~~~
+
+If we are a bank, we'd have one stream for every account. How do we query against all accounts?
+
+~~~ {.javascript}
+fromCategory("c") -> stream of streams
+// or
+streamsMatching(function(s) {}) => stream of streams
+
+.foreach() => stream of results // map might be a better name
+~~~
+
+We want to bring the code to the data, not data to code; most CEP (complex event processing) systems do it the other way around. Effectively, we have a NoSQL stream database.
+
+### Indexing
+
+~~~ {.javascript}
+emit(stream, event) 
+linkTo(stream, event) // make event appear in stream (a reference)
+~~~
+
+Index is a stream constructed using `linkTo`.
+
+### Debugging
+
+* demo of EventStore: web-based query interface, can debug queries using Javascript debugger built into Chrome
+* demo: query of in how many instances three consecutive CPU readings were > 10%
+* [stream processing algorithms]()?
+
+### Q&A
+
+* as-of query vs. as-at query; as-of can be generic, as-at is domain-specific
 
 
 ## Pizza & Beer
