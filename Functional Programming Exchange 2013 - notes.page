@@ -66,12 +66,44 @@ There is a commmon pattern here. How do we unify the API?
 class Functor k where
   fmap :: (a -> b) -> k a -> k b
 
-instance Functor Maube where
+instance Functor Maybe where
   fmap f x = mapM f x
 ~~~
 
-Note: `k` ranges over not types, but type constructors; it has kind `* -> *` (anything of kind `* -> ...` is higher-kinded)
+Note: `k` ranges over not types, but type constructors; it has kind `* -> *` (anything of kind `* -> ...` is higher-kinded). This gives as access to whole new level of code reuse:
 
+~~~ {.haskell}
+sequence :: Monad m -> [m a] -> m [a]
+~~~
+
+This will work for anthing that is in `Monad` class.
+
+Q: can type-level functions be written in ML?
+A: using ML module syste to model higher-kinded types is like using a nuclear weapon to open a matchbox -- it works, but there is a lot of collateral damage.
+
+Note: higher-kkinded type variables are much harder in languages with subtyping (e.g. OO) because of _variance_.
+
+GHC allows to specify kind signatures: `data Tree (x :: * -> *) (a :: *) = ...`.
+
+Haskell attempts to reuse the intuitions from the term/type level one level up, with types/kinds -- e.g. querying for type (`:t`) and kind (`:k`) in GHCi.
+
+Omega has infinite tower of universes (terms/types/kinds/sorts/level 5/level 6/...)
+
+### GADTs
+
+~~~ {.haskell}
+data Maybe a = Nothing | Just a
+~~~
+
+is the same as
+
+~~~ {.haskell}
+data Maybe a where
+  Just :: a -> Maybe a
+  Nothing :: Maube a
+~~~
+
+Classic example of usefulness: term evaluator (same as in [Advanced Haskell]()).
 
 
 ## Across Time and Address Space: Lift 3.0
