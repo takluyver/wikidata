@@ -330,7 +330,7 @@ Sneak preview of CloudSharper -- not released yet -- online development environm
   * Framing effect -- perception of the issue depends on who says about it (halo effect)
   * Well travelled road effect -- underestimating difficulty of task we know how to do
   * Emotional bias -- it's impossible to have rational conversation when under emotion (even excitement)
-* reference to [Thinking Fast and Slow]()
+* reference to _[Thinking Fast and Slow]()_
 * recognise situations in which these are likely and matter
 * conduct: design sessions, training, status updates
 * listen more than talk; avoid jumping ahead too far
@@ -339,12 +339,32 @@ Why Scala is good for addressing (some of) these issuess?
 
 * a domain term has a case class representation, concise enough so that it can be shown to the domain expert for validation
 * lack of clutter is extremely important for communication
+* it's really empowering for the experts as well, when they see they can understand the code
 * start with UI as early as possible: Lift's view-first approach is very useful for this
 
+* Q&A: actors are used to ensure fault-tolerance -- to a lesser extent for scalability
 
 ## LexiFi: Describing Financial Contracts and Extending OCaml
 
 *Alain Frisch*
+
+* strong french accent
+* CTO of LexiFi, which has been doing FP since 2001
+* involved in extending OCaml
+* financial products are described by _term sheets_, which describe how to map inputs (data, events) to outputs (cashflows) 
+* lots of errors in term sheets (axiom: term sheet contains at least one error)
+* small teams use inadequate tools (Excel, PDF, post-its) to manage hundreds or thousands of contracts
+* LexiFi: contract description language
+* algebraic approach: few building blocks and combinators
+* based on SPJ's [Composing Contracts]() paper 
+* just a DSL -- no web app, big data etc.
+* good time to market: a few days to support the full chain of treatments ofr a new kind of product
+* UI for management of contracts -- very nice, lots of features
+* maintain a custom version of OCaml
+* distribute the entire toolchain -- don't rely on target machine's linker or compiler
+* LexiFi coded up a bridge between OCaml and .Net
+* OCamplPro provides industrial support for OCaml
+
 
 ## F# in the Open Source World
 
@@ -355,3 +375,4 @@ Why Scala is good for addressing (some of) these issuess?
 *Greg Young*
 
 ## Pizza & Beer
+
