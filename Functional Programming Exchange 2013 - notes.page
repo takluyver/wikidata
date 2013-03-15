@@ -244,13 +244,12 @@ Why have reprogrammable systems (e.g. Smalltalk) failed? Transactional change? H
 Threads are coming to Emacs (although still with GIL). It would be nice to have actor-based model, it's very similar to microservice idea. Actually, a restricted actor system can be built on top of elnode.
 
 
-## Comparing Scala and ClojureFunctional%20Programming%20Exchange%202013%20-%20notes
+## Comparing Scala and Clojure
 
 *Robert Rees*
 
 * Robert set up London Clojurians group and works on Java/Scala codebase at Guardian
 
----------                -------------
 Clojure                  Scala
 ---------                -------------
 lisp with Java interop   Java++
@@ -259,7 +258,6 @@ simple                   complex
 practical                academic
 hippie                   enterprise
 dynamic                  static
----------                -------------
 
 ### Typing
 
@@ -273,16 +271,14 @@ dynamic                  static
 
 ### Enterprise
 
----------                -------------
 Clojure                  Scala
 ---------                -------------
 no objects               data model like in Java
 poor tooling             good tooling
 weird performance        performance comparable with Java
 lisp                     curly braces
----------                -------------
 
-* Clojure is more adpterd by teams that are already polyglot, service orientated, communicate mostly over HTTP
+* Clojure is more adopted by teams that are already polyglot, service orientated, communicate mostly over HTTP
 * Scala is adopted where binary artifacts are shared, codebases are big
 
 ### Tooling
@@ -300,13 +296,24 @@ lisp                     curly braces
 * Scala makes working on large Java codebase easier
 * Knowing Clojure makes one a better Scala programmer
 
-## Reducing Cognitive Bias in Design With Scala
-
-*Paul Dale*
-
 ## Developing with F# in the Cloud
 
 *Adam Granicz*
+
+Sneak preview of CloudSharper -- not released yet -- online development environment for web and mobile applications.
+
+* web-based IDE (looks like Visual Studio): multi=project solutions, on the fly type checking
+* interactive window, can evaluate expressions and produce output such as interactive charts
+* support for full F#
+* advantage over Visual Studio: web-based no up-front cost (?), better for collaboration, position as a step beyond [Try F#](http://www.tryfsharp.org/)
+* short demo video
+* presentation unconvincing: why web-based platform makes it easier for teams to collaborate? What does it have to do with provisioning of hardware?
+* overview of some F# features: units of measure, active patterns
+* WebSharper is now open source
+
+## Reducing Cognitive Bias in Design With Scala
+
+*Paul Dale*
 
 ## LexiFi: Describing Financial Contracts and Extending OCaml
 
