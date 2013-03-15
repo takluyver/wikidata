@@ -1,0 +1,8 @@
+## Configuring plugins
+
+* put the plugin source file somewhere inside the data directory (e.g. `plugins/Dot.hs`)
+* modify the `.conf` file to say:
+
+~~~
+plugins: plugins/Dot.hs
+~~~
