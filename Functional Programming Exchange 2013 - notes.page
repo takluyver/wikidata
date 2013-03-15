@@ -164,6 +164,12 @@ This is the same as `lengthInt` and `lengthChar` at the beginning. we want `T ::
 
 Ulitmate goal: **enable programmers to say what they mean**. Simple type systems really do get in our way. We need systems which are sophisticated enough to enable us to say what we mean while staying simple enough to be usable.
 
+### Q/A
+
+Q: Has every experiment that was added to Haskell stayed there?
+
+A: In practice most of them stayed; there is one or two which proved wrong and were removed.
+
 ## Across Time and Address Space: Lift 3.0
 
 *David Pollak*
