@@ -376,12 +376,12 @@ Why Scala is good for addressing (some of) these issuess?
 * there used to be a model where C# and F# "popes and cardinals" revealed new versions to the excited masses
 * that set unrealistic expectations, e.g. that Microsoft will provide Linux implementation
 * but it's an open-source product!
-* new model: a lot of contributors to F#, Microsoft Research just one of them (see [F# Software Foundation](fsharp.org))
-* Most important project: [F# Compiler "Open Edition"](fsharp.github.com) -- no open development yet, just code drops on every release
-* [nuget.org]() -- package management system for Visual Studio/Xamarin Studio/MonoDevelop, grows at large pace, over 11k packages at the moment; can be used on Windows, Linux and Mac
+* new model: a lot of contributors to F#, Microsoft Research just one of them (see [F# Software Foundation](http://fsharp.org))
+* Most important project: [F# Compiler "Open Edition"](http://fsharp.github.com) -- no open development yet, just code drops on every release
+* [http://nuget.org]() -- package management system for Visual Studio/Xamarin Studio/MonoDevelop, grows at large pace, over 11k packages at the moment; can be used on Windows, Linux and Mac
 * IDEs: Visual Studio (Windows), Xamarin Studio (Windows/Mac), MonoDevelop (Windows/Mac/Linux), Emacs, Vim, (...)
 * Emacs mode has been provided by the community; it can read Visual Studio projects
-* all these IDEs use the same code that [drives Visual Studio](fsharp.github.com/fsharpbinding)
+* all these IDEs use the same code that [drives Visual Studio](http://fsharp.github.com/fsharpbinding)
 * run through companies that contribute to the ecosystem: IntelliFactory, mbrace, ...
 
 **Type providers**: external information source (e.g. relational DB, CSV, JSON...) is brought into the language. Also used to provide access to R functions from F#; demo: loading stock data from Yahoo and invoking R functions to calculate correlation and draw graphics -- impressive!
