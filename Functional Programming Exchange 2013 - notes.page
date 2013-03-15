@@ -189,17 +189,60 @@ A: In practice most of them stayed; there is one or two (linear something?) whic
 * 2.5 is about to be released, then 2.6
 * 3.0 will be breaking
 * goals for 3.0: move up market, down market, address time and space
-* best futures in Scala-land -- EPFL's implementation is not always up to scratch (Q: is it still the case with Akka futures integrated into 2.10)
+* best futures in Scala-land -- EPFL's implementation is not always up to scratch (according to DPP Akka futures implementation sucks)
 * markdown templating
 * sources easier to understand for non-scala developers -- bindings can be in templates, not in scala sources
 * seamless development cycle: changes in sources picked up dynamically, better than with JRebel, which barfs eg. when interface types of anonymous functions change
 * server-side javascript data sources (controversial idea):
 
 ~~~ {.html}
-  <li data-jssource="* *+ #> ['fpx, 2, 'dog', 'hi']">Thing: </li>
+  <li data-jssource="* *+ #> ['fpx', 2, 'dog', 'hi']">Thing: </li>
 ~~~
 
 this will generate a list of four elements on the page.
+
+* cross-HTTP actors: requests from page are serialised as JSON and sent to server-side actors -- and vice versa
+* Q&A: DPP: he tried to agree on a common Actor interface with Jonas and EPFL but they thought they are smarter so they parted ways.
+
+## Elnode: The Evented IO Web Server
+
+*Nic Ferrier*
+
+Microservices: reaction to heavyweight containers like JBoss. Tiny, little, usually restful services, put together they form SOA.
+
+### Emacs
+
+When Richard Stallman stepped down from being the maintainer of Emacs a number of things happened:
+
+* packages: `M-x package-install somepackage` -- allows pulling packages from outside of FSF, lowers barriers to entry
+* server sockets:
+
+~~~ {.lisp}
+(defun example-make-server (port)
+  "Make listenign socket"
+  (let ((buf (get-buffer-create "*example-server*")))
+    (make-network-process
+     :name "" : buffer buf :server t :nowait 't ...)))
+~~~
+
+How does it work without threads (Emacs can't do threads?)
+
+* lexical scope -- it was missing for a long time (thanks to RMS, who was very conservative), but it was introduced in 24; enabled on per-file basis.
+
+### elnode
+
+* a webserver framework in Emacs lisp.
+* demo: web server started, but Emacs crashed
+* chat demo: works well
+
+### Problems
+
+Why have reprogrammable systems (e.g. Smalltalk) failed? Transactional change? How do we change our running system incrementally? Similar problem to continuous delivery with transactional databases.
+
+### Concurrency
+
+Threads are coming to Emacs (although still with GIL). It would be nice to have actor-based model, it's very similar to microservice idea. Actually, a restricted actor system can be built on top of elnode.
+
 
 ## Reducing Cognitive Bias in Design With Scala
 
@@ -212,10 +255,6 @@ this will generate a list of four elements on the page.
 ## Developing with F# in the Cloud
 
 *Adam Granicz*
-
-## Elnode: The Evented IO Web Server
-
-*Nic Ferrier*
 
 ## LexiFi: Describing Financial Contracts and Extending OCaml
 
