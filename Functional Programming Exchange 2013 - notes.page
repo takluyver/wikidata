@@ -81,7 +81,7 @@ This will work for anthing that is in `Monad` class.
 Q: can type-level functions be written in ML?
 A: using ML module syste to model higher-kinded types is like using a nuclear weapon to open a matchbox -- it works, but there is a lot of collateral damage.
 
-Note: higher-kkinded type variables are much harder in languages with subtyping (e.g. OO) because of _variance_.
+Note: higher-kinded type variables are much harder in languages with subtyping (e.g. OO) because of _variance_.
 
 GHC allows to specify kind signatures: `data Tree (x :: * -> *) (a :: *) = ...`.
 
@@ -90,6 +90,8 @@ Haskell attempts to reuse the intuitions from the term/type level one level up, 
 Omega has infinite tower of universes (terms/types/kinds/sorts/level 5/level 6/...)
 
 ### GADTs
+
+Idea: allow arbitrary return type for constructors, provided the outermost type constructor of type returned is still the type being defined.
 
 ~~~ {.haskell}
 data Maybe a = Nothing | Just a
@@ -105,6 +107,62 @@ data Maybe a where
 
 Classic example of usefulness: term evaluator (same as in [Advanced Haskell]()).
 
+~~~ {.haskell}
+data Term a where
+  Lit :: Int - Term Int
+  Succ :: Term Int -> Term Int
+  IsZero :: Term Int -> Term Bool
+~~~
+
+Real-life story: stream-processing library Yampa needed to treat identity in a special way. Allowing to express that in type system made huge performance difference
+
+### Type Functions
+
+(a.k.a "type families")
+
+~~~ {.haskell}
+class Num a where
+  (+) :: a -> a -> a
+~~~
+
+what if we want:
+
+~~~ {.haskell}
+class GNum a b where
+  (+) :: a -> b -> ???
+
+instance GNum Int Int where ...
+instance GNum Int Float where ...
+~~~
+
+What do we put in place of `???`?
+
+Given `a` and `b` we can tell what `???` should be. 
+
+~~~ {.haskell}
+class GNum a b where
+  type SumTy a b :: * -- type-level function
+  (+) :: a -> b -. SumTy a b
+
+instance GNum Int Int where
+  type SumTy Int Int = Int
+  ...
+~~~
+
+### Kind polymorphism
+
+No time to explain in detail.
+
+~~~ {.haskell}
+data T f a = MkT (f a)
+~~~
+
+f can be `* -> *` and a `*`
+but it can also be `(* -> *) -> *` and `* -> *`
+
+This is the same as `lengthInt` and `lengthChar` at the beginning. we want `T :: \forall k (k -> *) -> k -> *`
+
+Ulitmate goal: **enable programmers to say what they mean**. Simple type systems really do get in our way. We need systems which are sophisticated enough to enable us to say what we mean while staying simple enough to be usable.
 
 ## Across Time and Address Space: Lift 3.0
 
