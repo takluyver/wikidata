@@ -1,10 +1,53 @@
+* rrived at 9am, early enough to grab a seat at the front, next to power sockets -- front left.
+* Met: Channing and Lance Walton, David Pollak, Adam Fisher
+
 ## Adventures with Types in Haskell
 
 *Simon Peyton Jones*
 
+* FPComplete School of haskell plug
+* Reasons for Haskell popularity: purity, simple model (lambda calculus), **rich type system**
+* Why we want types: catch certain classes of bugs, provide partial specification (e.g. `reverse :: [a] -> [a]`), express design, support interactive development (e.g. intellisense), **ease program maintenance** (e.g. pervasive changes in GHC, SPJ has confidence in making them because of type checks)
+* look up: F# type providers, great example of how types help
+* how types are bad: get in your way:
 
+~~~ {.haskell}
+data IntList = Nil | Cons Int IntList
 
+lengthI :: IntList -> Int
+~~~
 
+now, what if we wanted to have length for list of chars? We need a more sophisticated type system (generics).
+
+programs accepted by the language / programs that work -- we want as much overlap between these two sets as possible.
+
+History:
+
+* 1960s: Simple Types
+* 1970s: ML with parametric polymorphism
+* 1980s: plateau
+* 1990s: Haskell: type classes, then plateau
+* 2000s: GADTs, then plateau
+* recent years: explosion of innovation, crazy type systems
+
+SPJ will be saying a little about a lot of different type system features.
+
+Plan for world domination: build on static typs so that mor good programs are accepted without killing the joy of programming
+
+### Type classes
+
+functions that are nearly polymorphic:
+
+~~~ {.haskell}
+sort :: [a] -> [a]
+(+) :: a -> a -> a 
+~~~
+
+we don't want these functions to be baked into the runtime, specific for every type they operate on (that's what Java does). Solution: **type classes**,
+
+~~~ {.haskell}
+(+) :: Num a => a -> a -> a
+~~~
 
 ## Across Time and Address Space: Lift 3.0
 
