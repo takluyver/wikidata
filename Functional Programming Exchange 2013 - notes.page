@@ -225,7 +225,7 @@ When Richard Stallman stepped down from being the maintainer of Emacs a number o
      :name "" : buffer buf :server t :nowait 't ...)))
 ~~~
 
-How does it work without threads (Emacs can't do threads?)
+How does it work without threads (Emacs can't do threads)? Callbacks.
 
 * lexical scope -- it was missing for a long time (thanks to RMS, who was very conservative), but it was introduced in 24; enabled on per-file basis.
 
@@ -244,13 +244,65 @@ Why have reprogrammable systems (e.g. Smalltalk) failed? Transactional change? H
 Threads are coming to Emacs (although still with GIL). It would be nice to have actor-based model, it's very similar to microservice idea. Actually, a restricted actor system can be built on top of elnode.
 
 
+## Comparing Scala and ClojureFunctional%20Programming%20Exchange%202013%20-%20notes
+
+*Robert Rees*
+
+* Robert set up London Clojurians group and works on Java/Scala codebase at Guardian
+
+---------                -------------
+Clojure                  Scala
+---------                -------------
+lisp with Java interop   Java++
+evolving slowly          trying to define itself
+simple                   complex
+practical                academic
+hippie                   enterprise
+dynamic                  static
+---------                -------------
+
+### Typing
+
+* clojure has strong, but primitive types
+* why do we need types if we have a test suite?
+
+### Simplicity/Complexity
+
+* Scala has lots of ways in the library to achieve the same result (`reduceLeft`, `foldLeft`, `maxBy`...)
+* Scala doesn't aim to be complex; Clojure strives to be simple
+
+### Enterprise
+
+---------                -------------
+Clojure                  Scala
+---------                -------------
+no objects               data model like in Java
+poor tooling             good tooling
+weird performance        performance comparable with Java
+lisp                     curly braces
+---------                -------------
+
+* Clojure is more adpterd by teams that are already polyglot, service orientated, communicate mostly over HTTP
+* Scala is adopted where binary artifacts are shared, codebases are big
+
+### Tooling
+
+* SBT slightly better than Leiningen 2
+* Scala has good Eclipse and IntelliJ tooling, most of clojurians use Emacs
+
+### Web development
+
+* Clojure: ring middleware (abstracts out HTTP), Compojure -- very basic and low-level
+* Scala: Lift, Scalatra, Play 2, ... -- rich, complete solutions
+
+### Personal Experience
+
+* Scala makes working on large Java codebase easier
+* Knowing Clojure makes one a better Scala programmer
+
 ## Reducing Cognitive Bias in Design With Scala
 
 *Paul Dale*
-
-## Comparing Scala and Clojure
-
-*Robert Rees*
 
 ## Developing with F# in the Cloud
 
