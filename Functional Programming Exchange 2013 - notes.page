@@ -49,6 +49,31 @@ we don't want these functions to be baked into the runtime, specific for every t
 (+) :: Num a => a -> a -> a
 ~~~
 
+### Higher kinds
+
+~~~ {.haskell}
+mapL :: (a -> b) -> [a] -> [b]
+-- recursive
+mapT :: (a -> b) -> Tree a -> Tree b
+-- recursive
+mapM :: (a -> b) -> Maybe a -> Maybe b
+-- non-recursive
+~~~
+
+There is a commmon pattern here. How do we unify the API?
+
+~~~ {.haskell}
+class Functor k where
+  fmap :: (a -> b) -> k a -> k b
+
+instance Functor Maube where
+  fmap f x = mapM f x
+~~~
+
+Note: `k` ranges over not types, but type constructors; it has kind `* -> *` (anything of kind `* -> ...` is higher-kinded)
+
+
+
 ## Across Time and Address Space: Lift 3.0
 
 *David Pollak*
