@@ -315,6 +315,33 @@ Sneak preview of CloudSharper -- not released yet -- online development environm
 
 *Paul Dale*
 
+* principal architect at Elemica
+* 250,000,000,000 USD in transactions passing through the system over the year
+* can't say about any of details of what they are doing (company lawyers!)
+* Elemica has large problem space: connecting everyone with everyone
+* clear communication between domain experts and developers is essential; Domain-Driven Design is a good approach (ubiquitous language)
+* cognitive bias arises when the communication is poor -- programmers and experts don't understand each other
+* some common biases:
+  * Ambiguity effect -- we are biased towards the alternative that has fewer unknowns
+  * Anchoring -- past information biases current understanding
+  * Attentional bias -- whatever happens in the environment grabs our attention
+  * Availability -- what is readily available in my memory seems more important, e.g. recent, but infrequent, issue
+  * False consensus -- tendency to believe your audience agrees with you more than they actually do
+  * Framing effect -- perception of the issue depends on who says about it (halo effect)
+  * Well travelled road effect -- underestimating difficulty of task we know how to do
+  * Emotional bias -- it's impossible to have rational conversation when under emotion (even excitement)
+* reference to [Thinking Fast and Slow]()
+* recognise situations in which these are likely and matter
+* conduct: design sessions, training, status updates
+* listen more than talk; avoid jumping ahead too far
+
+Why Scala is good for addressing (some of) these issuess?
+
+* a domain term has a case class representation, concise enough so that it can be shown to the domain expert for validation
+* lack of clutter is extremely important for communication
+* start with UI as early as possible: Lift's view-first approach is very useful for this
+
+
 ## LexiFi: Describing Financial Contracts and Extending OCaml
 
 *Alain Frisch*
