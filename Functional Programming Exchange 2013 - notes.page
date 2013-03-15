@@ -168,11 +168,38 @@ Ulitmate goal: **enable programmers to say what they mean**. Simple type systems
 
 Q: Has every experiment that was added to Haskell stayed there?
 
-A: In practice most of them stayed; there is one or two which proved wrong and were removed.
+A: In practice most of them stayed; there is one or two (linear something?) which proved wrong and were removed.
 
 ## Across Time and Address Space: Lift 3.0
 
 *David Pollak*
+
+* Lift: developer centric/designer friendly
+* most web frameworks are abstractions on top of HTTP request/response
+* but developers think about putting buttons on pages, not HTTP
+* interactivity is at the core: lift abstracts away the HTTP part of AJAX calls
+* templating: DOM manipulation (functions `DOM => DOM`) instead of spitting out strings. This approach has later been used (cloned) in templating systems for Haskell, Java and JavaScript.
+* designers and coders share the codebase; designers provide template, developers annotate them with `data-lift` transformations
+* best Comet (server push) and Ajax support in the industry; client that disconnects and reconnects gets deltas (in order)
+* current Comet implementation is over long polling, but it could be transparently ported to websockets
+* automatic deduplication of Ajax requests (eg. on retry after timeout)
+* seamless security
+* DOM transformations can be done in parallel (e.g. when assembling parts of pages from different sources)
+* asynchronous loading of page fragments
+* 2.5 is about to be released, then 2.6
+* 3.0 will be breaking
+* goals for 3.0: move up market, down market, address time and space
+* best futures in Scala-land -- EPFL's implementation is not always up to scratch (Q: is it still the case with Akka futures integrated into 2.10)
+* markdown templating
+* sources easier to understand for non-scala developers -- bindings can be in templates, not in scala sources
+* seamless development cycle: changes in sources picked up dynamically, better than with JRebel, which barfs eg. when interface types of anonymous functions change
+* server-side javascript data sources (controversial idea):
+
+~~~ {.html}
+  <li data-jssource="* *+ #> ['fpx, 2, 'dog', 'hi']">Thing: </li>
+~~~
+
+this will generate a list of four elements on the page.
 
 ## Reducing Cognitive Bias in Design With Scala
 
