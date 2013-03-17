@@ -11,7 +11,7 @@ If anyone had any doubt about the reputation **Simon Peyton Jones** enjoys in fu
 
 Strong typing is the most succesful method of formal verification of program semantics. Despite their unquestionable success, type systems are not without issues: their job is to restrict the set of allowed programs, but this restriction does not always coincide with the intents of the programmers:
 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="370px" width="500px" style="display: block; margin: auto">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="370px" width="420px" style="display: block; margin: auto">
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
