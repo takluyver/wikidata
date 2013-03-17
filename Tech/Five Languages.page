@@ -52,7 +52,7 @@ Contenders: StandardML, OCaml, also Scheme and Clojure, if we didn't have a sepa
 
 ## Object-oriented
 
-There are two main flavours of object orientation: object-based and class-based. While the former requires fewer concepts to explain, the latter is much more common in the industry and has an excellent, dogmatic representative: **Smalltalk**. In Smalltalk everything is an object, event conditional instructions are in fact messages sent to Boolean objects. Exactly the conceptual minimalism we have been looking for, at the same time introducing new features such as:
+There are two main flavours of object orientation: object-based and class-based. While the former requires fewer concepts to explain, the latter is much more common in the industry and has an excellent, dogmatic representative: **Smalltalk**. In Smalltalk everything is an object, even conditional instructions are in fact messages sent to Boolean objects. Exactly the conceptual minimalism we have been looking for, at the same time introducing new features such as:
 
 * objects responding to messages
 * class inheritance
