@@ -1,0 +1,331 @@
+* much fewer people than last year
+* no SPJ
+
+## 9:00 - 9:30 Welcome (Robert Pickering)
+
+- SkillsMatter plan to do events on Haskell
+
+## 9:30 - 10:15 Visi.Pro Bringing Functional Programming to the Masses (David Pollak)
+
+(a.k.a. how to program Tablets)
+
+Background: NeXTstep
+
+- 1991: started compny that developed Mesa(Maze?) (spreadsheet that took real-time data feeds)
+- spreadsheets: an amazing programming language
+- Asme: twitter for businesses
+
+### Thought process
+
+- lesson from Lift: business model is useful when running open-source project
+- kids: PCs hard to use, iPads really simple
+- tablet devices grow in business
+- spent a week using just iPad with keyboard (not programmig) -- no issues
+- running slides from iPad!
+- nowadays there are millions of data sources on the internet -- we need to manage this somehow
+- Google made a multi-billion dollar business out of providing access to this data
+- small businesses (plumbers, builders) often use Access to manage their business
+- PCs are dead-end for this sort of application
+- what if excel & haskell have a love child?
+
+### Visi.Pro
+
+- a business which takes language and platform and makes it available on iOS + cloud 
+- literate pl for business people
+- statically typed -- cures unit errors, which are prevalent in business apps!
+
+### Why?
+
+- existing languages are machine-oriented
+- time for a human focus
+
+### How?
+
+- Haskell at the core with ideas from smalltalk (drag/drop controls)
+- Visi language is open source and can be implemented on various platforms
+- Visi.Pro is iOS/OSX focussed
+
+### Design
+
+- develop models
+- transfer them to other devices
+- once devices have the model, we can transfer data between them
+- models can be developed in a social manner (Github-inspired) 
+- goal: bring open source ethos to the business world
+- should be beautiful (e.g. Ruby, iOS appeal to people with aesthetic sense)
+- simple: structural typing, what, not where or when (see Excel/SQL)
+- immutable and serialisable data
+- computation can be a parameter and sent where the data is, as opposed to pull the data where the computation is
+- clojure-like references, can intermingle Visi structs and ObjectiveC objects (within limits and with implications) 
+
+Technical considerations
+
+- Erlang: can move process between machines, Scala/Akka can not do that because of potential mutability
+- biggest problem for RIM: reduce CPU cycles (i.e. battery usage) on the device -- migrating processes is important!
+
+### Examples
+
+~~~
+aveOldIncome data = 
+  who = filter #old? data
+  income - sum (xform #income who)
+  income / who.length
+~~~
+
+excel users should be happy with this
+
+~~~
+?age // input the age
+
+allAges = age:allAges // collect
+ageCnt = length allAges
+<
+"age count" = ageCnt
+"average" = (sum AllAges)/ageCnt
+~~~
+
+`"sth"` is a sink (place where data goes out)
+
+~~~
+"greeting" = "Hello, world"
+
+?number1
+?number2
+?number3
+useless = number1 + number3
+"sum" = number1 + number2
+~~~
+
+visi is lazy, if there is no sink for something it's not computed
+
+~~~
+struct Dog(name: String)
+
+struct Person(String, age: Int) =
+  Kid() |
+  Parent(kids: [Person])
+~~~
+
+no varargs, no overloading, so needs special syntax for list construction
+
+~~~
+dogsName Dog(name) = name
+~~~
+
+pattern matching
+
+~~~
+fredsAge (name == "fred",
+          => age: Int) = age // Box int
+~~~
+
+no exceptions, maybe instead
+
+structs can have methods
+
+### Unfinished stuff
+
+- modules system
+- visibility
+- code signing and execution rights
+- library mode (with access to types and mutability)
+
+### Summary
+
+* dataflow language with inspirations from Haskell and Scala
+* still very much in a state of flux
+
+
+## 10:30 - 11:15 Silk: Making the Semantic Web Functional (Erik Hesselink)
+
+[http://silkapp.com]()
+
+- one of four co-founders of Silk (2009)
+- initial founding by one of founders
+- then seed investment from Atomico (Skype)
+- now 10 people
+
+### What is Silk?
+
+Aimed at "normal people", to let them structure data. Documents have names and tags, e.g.: 
+
+* name: Netherlands
+* value: population = 16m
+* link: capital -> Amsterdam
+
+we can build graph structure where docs are nodes and links are edges; how can we provide users with access to this graph?
+
+e.g. Q: What countries have a `population` under 5 million but a `capital` with a population over 1 million?
+-> translated to query on the graph structure
+
+Answers as table, plot or graph (e.g. on a map)
+
+* users can create their own content
+* Inline WYSIWYG editor
+* tagging made easy
+* query interface with nice visualisations
+* all web based
+* 4GB memory for 150 000 document database (on a 64 bit machine)
+* runs on AWS
+
+(15 mins product demo)
+
+### Technology
+
+* web-facing server with HTTP REST interface (Haskell; started with Happtstack, then Snap, now X2?)
+* other servers (e.g. graph database) communiating over HTTP (Haskell)
+* Fat client (Javascript)
+* comm client-server API through AJAX
+* website with signup and videos uses API (Ruby, to be replaced with Haskell)
+
+* Documents stored on file system in XML (simple debugging and recovery)
+* relational database for user data
+* graph databae for tag structure and querying
+
+### Where Haskell was good?
+
+- type inference
+- immutable data
+- IO restricted; otherwise pure
+- lower bug count per line than Javascript (due to purity?) -- all the bugs are in JS at the moment (but also UI part more tricky)
+- refactoring is easy (compiler picks up any errors)
+- clear separation between data and operations (functions) -- easier to model and modularise
+- easy to build DSLs; useful for parsers, REST API, queries, db interaction
+- API can be modelled as data structure and documentation can be generated directly from it
+- community, cabal, hackage, ghc, debugging tools
+
+### Where it was not so good?
+
+- laziness: can hurt performance and is tricky to reason about (e.g. `performQuery` does the work of `updateDocument` that was executed earlier)
+
+### JavaScript as a functional language
+
+* functions first class
+* closures
+
+but
+
+* no types, namespaces, information hiding
+* mutable state and nulls
+* higher-order functions have ugly syntax
+* bad error messages
+* can be slow if you use functional idioms instead of mutable data; browsers are good at optimising oo/imperative code
+* no standard test framework (and requires lots of tests)
+* needs testing against a number of browsers (testswarm helps)
+
+Silk guys developed reactive (dataflow) values:
+
+~~~ {.javascript}
+var input = new Value(1);
+var output = input.map(function (x) { return x * 2; });
+~~~
+
+and modules
+
+~~~ {.javascript}
+Module ("reactive.Value")
+Import ("reactive.Reactive")
+~~~
+
+### Lessons
+
+- fp is great
+- know your language and tools
+- roll your own (mostly in Haskell)
+- get involved with the community
+
+
+## 11:30 - 12:15 FPish: Leveraging F# and WebSharper in a Large-Scale Web Application (Loic Denuziere)
+
+again, 15 mins of demo
+
+dataflow again
+
+## 12:30 - 13:15 Akka at Zeebox: a Case Study (Kevin Wright)
+
+* FP became popular in banking (?)
+* Scala popular in social (Twitter, LinkedIn, Yammer, Foursquare, Zeebox)
+* Actor model good for reliability
+* JVM good for operations
+
+Zeebox: 
+
+* runs on AWS
+
+two styles of programming for 2 different problems:
+
+1. streams of data that don't need to scale with the no of users: TV schedule, celebrity tweets etc.
+
+- stateful components (non-functional)
+- uses Akka agents
+- internally actors use pure functions, handling of state pushed to the edges -> fairly testable
+- complex event processing using a pipeline of functions (e.g. Term -> Either[Term, Error])
+
+2. stuff that grows with the number of users: FB and Twitter connectivity, chat
+
+- multiple nodes running on AWS
+- talk to Facebook and Twitter
+- builds a graph of social links from these services
+- heavy use of async requests (Futures)
+
+## 14:15 - 15:00 Haskell for Embedded Domain-Specific Languages (Andres Loeh)
+
+* Every CS problem is a language problem
+* every tool is a compiler (translating from one language to another)
+* EDSL -- a haskell library
+    - can use general programming constructs from host language
+    - tools provided for free
+    - can combine multiple EDSLs
+
+How to design?
+
+* syntax (interface): data types and functions
+
+useful features:
+
+- user-defined operators and priorities
+- overloading (even literals)
+- do notation
+- function calls without parentheses
+- quasi-quoting
+- types: guide the programmer. Typically there is a number of functions that create values of a type, a number that combine them and some that extract known values from DSL types. C.f. Control.Monad.Par, Text.Pretty
+- laziness by default useful to define constructs like if-then-else
+- purity (control over effects) and hierarchy of types to control them (IO, Gen, STM, Error etc.)
+- payoff from reusing of familiar functional interfaces: monads, applicative functors
+
+implementation
+
+extreme points:
+
+- shallow embedding: EDSL constructs are directly described by their semantics
+- deep embedding: EDSL constructs represent an AST and is interpreted at a separate stage; allows for many different interpretations, run time optimisations, visualisers etc.
+
+
+## 15:15 - 16:00 F#'s Type Providers in Depth (Tomas Petricek)
+
+_me hacking_
+
+## 16:15 - 17:00 Park bench
+
+* how to drive adoption of FP in enterprise?
+* type inference
+
+## 17:15 - 17:30 Clojure Made Simple (John Stevenson)
+
+introduction 
+
+~~~ {.clojure}
+(defn square [x] 
+  (* x x))
+~~~
+
+* there is Android REPL
+* `doto` == with
+* `recur` for tail calls
+
+## 17:30 - 17:45 Who's got Clojure (Robert Rees)
+
+
+
+## 17:45 - 18:00 Clojure and Incanter for the Professional Programmer (Bruce Durling)
+
