@@ -1,0 +1,176 @@
+After slightly disappointing FPX 2012, this year's edition of Skills Matter-run one day gathering of functional programming enthusiasts bounced back with promising speaker line-up. The participant numbers were up compared to last year and seem to have even exceeded the excellent 2011 edition.
+
+## Adventures with Types in Haskell
+
+If anyone had any doubt about the reputation **Simon Peyton Jones** enjoys in fuctional programming community, the enthusiastic welcome he received must have dispelled it. His talk was, as usual, entertaining and fast-paced, but at no expense of clarity. 
+
+Strong typing is the most succesful method of formal verification of program semantics. Despite their unquestionable success, type systems are not without issues: their job is to restrict the set of allowed programs, but this restriction does not always coincide with the intents of the programmers:
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="400px" width="500px">
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="arc"
+       style="fill:#268bd2;fill-opacity:0.47058824;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
+       id="path2985"
+       sodipodi:cx="255.56859"
+       sodipodi:cy="352.32648"
+       sodipodi:rx="156.57364"
+       sodipodi:ry="102.02541"
+       d="m 412.14223,352.32648 a 156.57364,102.02541 0 1 1 -313.147281,0 156.57364,102.02541 0 1 1 313.147281,0 z"
+       transform="translate(-90.913729,-210.11173)" />
+    <path
+       transform="translate(7.0710719,-130.30969)"
+       sodipodi:type="arc"
+       style="fill:#ffd909;fill-opacity:0.47058824;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
+       id="path2985-1"
+       sodipodi:cx="255.56859"
+       sodipodi:cy="352.32648"
+       sodipodi:rx="156.57364"
+       sodipodi:ry="102.02541"
+       d="m 412.14223,352.32648 a 156.57364,102.02541 0 1 1 -313.147281,0 156.57364,102.02541 0 1 1 313.147281,0 z" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="85.862976"
+       y="13.925364"
+       id="text3781"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3783"
+         x="85.862976"
+         y="13.925364">Programs allowed by</tspan><tspan
+         sodipodi:role="line"
+         x="85.862976"
+         y="31.425365"
+         id="tspan3785">the type system</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="205.63705"
+       y="338.34738"
+       id="text3781-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="205.63705"
+         y="338.34738"
+         id="tspan3785-7">Programs we want</tspan><tspan
+         sodipodi:role="line"
+         x="205.63705"
+         y="355.84738"
+         id="tspan3813">to write</tspan></text>
+  </g>
+</svg> 
+
+It is particularly frustrating when the type system gets in our way by disallowing a desired program. Simon ran through a number of examples where this happened and prompted advances in Haskell's type system. The features discussed were:
+
+* **type classes**: some functions, e.g. `sort :: [a] -> [a]`, are "nearly polymorphic", i.e. in order for us to be able to write them polymorphically, we need to restrict the set of admissible types to ones that support specific operations (comparison in the case of `sort`). Type classes provide this mechanism: if we write the type of `sort` as `Ord a => [a] -> [a]` we can make use of the operations provided by `Ord` type class in `sort`'s definition.
+* **higher kinds**: we would like to abstract the notion of mapping values over arbitrary "container", e.g. instead of having two separate functions, `mapList :: (a -> b) -> [a] -> [b]` and `mapTree :: (a -> b) -> Tree a -> Tree b` we would prefer `map :: Functor f => (a -> b) -> f a -> f b`. `Functor` here is a type class whose instances are not *types* (of kind `*`), but *type constructors* (of kind `* -> *`).
+* **GADTs** (generalised algebraic data types): when defining data type for terms we would like to be able to say what type the term evaluates to, so that writing evaluation function is straightforward. GADTs enable us to do that by allowing individual data constructors to produce arbitrary types, as long as the outermost type is the type being defined:
+
+~~~ {.haskell}
+data Term :: * -> * where
+  Lit    :: Int                           -> Term Int
+  Succ   :: Term Int                      -> Term Int
+  IsZero :: Term Int                      -> Term Bool
+  Cond   :: Term Bool -> Term a -> Term a -> Term a
+~~~
+
+* **type families** (type functions): type classes with multiple parameters enable us to specify that e.g. addition can operate on arguments of two different types; but how can we say what the result type of such addition should be? With type families we can declare that such a type can be derived from the type class parameters:
+
+~~~ {.haskell}
+class GNum a b where
+  type SumT a b :: *        -- type-level function
+  (+) :: a -> b -> SumT a b
+
+instance GNum Int Float where
+  type SumT Int Float = Float
+  -- ...
+~~~
+
+In recent years there has been an explosion of innovation in type systems. The ultimate goal of all this work is enabling programmers to say what they mean. In Simon's opinion, one of the main reasons for recent growth in Haskell's popularity is its rich, but still usable, type system.
+
+[Video](http://skillsmatter.com/podcast/scala/keynote-3842)
+
+## Lift 3.0: Across Time and Address Space
+
+**David Pollak** delivered a preview of what can be expected from next major release of [Lift web framework](http://liftweb.net). Not dealing with web development on day-to-day basis I am not best qualified to judge how much of an improvement Javascript sources, cross-HTTP actors, markdown templating or dynamic reload of changed classes are going to be. What is clear is that Lift is quite different from most other web frameworks out there, not least as a result of strong opinions held by its creator: according to David, Akka actor and future implementations are of poor quality, hence the need for Lift's own version of these abstractions. Another mark of David's personality on the new Lift is integration of his other recent project, dataflow language [Visi](http://blog.visi.la/), into Lift page templates. While this strong-mindedness does alienate some in the wider Scala community, Lift is still one of the most popular Scala web frameworks and has a dedicated following, so it must get some things right.
+
+[Video](http://skillsmatter.com/podcast/scala/across-time-and-address-space-lift-3-0)
+
+## Elnode: The Evented IO Web Server
+
+Emacs afficionados sometimes go to such great lengths to get their beloved piece of software to perform as something it was not originally designed for, that it is really difficult to explain their motivation to the non-initiated. One such case is definitely **Nic Ferrier's** implementation of web server inside Emacs. In an entertaining talk Nic explained how Richard Stallman's stepping down from long held post of Emacs maintainer opened the floodgate of innovation: a package system (`M-x package-install`), lexical scoping in Emacs Lisp and server sockets. This last addition enabled Nic to implement *elnode* -- a web server framework in Emacs Lisp. As Emacs is single-threaded, asynchronous processing of HTTP requests is based on callbacks, in the style popularised by Node.js. The audience could experience the joys of Emacs web first hand, by using a chat application served from elnode instance running on Nic's laptop.
+
+But why turn Emacs into a web server? To quote George Mallory: "because it's there". 
+
+[Video](http://skillsmatter.com/podcast/scala/elnode-the-evented-io-web-server)
+
+## Comparing Scala and Clojure
+
+**Robert Rees** is one of the founders of [London Clojurians community](http://londonclojurians.org/) and codes in Scala on daily basis as a part of his job at Guardian. In the table below I attempted to summarise his experiences and impressions of the two languages aspiring to be "the next big thing" in JVM world.
+
+---------------------------------------------------------------------------------------------------------------------------
+Scala                                                          Clojure
+------------------------------------------------------------   ------------------------------------------------------------
+Java++                                                         Lisp with Java interoperability
+
+complex, academic -- see the type system                       simple, practical -- see the data structures
+
+enterprise-friendly: curly braces, strong Java                 hippie: no objects, Lisp syntax
+interoperability
+
+good tooling: Eclipse and IntelliJ both have feature-rich      poor tool support, most clojurians use Emacs
+Scala plugins
+
+performance comparable with Java                               performance sometimes weird
+
+used by companies and teams with large existing Java           used by teams that are already polyglot, for software that 
+investment, big codebase, binary sharing of artifacts          is service-orientated and communicates over HTTP
+
+Lift, Scalatra, Play2 and other rich, complete frameworks      rudimentary web development support from Ring middleware and
+                                                               Compojure
+
+SBT is one of the best build tools out there                   Leiningen 2 is catching up with SBT
+
+makes working with existing Java codebase easier               makes one a better Scala programmer
+---------------------------------------------------------------------------------------------------------------------------
+
+Overall it was clear that Robert's sympathies lied with Clojure, but the talk was balanced and did give Scala credit where it was due.
+
+[Video](http://skillsmatter.com/podcast/scala/comparing-scala-and-clojure)
+
+## Developing With F# in The Cloud
+
+**Adam Granicz**, the CEO of [IntelliFactory](http://www.intellifactory.com) presented his company's latest product, CloudSharper -- a web-based IDE for developing web and mobile applications. On initial launch, planned for April 2013, the IDE will support F#, with server-side compilation, intellisense, multi-project capability and other modern conveniences users of development environments are accustomed to. While the videos of interaction with the IDE -- there was no live demo -- looked impressive, Adam struggled to explain convincingly the advantages of his solution over existing stand-alone .Net IDEs such as Visual Studio or MonoDevelop. Overall, along with the [Lift talk](#lift-3.0-across-time-and-address-space), this one was the least interesting session of the day. In both cases the previews of the products could have been made more relevant to the subject of the conference if the presenters focused on the value added by functional techniques, rather than highlighting specific features that were of interests only to the intended audience of the products.
+
+[Video](http://skillsmatter.com/podcast/scala/developing-with-f-in-the-cloud)
+
+## Reducing Cognitive Bias in Design With Scala
+
+In the course of his work as the principal architect in [Elemica](http://www.elemica.com), **Paul Dale** learned to appreciate the importance of good communication between the programmers and domain experts. Cognitive bias in its various forms -- ambiguity effect, anchoring, attention bias, availability, false consensus, framing effect -- presents a major obstacle to achieving this mutual understanding. As a solutions to the communication problem, Paul recommended the framework offered by *Domain-Driven Design*: building and carefully maintaining common vocabulary that reduces the chance of misunderstanding resulting from the aforementioned forms of bias. This is where Scala comes into the picture: case classes are an excellent tool for modeling domain concepts in concise and uncluttered way. Paul's observation was that this had an empowering effect on the domain experts, who, having realised that they had no trouble understanding the code, were eager to provide relevant business logic in the form of code that built on the model developed in this way. Paul's other recommendation was to start with the UI as early as possible -- an approach facilitated by Lift's view-first development model.
+
+[Video](http://skillsmatter.com/podcast/scala/akka-scala)
+
+## LexiFi: Describing Financial Contracts and Extending OCaml
+
+Ever since learning about [*composing contracts* paper](http://www.lexifi.com/files/resources/MLFiPaper.pdf) I wondered if anyone has commercialised the idea. It turns out that yes: one of the authors, Jean-Marc Eber, founded [LexiFi](http://lexifi.com) -- a company producing derivatives pricing and management software. **Alain Frisch**, LexiFi's CTO, talked about the product and how algebraic modeling of financial instruments and construction of term sheets from few generic building block and combinators enables them to add new product treatments to the system in the matter of days. 
+
+LexiFi being a French company, OCaml was the natural choice for implementation language. In the course of development of the system, the company had to modify the compiler to support features they needed, contributing the patches back to the official distribution. Presently, LexiFi's system is distributed together with the complete, customised OCaml toolchain that allows building and execution of their models on Windows and Unix systems without any additional dependencies. Even the Windows GUI is written in OCaml, utilising a bi-directional OCaml-.Net bridge built specifically for this purpose.
+
+[Video](http://skillsmatter.com/podcast/scala/lexifi-describing-financial-contracts-and-extending-ocaml)
+
+## F# in the Open Source World
+
+F# was designed by **Don Syme** of Microsoft Resarch and over the years has progressed from an experiment to a first-class citizen of Visual Studio offering. As with .Net in its entirety, there is the perception that Microsoft has full control over the language and its implementation. Don appeared at FPX to try and alter this impression, and present the vision of F# ecosystem where Microsoft is just one of many contributors. While the compiler development is not yet open, the drops of source code of official releases are available [on Github](http://fsharp.github.com/fsharp/), as are [editor bindings](http://fsharp.github.com/fsharpbinding/) that enable authors of editors and IDEs to provide integration with the compiler. This has resulted in environments such as MonoDevelop, Xamarin Studio and Emacs offering excellent support for F# development. On top of the compiler infrastructure, there is now [NuGet](http://nuget.org) -- a repository of libraries and extensions that work across development environments. An impressive example of community-built extensions was F# binding to R, built as a type provider, so that R functions could be seamlessly invoked from F# code -- including opening a window with scatterplot matrix.
+
+[Video](http://skillsmatter.com/podcast/scala/f-in-the-open-source-world-3885)
+
+## Functional Data Storage
+
+**Greg Young** delivered what was probably the best product demo of the day -- and one in which the name of the product has not been mentioned even once. The entire concept of functional data storage, in Greg's interpretation, was a derviation of ideas from *functional reactive programming*, *NoSQL* and *event sourcing*: what is being stored is not mutable state, but the sequence of events observed by the system. These events can then be interpreted as function invocations: e.g. obtaining current state is possible by taking an initial state and then applying to it in sequence functions represented by all events. In a similar fashion, queries over event stream can be represented as catamorphisms (folds).
+
+This model makes easy certain queries that are difficult in relational, document and key-value databases; one example could be temporal queries, such as "find all people who tweeted *Starbucks* and then, within 4 minutes, *Happy* and *Coffee*". However, it also calls for a new query language. Greg presented some operators of such language, with demo based on aptly named [Event Store](http://geteventstore.com/) -- an event database. While many in the audience might have questioned the choice of Javascript as the query language, there is a precedent for that in the form of popular MongoDB; besides familiarity, another point raised by Greg was ease of debugging queries issued via web interface using Javascript debugger built into modern browsers.
+
