@@ -69,7 +69,7 @@ Strong typing is the most succesful method of formal verification of program sem
   </g>
 </svg> 
 
-It is particularly frustrating when the type system gets in our way by disallowing a desired program. Simon ran through a number of examples where this happened and prompted advances in Haskell's type system. The features discussed were:
+It is particularly frustrating when the type system gets in our way by disallowing a working program. Simon ran through a number of examples where this happened and prompted advances in Haskell's type system. The features discussed were:
 
 * **type classes**: some functions, e.g. `sort :: [a] -> [a]`, are "nearly polymorphic", i.e. in order for us to be able to write them polymorphically, we need to restrict the set of admissible types to ones that support specific operations (comparison in the case of `sort`). Type classes provide this mechanism: if we write the type of `sort` as `Ord a => [a] -> [a]` we can make use of the operations provided by `Ord` type class in `sort`'s definition.
 * **higher kinds**: we would like to abstract the notion of mapping values over arbitrary "container", e.g. instead of having two separate functions, `mapList :: (a -> b) -> [a] -> [b]` and `mapTree :: (a -> b) -> Tree a -> Tree b` we would prefer `map :: Functor f => (a -> b) -> f a -> f b`. `Functor` here is a type class whose instances are not *types* (of kind `*`), but *type constructors* (of kind `* -> *`).
