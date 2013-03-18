@@ -7,7 +7,7 @@ toc: no
 
 <a href="Tech/Functional Programming Exchange 2013"><img src="/Tech/code.png" width="150" height="150" class="frontpage-thumbnail"></a>
 
-The entire concept of functional data storage, in Greg's interpretation, was a derviation of ideas from *functional reactive programming*, *NoSQL* and *event sourcing*: what is being stored is not mutable state, but the sequence of events observed by the system. These events can then be interpreted as function invocations: e.g. obtaining current state is possible by taking an initial state and then applying to it in sequence functions represented by all events. In a similar fashion, queries over event stream can be represented as catamorphisms (folds).
+The entire concept of functional data storage, in Greg's interpretation, was a derivation of ideas from *functional reactive programming*, *NoSQL* and *event sourcing*: what is being stored is not mutable state, but the sequence of events observed by the system. These events can then be interpreted as function invocations: e.g. obtaining current state is possible by taking an initial state and then applying to it in sequence functions represented by all events. In a similar fashion, queries over event stream can be represented as folds (catamorphisms).
 
 # [Cooking]()
 
