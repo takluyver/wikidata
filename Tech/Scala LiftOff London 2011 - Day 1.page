@@ -270,7 +270,7 @@ val magic = 0x9e3775cd
 
 def bhash(i: Int) = reverseBytes(i * magic) * magic
 
-* slow version; Integer.reverseBytes does this in one x86 instruction!
+// slow version; Integer.reverseBytes does this in one x86 instruction!
 def reverseBytes = {
   val i = (x << 16) + (x >>> 16)
   ((i & K8) << 8) + ((i >>> 8) & K8)
