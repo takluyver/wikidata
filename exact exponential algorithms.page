@@ -1,4 +1,4 @@
-Algorithms that provide solutions to NP-complete problems that are better than complete exhaustive search. For example, complete exhaustive search for [MAX-2-SAT problem]() would be *O(2^n)*, but a solution exists that requires *O(1.74^n)*. CACM article also shows similar results for [graph colouring]() and [hamiltonian path]() problems.
+Algorithms that provide solutions to NP-complete problems that are better than complete exhaustive search. For example, complete exhaustive search for [MAX-2-SAT problem]() would be O(2^n), but a solution exists that requires O(1.74^n). CACM article also shows similar results for [graph colouring]() and [hamiltonian path]() problems.
 
 ## References
 
