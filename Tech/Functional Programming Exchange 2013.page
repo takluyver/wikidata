@@ -179,3 +179,4 @@ F# was designed by **Don Syme** of Microsoft Resarch and over the years has prog
 
 This model makes easy certain queries that are difficult in relational, document and key-value databases; one example could be temporal queries, such as "find all people who tweeted *Starbucks* and then, within 4 minutes, *Happy* and *Coffee*". However, it also calls for a new query language. Greg presented some operators of such language, with demo based on aptly named [Event Store](http://geteventstore.com/) -- an event database. While many in the audience might have questioned the choice of Javascript as the query language, there is a precedent for that in the form of popular MongoDB; besides familiarity, another point raised by Greg was ease of debugging queries issued via web interface using Javascript debugger built into modern browsers.
 
+[Video](http://skillsmatter.com/podcast/scala/greg-young)
