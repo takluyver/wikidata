@@ -1,0 +1,6 @@
+A problem from [k-SAT]() family, where there are two literals in each OR clause:
+
+(x~1~ OR x~2~) AND (x~z~ OR ¬x~3~) AND (¬x~2~ OR x~3~)
+
+In standard k-SAT we are looking for assignment that satisfies the entire expression. In more difficult *MAX* version there is an additional parameter, *t*, and we have to decide whether an assignment exists that causes at least *t* clauses to evaluate to *true*. k-SAT has a polynomial solution for *k* = 2 and is NP-complete for larger *k*. MAX-k-SAT is NP-complete for *k* >= 2.
+
