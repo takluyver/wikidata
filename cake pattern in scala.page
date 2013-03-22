@@ -1,4 +1,3 @@
-
 Steps:
 
   - Write your classes
@@ -17,8 +16,7 @@ trait ModelComponent {
   // ...
 }
 
-trait ControllerComponent {
-  this: ModelComponent =>
+trait ControllerComponent { this: ModelComponent =>
   val controller: FullController
   class FullController {
     // ...
