@@ -1,0 +1,188 @@
+*Tim Williams, 27/03/2013*
+
+* Based on ideas and production code at Barcap (Ben Moseley, Peter Marks).
+* Recursion schemes: programming patterns, or even a new way of thinking about programming
+* Inspired by Jeremy Gibbons's *Origami Programming*
+* A lot of stuff, intermediate-advanced (Zygo-, Histo- and Futumorphisms)
+* Presentation as literate Haskell
+
+imports:
+
+* `Data.Foldable`
+
+3rd-party:
+
+* `Data.Bool.Extras`
+
+Useful typeclasses:
+
+* `Foldable` -- list-like, specifies various variants of `fold`; derivable in GHC (with pragma)
+* `Traversable` -- traverse a structure preserving the shape, also derivable in GHC; see `traverse`
+
+## Catamorphisms
+
+* known as *iteration*
+* `foldr` is a specialised catamorphism; e.g. bottom-up traversal for a tree
+* when defined closer to the theory, it is operates on an F-algebra
+
+### Fixed points of Functors
+
+Fixed points are trepreseted by the type:
+
+~~~ {.haskell}
+newtype Fix f = Fix { unFix :: f (Fix f) }
+~~~
+
+Allows us to write code that works with any data type (data type-generic programming), e.g. serialisers and pretty-printers. For recursion schemes, allows us to capture them as a single combinator, which makes it easier to study and compare them. Can't be used to represent nested and mutually recursive data types -- that requires kind polymorphism.
+
+~~~ {.haskell}
+data ListF a r = C a r | N -- unfixed list
+
+instance Functor (ListF a) where -- ...
+~~~
+
+now:
+
+~~~ {.haskell}
+cata :: Functor f => (f a -> a) -> Fix f -> a
+~~~
+
+(see diagram from the talk)
+
+Example: algebra for evaluator: `ExprF (Maybe Int) -> Maybe Int` -- no explicit recursion in evaluator! Pretty-printer can be defined in a similar way. The algebra is a description how to treat each case of the data type, very clear and concise.
+
+### Composing Algebras
+
+Catamorphisms do not compose in general, but there are useful special cases.
+
+### Combining Algebras
+
+Algebras over the same functor but different carriers can be combined.
+
+## Anamorphisms
+
+Categorical, corecursive dual of catamorphism. E.g. `unfoldr`. Useful e.g. for splitting list using a predicate.
+
+### Corecursion
+
+Catamorphisms guarantee termination; anamorphisms guarantee *co-termination* -- they guarantee we'll keep on producing data!
+
+~~~ {.haskell}
+ana :: Functor f => (a -> f a) -> a -> Fix f
+~~~
+
+In Haskell we don't have a distinction between recursion and corecursion; there is an importance difference in type theory. We can introduce distinction on type level:
+
+~~~ {.haskell}
+newtype Cofix f = Cofix { unCofix :: f (Cofix f) }
+~~~
+
+e.g. it will prevent us from running a `sum` on infinite list. The diagram for `ana` is the same as for `cata`, but with arrows reversed.
+
+Example: coinductive streams.
+
+data StreamF a r = S a r deriving Show
+newtype Stream a = -- ??? (see talk)
+
+## Hylomorphisms
+
+A composition of catamorphism and anamorphism. Gives us Turing-completeness (takes away all termination guarantees); models *general recursion*.
+
+merge sort:
+
+~~~ {.haskell}
+msort :: Ord a => [a] -> [a]
+msort = hylo merge unflatten
+~~~
+
+## Paramorphisms
+
+An extension of catamorphisms, models primitive recursion:
+
+~~~ {.haskell}
+para :: Fixpoint f t => (f (a, t) -> a) -> t -> a
+para alg = alg . fmap (para alg &&& id) . outF
+~~~
+
+Examples: factorial, sliding window, tracing intermediate results of a catamorphism.
+
+## Compositional Data Types
+
+* see *Data types a la carte* paper
+
+~~~ {.haskell}
+data (f :+: g) r = Inl (f r) | Inr (g r)
+
+data (f :*: g) r = (f r) :*: (g r)
+
+data FreeF f a r = FreeF (f r) | Pure a -- free monad
+
+data CofreeF f a r = CofreeF (f r) a
+~~~
+
+Examples: templating. Traditional templating (e.g. JSP): template gets compiled to print statements interspersed with embedded code. Templating done right: 
+
+~~~ {.haskell}
+data CtxF f r a = Term (f r) | Hole a
+~~~
+
+Also: annotating, e.g. AST during compilation. `CofreeF` is useful for this.
+
+## Memoisation
+
+If we've written everything in terms of catamorphisms, we can replace the standard one with memoising catamorphism and trade space for time.
+
+~~~ {.haskell}
+memoise :: Enumerable k => (k -> v) -> k -> v
+~~~
+
+## Apomorphism
+
+Categorical dual of paramorphism -- allows short-circuiting traversal. Can be implemented in terms of anamorphism.
+
+## Zygomorphism
+
+Generalisation of paramorphism: instead of passing original term used for computation, we transform it using additional auxiliary algebra.
+
+~~~ {.haskell}
+zygo :: Functor f => (f b -> b) -> (f (a, b) -> a) -> Fix f -> a
+~~~
+
+Example: analysis of discontinuities in if expressions; evaluator algebra is used as auxiliary algebra.
+
+~~~ {.haskell}
+disconts env = getSum . zygo (evalAlg env) discontAlg
+~~~
+
+## Histomorphism
+
+Moves bottom-up annottaing the tree with results and funally collapses the tree producing the end result; a form of catamorphism.
+
+Example: fibonacci; we can write it as per mathematical definition and it will be very efficient!
+
+## Futumorphism
+
+Corecursive dual of histomorphism.
+
+Example: pairwise exchange the elements of a stream.
+
+## Conclusion and Q&A
+
+Catamorphisms (folds), anamorphisms (unfolds) and hylomorphisms (refolds) capture all recursive computation -- allow us to avoid explicit recursion. Other, more exotic schemes, are based on these and offer more struture.
+
+8 schemes covered, see table that shows which are recursive, which corecursive, and which generally recursive.
+
+"explicit recursion is the goto of functional programming" -- tempting to use, but makes reasoning more difficult as it does not allow us to use types. Can be compared to for loop vs. goto in an imperative language: a way to name certain pattern.
+
+Benefit at Barcap: avoiding boilerplate.
+
+Tips:
+
+* start with Jeremy Gibbons's paper.
+* these things are easier to use than understand
+* whenever we use explicit recursion, think how it can be translated to one of these
+* without unfixed data types: we can write `cata` etc. for each type we have
+* unfixed types let us define recursion schemes on a single line
+* there are languages which make this easier; haskell wasn't designed to work this way
+* Tim bets this is how programming is going to look in the future
+
