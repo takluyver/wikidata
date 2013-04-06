@@ -1,0 +1,5 @@
+In functional languages, elimination of unnecessary intermediate results of functions operating on sequences, such as `fold`, `map` etc. Allows generation of very efficient code, comparable with hand-tuned imperative implementation.
+
+## References
+
+* *[Haskell Beats C Using Generalised Stream Fusion](http://research.microsoft.com/en-us/um/people/simonpj/papers/ndp/haskell-beats-C.pdf)*
