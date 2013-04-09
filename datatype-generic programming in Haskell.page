@@ -3,3 +3,54 @@ categories: talk haskell
 ...
 
 *Andres Löh, 9 April 2013*
+---
+categories: talk haskell
+...
+
+*Andres Löh, 9 April 2013*
+
+Haskell programmers are encouraged to declare lots of datatypes. However, there is a cost associated with it: our custom types cannot be compared for equality, serialised, traversed etc. There is a solution for that: `deriving`, that works for:
+
+* `Eq`
+* `Ord`
+* `Enum`
+* `Bounded`
+* `Read`
+* `Show`
+
+plus GHC extensions:
+
+* `Functor`
+* `Traversable`
+* `Typeable`
+* `Data`
+* `Generic`
+
+That is a limited set. What about serialisation/deserialisation, where implementation of typeclasses is typically obvious (i.e. can be expressed as an algorithm) for a given datatype? Some solutions:
+
+* Template Haskell
+* `data-derive`
+* use GHC `Generic`
+
+The last option is what we'll discuss.
+
+## Usage
+
+Step 1: `deriving Generic`
+
+~~~ {.haskell}
+data MyType a b = Flag Bool 
+                | Combo (a, a) 
+                | Other b Int (MyType a a)
+  deriving Generic
+~~~
+
+Step 2: empty instance declaration for the class we want:
+
+~~~ {.haskell}
+import Data.Binary
+
+instance (Binary a, Binary b) => Binary (MyType a b)
+~~~
+
+## How `deriving` works
