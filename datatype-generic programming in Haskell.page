@@ -150,9 +150,9 @@ instance Generic [a] where
 
 thanks to non-recursion the conversion functions are non-recursive.
 
-But: what do we do with primitive types? We don't -- that's the limit to genericity -- we simply have to give instances for those types.
+But: how do we encode primitive types? We don't -- that's the limit to genericity: we simply have to give instances for those types.
 
-Given that, we can define generic functions on the 
+Given that, we can define generic equality:
 
 ~~~ {.haskell}
 class GEq -- ...
