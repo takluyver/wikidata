@@ -2,10 +2,7 @@
 categories: talk haskell
 ...
 
-*Andres Löh, 9 April 2013*
----
-categories: talk haskell
-...
+## Introduction
 
 *Andres Löh, 9 April 2013*
 
@@ -54,3 +51,103 @@ instance (Binary a, Binary b) => Binary (MyType a b)
 ~~~
 
 ## How `deriving` works
+
+~~~ {.haskell}
+class Eq' a where
+  eq :: a -> a -> Bool
+
+data Choice = I Int | C Char | B Choice Bool | S Choice
+
+instance Eq' Choice where
+  eq (I n1) (I n2) = eq n1 n2
+  eq (B c1 b1) (B c2 b2) = eq c1 c2 && eq b1 b2
+  -- ...
+  eq _      _      = False
+
+data Tree a = Leaf a | Node (Tree a) (Tree a)
+
+instance Eq' a => Eq' (Tree a) where
+ -- ....
+
+~~~
+
+Pattern:
+
+* the `eq` definition has as many cases as there are constructors + 1
+* it returns true if constructor has no arguments
+* recursion leads to recursion
+* parametrisation of types leads to parametrisation of functions
+
+How do we write a program to do this?
+
+## Interlude: type isomorphisms
+
+Types `A` and `B` are isomorphic if we have
+
+* `f :: A -> B`
+* `g :: B -> A`
+
+such that `f . g = id` and `g . f = id`.
+
+~~~ {.haskell}
+data SnocList a = Lin | SnocList a :> a
+
+listToSnocList [] = Lin
+iistToSnocList (x : xs) = listToSnocList xs :> x
+
+-- snocListToList analaguous
+~~~
+
+## Implementation of `Generic`
+
+The idea of datatype generic programming:
+
+Represent type `A` as isomorphic type `Rep A`. If a limited number of type constructors is used to build `Rep A` then functions defined on each of these type constructors can be lifted to work on teh original type `A`.
+
+What constructors do we use to encode an arbitrary data type?
+
+* `Either a b` encodes choice between two constructors; this can be nested to encode choice with more options
+* `(a, b)` encodes combination of two fields; this can be nested for arbitrary number of arguments
+* `()` can be used to represent constructors without arguments -- they don't carry any information
+
+for clarity, we'll use types isomorphic to these:
+
+~~~ {.haskell}
+data U = U
+data a :+: b = L a | R b
+data a:*: b = a :*: b
+~~~
+
+now we can specify generic:
+
+~~~ {.haskell}
+class Generic a where
+  type Rep a
+  from :: a -> Rep a
+  to   :: Rep a -> a
+~~~
+
+An instance for `Bool` would then look as follows:
+
+~~~ {.haskell}
+instance Generic Bool where
+  type Rep Bool = U :+: U
+
+  from False = L U
+  from True = R U
+
+  to (L U) = False
+  to (R U) = True
+~~~
+
+and for lists:
+
+~~~ {.haskell}
+instance Generic [a] where
+  type Rep [a] = U :+: (a :*: [a]) -- note: we are not recursively expanding!
+  -- ...
+~~~
+
+thanks to non-recursion the conversion functions are non-recursive.
+
+But: what do we do with primitive types? We don't -- that's the limit to genericity -- we simply have to give instances for those types.
