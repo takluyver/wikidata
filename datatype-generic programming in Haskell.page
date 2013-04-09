@@ -115,7 +115,7 @@ for clarity, we'll use types isomorphic to these:
 ~~~ {.haskell}
 data U = U
 data a :+: b = L a | R b
-data a:*: b = a :*: b
+data a :*: b = a :*: b
 ~~~
 
 now we can specify generic:
@@ -244,3 +244,20 @@ Look at the sources of `generic-deriving` package -- it contains re-implementati
 * safer, but less powerful than Template Haskell
 * for user of libraries: less boilerplate, easy to use
 * for library author: consider using this!
+
+Q: how does it relate to `Data` typeclass?
+
+A: it's an alternative solution, based on *[scrap your boilerplate]()*; note: `Data` cannot be derived using `Generic` (the only other example is `Typeable`). `Generic` is very well suited to automatic deriving, SYB is suitable for other use cases such as traversal.
+
+Q: does it support GADTs?
+
+A: no; i.e. it can be used for types that use GADT syntax as long as they are not actually GADTs.
+
+Q: will it ever work with kind polymorphism (`Generic`, `Generic1`, ...)?
+
+A: kind polymorphism is itself very new, so difficult to tell. But we can be hopeful: the representation used internally by GHC can be very complex and we don't have to worry about it.
+
+Q: can we write our own `Generic` instance instead of using `deriving Generic`?
+
+A: yes, and it's much safer than e.g. writing custom `Typeable` (GHC will prevent us from defining `Typeable` instances)
+
