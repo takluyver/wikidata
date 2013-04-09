@@ -207,7 +207,6 @@ additional type parameter on Rep is a technicality that allows us to derive clas
 Encoding meta-information:
 
 ~~~ {.haskell}
-
 data U1 a = U1
 -- ...
 newtype K1 t c a = 1 { unK1 :: c }
@@ -223,3 +222,25 @@ class Datatype d where
 ~~~
 
 We can adapt `GEq'` and `GEq` to this representation.
+
+Q: why do we have to write `deriving Generic`? Why is it not derived for every data type?
+
+A: it does not work for some (very few) data types; also, it leaks abstraction.
+
+Q: can we derive it for datatype defined elsewhere?
+
+A: yes, using `StandaloneDeriving`.
+
+## `Generic1`
+
+To cover classes such as `Functor`, `Traversable` or `Foldable` we need to use `Generic1` -- this is deriving as well.
+
+## Examples
+
+Look at the sources of `generic-deriving` package -- it contains re-implementation of all main type classes using `Generic`.
+
+## Conclusion
+
+* safer, but less powerful than Template Haskell
+* for user of libraries: less boilerplate, easy to use
+* for library author: consider using this!
