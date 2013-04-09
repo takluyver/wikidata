@@ -151,3 +151,75 @@ instance Generic [a] where
 thanks to non-recursion the conversion functions are non-recursive.
 
 But: what do we do with primitive types? We don't -- that's the limit to genericity -- we simply have to give instances for those types.
+
+Given that, we can define generic functions on the 
+
+~~~ {.haskell}
+class GEq -- ...
+
+intance (GEq a, GEq b) => GEq (a :+: b) where
+  geq (L x) (L y) = geq x y
+  geq (R x) (R y) = geq x y
+  geq _     _     = False
+
+instance (GEq a, GEq b) => GEq (a :*: b) where
+  geq (a1 :*: b1) (a2 :*: b2) = geq a1 a2 && geq b1 b2
+
+instance GEq U where
+  geq U = True
+~~~
+
+What remains is lifting the generic functions to function that works on the original type:
+
+~~~ {.haskell}
+defaultEq :: (Generic a Geq (Rep a)) => a -> a -> Bool
+defaultEq x y = geq (from x) (from y)
+~~~
+
+now:
+
+~~~ {.haskell}
+instance GEq Bool where
+  geq = defaultEq
+
+instance GEq [a] where
+  geq = defaultEq
+~~~
+
+using `DefaultSignatures` language extension we can end up with empty instance declarations.
+
+## Advantages
+
+We have replaced tedious work of defining equality for every type with defining representation for every type. But thisiven a representation, we can define many generic functions that operate on this single representation.
+
+## `DeriveGeneric`
+
+We can use `DeriveGeneric`, but we'll end up with more complicated representation than suggested above...
+
+~~~ {.haskell}
+class Generic a where
+  type Rep a : * -> *
+  -- ...
+~~~
+
+additional type parameter on Rep is a technicality that allows us to derive classes parameterised by type constructors, such as Functor. We can see actual type using `:kind! (Rep (Tree ())))` in ghci -- it has the original structure, but enriched with meta-information that says e.g. whether record syntax has been used. This all enables extra features that we don't need for generic equality, but we would need e.g. for `Show` (constructor names, record syntax etc.).
+
+Encoding meta-information:
+
+~~~ {.haskell}
+
+data U1 a = U1
+-- ...
+newtype K1 t c a = 1 { unK1 :: c }
+data P -- marks parameters
+data R -- marks other occurrences
+
+newtype M1 t i f a = M1 { unM1 : f a }
+
+class Datatype d where
+  datatypeName :: w d f a -> String
+  moduleName :: w d f a -> String
+-- ...
+~~~
+
+We can adapt `GEq'` and `GEq` to this representation.
