@@ -1,0 +1,8 @@
+A technique used e.g. in QuickCheck that allows evaluation of functions with arbitrary number of arguments, as long as the types of these arguments are members of specific class. Example:
+
+https://gist.github.com/mmakowski/5365695
+
+<script src="https://gist.github.com/mmakowski/5365695.js"></script>
+
+
+ 
