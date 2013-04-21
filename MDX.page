@@ -1,0 +1,15 @@
+A query language for [OLAP cubes](OLAP cube), syntax resembles SQL. A query defines the dimensions to use as rows and columns of the report (`SELECT` clause), as well as the slice to report on (`WHERE` clause).
+
+## Example
+
+~~~ {.sql}
+SELECT 
+  [Customers].[Geography].[Region].allMembers on COLUMNS,
+  [Product].allMembers on ROWS
+FROM Sales
+WHERE [Time].[Year].[2010]
+~~~
+
+## References
+
+* [icCube documentation](http://www.iccube.com/support/documentation/mdx/index.html)
