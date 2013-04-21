@@ -1,8 +1,10 @@
-A piece of software that allows reporting on data that is categorised along multiple dimensions. Each piece of data (*measure*) is has a number of attributes, whose values are members of dimensions. For example given a fact:
+## Overview
+
+A piece of software that allows reporting on data that is categorised along multiple dimensions. Each piece of data (*measure*) is has a number of attributes, whose values are members of dimensions (axes). For example given a fact:
 
 a *£13m* *GBP* *swap* maturing in *August 2020* where the counterparty is *Vodafone* is worth *-£3k*
 
-if we take *-£3k* as the measure, we can distinguis the following dimensions:
+if we take *-£3k* as the measure, we can distinguis the following five dimensions:
 
 * nominal (£13m)
 * currency (GBP)
@@ -10,3 +12,36 @@ if we take *-£3k* as the measure, we can distinguis the following dimensions:
 * maturity (August 2020)
 * counterparty (Vodafone)
 
+The values of dimensions can be further organised into hierarchies, e.g. 
+
+~~~ {.asciiart}
+2020
+|
++- Q3
+   |
+   +- August
+~~~
+
+## Terminology
+
+measure
+:   an atomic, scalar value that is categorised across a number of dimensions
+dimension
+:   a label assigned to one axis of the cube
+slicing
+:   selecting a specific value of one dimension
+dicing
+:   selecting a specific value (or a range of values?) of a number of dimensions
+drill down
+:   navigation from the summarised figures to details
+roll up
+:   summarising detailed figures into higher level figures, e.g. along the dimension hierarchy, but can also be done according to a custom formula
+
+## Querying
+
+A de-facto standard for querying OLAP cubes is [MDX]().
+
+## References
+
+* Wikipedia
+* icCube documentation
