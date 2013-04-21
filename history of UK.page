@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="801"
-   height="1264.0001"
+   height="2224"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
@@ -25,8 +25,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="423.82304"
-     inkscape:cy="130.50934"
+     inkscape:cx="392.82569"
+     inkscape:cy="4.7950797"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -56,42 +56,42 @@
        spacingx="16px"
        spacingy="16px"
        originx="7.4475099e-07px"
-       originy="1200px" />
+       originy="2160.0001px" />
     <sodipodi:guide
        orientation="1,0"
-       position="7.4475099e-07,944.00002"
+       position="7.4475099e-07,1904.0001"
        id="guide3005" />
     <sodipodi:guide
        orientation="1,0"
-       position="144,1264"
+       position="144,2224.0001"
        id="guide3009" />
     <sodipodi:guide
        orientation="1,0"
-       position="23.486048,1301.5203"
+       position="23.486048,2261.5204"
        id="guide3214" />
     <sodipodi:guide
        orientation="1,0"
-       position="48.000001,976.00002"
+       position="48.000001,1936.0001"
        id="guide3216" />
     <sodipodi:guide
        orientation="1,0"
-       position="800,880.00002"
+       position="800,1840.0001"
        id="guide3218" />
     <sodipodi:guide
        orientation="1,0"
-       position="15.657365,823.7182"
+       position="15.657365,1783.7183"
        id="guide3222" />
     <sodipodi:guide
        orientation="1,0"
-       position="64.000001,1232"
+       position="64.000001,2192.0001"
        id="guide3469" />
     <sodipodi:guide
        orientation="1,0"
-       position="39.82143,839.91073"
+       position="39.82143,1799.9108"
        id="guide3552" />
     <sodipodi:guide
        orientation="1,0"
-       position="496,848.00002"
+       position="496,1808.0001"
        id="guide4380" />
   </sodipodi:namedview>
   <metadata
@@ -111,6 +111,13 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(7.4475099e-7,-988.36218)">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#858585;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
+       id="rect4346-3-2-3-6-0-2-1-2"
+       width="304"
+       height="32"
+       x="496"
+       y="2828.3623" />
     <rect
        style="fill:#784421;fill-opacity:1"
        id="rect3176-9-4"
@@ -198,41 +205,7 @@
        x="144"
        y="1084.3622"
        id="text2995-5"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan2997-1"
-         x="144"
-         y="1084.3622"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Sans;-inkscape-font-specification:Sans">first farmers arrive from south-east Europe</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="64"
-       y="1116.3622"
-       id="text3011-4-4"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="64"
-         y="1116.3622"
-         id="tspan3084">2000 BC</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="64"
-       y="1340.3622"
-       id="text3011-4-4-7"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="64"
-         y="1340.3622"
-         id="tspan3084-0">55 BC</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-1049.2118"
-       y="16"
-       id="text3109"
-       sodipodi:linespacing="125%"
+     sodipodi:linespacing="125%"
        transform="matrix(0,-1,1,0,0,0)"><tspan
          sodipodi:role="line"
          id="tspan3111"
@@ -800,114 +773,7 @@
          sodipodi:role="line"
          x="64"
          y="2093.8623"
-         id="tspan3308-2-8-0-5-5-5-4-2-2-6" /></text>
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="144"
-       y="2076.3623"
-       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2"
-         x="144"
-         y="2076.3623"
-         style="font-style:normal">Wars of the Roses begin</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="64"
-       y="2108.3623"
-       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="64"
-         y="2108.3623"
-         id="tspan4773">1485</tspan><tspan
-         sodipodi:role="line"
-         x="64"
-         y="2125.8623"
-         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2" /></text>
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="144"
-       y="2108.3623"
-       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6"
-         x="144"
-         y="2108.3623"
-         style="font-style:normal">Battle of Bosworth Field</tspan></text>
-    <rect
-       style="fill:#782121;fill-opacity:1"
-       id="rect3176-9-4-7-5-7-4-2-3"
-       width="24.513947"
-       height="64.000053"
-       x="23.486048"
-       y="2108.3621" />
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-2139.7405"
-       y="39.82143"
-       id="text3109-4-6-1-7-9-5-7-5"
-       sodipodi:linespacing="125%"
-       transform="matrix(0,-1,1,0,0,0)"><tspan
-         sodipodi:role="line"
-         id="tspan3111-9-4-2-4-8-8-9-1"
-         x="-2139.7405"
-         y="39.82143"
-         style="font-size:10px;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff"
-         rotate="0 0 0 0 0 0 0 0 0 0">Henry VII</tspan></text>
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#782121;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
-       id="rect4346-3-2"
-       width="304"
-       height="32"
-       x="496"
-       y="2124.3621" />
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="512"
-       y="2140.3621"
-       id="text2995-5-7-1-4-4-7-6-4-6-9"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="512"
-         y="2140.3621"
-         style="font-size:10px"
-         id="tspan4585-1">centralised power and built up financial reserves</tspan></text>
-    <path
-       style="fill:#0044aa;stroke:#782121;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
-       d="m 48,2140.3622 448,0"
-       id="path4382-8-1"
-       inkscape:connector-curvature="0" />
-    <rect
-       style="fill:#a02c2c;fill-opacity:1"
-       id="rect3176-9-4-7-5-7-4-2-3-5"
-       width="24.513954"
-       height="79.999947"
-       x="23.486048"
-       y="2172.3623" />
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-2210.1692"
-       y="39.82143"
-       id="text3109-4-6-1-7-9-5-7-5-7"
-       sodipodi:linespacing="125%"
-       transform="matrix(0,-1,1,0,0,0)"><tspan
-         sodipodi:role="line"
-         id="tspan3111-9-4-2-4-8-8-9-1-7"
-         x="-2210.1692"
-         y="39.82143"
-         style="font-size:10px;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff"
-         rotate="0 0 0 0 0 0 0 0 0 0 0">Henry VIII</tspan></text>
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#a02c2c;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6" /></text>2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
        id="rect4346-3-2-3"
        width="304"
        height="32"
@@ -927,7 +793,7 @@
          id="tspan4585-1-4">married six times</tspan></text>
     <path
        style="fill:#0044aa;stroke:#a02c2c;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
-       d="m 47.999998,2188.3622 448.000002,0"
+       d="m 47.999997,2172.3623 448.000003,0"
        id="path4382-8-1-5"
        inkscape:connector-curvature="0" />
     <text
@@ -984,5 +850,558 @@
          x="144"
          y="2204.3623"
          style="font-style:normal">separation from the Church of Rome</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="2332.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2332.3623"
+         id="tspan4773-4-14">1588</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2349.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="2332.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4"
+         x="144"
+         y="2332.3623"
+         style="font-style:normal">defeat of the Spanish Armada</tspan></text>
+    <rect
+       style="fill:#c83737;fill-opacity:1"
+       id="rect3176-9-4-7-5-7-4-2-3-5-2"
+       width="24.513954"
+       height="79.999947"
+       x="23.486046"
+       y="2268.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-2306.1692"
+       y="39.821434"
+       id="text3109-4-6-1-7-9-5-7-5-7-0"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3111-9-4-2-4-8-8-9-1-7-0"
+         x="-2306.1692"
+         y="39.821434"
+         style="font-size:10px;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff"
+         rotate="0 0 0 0 0 0 0 0 0 0 0 0">Elizabeth I</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#c83737;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
+       id="rect4346-3-2-3-6"
+       width="304"
+       height="32"
+       x="496"
+       y="2284.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="512"
+       y="2300.3623"
+       id="text2995-5-7-1-4-4-7-6-4-6-9-4-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="512"
+         y="2300.3623"
+         style="font-size:10px"
+         id="tspan4585-1-4-9">popular, cooperated well with the Parliament</tspan></text>
+    <path
+       style="fill:#0044aa;stroke:#c83737;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
+       d="m 47.999997,2300.3623 448.000003,0"
+       id="path4382-8-1-5-7"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#e9c6af;fill-opacity:1"
+       id="rect3176-9-4-7-5-7-9-6"
+       width="23.486048"
+       height="223.99995"
+       x="-4.8950199e-07"
+       y="1884.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1991.9337"
+       y="15.657364"
+       id="text3109-4-6-1-7-9-3-6"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3111-9-4-2-4-8-0-6"
+         x="-1991.9337"
+         y="15.657364"
+         style="text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1"
+         rotate="0 0 0 0 0 0 0 0 0 0 0 0">Middle Ages</tspan></text>
+    <rect
+       style="fill:#006680;fill-opacity:1"
+       id="rect3176-9-4-7-5-7-4-2-3-5-2-4"
+       width="24.513954"
+       height="63.999958"
+       x="23.486044"
+       y="2364.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-2397.1692"
+       y="39.82143"
+       id="text3109-4-6-1-7-9-5-7-5-7-0-1"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3111-9-4-2-4-8-8-9-1-7-0-0"
+         x="-2397.1692"
+         y="39.82143"
+         style="font-size:10px;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff"
+         rotate="0 0 0 0 0 0 0 0 0 0">Charles I</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#006680;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
+       id="rect4346-3-2-3-6-0"
+       width="304"
+       height="32"
+       x="496"
+       y="2364.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="512"
+       y="2380.3623"
+       id="text2995-5-7-1-4-4-7-6-4-6-9-4-3-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="512"
+         y="2380.3623"
+         style="font-size:10px"
+         id="tspan4585-1-4-9-1">introduced a revised Prayer Book</tspan></text>
+    <path
+       style="fill:#0044aa;stroke:#006680;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
+       d="m 48,2380.3623 448,0"
+       id="path4382-8-1-5-7-4"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#ffccaa;fill-opacity:1"
+       id="rect3176-9-4-7-5-7-9-6-6"
+       width="23.486048"
+       height="511.99988"
+       x="0"
+       y="2108.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-2380.3623"
+       y="15.657364"
+       id="text3109-4-6-1-7-9-3-6-0"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3111-9-4-2-4-8-0-6-5"
+         x="-2380.3623"
+         y="15.657364"
+         style="text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1"
+         rotate="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0">Tudors and Stuarts</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="2396.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2396.3623"
+         id="tspan4773-4-14-2">1642</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2413.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="2396.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4"
+         x="144"
+         y="2396.3623"
+         style="font-style:normal">Civil War begins</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="2428.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2428.3623"
+         id="tspan4773-4-14-2-7">1649</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2445.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="2428.3623stroke:none;font-family:Sans"
+       x="64"
+       y="2684.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2684.3623"
+         id="tspan5335-4">1690</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2701.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="2684.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2"
+         x="144"
+         y="2684.3623"
+         style="font-style:normal">Battle of the Boyne</tspan></text>
+    <rect
+       style="fill:#d45500;fill-opacity:1"
+       id="rect3176-9-4-7-5-7-4-2-3-5-2-4-6-6"
+       width="24.513954"
+       height="111.99992"
+       x="23.486053"
+       y="2620.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-2674.3623"
+       y="39.82143"
+       id="text3109-4-6-1-7-9-5-7-5-7-0-1-8-1"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3111-9-4-2-4-8-8-9-1-7-0-0-2-6"
+         x="-2674.3623"
+         y="39.82143"
+         style="font-size:10px;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff"
+         rotate="0 0 0 0 0 0 0 0 0 0 0">William II</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#d45500;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
+       id="rect4346-3-2-3-6-0-2-1"
+       width="304"
+       height="32"
+       x="496"
+       y="2620.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="512"
+       y="2636.3623"
+       id="text2995-5-7-1-4-4-7-6-4-6-9-4-3-7-4-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="512"
+         y="2636.3623"
+         style="font-size:10px"
+         id="tspan5405">was invited to invade England and met no resistance</tspan></text>
+    <path
+       style="fill:#0044aa;stroke:#d45500;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 2;stroke-dashoffset:0"
+       d="m 47.999997,2636.3623 448.000003,0"
+       id="path4382-8-1-5-7-4-4-4"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="2652.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2652.3623"
+         id="tspan5335-4-4">1689</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2669.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-6" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="2652.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+        0.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2940.3623"
+         id="tspan5335-4-3-5-9-4-1-4-9">1853-56</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2957.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-67-5-0-8-3-4-9" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="2940.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-9-6-7-8-0-8-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2-5-4-4-8-7-6-6"
+         x="144"
+         y="2940.3623"
+         style="font-style:normal">Crimean War</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5800"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-7.4475099e-7,988.36218)"><flowRegion
+         id="flowRegion5802"><rect
+           id="rect5804"
+           width="860"
+           height="204.28572"
+           x="-3.5714285"
+           y="1896.1429" /></flowRegion><flowPara
+         id="flowPara5806"></flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="2908.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="2908.3623"
+         id="tspan5335-4-3-5-9-4-1-4-7">1832</tspan><ttheir own property</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="3004.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-3-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3004.3623"
+         id="tspan5335-4-3-5-9-4-1-4-9-1">1899-1902</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3021.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-67-5-0-8-3-4-9-2" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="3004.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-9-6-7-8-0-8-7-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2-5-4-4-8-7-6-6-5"
+         x="144"
+         y="3004.3623"
+         style="font-style:normal">The Boer War</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="3036.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-3-3-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3036.3623"
+         id="tspan5335-4-3-5-9-4-1-4-9-1-9">1914-18</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3053.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-67-5-0-8-3-4-9-2-5" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="3036.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-9-6-7-8-0-8-7-7-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2-5-4-4-8-7-6-6-5-9"
+         x="144"
+         y="3036.3623"
+         style="font-style:normal">First World War</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="3068.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-3-3-0-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3068.3623"
+         id="tspan5335-4-3-5-9-4-1-4-9-1-9-3">1922</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3085.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-67-5-0-8-3-4-9-2-5-2" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="3068.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-9-6-7-8-0-8-7-7-9-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2-5-4-4-8-7-6-6-5-9-9"
+         x="144"
+         y="3068.3623"
+         style="font-style:normal">the partition of Ireland</tspan></text>
+    <rect
+       style="fill:#fff4ed;fill-opacity:1"
+       id="rect3176-9-4-7-5-7-9-6-6-3-8"
+       width="23.486048"
+       height="191.99995"
+       x="0"
+       y="3020.3623" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-3116.3623"
+       y="15.657364"
+       id="text3109-4-6-1-7-9-3-6-0-2-4"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3111-9-4-2-4-8-0-6-5-5-0"
+         x="-3116.3623"
+         y="15.657364"
+         style="text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1"
+         rotate="0 0 0 0 0 0 0 0 0 0 0 0 0">20th Century</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="3100.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-3-3-0-0-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3100.3623"
+         id="tspan5335-4-3-5-9-4-1-4-9-1-9-3-0">1929</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3117.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-67-5-0-8-3-4-9-2-5-2-2" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="3100.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-9-6-7-8-0-8-7-7-9-3-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2-5-4-4-8-7-6-6-5-9-9-6"
+         x="144"
+         y="3100.3623"
+         style="font-style:normal">the Great Depression</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="3132.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-3-3-0-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3132.3623"
+         id="tspan5335-4-3-5-9-4-1-4-9-1-9-4">1939-45</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3149.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-67-5-0-8-3-4-9-2-5-6" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="3132.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-9-6-7-8-0-8-7-7-9-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2-5-4-4-8-7-6-6-5-9-2"
+         x="144"
+         y="3132.3623"
+         style="font-style:normal">Second World War</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="3164.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-3-3-0-0-5-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3164.3623"
+         id="tspan5335-4-3-5-9-4-1-4-9-1-9-3-0-7">1948</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3181.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-67-5-0-8-3-4-9-2-5-2-2-5" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="3164.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-9-6-7-8-0-8-7-7-9-3-5-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2-5-4-4-8-7-6-6-5-9-9-6-8"
+         x="144"
+         y="3164.3623"
+         style="font-style:normal">establishment of the NHS</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="64"
+       y="3196.3623"
+       id="text3011-4-4-7-4-0-4-0-0-2-0-7-9-5-1-3-4-1-4-5-2-4-7-1-7-9-4-8-5-2-7-6-3-3-0-0-5-1-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3196.3623"
+         id="tspan5335-4-3-5-9-4-1-4-9-1-9-3-0-7-4">1973</tspan><tspan
+         sodipodi:role="line"
+         x="64"
+         y="3213.8623"
+         id="tspan3308-2-8-0-5-5-5-4-2-2-6-2-7-4-8-8-5-7-9-9-2-67-5-0-8-3-4-9-2-5-2-2-5-4" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144"
+       y="3196.3623"
+       id="text2995-5-7-1-4-4-7-6-0-2-6-6-7-8-0-0-7-5-4-8-1-1-0-0-7-9-6-7-8-0-8-7-7-9-3-5-7-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997-1-2-6-7-5-8-9-1-6-9-8-9-2-2-6-8-4-4-4-0-4-4-3-2-5-4-4-8-7-6-6-5-9-9-6-8-5"
+         x="144"
+         y="3196.3623"
+         style="font-style:normal">entry into EEC</tspan></text>
   </g>
 </svg>
