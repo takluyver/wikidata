@@ -1,0 +1,12 @@
+A piece of software that allows reporting on data that is categorised along multiple dimensions. Each piece of data (*measure*) is has a number of attributes, whose values are members of dimensions. For example given a fact:
+
+a *£13m* *GBP* *swap* maturing in *August 2020* where the counterparty is *Vodafone* is worth *-£3k*
+
+if we take *-£3k* as the measure, we can distinguis the following dimensions:
+
+* nominal (£13m)
+* currency (GBP)
+* product type (swap)
+* maturity (August 2020)
+* counterparty (Vodafone)
+
