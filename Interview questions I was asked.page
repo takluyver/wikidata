@@ -30,16 +30,16 @@ Collection classes assume this relationship. If we had two objects for which `eq
 
 **Describe the class hierarchy of exceptions.**
 
-  * `Object`
+* `Object`
     * `Throwable` (class, not interface)
-      * `Error` -- for JVM error conditions (unchecked)
-      * `Exception`
-        * `RuntimeException` -- unchecked exceptions
-          * `NullPointerException`
-          * `IllegalArgumentException`
-          * ...
-        * `IOException`
-        * ...
+        * `Error` -- for JVM error conditions (unchecked)
+        * `Exception`
+            * `RuntimeException` -- unchecked exceptions
+                * `NullPointerException`
+                * `IllegalArgumentException`
+                * ...
+            * `IOException`
+            * ...
 
 **What does `final` mean?**
 
@@ -67,11 +67,11 @@ Typically it's implemented as returning internal address of the object in the me
 
 **What is immutability? What are its advantages/disadvantages?**
 
-Immutable values (object) can't be modified once constructed, i.e. there are no setters. They help in understanding the code and in a concurrent setting, where they don't have to be guarded by locks. Disadvantage is performance impact of copying which is required when a changed value needs to be created.
+Immutable values (object) can't be modified once constructed, i.e. there are no setters. They help in reasoning about the code and in a concurrent setting, where they don't have to be guarded by locks. Disadvantage is performance impact of copying which is required when a changed value needs to be created.
 
 **How do you implement an immutable class?**
 
-Make fields final, provide a constructor initialising all the fields and getters for them. In addition we might want to store a (deep) copy of mutable values in the fields and make setters return (deep) copies of them.
+Make fields final, provide a constructor initialising all the fields and getters for them. In addition we might want to store a (deep) copy of mutable values in the fields and make getters return (deep) copies of them.
 
 #### Serialisation
 
