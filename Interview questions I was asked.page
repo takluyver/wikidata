@@ -284,9 +284,9 @@ TODO
 ~~~ { .java }
 <T> Collection<T> intersection(Collection<T> a, Collection<T> b) {
   final Map<T, Pair<Integer>> counts = new HashMap<T, Pair<Integer>>();
-  for (T t: a) inc(counts, t, 0); * increases the value of first element of 
-                                  * pair at T, or inserts (1, 0) if pair doesn't exist)
-  for (T t: b) inc(counts, t, 1); * same as above, but for the second element
+  for (T t: a) inc(counts, t, 0); // increases the value of first element of 
+                                  // pair at T, or inserts (1, 0) if pair doesn't exist)
+  for (T t: b) inc(counts, t, 1); // same as above, but for the second element
   final List<T> result = new LinkedList<T>();
   for (Map.Entry<T, Pair<Integer>> entry: counts.entrySet() {
     final Pair<Int> count = entry.getValue()
