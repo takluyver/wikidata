@@ -85,7 +85,7 @@ Serialization doesn't make sense for some things, like threads, streams or socke
 
 **What does `Externalizable` interface provide on top of `Serializable`?**
 
-R: `Externalizable` is for cases where we want to have complete control over how the object is serialised. It provides `writeExternal()` and `readExternal()` methods.
+R: `Externalizable` is for cases where we want to have complete control over how the object is serialised. It provides `writeExternal()` and `readExternal()` methods (although, with `Serializable` it's still possible to customise serialisation by overriding `writeObject` and `readObject`).
 
 #### I/O
 
