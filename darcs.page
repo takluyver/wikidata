@@ -1,0 +1,77 @@
+*Ganesh Sittampalam, London HUG 24 April 2013*
+
+* Around 2008 most Haskell projects were stored in darcs, nowadays most have moved to git.
+* Patches as first-class objects, unlike git or mercurial, which are based on source trees
+* Is it worth carrying on with git around? Yes, patches give you model of work that other VCS don't allow.
+* Currently working on darcs/git bridge
+* Practical difference patches make: cherry-picking is cheap and reversible, merges are deterministic
+* What's missing? Multi-head repos (can't switch between branches), good conflict handling, short revision ids, github, tools, users, speed
+* Is not well suited for huge repositories
+* Merge complexity: if there are 100 merges on branch one and 100 on branch b, the amount of work required to merge will be 100 * 100
+* New in 2.10: `rebase` 
+* Patch types: rename directory, add file, edit file, replace text, in the future perhaps indent etc.
+
+## Sample session
+
+~~~
+darcs init
+darcs add demo.hs
+darcs record
+cd ..
+darcs get repo1 repo2
+darcs obliterate
+darcs pull ../repo1
+cd ../repo1
+darcs replace printMessage outputMessage demo.hs
+cd ../repo2
+darcs pull ../repo1   # choose rename       
+darcs pull ../repo1   # choose the previous change
+~~~
+
+Darcs got the renamed method correctly, even though the original order of operations was different! Darcs rewrote the patch to user renamed name. This is what we want in most cases, but can lead to errors due to darcs not being aware of lexical scope (`replace` is dummy text replacement).
+
+Interactive hunk edit: allows editing changes so that they make semantic sense. Darcs attempts to work out which edits belong together.
+
+Darcs repo does not contain all patches that are available in upstream -- only ones that have been pulled.
+
+## What is a darcs patch?
+
+A description of how to change the repository. All patches are reversible, e.g. "remove X and add Y at line 3" vs. "remove Y and add X at line 3". Merge algorithm is part of patch type, so merges are dterministic. Also, merging is associative: (a merge b) merge c = a merge (b merge c).
+
+Internally the inverse of merging is commuting:
+
+~~~ {.asciiart}
+
+     
+Tree A - - - - -> ?
+ ^       B'        ^
+ | A            A'
+ |       B         |
+base ---------> Tree B
+                
+
+intermediate ---> final
+ ^                ^
+ |
+ |                |
+base - - - - ->   ?
+
+~~~
+
+There are some laws which are believed to be true (mostly around commutativity, can be nicely represented on diagrams), but there is no formal "patch theory" (sadly).
+
+## Use of Haskell
+
+Use GADTs and phantom types for providing patch context:
+
+~~~ {.haskell}
+data Patch a b where
+  Null :: Patch a a
+  Seq :: Patch a b -> Patch b c -> Patch a c
+
+data PatchPair a b where
+  Pair :: Patch a b -> Patch b c -> PatchPair a c  
+
+commute :: PatchPair a c -> Maybe (PatchPair a c)
+~~~
+
