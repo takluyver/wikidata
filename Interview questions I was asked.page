@@ -333,4 +333,4 @@ def waysToClimb(steps: int) = steps match {
 }
 ~~~
 
-i.e. a Fibonacci sequence?
+i.e. a Fibonacci sequence!
