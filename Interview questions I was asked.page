@@ -155,7 +155,7 @@ It's unsafe because the increment is not atomic. Can use `synchronized` on the m
 
 A service run by JVM which reclaims memory used by objects that are no longer required. On each collection objects which are reachable from roots are marked as used, other objects are known to be not used. The roots are all static fields of all loaded classes and the stacks of all live threads.
 
-** How is the heap structured**
+**How is the heap structured?**
 
 There are generations. Objects are created in Eden space, then if they don't get collected for a certain number of collection cycles, get promoted to the survivor and then tenured generations. Collection of eden is done very frequently and without any compaction, GC of tenured objects moves them around to defragment the heap so is more expensive and runs less frequently.
 
@@ -332,3 +332,5 @@ def waysToClimb(steps: int) = steps match {
   case _ => waysToClimb(steps - 1) + waysToClimb(steps - 2)
 }
 ~~~
+
+i.e. a Fibonacci sequence?
