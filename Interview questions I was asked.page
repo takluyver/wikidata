@@ -333,4 +333,4 @@ def waysToClimb(steps: int) = steps match {
 }
 ~~~
 
-i.e. a Fibonacci sequence!
+i.e. a Fibonacci sequence, so could actually use the closed form solution for constant-time and space!
