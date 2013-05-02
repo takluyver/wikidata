@@ -1,0 +1,14 @@
+A reversible text permutation that increases the grouping of same characters, which makes the text easier to compress. Based on a simple idea: all rotations of the text are sorted alphabetically and then the last character is taken as the permutation. 
+
+* it groups the characters because (in longer bodies of text) the same pairs tend to occur next to each other; e.g. every time we have a word "the" and the rotations "he...t" will, after sorting, appear next to each other
+* it is reversible, because the output gives us the last column of the table of rotations; we can get the first column by sorting the characters, and this will give us all the pairs of two adjacent characters in the text, because the table contained all rotations (TODO: why is it unambiguous?)
+
+## Usage
+
+Daniel Peebles (@copumpkin) wrote these Haskell one-liners that perform compression/decompression using BWT:
+
+~~~ {.haskell}
+compress = map(length&&&head).group.(last<$>).sort.init.(zipWith(++)<$>tails<*>inits).(Nothing:).(Just<$>)
+
+decompress = catMaybes.head.foldr((sort.).zipWith(:))(repeat[]).(replicate=<<length).(uncurry replicate=<<)
+~~~
