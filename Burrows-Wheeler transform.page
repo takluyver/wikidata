@@ -8,7 +8,9 @@ A reversible text permutation that increases the grouping of same characters, wh
 Daniel Peebles (@copumpkin) wrote these Haskell one-liners that perform compression/decompression using BWT:
 
 ~~~ {.haskell}
-compress = map(length&&&head).group.(last<$>).sort.init.(zipWith(++)<$>tails<*>inits).(Nothing:).(Just<$>)
+compress = 
+  map(length&&&head).group.(last<$>).sort.init.(zipWith(++)<$>tails<*>inits).(Nothing:).(Just<$>)
 
-decompress = catMaybes.head.foldr((sort.).zipWith(:))(repeat[]).(replicate=<<length).(uncurry replicate=<<)
+decompress = 
+  catMaybes.head.foldr((sort.).zipWith(:))(repeat[]).(replicate=<<length).(uncurry replicate=<<)
 ~~~
