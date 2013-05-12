@@ -1,11 +1,12 @@
 ## Setup
 
-* `sudo apt-get install nvidia-cuda-toolkit`
-* `cabal install accelerate-cuda`
+~~~ 
+sudo apt-get install nvidia-cuda-toolkit
+export LDFLAGS=-L/usr/lib/nvidia-313-updates
+cabal install accelerate-cuda
+~~~
 
 ### Troubleshooting
 
 * `cabal install` fails a number of times when it can't find compiled programs such as `happy`, `alex` and `c2hs`. Needed to `cabal install` these separately.
-* `configure: error: could not find CUDA driver library` -- stuck at this currently
-
-So far figured out that when building CUDA samples I needed to set `LD_PATH` to `/usr/lib/nvidia-313-current`, because that's where `libcuda.so` is on my system. Setting `--extra-lib-paths` on cabal hasn't helped though.
+* `configure: error: could not find CUDA driver library` -- happened when `/usr/lib/nvidia-313-current` (the directory containing `libcuda.so`) wasn't added to linker paths.
