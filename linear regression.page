@@ -1,0 +1,16 @@
+A statistical technique for predicting values of random variable assuming its relationship with underlying variable is linear.
+
+## in R
+
+A simple example, after [http://msenux.redwoods.edu/math/R/regression.php]():
+
+~~~ { .r }
+age <- 18:29
+height <- c(76.1, 77, 78.1, 78.2, 78.8, 79.7, 79.9, 81.1, 81.2, 81.8, 82.8, 83.5)
+# find coefficients:
+line = lm(height ~ age)
+# plot the points:
+plot(age, height)
+# plot the line:
+abline(line)
+~~~
