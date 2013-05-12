@@ -1,0 +1,9 @@
+## Setup
+
+* `sudo apt-get install nvidia-cuda-toolkit`
+* `cabal install accelerate-cuda`
+
+### Troubleshooting
+
+* `cabal install` fails a number of times when it can't find compiled programs such as `happy`, `alex` and `c2hs`. Needed to `cabal install` these separately.
+* `configure: error: could not find CUDA driver library` -- stuck at this currently
