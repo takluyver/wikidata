@@ -1,0 +1,61 @@
+Getting Access
+--------------
+
+get https://github.com/michaelliao/githubpy
+
+~~~ { .python }
+import github
+
+gh = github.GitHub(username='user', password='pwd')
+~~~ 
+
+List of Repos
+-------------
+
+~~~ { .python }
+repos = gh.repositories().get()
+repos = gh.repositories().get(since=repos1[-1]['id'])
+~~~ 
+
+extract:
+
+* `id`
+* `name`
+* `full_name`
+* `fork`
+* `description`
+* `private`
+* `url`
+* `owner.id`
+* `owner.login`
+* `owner.type`
+
+Commits In a Repo
+---------------
+
+~~~ { .python }
+commits = gh.repos('collectiveidea', 'acts_as_geocodable').commits().get(per_page='100')
+commits = gh.repos('collectiveidea', 'acts_as_geocodable').commits().get(per_page='100', sha=commits[-1]['sha'])
+~~~
+
+Diffs for a Commit
+------------------
+
+Will probably be too expensive, entails downloading patches for every file in every commit!
+
+~~~ { .python }
+diff = gh.repos('collectiveidea', 'acts_as_geocodable').compare('%s...%s' % (commits[-1]['sha'], commits[-2]['sha'])).get()
+~~~
+
+* `files[*].filename`
+* `files[*].changes`
+* `files[*].deletions`
+* `files[*].additions`
+* `files[*].status`
+
+Files In a Repo
+---------------
+
+~~~
+GET /repos/:owner/:repo/git/trees/:sha?recursive=1
+~~~
