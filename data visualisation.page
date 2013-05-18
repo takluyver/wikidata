@@ -1,7 +1,7 @@
 ## Programmatic tools
 
-[D3.js](http://d3js.org/) -- a library for data-driven document transformations, allows arbitrary modification of HTML, SVG etc. documents based on data.
+* [D3.js](http://d3js.org/) -- a library for data-driven document transformations, allows arbitrary modification of HTML, SVG etc. documents based on data.
 
 ## Graphical tools
 
-* [Gephi](https://gephi.org/)
+* [Gephi](https://gephi.org/) -- graph analysis and visualisation tool.
