@@ -11,3 +11,4 @@ hadoop dfs -copyToLocal /user/hadoop/resultsdir localdir
 ## References
 
 * [Data Science course wiki](https://class.coursera.org/datasci-001/wiki/view?page=awssetup)
+* [Another university course instructions](http://avid.cs.umass.edu/courses/645/f2012/hw/hw3files/aws.html)
