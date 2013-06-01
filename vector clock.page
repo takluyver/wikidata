@@ -1,0 +1,18 @@
+In a distributed system, a mechanism for detecting conflicts. Each data item is annotated with a vector specifying last update by each server that handled the item:
+
+~~~ {.dot}
+digraph vectorclock {
+  node [shape=box];
+
+  "[]" -> "[(s1, t0)]" [label="s1 updates at time t0"];
+  "[(s1, t0)]" -> "[(s1, t1)]" [label="s1 updates at time t1"];
+  "[(s1, t1)]" -> "[(s1, t1), (s2, t2)]" [label="s2 updates at time t2"];
+  "[(s1, t1)]" -> "[(s1, t1), (s3, t3)]" [label="s3 updates at time t3"];
+}
+~~~
+
+It is now possible to implement a mechanism that will detect conflicting updates and make them consistent, e.g. by choosing the more recent write.
+
+## References
+
+* [Coursera Data Science lecture on dynamo](https://class.coursera.org/datasci-001/lecture/105)
