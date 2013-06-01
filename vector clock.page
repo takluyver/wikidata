@@ -11,7 +11,7 @@ digraph vectorclock {
 }
 ~~~
 
-It is now possible to implement a mechanism that will detect conflicting updates and make them consistent, e.g. by choosing the more recent write.
+It is now possible to implement a mechanism that will detect conflicting copies of data and make them consistent, e.g. by choosing the more recent write.
 
 ## References
 
