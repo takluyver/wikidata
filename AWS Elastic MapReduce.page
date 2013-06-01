@@ -1,3 +1,13 @@
+## Pig
+
+### Downloading results
+
+If the results have been saved to `/user/hadoop`:
+
+~~~
+hadoop dfs -copyToLocal /user/hadoop/resultsdir localdir
+~~~
+
 ## References
 
 * [Data Science course wiki](https://class.coursera.org/datasci-001/wiki/view?page=awssetup)
