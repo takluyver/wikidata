@@ -1,0 +1,5 @@
+In the context of distributed data storage hashing is used to determine which server is responsible for a data item. In a naive hashing scheme (e.g. hash of the item modulo number of servers), if a new server is added to the server pool all items need to be rehashed. Consistent hashing avoids this by mapping all values to a circle and having each server responsible for a segment of that circle. when a new server is added, one of the existing segments is divided and only part of the keys residing on the server responsible for divided segment needs to be rehashed.
+
+## References
+
+* [Coursera Data Science course lecture about memchached](https://class.coursera.org/datasci-001/lecture/103)
