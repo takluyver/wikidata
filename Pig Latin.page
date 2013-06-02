@@ -47,6 +47,8 @@ C ~ {(1,2,1,5),
      (2,4,2,6)}
 ~~~
 
+**Note:** COGROUP is one-step process, JOIN requires two steps, grouping and flattening. Use COGROUP if sufficient as it's more efficient.
+
 ## References
 
 * [Documentation](http://pig.apache.org/docs/r0.7.0/piglatin_ref2.html)
