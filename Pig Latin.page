@@ -54,6 +54,14 @@ temp = cogroup A by $0, B by $0;
 join_result = foreach temp generate flatten($1), flatten($2);
 ~~~
 
+## Parallelism
+
+By default Pig will work out the number of required mappers based on the input data, but will only spin off a single reducer. To increase the reduction parallelism specify `PARALLEL` clause:
+
+~~~
+histogram = foreach by_subject generate flatten($0), count($1) as count parallel 50;
+~~~
+
 ## References
 
 * [Documentation](http://pig.apache.org/docs/r0.7.0/piglatin_ref2.html)
