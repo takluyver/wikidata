@@ -2,6 +2,13 @@ A high-level language on top of [Hadoop]().
 
 ## Operators
 
+
+### FILTER
+
+~~~
+filtered = filter A by $0 matches '.*rdfabout\\.com.*';
+~~~
+
 ### GROUP
 
 Groups records by specified field:
