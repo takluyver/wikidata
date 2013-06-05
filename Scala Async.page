@@ -1,0 +1,200 @@
+---
+categories: scala
+...
+
+5/6/2013, Philipp Haller
+
+## Basic Usage
+
+`async` and `await`, like in C#.
+
+`async { expr: T }` produces a `Future[T]` -- sames as standard future wrapping function. However, we can do interesting things in `expr`. In scala any expression can be made asynchronous. If we wanted async method, like in C#, this is the way to do it:
+
+~~~ { .scala }
+def findAll[T](what: T => Boolean): Future[List[T]] = async {
+  // something that computes List[T]
+}
+~~~
+
+`await`:
+
+* non-blocking
+* is only valid within an `async` block
+* suspends execution of current `async` until the awaited future is completed
+* allows to suspend in an arbitrary scala async expression!
+
+So far the only way to suspend was to use delimited continuations plug-in -- but it complicated types a lot, and here the types are not affected.
+
+~~~ { .scala }
+val fut1 = future { 42 }
+val fut2 = future { 84 }
+
+async {
+  println("computing...")
+  val answer = await(fut1)
+  println(s"answer: $answer")
+}
+
+val sum = async {
+  await(fut1) + await(fut2)
+}
+~~~
+
+Argument: `flatMap` is very generic, doesn't suggest that we are dealing with futures. Example: rewriting chained `flatMaps` with `async` containing two `await`s. Bonus (beyond readability): avoids creation of closures, and that can help with performance.
+
+### Restrictions
+
+* `await` is illegal:within closures (would require full, undelimited CPS transform)
+
+This is illegal
+
+~~~ { .scala }
+async {
+  list.map(x => await(fut(x)))
+}
+~~~
+
+But this is legal:
+
+~~~ { .scala }
+Future.sequence(
+  list.map(x => async { await(fut(x))}) // async { await } is a noop, but whatever...
+)
+~~~
+
+* it is illegal in local functions, classes and objects
+* it can't be used within an argument to a by-name parameter
+
+However, these will fail with very clear compilation error messages.
+
+### Comparison with delimited continuations
+
+Delimited continuations are very powerful and async/await could easily be implemented using them, but they require type annotations (`cpsParam`) and produce complex error messages.
+
+## Advanced Uses
+
+Example: iterating over 
+
+~~~ { .scala }
+trait Tree[+T]
+case class Fork[T](left: Tree[T], el: T, right: Tree: [T]) extends Tree[T]
+case object Empty extends Tree[Nothing]
+~~~
+
+in e.g. pre-order. Ends up as quite a lot of code, but is very simple with `AsyncIterator`:
+
+~~~ { .scala }
+classTreeIterator[T](val container: Tree[T]) extends AsyncIterator[T, Tree[T]] {
+  def size(t: Tree[T]) = // ...
+
+  def iterate(t: Tree[T]): Future[Unit] = async {
+    t match {
+      case Fork(left, el, right) =>
+        await { iterate(left) }
+        await { yieldAsync(el) } // this causes a suspention, this is what next() will return
+                                 // similar to yield in for comprehension
+        await { iterate(right) }
+      case Empty => // do nothing
+    }
+  }
+}
+~~~
+
+In this example, async API works on top of other construct than futures, so that the evaluation is sequential without future overhead. Looks like abuse of the construct to me.
+
+## Async API
+
+Async is implemented using macros, i.e. "compile-time reflection" (uses the same reflection API that is available at runtime). It has an API plus default implementation, that uses futures and promises:
+
+~~~ { .scala }
+trait FutureSystem {
+  type Prom[A]
+  type Fut[A]
+
+  trai Ops {
+    val contextt: reflect.macros.Contexxt
+    import context.universe._
+
+    def createProm[A: WeakTypeTag]: Expr[Prom[A]]
+    def future[A: WeakTypeTag](a: Expr[A]): Expr[Fut[A]]
+    def onComplete[A, U](fut: Expr[Fut[A]],
+    	                 fun: Expr[Try[A] => U]): Expr[Unit]
+    // ...
+  }
+
+  def mkOps = ...
+}
+
+object ScalaConcurrentFutureSystem extends FutureSystem {
+  type Prom[A] = Promise[A]
+  type Fut[A]  = Future[A]
+
+  def mkOps /* ... */ = {
+    def createProm[A: WeakTypeTag]: Expr[Prom[A]] = reify { Promise[A]() }
+    // ...
+  }
+} 
+~~~
+
+## Internals
+
+`async` is a macro that runs at compile time and transforms the code it is given. The transformation has two steps:
+
+* ANF transform
+* state machine transform
+
+~~~ { .scala }
+val sum = async {
+  aait(fut1) + await(fut2)
+}
+~~~
+
+after ANF:
+
+~~~ { .scala }
+val sum = async {
+  val await$1: Int = await[Int](fut1)
+  val await$2: Int = await[Int](fut2)
+  await$1 + await$2
+}
+~~~
+
+after FSM:
+
+~~~ { .scala }
+class StateMachine$3 extends StateMachine[...] {
+  var state$async: Int = 0
+  val result$async: Promise[Int] = Promise[Int]()
+  var await$1: Int = 0
+  var await$2: Int = 0
+
+  def resume$async(): Unit = try {
+    state$async match {
+      case 0 => fut1.onComplete(this)
+      case 1 => fut2.onComplete(this)
+      case 2 => result$async.complete(Success(await$1.$plus(await$2)))	
+    }
+  } catch {
+    case NonFatal((tr @ _)) => result$async.complete(Failure(tr))
+  }
+
+  def apply(tr: Try[Any]): Unit = state$async match {
+    case 0 => // ... state$async = 1; resume$async() ...
+    case 1 => // ...
+  }
+}
+~~~
+
+## Q&A
+
+**Q**: production ready?
+
+**A**: not yet, perhaps in 2 months time
+
+**Q**: will it make it to Scala library?
+
+**A**: modularisation of library is under way, it would be good for it to be included among officially distributed modules, but there is no roadmap for this yet. The target scala version for development is 2.11, but also works on 2.10.
+
+**Q**: is the thread pool used by async controllable by the users
+
+**A**: yes, it's the futures pool, controllable via implicit `ExecutionContext` -- but better not to touch it, Akka guys have measured that it performs better than standard Java alternatives.
