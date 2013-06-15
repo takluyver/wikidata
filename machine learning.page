@@ -25,6 +25,18 @@ digraph titanic {
 }
 ~~~
 
+### Bagging
+
+TODO
+
+### Boosting
+
+Iterative re-training where the points misclassified during verification are added to the training set with large weights.
+
+### Bootstrapping
+
+A technique for generating multiple training sets from a single one by randomly drawing (with repetition) data points. Allows to train multiple classifiers in parallel; these can then be used toegether (with majority voting or averaging) to obtain better results.
+
 ## References
 
 * an article in CACM 10/2012.
