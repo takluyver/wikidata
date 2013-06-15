@@ -1,1 +1,31 @@
-See article in CACM 10/2012.
+## Supervised
+
+Supervised machine learning involves first training the model on a training set of data, that is already labelled with expected results (e.g. classification). Some concrete techniques follow, illustrated by a tutorial example from [Kaggle](http://kaggle.com) -- Titanic survivors.
+
+### Rules
+
+E.g.: if woman then survived (TODO: more details).
+
+### Decision Trees
+
+Making a decision based on values of various variables. It makes sense to put the variable that is the best classifier (i.e. has the lowest [entropy]()) at the root, and follow down by choosing the most discriminating of remaining variables.
+
+Example:
+
+~~~ {.dot}
+digraph titanic {
+  node [shape = plaintext];
+  gender -> age [label=male];
+  gender -> class [label=female];
+  age -> survived [label="< 15"];
+  age -> drowned [label=">= 15"];
+  class -> survived [label=first];
+  class -> survived [label=second];
+  class -> drowned [label=third];
+}
+~~~
+
+## References
+
+* an article in CACM 10/2012.
+* a set of lectures in Coursera's [Introduction to Data Science](https://class.coursera.org/datasci-001/lecture/index)
