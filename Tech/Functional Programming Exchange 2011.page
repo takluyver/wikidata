@@ -175,7 +175,7 @@ The relay race started with **Antonio Cisternino** showing his work on a Visual 
 
 ## Pizza and Beer
 
-As soon as Miles finished (and half an hour after the planned end of talks) we have been treated to pizza and beer, which were, fortunately, still warm and cold (respectively). This was an excellent opportunity to evasedrop on Simon Peyton Jones and Miles Sabin discussing how type checking is the most widely applied formal method and how it is important to not discourage programmers from using it by making type systems overly complicated (read: [dependent types](http://en.wikipedia.org/wiki/Dependent_type) and variance(?) polymorphism are not coming to Haskell anytime soon).
+As soon as Miles finished (and half an hour after the planned end of talks) we have been treated to pizza and beer, which were, fortunately, still warm and cold (respectively). This was an excellent opportunity to evasedrop on Simon Peyton Jones and Miles Sabin discussing how type checking is the most widely applied formal method and how it is important to not discourage programmers from using it by making type systems overly complicated (read: [dependent types]() and variance(?) polymorphism are not coming to Haskell anytime soon).
 
 A park bench panel discussion was planned after the refreshments, but due to lack of significant interest and late hour all further discussion has been moved to
 
