@@ -43,7 +43,7 @@ There is no feedback.
 
 ### Clustering
 
-Grouping data points into sets. Popular technique: [k-means]().
+Grouping data points into sets. Popular technique: [k-means](). Also recommended is [DBSCAN]() which in many situations gives better results.
 
 ## References
 
