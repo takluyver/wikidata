@@ -1,4 +1,4 @@
-$$f(x)=\frac{e\sup{x}}{e\sup{x}+1}$$
+$$f(x)=\frac{e^x}{e^x+1}$$
 
 A function that maps real numbers to the interval (0,1), which can be interpreted as a probability. Used in machine learning.
 
