@@ -37,6 +37,14 @@ Iterative re-training where the points misclassified during verification are add
 
 A technique for generating multiple training sets from a single one by randomly drawing (with repetition) data points. Allows to train multiple classifiers in parallel; these can then be used toegether (with majority voting or averaging) to obtain better results.
 
+## Unsupervised
+
+There is no feedback.
+
+### Clustering
+
+Grouping data points into sets. Popular technique: [k-means]().
+
 ## References
 
 * an article in CACM 10/2012.
