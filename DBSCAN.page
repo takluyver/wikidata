@@ -1,0 +1,11 @@
+A clustering algorithm that has various advantages over popular [k-means](), among them lack of sensitivity to starting conditions, no need for upfront definition of the number of clusters and ability to detect clusters that are not linearly separable.
+
+Choose ε distance;
+While there are points that are not assigned to clusters (or rejected):
+
+* choose one unassigned point
+* mark all points within ε from that point as belonging to the same cluster as the starting point
+
+## References
+
+* Introduction to Data Science course [lecture](https://class.coursera.org/datasci-001/lecture/197)
