@@ -1,0 +1,12 @@
+Clustering algorithm that requires upfront knowledge of the number of clusters we are looking for (that's the *k*).
+
+Start by selecting *k* "cluster centres" at random. Then repeat:
+
+* for each point in the set assign it to the cluster whose centre is the closest
+* update the centres to be the average positions of all points in each cluster
+
+until the movement af all centres falls below specified threshold.
+
+## References
+
+* Introduction to Data Science course [lecture](https://class.coursera.org/datasci-001/lecture/195)
