@@ -1,0 +1,5 @@
+States that programs are safe to run under [eventual consistency]() if it is monotonic, ie. computes an ever growing set of facts, without retracting already computed ones. 
+
+## References 
+
+* CACM 05/2013
