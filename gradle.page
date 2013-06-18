@@ -7,3 +7,5 @@ configurations.all {
     }
 }
 ~~~
+
+See [the documentation](http://www.gradle.org/docs/current/dsl/org.gradle.api.artifacts.ResolutionStrategy.html).
