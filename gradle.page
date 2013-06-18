@@ -1,0 +1,9 @@
+### Overriding version of a dependency
+
+~~~
+configurations.all {
+    resolutionStrategy {
+        force 'group:artifact:1.2.3'
+    }
+}
+~~~
