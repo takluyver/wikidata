@@ -1,0 +1,6 @@
+It is impossible to provide both consistency and availability in the presence of network partitions. 
+
+## References
+
+* Coda Hale's blog
+* CACM 05/2013
