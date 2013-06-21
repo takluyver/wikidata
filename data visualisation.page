@@ -1,4 +1,6 @@
-## Visual Attributes and Data Types
+## Visual Attributes
+
+### Usage with data types
 
 Bertin in _Semiology of Graphics_ introduced a classification of attributes that can be used to present data:
 
@@ -9,6 +11,19 @@ Bertin in _Semiology of Graphics_ introduced a classification of attributes that
 * colour -- nominal only
 * orientation -- nominal only
 * shape -- nominal only
+
+### Perceptual properties
+
+From most to least easily perceptible by humans:
+
+* position
+* length
+* angle and slope
+* area
+* volume
+* colour and density
+
+It's a good practice to use the most easily distinguishable values for most important variables.
 
 ## Articles
 
