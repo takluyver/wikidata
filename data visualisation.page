@@ -1,3 +1,15 @@
+## Visual Attributes and Data Types
+
+Bertin in _Semiology of Graphics_ introduced a classification of attributes that can be used to present data:
+
+* position -- suitable for nominal, ordered and quantitative data
+* size -- suitable for nominal, ordered and quantitative data
+* value -- suitable for nominal, ordered and to lesser extent quantitative data
+* texture -- suitable for nominal and to a lesser extent ordered data
+* colour -- nominal only
+* orientation -- nominal only
+* shape -- nominal only
+
 ## Articles
 
 * [Brett Victor on information software design](http://worrydream.com/MagicInk/) 
