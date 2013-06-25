@@ -1,0 +1,5 @@
+Most of category theory constructs have duals, e.g. product/coproduct, monomorphism/epimorphism, pullback/pushout. The duals are the same constructs but in [dual category]().
+
+## References
+
+* *Basic Category Theory for Computer Scientists*
