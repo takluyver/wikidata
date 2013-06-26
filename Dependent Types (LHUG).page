@@ -1,0 +1,145 @@
+*Lennart Augustsson, 26/06/2013*
+
+## Dependent Types
+
+~~~ {.haskell}
+f x = if x then "Hello" else 42
+~~~
+
+How can we type this?
+
+first try:
+
+~~~ {.haskell}
+f :: Bool -> if x then String else Int
+~~~
+
+what is `x`? We can bind it:
+
+~~~ {.haskell}
+f :: (x :: Bool) -> if x then String else Int
+~~~
+
+This is what it would look like in Cayenne, Lennart's language. In other words, types depend on values.
+
+Why is it useful?
+
+* because we can type more programs (e.g. `f` above)
+* we can give more accurate types (e.g. `sort` returns sorted list that is a permutation of the argument, `printf`)
+
+Example (typing more):
+
+~~~ {.haskell}
+printf :: (fmt :: String) -> PrintfType fmt
+
+PrintfType :: String -> * -- function that computes a type
+PrintfType "" = String
+PrintfType ('%':('d':cs)) = Int -> PrintfType cs
+-- etc
+~~~
+
+Aside: gcc checks that args to `printf` and `scanf` agree with the placeholders -- it's implemented as a special case hack.
+
+Example (more accurate): _lists with length, see [Advanced Haskell]()_
+
+How accurate are these types? As expressive as predicate logic.
+
+## Curry-Hooward Isomorphism
+
+-------------------  -----------
+*A ^ B*              `(A, B)`
+*A v B*              `Either A B`
+*A -> B*             `A -> B`
+*~A*                 `A -> Nothing`
+$\forall x\in A.B$   `forall (x::A).B`
+-------------------  -----------
+
+Existentials are more complex.
+
+~~~ {.haskell}
+<a, b> :: Exists A B
+  where
+    a :: A, b :: B a
+~~~
+
+Here `b` is a proof for existence of desired thing parameterised by `a`
+
+This is useful for module types:
+
+~~~ {.haskell}
+module M where
+data T = ...
+foo :: T
+foo = ...
+bar :: T -> T
+bar = ...
+
+-- Haskell doesn't allow it, it's like StandardML signature:
+M :: { T :: *, foo : T, bar :: T -> T}
+
+-- i.e.:
+
+Exists T (\ T . (T, T -> T))
+~~~
+
+## Classical Logic
+
+HC isomorphism works for intuitionistic (constructive) logic -- classical logic without law of exculded middle (A v ~A). What if we tried to implement this law?
+
+~~~ {.haskell}
+type Not a = a -> Void
+
+lem :: Either a (Not a)
+lem = ??? -- a can be anything, so we can't implement it!
+~~~
+
+We can try to cheat:
+
+~~~ {.haskell}
+case lem of
+  Left  a -> ... a ....     -- this branch is easy -- we are given a
+  Right f -> .... f e ....  -- here if someone tries to apply f we 
+                            -- trace back and give it Left instead!
+~~~
+
+Peirce's Law (equivalent to law of excluded middle) is type of `call/cc` in Scheme. Conclusion: classical logic is implementable if language supports first class continuations. It's because it's roughly equivalent to inserting double negation, and that is isomorphic to CPS transform.
+
+## Demo: Djinn
+
+A program that creates implementation for functions.
+
+~~~ {.haskell}
+? f :: Maybe a -> (a -> b) -> Maybe b
+? instance Monad Maybe
+~~~
+
+Really cool!
+
+Only handles propositional logic (decidable). I.e. won't instantiate polymorphic functions.
+
+## Dependent Types in Haskell
+
+Using GHC extension `DataKinds`:
+
+~~~ {.haskell}
+data Nat = Z | S Nat
+~~~
+
+we can define functions on it, with `TypeFamilies`:
+
+~~~ {.haskell}
+type family (m :: Nat) :+ (n :: Nat) :: Nat
+  where  Z   :+ n = m
+         S m :+ n = S (m :+ n)
+~~~
+
+To do lists with length we needed three types and a type class! There is a `singleton` package on hackage that derives this for us.
+
+We can only index by regular types, not indexed types (e.g. GADTs are excluded). Heterogenous kind equality is in the works and will address that.
+
+## Q&A
+
+Q: Practical?
+
+A: Conor McBride had a nice presentation where he wrote a tiny stack machine that could go wrong and then refined the types without changing the code.
+
