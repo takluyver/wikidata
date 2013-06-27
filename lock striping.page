@@ -1,0 +1,1 @@
+Technique for increasing concurrency: instead of having a single lock on a data structure have a separate one for each "cell" of the structure that is to be updated. E.g. if in a cache represented as a map, there can be a separate lock for each key.
