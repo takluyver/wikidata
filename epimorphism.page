@@ -1,0 +1,11 @@
+~~~ {.dot}
+digraph m {
+node[shape=none];
+rankdir=LR;
+A -> B [label=f];
+B -> C [label=g];
+B -> C [label=h];
+}
+~~~
+
+f is an epimorphism if for every pair of arrows *g* and *h* from *B* to *C* $g \circ f = h \circ f$ implies that $g = h$. In **Set**, epimorphism is the same as surjection (onto).
