@@ -1,0 +1,12 @@
+
+~~~ {.dot}
+digraph m {
+node[shape=none];
+rankdir=LR;
+A -> B [label=g];
+A -> B [label=h];
+B -> C [label=f];
+}
+~~~
+
+f is a monomorphism if for every pair of arrows *g* and *h* from *A* to *B* $f \circ g = f \circ h$ implies that $g = h$. In **Set**, monomorphism is the same as injection (1-1).
