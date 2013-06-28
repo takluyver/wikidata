@@ -1,0 +1,17 @@
+## Tools
+
+### Tone mapping
+
+#### Tone curve
+
+Maps input luminosity (?) to output. Very useful, e.g. allows to make both clouds on light sky and items in the shade visible.
+
+### Colour
+
+#### Colour zones
+
+Allows to modify lightness, saturation and hue for different colours in the picture. Useful e.g. for making black+white+red pictures.
+
+## Software
+
+* darktable -- free, Linux/MacOS only
