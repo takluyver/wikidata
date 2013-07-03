@@ -1,0 +1,9 @@
+---
+categories: category_theory
+...
+
+In category theory, an object *A* in category **C** such that for every object in **C** there exists exactly one arrow from that object to *A*. In **Set** all singletons are terminal objects. The dual is called [initial object]().
+
+## References
+
+* *Basic Category Theory for Computer Scientists*
