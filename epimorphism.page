@@ -1,3 +1,7 @@
+---
+categories: category_theory
+...
+
 ~~~ {.dot}
 digraph m {
 node[shape=none];
@@ -8,4 +12,8 @@ B -> C [label=h];
 }
 ~~~
 
-f is an epimorphism if for every pair of arrows *g* and *h* from *B* to *C* $g \circ f = h \circ f$ implies that $g = h$. In **Set**, epimorphism is the same as surjection (onto).
+f is an epimorphism if for every pair of arrows *g* and *h* from *B* to *C* $g \circ f = h \circ f$ implies that $g = h$. In **Set**, epimorphism is the same as surjection (onto). Its [dual](categorical duals) is [monomorphism]().
+
+## References
+
+* *Basic Category Theory for Computer Scientists*
