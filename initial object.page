@@ -2,8 +2,8 @@
 categories: category_theory
 ...
 
-In category theory, an object *A* in Category **C** such that there exists exactly one arrow from *A* to all objects in **C** (including *A*). In **Set** the only initial object is an empty set.
+In category theory, an object *A* in Category **C** such that there exists exactly one arrow from *A* to all objects in **C** (including *A*). In **Set** the only initial object is an empty set. Its dual is [terminal object]().
 
 ## References
 
-* *Basic Category Theory Fro Computer Scientists*
+* *Basic Category Theory For Computer Scientists*
