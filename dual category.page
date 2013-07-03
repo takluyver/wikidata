@@ -1,1 +1,9 @@
-*C^op* -- a category with the same objects but the arrows reversed.
+---
+categories: category_theory
+...
+
+$C^{op}$ -- a category with the same objects but the arrows reversed.
+
+## References
+
+* *Basic Category Theory for Computer Scientists*
