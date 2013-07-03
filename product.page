@@ -1,0 +1,24 @@
+---
+categories: category_theory
+...
+
+The triplet $(A\times B, p_1, p_2)$ is a product of *A* and *B* if for every object *C* and arrows *f* and *g* there exists exactly one arrow $<f,g>$ such that this diagram commutes:
+
+~~~ {.dot}
+digraph m {
+node[shape=none];
+C -> A [label=f];
+C -> B [label=g];
+C -> AxB [label="<f,g>"];
+AxB -> A [label=p1];
+AxB -> B [label=p2];
+}
+~~~
+
+In **Set** this corresponds to Cartesian product, and there is a nice explanation of how to generalise set product to this abstract definition in Pierce's book.
+
+The [dual](categorical duals) is [coproduct]().
+
+## References
+
+* *Basic Category Theory for Computer Scientists*
