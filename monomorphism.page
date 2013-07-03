@@ -1,3 +1,6 @@
+---
+categories: category_theory
+...
 
 ~~~ {.dot}
 digraph m {
@@ -9,4 +12,8 @@ B -> C [label=f];
 }
 ~~~
 
-f is a monomorphism if for every pair of arrows *g* and *h* from *A* to *B* $f \circ g = f \circ h$ implies that $g = h$. In **Set**, monomorphism is the same as injection (1-1).
+f is a monomorphism if for every pair of arrows *g* and *h* from *A* to *B* $f \circ g = f \circ h$ implies that $g = h$. In **Set**, monomorphism is the same as injection (1-1). Its [dual](categorical duals) is [epimorphism]().
+
+## References
+
+* *Basic Category Theory for Computer Scientists*
