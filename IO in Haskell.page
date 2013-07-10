@@ -23,8 +23,9 @@ Released in [March 2013](http://snapframework.com/blog/2013/03/05/announcing-io-
 Criticised by Paul Chiusano:
 
 <blockquote class="twitter-tweet" data-conversation="none"><p>@<a href="https://twitter.com/pelotom">pelotom</a> They decided existing stream processing libraries too complex but then just implemented something ad hoc and specialized to IO!</p>— Paul Chiusano (@pchiusano) <a href="https://twitter.com/pchiusano/status/309225338842513408">March 6, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## References
 
 * [Edsko de Vries's talk](Alternatives to Lazy IO in Haskell)
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
