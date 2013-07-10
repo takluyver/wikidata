@@ -1,0 +1,141 @@
+---
+categories: haskell
+...
+
+*Edsko de Vries, 2013-07-10*
+
+basic IO primitives
+
+readIORef, writeIORef
+`withFile` -- takes care of cleaning up resources
+
+## Lazy IO
+
+unsafeInterleaveIO :: IO a -> IO a
+delays evaluation of arg until we demand the value of it. Introduces referential opaqueness: x + y might not be equal y + x
+
+~~~ { .haskell }
+ref <- unsafePerformIO $ newIORef 0
+x <- unsafeInterleaveIO $ readIORef ref
+y <- unsafeInterleaveIO $ writeIORef ref 1 >> return 5
+~~~
+
+now `print (x + y)` would print 5 and `print (y + x)` would print 6
+
+hGetContents :: Handle -> IO String 
+
+This throws exception:
+
+~~~ { .haskell }
+h <- openFile "file.txt" ReadMode
+contents <- hGetContents h
+hClose h
+print (length contents)
+~~~
+
+because the handle is closed before contents are actually demanded. Solution: make hGetContents close the handle for us. But then, if we have a program that doesn't read entire file the handle won't ever be closed. Improvement: add a finaliser in `openFile` that will close the handle when it's garbage collected.
+
+Lazy IO has lead to hard to find bugs in GHC -- it's hard to get resource management right.
+
+## `io-streams`
+
+Just two primitives:
+
+* `InputStream`
+* `OutputStream`
+
+`makeInputStream` provides input stream with buffering.
+
+Ths simplicity is both strength and weakness. 
+
+### Issues
+
+An example of thing that is difficult to do is duplicating every character in the input stream `dup :: InputStream a -> InputStream a` -- we have to encode a state machine in our code.
+
+Confusing semantics:
+
+~~~ 
+ghci> old <- S.fromList [1, 2, 3]
+ghci> new <- S.map id old
+ghci> S.read new
+Just 1
+ghci> S.read old
+Just 2
+ghci> S.read new
+Just 3
+~~~
+
+Block scope (`withXXX`) is very limiting.
+
+## `pipes`
+
+~~~ {.haskell}
+examplePipe = do
+  x <- request
+  y <- request
+  liftIO $ print (x + y)
+
+exampleInput = ... -- read value from stdin
+
+main = runPipe exampleInput examplePipe
+~~~
+
+This will read two numbers and print out its output. Responses can be defined in a similar way.
+
+Pipes can be composed in various ways, both using monadic composition ("parallel/vertical") and `>->` ("sequential/horizontal"). See prompter/printer example.
+
+~~~ {.haskell}
+prompter = do
+  i <- liftIO $ readInt
+  respond i
+
+printer = do
+  i <- request
+  liftIO $ print i
+
+main1 = runPipe (prompter >-> printer)
+
+takePipe n = replicateM_ n $ do
+  a <- request
+  respond a
+
+main2 = runPipe (prompter >-> takePipe 3 >-> printer)`
+~~~
+
+How are pipes composed? It's designed to model haskell's demand-drive evaluation.
+
+~~~ {.haskell}
+(>->) :: forall a b c r. Pipe a b r -> Pipe b c r -> Pipe a c r
+(>->) = go Right
+  where
+    goRight p q = Pipe $ do
+      qstep <- unPipe q
+      case qstep of
+        Respond b k -> return $ Respond b (goRight p k)
+        Pure r      -> return $ Pure r
+        Request     -> unPipe $ goLeft p k
+    goLeft p q = Pipe $ do
+      pstep <- unPipe p
+      case pstep of
+        Request k   -> return $ Request (\a -> goLeft (k a) q)
+        Pure r      -> return (Pure r)
+        Respond b k -> unPipe $ goRight k (q b)
+~~~
+
+Other important features:
+
+* finalisers -- allow to free up resources (`finallyP`)
+* exception handlers -- `catchP`
+* leftovers
+* pipe transformers (like monad transformers)
+* bidirectional pipes -- that's why the type is now called `Proxy`
+
+## `conduits`
+
+Similar to pipes.
+
+## conclusion
+
+* production: enumerator
+* in-between: pipe
+* consumption: iteratee
