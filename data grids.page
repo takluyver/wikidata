@@ -129,3 +129,47 @@ A: push replication very stable, is going to be incorporated into the main produ
 Q: handling conflicts in push replication?
 
 A: Currently we need to provide a resolved that will resolve conflicting updates. Users have been dealing with this by using different keys in different areas and then resolving in application logic.
+
+## Lab
+
+### Basic cluster startup
+
+* logged in to EC2 instance
+* updated "well-known-addresses" in `tangosol-coherence-override.xml` to point to a predefined host for the cluster -- necessary if env does not support UDP multicast, as on AWS EC2.
+* problems with cluster nodes talking to each other -- down to EC2 security group
+* coherence client
+
+~~~
+cache ec2-cache
+put "mm" "sample value"
+size
+list
+~~~
+
+* shut down the node
+
+### Querying
+
+~~~
+ensure cache 'ec2-cache';
+select * from 'ec2-cache';
+insert into 'ec2-caache' key 'mm2' value 'another value';
+~~~
+
+### Updates
+
+* stock ticker (with polling) and price updater sample apps
+
+### Events
+
+* chat sample app
+
+When attaching new nodes to existing cluster we've been asked to do it one at a time, not all at once, "just in case".
+
+Demo of rebucketing: when new nodes join they data is redistributed evenly.
+
+## Q&A
+
+Q: invalidation in the presence of independent writes to database?
+
+A: have to be managed on your own, or use Golden Gate
