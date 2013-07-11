@@ -1,6 +1,6 @@
-Common ways to scale the system
+## Scaling the system
 
-## Stateless middle tier
+### Stateless middle tier
 
 Adding more CPUs to a blade does not always help: when blades upgraded from 8 to 24 CPUs many users didn't see improvement due to resource contention and non thread-safe code that earlier worked fine. In many cases poopular solution is horizontal scaling. Usual solution to horizontal scaling:
 
@@ -25,7 +25,7 @@ Database scaling patterns:
 
 Other option: no ACID, e.g. eventual consistency.
 
-## Stateful middle tier
+### Stateful middle tier
 
 What if we want *stateful* middle tier? This is where data grids come into play.
 
@@ -79,3 +79,45 @@ Q: Coherence deployment topologies:
 * embedded (in same JVM as the app) -- straightforward, cheap, not elegant, only suitable for local development
 * storage-disabled (same node but separate JVM) -- safer, but still susceptible to upsetting of cluster e.g. due to app upgrade
 * client-server -- app just has client jars, cache tier is completely separate, can also use Coherence proxy nodes in front of storage nodes.
+
+## Coherence at scale
+
+Coherence is expensive ("the most expensive 18 MB"), we want to run many more than four nodes. Client-server deployment makes a lot of sense, it allows multiple applications to use the same cache. 
+
+* linear scalability: 2 hops for read and write (app -> proxy -> node).
+* HA: configurable number of duplicates
+
+Example cost (21 Amazon xLargeMemory instances): $9000/month/125GB
+
+What when data doesn't fit? Data can overflow to:
+
+* memory-mapped file
+* off-heap byte array
+* Berkeley DB
+
+Ensuring HA: push replication between data centres
+
+Can we ditch the database? Pretty much, we only need to store mandatory audit info (that allows replay), the rest can live in the grid.
+
+### Processing data
+
+Challenge: pulling the data back to application can saturate the network. Solutions: 
+
+* computation on the grid
+* near cache, that contains the "working set"
+* in-place processing: `EntryProcessor`, `Aggregator` (i.e. map-reduce) -- handles failover transparently
+* running arbitrary `Runnable` on the grid -- does not handle failover, not very popular
+
+### Querying
+
+Queries are executed in parallel on the nodes. Since coherence 3.6: JPQL-like query language.
+
+### Events
+
+We can register listeners for events and perform any actions we want in response.
+
+Continuous query cache: like near cache, but its contents are based on a query and continuously updated. 
+
+### Coherence*Extend
+
+i.e. client-server mode: extend client connects to remote cache.
