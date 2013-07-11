@@ -121,3 +121,11 @@ Continuous query cache: like near cache, but its contents are based on a query a
 ### Coherence*Extend
 
 i.e. client-server mode: extend client connects to remote cache.
+
+Q: stability of incubator projects?
+
+A: push replication very stable, is going to be incorporated into the main product
+
+Q: handling conflicts in push replication?
+
+A: Currently we need to provide a resolved that will resolve conflicting updates. Users have been dealing with this by using different keys in different areas and then resolving in application logic.
