@@ -1,5 +1,6 @@
-* Goal: reduce latency
-* Solution: keep data and processing close together
+Common ways to scale the system
+
+## Stateless middle tier
 
 Adding more CPUs to a blade does not always help: when blades upgraded from 8 to 24 CPUs many users didn't see improvement due to resource contention and non thread-safe code that earlier worked fine. In many cases poopular solution is horizontal scaling. Usual solution to horizontal scaling:
 
@@ -19,7 +20,62 @@ nodes are stateles, database is stateful. Scaling the middle tier is easy, datab
 Database scaling patterns:
 
 * master/slave -- all writes to master, replication from master to slaves, slave replicas only for reading
-* clustering
+* clustering -- multi-way replication
 * sharding (partitioning) -- based on data keys, e.g. by region/customer etc. does not provide HA on its own, expensive to maintain.
 
 Other option: no ACID, e.g. eventual consistency.
+
+## Stateful middle tier
+
+What if we want *stateful* middle tier? This is where data grids come into play.
+
+Examples of common caches:
+
+* Hibernate session cache and L2 cache (can span multiple sessions)
+* Entity Bean cache (EJB 2.1)
+* JPA cache
+* various custom and open source caches
+
+Typically they are used to cache database data. Data grids are cache on steroids.
+
+Custom local caching:
+
+* JCache (JSR 107) standardises the API
+* easy to implement using `ConcurrentHashMap`
+
+Challenges:
+
+* eviction
+* loading
+* prefetching
+* write-behind processing
+* clustering (this one is hard!)
+
+Basic API (JCache):
+
+* `put(K, V)`
+* `get(K)`
+
+Common cache interaction patterns:
+
+* *cache-aside*. When reading from a data store we store retrieved data in cache and look there first.
+* *read-through* -- it's the responsibility of cache to read from data store if it's not in cache
+* *write-through* -- same as read, just in opposite direction
+* *write-behind* -- like *write-through*, but the write is asynchronous
+
+Clustered cache brings in additional challenges:
+
+* what to do on an update? Common answers are update (send entry to replica) or invalidate (cheaper)
+
+Replication (in [Coherence]()):
+
+* with replication, a reasonable limit is 4 cache nodes
+* ideally all replication traffic should be on its own network
+* instead of storing complete copy in every node a better strategy is partitioning: even if we ask a node that doesn't have the data, it will know which node to obtain it from, it's transparent to the user code. This is done by hashing a key to a bucket, buckets in turn are assigned to nodes. These buckets can be reallocated when the cluster changes.
+* with one copy of the value it's not HA. We can configure the cache to have multiple copies of the data: a primary owner and a backup. If one of these goes offline Coherence will create a new copy to maintain redundancy.
+
+Q: Coherence deployment topologies:
+
+* embedded (in same JVM as the app) -- straightforward, cheap, not elegant, only suitable for local development
+* storage-disabled (same node but separate JVM) -- safer, but still susceptible to upsetting of cluster e.g. due to app upgrade
+* client-server -- app just has client jars, cache tier is completely separate, can also use Coherence proxy nodes in front of storage nodes.
