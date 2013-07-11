@@ -1,0 +1,25 @@
+* Goal: reduce latency
+* Solution: keep data and processing close together
+
+Adding more CPUs to a blade does not always help: when blades upgraded from 8 to 24 CPUs many users didn't see improvement due to resource contention and non thread-safe code that earlier worked fine. In many cases poopular solution is horizontal scaling. Usual solution to horizontal scaling:
+
+~~~ {.dot}
+digraph g {
+"load balancer" -> node1;
+"load balancer" -> node2;
+"load balancer" -> node3;
+node1 -> database;
+node2 -> database;
+node3 -> database;
+}
+~~~
+
+nodes are stateles, database is stateful. Scaling the middle tier is easy, database is hard (e.g. RAC).
+
+Database scaling patterns:
+
+* master/slave -- all writes to master, replication from master to slaves, slave replicas only for reading
+* clustering
+* sharding (partitioning) -- based on data keys, e.g. by region/customer etc. does not provide HA on its own, expensive to maintain.
+
+Other option: no ACID, e.g. eventual consistency.
