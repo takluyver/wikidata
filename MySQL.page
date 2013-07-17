@@ -1,0 +1,24 @@
+#### Importing data from flat file with multi-line fields:
+
+Given data:
+
+~~~
+1<FE>
+test-repo<FE>
+some test repo to test imports<FE>
+true<FE>
+so:
+
+here goes a long description, possibly containing "double quotes"<FE>
+false<FE>
+http://mmakowski.com<FE>
+12314111<RE>
+~~~
+
+Can be imported with:
+
+~~~
+mysqlimport --local --compress --host=github-analytics.cnl8rjdkpch9.us-east-1.rds.amazonaws.com --user=mmakowski --password --fields-terminated-by='<FE>\n' --lines-terminated-by='<RE>\n' gh repos.csv 
+~~~
+
+(tested with Amazon RDS)
