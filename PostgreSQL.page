@@ -1,3 +1,9 @@
+#### Exporting data to CSV
+
+~~~ {.sql}
+copy users to '/tmp/users.csv' delimiter ',' csv;
+~~~
+
 ## References
 
 * [Python PostgreSQL Tutorial](http://zetcode.com/db/postgresqlpythontutorial/)
