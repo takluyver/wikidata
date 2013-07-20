@@ -1,0 +1,3 @@
+1. wrote a python script that queried Github API for repository data and put extracted data in a [PostgreSQL]() database. Ran for a day or two and extracted 5m+ repos.
+2. tried to repeat the same approach for commit details -- at the current rate would end up taking about a year. Cloning repos and extracting the data locally would be more efficient.
+3. exported the data from local Postgres and imported into [Amazon RDS]()-based [MySQL]() db.
