@@ -12,6 +12,12 @@ Maps input luminosity (?) to output. Very useful, e.g. allows to make both cloud
 
 Allows to modify lightness, saturation and hue for different colours in the picture. Useful e.g. for making black+white+red pictures.
 
+### Enhancements
+
+#### Equalizer
+
+Very useful for smoothing out skin: denoise preset.
+
 ## HDR
 
 The main tool that gives the familiar overdone HDR appearance, with light halos, is "shadows and highlights"; moving the "shadows" slider to the right increases brightness of dark areas and the halos around them.
