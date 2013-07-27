@@ -1,5 +1,18 @@
 A DSL based on Haskell for creating computer music and for algorithmic composition.
 
+## Quick Start
+
+~~~
+> git clone https://github.com/dwincort/Euterpea
+> cd Euterpea
+> cabal-dev install
+> cabal-dev ghci
+ghci> :l Euterpea/Examples/SoundCheck.hs
+ghci> test sawtooth
+~~~
+
+this is supposed to play a sound, but didn't on my system. However, it did produce `test.wav` file that could then be played externally.
+
 ## References
 
 * [Home page](http://haskell.cs.yale.edu/euterpea/)
