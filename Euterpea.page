@@ -11,7 +11,7 @@ ghci> :l Euterpea/Examples/SoundCheck.hs
 ghci> test sawtooth
 ~~~
 
-this is supposed to play a sound, but didn't on my system. However, it did produce `test.wav` file that could then be played externally.
+this will produce `test.wav` file that could then be played externally.
 
 ## References
 
