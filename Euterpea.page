@@ -2,6 +2,8 @@ A DSL based on Haskell for creating computer music and for algorithmic compositi
 
 ## Quick Start
 
+### Basic Sound Generation
+
 ~~~
 > git clone https://github.com/dwincort/Euterpea
 > cd Euterpea
@@ -12,6 +14,10 @@ ghci> test sawtooth
 ~~~
 
 this will produce `test.wav` file that could then be played externally.
+
+### Sequencing
+
+Have a look at `Examples/Interlude.hs`, which contains the first couple of bars of Chick Corea's _Child Song 6_. It can be rendered as wav with `Examples/MusicToSignal.lhs`.
 
 ## References
 
