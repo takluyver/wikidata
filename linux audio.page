@@ -14,3 +14,14 @@ In `QjackCtl`, in _Setup..._ set _server prefix_ to `pasuspender -- /usr/bin/jac
 
 * set up a project as per [instructions](https://github.com/overtone/overtone/wiki/Installing-overtone)
 * set up Sublime Text to use Sublime REPL and Ctrl+Enter to evaluate current block in REPL (this is in my checked-in Sublime config)
+
+## Synthesisers
+
+### amSynth
+
+An emulator of analogue synthesiser.
+
+### qsynth
+
+Qt front-end for [FluidSynth](http://fluidsynth.org)
+
