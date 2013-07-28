@@ -17,7 +17,15 @@ this will produce `test.wav` file that could then be played externally.
 
 ### Sequencing
 
-Have a look at `Examples/Interlude.hs`, which contains the first couple of bars of Chick Corea's _Child Song 6_. It can be rendered as wav with `Examples/MusicToSignal.lhs`.
+Have a look at `Examples/Interlude.hs`, which contains the first couple of bars of Chick Corea's _Child Song 6_. It can be rendered as wav with `Examples/MusicToSignal.lhs`. To 
+
+## Setup for MIDI
+
+Assuming Euterpea has been set up as per _Quick Start_ section above:
+
+* start `qsynth`
+* start `qjackctl` and in _Connect_ screen connect _Midi Through_ to _FLUID Synth_
+* in `ghci` load `Euterpea/Examples/EuterpeaExamples.hs` and execute examples `t0` through to `t5`
 
 ## References
 
