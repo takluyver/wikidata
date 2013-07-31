@@ -5,3 +5,7 @@ Ones I tried (in order of preference):
 * Fluid R3
 * SGM-V2.01
 * Unison
+
+## Compressed Formats
+
+For some reason people liked to use custom compressed formats to distribute sf2 files. Two I encountered were *sfArk* and *sfpack*. Both require windows UI apps to convert to sf2 -- in July 2013 these were easily found using Google, although they were hosted by third parties. Both can be run under Wine.
