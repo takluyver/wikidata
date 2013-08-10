@@ -1,8 +1,7 @@
 ## Callback to Future
 
 ~~~ {.scala}
-import scala.concurrent.Future
-import scala.concurrent.Await
+import scala.concurrent.{ Await, Future, promise }
 import scala.concurrent.duration._
 
 def save(data: String, callback: String => Unit): Unit = {
@@ -10,7 +9,7 @@ def save(data: String, callback: String => Unit): Unit = {
 }
 
 def cb2async(data: String): Future[String] = {
-  val p = scala.concurrent.promise[String]
+  val p = promise[String]
   save(data, p.success(_))
   p.future
 }
