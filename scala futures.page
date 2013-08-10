@@ -1,0 +1,26 @@
+## Callback to Future
+
+~~~ {.scala}
+import scala.concurrent.Future
+import scala.concurrent.Await
+import scala.concurrent.duration._
+
+class CallingBack {
+  def save(data: String, callback: String => Unit): Unit = {
+    callback(s"saved $data") 
+  }
+}
+
+val cb = new CallingBack
+
+def cb2async(data: String): Future[String] = {
+  val p = scala.concurrent.promise[String]
+  cb.save(data, p.success(_))
+  p.future
+}
+
+val f = cb2async("ff")
+Await.result(f, 1.second)
+
+// res: String = saved ff
+~~~
