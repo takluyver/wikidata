@@ -30,6 +30,8 @@ Note: there are two languages in play here:
 * the *object language* -- *L* in this case
 * the *metalanguage* -- the language in which we define the truth, English in this case
 
+Restriction: the sentences of the langauge cannot use its own truth predicate, this can only be expressed in the metalanguage. This avoids the liar's paradox ("this sentence is false"). However, it is possible to speak of the truth in the metalanguage. What if we want to asses the truth of metalanguage sentences? We need a metametalanguage. And so on...
+
 ## References
 
 * Coursera's *Introduction to Mathematical Philosophy* [lecture 2](https://class.coursera.org/mathphil-001/lecture/index)
