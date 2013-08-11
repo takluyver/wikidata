@@ -2,9 +2,9 @@
 
 *'A' is true iff A*
 
-## Tarski's definition
+## Tarski's Definition
 
-For a given language *L* the definition of truth follows the rules of grammar. E.g.:
+For a given [formal language]() *L* the definition of truth follows the rules of grammar. E.g.:
 
 * $x \in \{Socrates, Tarski\}$
 (1) '*x* is a philosopher' is a sentence of *L*
