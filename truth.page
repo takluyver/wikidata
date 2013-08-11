@@ -19,6 +19,8 @@ And for rule (2):
 
 * '*a* and *b*' is true iff a is true and b is true
 
+This definition exploits the recursive structure of *L*: the semantic rules follow syntactic rules. It is argued that such recursiveness is present in natural languages and is essential to us being able to understand the meaning of sentences we have never encountered before.
+
 
 ## References
 
