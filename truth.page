@@ -25,6 +25,10 @@ And for rule (2):
 
 This definition exploits the recursive structure of *L*: the semantic rules follow syntactic rules. It is argued that such recursiveness is present in natural languages and is essential to us being able to understand the meaning of sentences we have never encountered before.
 
+Note: there are two languages in play here:
+
+* the *object language* -- *L* in this case
+* the *metalanguage* -- the language in which we define the truth, English in this case
 
 ## References
 
