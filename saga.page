@@ -1,0 +1,6 @@
+In [event sourcing]() context, saga is a component that handles transactions that span multiple messages (a.k.a. "long-running transactions"). According to [Jonathan Oliver's blog post](http://blog.jonathanoliver.com/2010/09/cqrs-sagas-with-event-sourcing-part-i-of-ii/), saga should not encapsulate business logic but a state machine.
+
+## References
+
+* [Jonathan Oliver's blog post](http://blog.jonathanoliver.com/2010/09/cqrs-sagas-with-event-sourcing-part-i-of-ii/)
+
