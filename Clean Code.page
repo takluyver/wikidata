@@ -39,3 +39,6 @@ The entire chapter is written as a series of rules, usually with little or no ju
 
 * _Whenever I have succumbed to this [putting short methods and block bodies on a single line], I have almost always gone back and put the indentation back in_ -- It would have been more convincing if it was backed by some analysis as to why.
 
+## Other Remarks
+
+Chapter 6 introduces a distinction between objects and data structures and proposes usage of one or the other depending on whether we expect the functions or data types to change -- a way to tackle the [expression problem]().
