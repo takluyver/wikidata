@@ -14,7 +14,7 @@
 Below are quotes that back up some of my coding heuristics.
 
 On mandated comments:
-
+accentuates that 
 _It is just plain silly to have a rule that says that every function must have a javadoc, or every variable must have a comment. Comments like this just clutter up the code, propagate lies, and lend to general confusion and disorganization._
 
 ## Objections
@@ -36,3 +36,6 @@ The entire chapter is written as a series of rules, usually with little or no ju
 ### Formatting
 
 * _[with variable list with horizontally aligned names] you are tempted to read down the list of variable names without looking at their types_ -- with well named variables the types are not as important on first reading. Even more helpful is the horizontal alignment of a series of assignments, where the alignment strenghtens the impression that all of the operations in the list are of the same kind, and all that matters is what's on the left and what's on the right side.
+
+* _Whenever I have succumbed to this [putting short methods and block bodies on a single line], I have almost always gone back and put the indentation back in_ -- It would have been more convincing if it was backed by some analysis as to why.
+
