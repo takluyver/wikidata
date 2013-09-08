@@ -6,6 +6,7 @@
 * avoid duplication
 * comments compensate for failure of expressing ideas clearly in code; extract appropriately named functions instead of commenting
 * avoid noise
+* use version control system in preference to keeping the history in the source code
 
 ### Quotes
 
