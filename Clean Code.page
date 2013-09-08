@@ -5,6 +5,15 @@
 * functions should do one thing, be short and focused
 * avoid duplication
 * comments compensate for failure of expressing ideas clearly in code; extract appropriately named functions instead of commenting
+* avoid noise
+
+### Quotes
+
+Below are quotes that back up some of my coding heuristics.
+
+On mandated comments:
+
+_It is just plain silly to have a rule that says that every function must have a javadoc, or every variable must have a comment. Comments like this just clutter up the code, propagate lies, and lend to general confusion and disorganization._
 
 ## Objections
 
@@ -21,4 +30,3 @@ The entire chapter is written as a series of rules, usually with little or no ju
 ### Functions
 
 * _consider, for instance, the `StringBuffer` in the example. We could have passed it around as an argument rather than making it an instance variable, but then our readers would have had to interpret it each time they saw it_ -- I don't buy the argument that it's better for code comprehension to stick something in class state rather than pass it to wherever it is needed.
-
