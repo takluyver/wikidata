@@ -17,6 +17,10 @@ On mandated comments:
 
 _It is just plain silly to have a rule that says that every function must have a javadoc, or every variable must have a comment. Comments like this just clutter up the code, propagate lies, and lend to general confusion and disorganization._
 
+On all fields being private:
+
+_The quasi-encapsulation of beans seems to make some OO purists feel better but usually provides no other benefit._
+
 ## Objections
 
 The first chapter makes it clear that the rules laid out in the book should be taken in a similar vain as teachings of martial arts masters, who each have their own school and no single one is absolutly right or best. Many of my objections might result from this approach to teaching about programming. My concerns might be summarised in that telling the students they are not competent enough to judge what the best way to approach a given problem is and that they should be following a set of rules does more damage that good.
