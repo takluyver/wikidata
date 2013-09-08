@@ -32,3 +32,7 @@ The entire chapter is written as a series of rules, usually with little or no ju
 ### Functions
 
 * _consider, for instance, the `StringBuffer` in the example. We could have passed it around as an argument rather than making it an instance variable, but then our readers would have had to interpret it each time they saw it_ -- I don't buy the argument that it's better for code comprehension to stick something in class state rather than pass it to wherever it is needed.
+
+### Formatting
+
+* _[with variable list with horizontally aligned names] you are tempted to read down the list of variable names without looking at their types_ -- with well named variables the types are not as important on first reading. Even more helpful is the horizontal alignment of a series of assignments, where the alignment strenghtens the impression that all of the operations in the list are of the same kind, and all that matters is what's on the left and what's on the right side.
