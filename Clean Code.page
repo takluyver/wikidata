@@ -4,6 +4,7 @@
 
 * functions should do one thing, be short and focused
 * avoid duplication
+* comments compensate for failure of expressing ideas clearly in code; extract appropriately named functions instead of commenting
 
 ## Objections
 
