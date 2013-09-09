@@ -1,0 +1,1 @@
+In Japan clients of banks can request evidence of how the price was arrived at. This is an important considerations when designing bank systems, as full trace of various calculations needs to be preserved.
