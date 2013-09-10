@@ -8,6 +8,7 @@
 * avoid noise
 * use version control system in preference to keeping the history in the source code
 * top-down order of functions (caller above callee)
+* don't pass or return `null`
 
 ### Quotes
 
@@ -42,6 +43,14 @@ The entire chapter is written as a series of rules, usually with little or no ju
 * _[with variable list with horizontally aligned names] you are tempted to read down the list of variable names without looking at their types_ -- with well named variables the types are not as important on first reading. Even more helpful is the horizontal alignment of a series of assignments, where the alignment strenghtens the impression that all of the operations in the list are of the same kind, and all that matters is what's on the left and what's on the right side.
 
 * _Whenever I have succumbed to this [putting short methods and block bodies on a single line], I have almost always gone back and put the indentation back in_ -- It would have been more convincing if it was backed by some analysis as to why.
+
+### Error Handling
+
+* _C# doesn't have checked exceptions, and despite valiant attempts, C++ doesn't either. Neither do Python or Ruby. Yet it is possible to write robust software in all of these languages._ -- along this line of argumentation, static typing is also of questionable value. That said, the argument against checked exceptions, namely broken encapsulation, seems sound.
+
+### Clean Tests
+
+* _But with [unit] tests that fear [of making breaking changes] disappears._ -- I'd agree if it was about _acceptance_ tests, not _unit_ tests.
 
 ## Other Remarks
 
