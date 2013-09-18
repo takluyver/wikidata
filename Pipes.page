@@ -1,0 +1,177 @@
+LHUG talk, Oliver Charles, 18/09/2013
+
+Data streaming abstraction. 
+
+* lots of reuse
+* very small memory footprint
+* version 4 has just been released -- this is the version we will be discussing
+
+## Motivation
+
+~~~ {.haskell}
+log :: [LogEntry]
+
+isinteresting :: LogEntry -> Bool
+
+pertinent :: [LogEntry]
+pertinent = take 50 . filter is Interesting log
+~~~
+
+This is nice because it is built with composition and runs lazily. But this is not realistic -- normally we'd need to do some IO. Can we achieve the same?
+
+~~~ {.haskell}
+log :: [LogEntry]
+
+pertinent :: IO [LogEntry]
+pertinent = take 50 . filter is Interesting <$> log
+~~~
+
+But this is no longer lazy! We can get streaming back, but then we'll give up composition.
+
+## Why not Lazy IO?
+
+Potential solution: lazy IO. But lazy IO is known to cause problems with weird runtime behaviour. Example:
+
+~~~ {.haskell}
+withFile "hello.txt" ReadMode (hGetcontents >=> print)
+-- will print the contents
+withFile "hello.txt" ReadMode hGetcontents >>= print
+-- will print empty string
+~~~ 
+
+Both programs typecheck, but have very different runtime behaviour. Another example:
+
+~~~ {.haskell}
+readFiles = fmap concat . mapM readFile
+~~~
+
+This gives "resource exhausted (Too many open files)".
+
+In summary, this is not very Haskell-y.
+
+## Overview
+
+Four main parts:
+
+* Producers
+* Consumers
+* Pipes
+* Effects
+
+There are fie ways to compose them. The library has strong theoretical foundations in Category Theory.
+
+### Producer
+
+Extend the base monad with the ability to `yield` data.
+
+~~~ {.haskell}
+stdin :: Producer String IO r -- runs forever, so can be polymorphic in return type
+stdin = forever $ lift getLine >>= yield
+
+greet :: String -> IO ()
+
+greetStdin :: Effect IO r
+greetStdin = for stdin $ \name -> lift (greet name)
+~~~
+
+### Effect
+
+Can be run with `runEffect`.
+
+### Consumer
+
+Extend the base monad with the ability to `await` data.
+
+~~~ {.haskell}
+greet :: Consumer String IO r
+greet = forever $ await >>= lift . putStrLn
+~~~
+
+### Pull Composition
+
+~~~ {.haskell}
+effect = producer >-> consumer -- consumer is driving the computation
+~~~
+
+We can combine our producer with consumer:
+
+~~~ {.haskell}
+greetPull :: Effect IO r
+greetPull = stdin >-> greet
+~~~
+
+### Pipes
+
+Extend the base monad with ability to both `yield` and `await`. Uses:
+
+* mapping
+* filtering
+* aggregation
+
+~~~ {.haskell}
+greetName : Monad m => Pipe String String m r
+greetName = forever $ do
+  name <- await
+  yield ("Hello " ++ name)
+
+greetWithPipe = -- ... ? how do we compose these ?
+~~~
+
+### Monadic Composition
+
+We don't have to use the pipe operators to compose pipes. Monadic composition is useful to e.g. read from two files at once.
+
+~~~ {.haskell}
+produceList :: Monad m => [a] -> Producer a m ()
+produceList l = mapM_ yield l
+~~~
+
+### Prelude
+
+There is a large number of standard components that come predefined: producers (for stdin etc.), consumers, pipes (folds, null tests etc.)
+
+## Solution
+
+~~~ {.haskell}
+logLines :: Producer LogEntry IO ()
+
+pertinent :: Producer LogEntry IO ()
+pertinent = logLines >-> filter is Interesting >-> take 50
+~~~
+
+## Advanced
+
+### Hoisting
+
+The base monad extends over entire pipeline, but there is a solution. Assuming `stdin` and `stdout` are on `IO` and `statefulPipe` is on `StateT`. 
+
+hoist lift stding >-> statefulPipe >-> hoist lift stdout
+
+### Proxies
+
+Allow bidirectional communication. (see diagram for A,A',B,B')
+
+~~~ {.haskell}
+request :: Monad m => a' -> Proxy a' a b' b m a
+respond :: Monad m => b -> Proxy a' a b' b m a
+~~~
+
+Everything is implemented on top of this and normally we don't have to worry about these internals.
+
+## Extensions
+
+### pipes-safe
+
+Allows attaching finalisers.
+
+~~~ {.haskell}
+import Pipes.PRelude (fold)
+import Pipes.Safe.Prelude (readFile)
+
+readFiles :: [FilePath] -> IO String
+readFiles = runSafeT .fold (++) "" id . mapM_ readFile
+~~~
+
+### pipes-parse
+
+Free monad transformer: if `Producer a m` is analoguous to `[a]`, then `FreeT (Producer a m) m` is analoguous to `[[a]]`. It's a powerful technique for parsing data.
