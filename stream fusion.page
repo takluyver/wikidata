@@ -3,3 +3,6 @@ In functional languages, elimination of unnecessary intermediate results of func
 ## References
 
 * *[Haskell Beats C Using Generalised Stream Fusion](http://research.microsoft.com/en-us/um/people/simonpj/papers/ndp/haskell-beats-C.pdf)*
+* a simple explanation on [Stack Overflow](http://stackoverflow.com/a/580172/424978)
+* a [paper](http://code.haskell.org/~dons/papers/icfp088-coutts.pdf) describing efficient implementation in GHC 
+* [implementation in Scala](http://jnordenberg.blogspot.co.uk/2010/03/scala-stream-fusion-and-specialization.html) by Jesper Nordenberg
