@@ -1,4 +1,8 @@
-LHUG talk, Oliver Charles, 18/09/2013
+---
+categories: haskell talk
+...
+
+*LHUG talk, Oliver Charles, 18/09/2013*
 
 Data streaming abstraction. 
 
@@ -145,7 +149,9 @@ pertinent = logLines >-> filter is Interesting >-> take 50
 
 The base monad extends over entire pipeline, but there is a solution. Assuming `stdin` and `stdout` are on `IO` and `statefulPipe` is on `StateT`. 
 
+~~~ {.haskell}
 hoist lift stding >-> statefulPipe >-> hoist lift stdout
+~~~
 
 ### Proxies
 
