@@ -1,0 +1,9 @@
+TODO: description
+
+## Advantages over constructor injection
+
+Lets one partially construct the components and only override specific dependencies when testing.
+
+## References
+
+* Jonas Boner's [blog post](http://jonasboner.com/2008/10/06/real-world-scala-dependency-injection-di/)
