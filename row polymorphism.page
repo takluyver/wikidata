@@ -1,4 +1,4 @@
-Record subtyping provides a way to formalise type system for OO languages, but leads to information loss:
+[Record subtyping](subtyping) provides a way to formalise type system for OO languages, but leads to information loss:
 
 ~~~
 f: {a: int} -> int x {a: int}
