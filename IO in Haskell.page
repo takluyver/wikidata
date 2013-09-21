@@ -8,9 +8,9 @@ Concept by [Oleg Kiselyov](http://okmij.org/ftp/Streams.html), meant to address 
 
 * [Hoodlums homework](https://gist.github.com/mmakowski/1397756)
 
-## Proxies (Pipes)
+## Pipes
 
-* [Tutorial](http://hackage.haskell.org/packages/archive/pipes/latest/doc/html/Control-Proxy-Tutorial.html)
+* [Tutorial](http://hackage.haskell.org/packages/archive/pipes/4.0.0/doc/html/Pipes-Tutorial.html)
 * [Oliver Charles's LHUG talk](Pipes)
 
 ## Conduits 
