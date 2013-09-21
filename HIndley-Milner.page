@@ -1,0 +1,3 @@
+Hindley-Milner is a type system (or a family of type systems), but usually is used when speaking about type inference algorithm for those systems -- which more accurately would be called *Algorithm W*. The algorithm itself is straightforward: it computes a set of constraints for each unspecified type, based on the usage of variables, and then unifies these constraints to infer a single type.
+
+It is said that HM does not work in the presence of [subtyping](), but I haven't yet seen a simple example that explains why.
