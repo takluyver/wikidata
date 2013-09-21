@@ -1,0 +1,1 @@
+A property of a type system where a type S can be considered a subtype of T (written S <: T) meaning that value of type S can be *safely used* wherever value of type T is expected. What *safe usage* means depends on a particular programming language. 
