@@ -10,7 +10,8 @@ Concept by [Oleg Kiselyov](http://okmij.org/ftp/Streams.html), meant to address 
 
 ## Proxies (Pipes)
 
-[Tutorial](http://hackage.haskell.org/packages/archive/pipes/latest/doc/html/Control-Proxy-Tutorial.html)
+* [Tutorial](http://hackage.haskell.org/packages/archive/pipes/latest/doc/html/Control-Proxy-Tutorial.html)
+* [Oliver Charles's LHUG talk](Pipes)
 
 ## Conduits 
 
