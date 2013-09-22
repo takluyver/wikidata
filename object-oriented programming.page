@@ -1,6 +1,12 @@
 ## Definition
 
-Some (Tony Morris, Brian McKenna et al.) believe OO doesn't exist -- i.e. is not well defined. Others (William Cook) think it does and [defines it](http://wcook.blogspot.co.uk/2013/05/declarative-versus-imperative.html) as follows:
+Some FP aficionados believe OO doesn't exist -- i.e. is not well defined:
+
+<blockquote class="twitter-tweet"><p><a href="https://twitter.com/dibblego">@dibblego</a> sounds just as coherent as any other description I've heard.</p>— Brian McKenna (@puffnfresh) <a href="https://twitter.com/puffnfresh/statuses/378688476469682176">September 14, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+William Cook thinks it does and [defines it](http://wcook.blogspot.co.uk/2013/05/declarative-versus-imperative.html) as follows:
 
 >An object is a first-class, dynamically dispatched behavior. A behavior is a collection of named operations that can be invoked by clients where the operations may share additional hidden details. Dynamic dispatch means that different objects can implement the same operation name(s) in different ways, so the specific operation to be invoked must come from the object identified in the client's request. First class means that objects have the same capabilities as other kinds of values, including being passed to operations or returned as the result of an operation.
 
