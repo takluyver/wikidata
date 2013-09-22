@@ -1,0 +1,15 @@
+## Definition
+
+Some (Tony Morris, Brian McKenna et al.) believe OO doesn't exist -- i.e. is not well defined. Others (William Cook) think it does and [defines it](http://wcook.blogspot.co.uk/2013/05/declarative-versus-imperative.html) as follows:
+
+>An object is a first-class, dynamically dispatched behavior. A behavior is a collection of named operations that can be invoked by clients where the operations may share additional hidden details. Dynamic dispatch means that different objects can implement the same operation name(s) in different ways, so the specific operation to be invoked must come from the object identified in the client's request. First class means that objects have the same capabilities as other kinds of values, including being passed to operations or returned as the result of an operation.
+
+>A language or system is object oriented if it supports the dynamic creation and use of objects. Support means that objects are easy to define and use. It is possible to encode objects in C or Haskell, but an encoding is not support.
+
+## Advantages
+
+A perceived advantage of OO is that it allows building large systems. Rob Pike [contests this notion](http://commandcenter.blogspot.it/2012/06/less-is-exponentially-more.html):
+
+>There's this idea about "programming in the large" and somehow C++ and Java own that domain. I believe that's just a historical accident, or perhaps an industrial accident. But the widely held belief is that it has something to do with object-oriented design.
+
+>I don't buy that at all. Big software needs methodology to be sure, but not nearly as much as it needs strong dependency management and clean interface abstraction and superb documentation tools, none of which is served well by C++ (although Java does noticeably better).
