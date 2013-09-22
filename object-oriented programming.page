@@ -5,8 +5,27 @@ Some FP aficionados believe OO doesn't exist -- i.e. is not well defined:
 <blockquote class="twitter-tweet"><p><a href="https://twitter.com/dibblego">@dibblego</a> sounds just as coherent as any other description I've heard.</p>— Brian McKenna (@puffnfresh) <a href="https://twitter.com/puffnfresh/statuses/378688476469682176">September 14, 2013</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+They might have a point in that there are multiple "definitions", that have been changing over time and none of them is particularly clear. 
 
-William Cook thinks it does and [defines it](http://wcook.blogspot.co.uk/2013/05/declarative-versus-imperative.html) as follows:
+### Kristen Nygaard
+
+Nygaard was the creator of [Simula](), considered the first object-oriented programming language. He defined OOP by contrasting it to procedural, functional and constraint programming paradigms:
+
+>[In OOP] a program execution is regarded as a physical model, simulating the behavior of either a real or imaginary part of the world.
+
+He then clarifies the meaning of "physical model":
+
+>The notion of a physical model should be taken literally. Most people can imagine the construction of physical models by means of, for example, Lego bricks. In the same way, a program execution may be viewed as a physical model. Other perspectives on programming are made precise by some underlying model defining equations, relations, predicates, etc. For object-oriented programming, however, we have to elaborate on the concept of physical models.
+
+### Alan Kay
+
+Alan Kay, considered to be the father of modern OO, said the following in [an e-mail from 2003](http://userpage.fu-berlin.de/~ram/pub/pub_jf47ht81Ht/doc_kay_oop_en):
+
+>OOP to me means only messaging, local retention and protection and hiding of state-process, and extreme late-binding of all things. 
+
+### William Cook
+
+Cook, a prolific OOP researcher, [defines it](http://wcook.blogspot.co.uk/2013/05/declarative-versus-imperative.html) as follows:
 
 >An object is a first-class, dynamically dispatched behavior. A behavior is a collection of named operations that can be invoked by clients where the operations may share additional hidden details. Dynamic dispatch means that different objects can implement the same operation name(s) in different ways, so the specific operation to be invoked must come from the object identified in the client's request. First class means that objects have the same capabilities as other kinds of values, including being passed to operations or returned as the result of an operation.
 
@@ -19,3 +38,7 @@ A perceived advantage of OO is that it allows building large systems. Rob Pike [
 >There's this idea about "programming in the large" and somehow C++ and Java own that domain. I believe that's just a historical accident, or perhaps an industrial accident. But the widely held belief is that it has something to do with object-oriented design.
 
 >I don't buy that at all. Big software needs methodology to be sure, but not nearly as much as it needs strong dependency management and clean interface abstraction and superb documentation tools, none of which is served well by C++ (although Java does noticeably better).
+
+## References
+
+* [C2 wiki](http://c2.com/cgi/wiki?DefinitionsForOo)
