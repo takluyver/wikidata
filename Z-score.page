@@ -1,0 +1,10 @@
+---
+categories: statistics
+...
+In [statistics](), a value of a measurement expressed as the number of standard deviations from the mean. I.e., if $M$ is the mean and $SD$ is standard deviation the Z-score for value $X$ is
+
+$Z = (X-M)/SD$
+
+## References
+
+* Statistics 1 Coursera course [Lecture 3](https://class.coursera.org/stats1-002/lecture/29)
