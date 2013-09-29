@@ -1,0 +1,18 @@
+## Hierarchical Theory
+
+Decades of [correllational research]() lead to Cattell-Horn-Carroll's hierarchical model. It states that genral intelligence consists of various abilities that are determinant of performance in different types of tasks. There is strong positive correlation between the abilities at the lowest level of the hierarchy, weaker, but still positive, at the higher level, and so on.
+
+~~~ {.dot}
+digraph intelligence {
+ "general intelligence" -> "verbal ability"
+ "general intelligence" -> "spatial ability"
+ "verbal ability" -> "history"
+ "verbal ability" -> "languages"
+ "spatial ability" -> "maths"
+ "spatial ability" -> "science"
+}
+~~~
+
+## References
+
+* Statistics 1 Coursera course [Lecture 2](https://class.coursera.org/stats1-002/lecture/19)
