@@ -1,0 +1,10 @@
+---
+categiries: statistics
+...
+In [statistics](), research that does not involve an [independent variable](), i.e. relies on observation of things that happen naturally rather than experimental setup. 
+
+An interesting example: study of impact of sports-related concussion on cognitive abilities. Tests were administered to american football players who have and who have not suffered a concussion and the ones who were not concussed did much better. Does it qualify as an experimental research? Does it prove causality? While on the surface of it the setup seems adequate -- there is a "treatment group" and a "control group", the assignment to those groups was not random. There might have been more fundamental reasons why the concussed players suffered the injury, e.g.: prior hits on the head, more aggressive personality etc., which would have been the true determinant of the performance in the test. Due to lack of control of researches over whether someone was concussed or not, it's called a _quasi-independent variable_.
+
+## References
+
+* Statistics 1 Coursera course [Lecture 2](https://class.coursera.org/stats1-002/lecture/21)
