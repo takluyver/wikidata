@@ -1,0 +1,17 @@
+---
+categories: statistics
+...
+
+## Summary Statistics
+
+### Measures of central tendency
+
+* mean: the arithmetic average
+* median: the 50th percentile value
+* mode: the peak of the histogram
+
+Note: for normal distribution all of these will have the same value.
+
+## References
+
+* Statistics 1 [Coursera course](https://class.coursera.org/stats1-002/class/index)
