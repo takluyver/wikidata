@@ -1,6 +1,6 @@
 ## Hierarchical Theory
 
-Decades of [correllational research]() lead to Cattell-Horn-Carroll's hierarchical model. It states that genral intelligence consists of various abilities that are determinant of performance in different types of tasks. There is strong positive correlation between the abilities at the lowest level of the hierarchy, weaker, but still positive, at the higher level, and so on.
+Decades of [correlational research]() lead to Cattell-Horn-Carroll's hierarchical model. It states that genral intelligence consists of various abilities that are determinant of performance in different types of tasks. There is strong positive correlation between the abilities at the lowest level of the hierarchy, weaker, but still positive, at the higher level, and so on.
 
 ~~~ {.dot}
 digraph intelligence {
