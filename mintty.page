@@ -1,6 +1,6 @@
 Setting colours:
 
-~~~
+~~~ { .bash }
 echo -ne '\e]4;0;#000000\a'   # black
 echo -ne '\e]4;1;#BF0000\a'   # red
 echo -ne '\e]4;2;#00BF00\a'   # green
