@@ -16,11 +16,11 @@ Below are quotes that back up some of my coding heuristics.
 
 On mandated comments:
 
-_It is just plain silly to have a rule that says that every function must have a javadoc, or every variable must have a comment. Comments like this just clutter up the code, propagate lies, and lend to general confusion and disorganization._
+> It is just plain silly to have a rule that says that every function must have a javadoc, or every variable must have a comment. Comments like this just clutter up the code, propagate lies, and lend to general confusion and disorganization.
 
 On all fields being private:
 
-_The quasi-encapsulation of beans seems to make some OO purists feel better but usually provides no other benefit._
+> The quasi-encapsulation of beans seems to make some OO purists feel better but usually provides no other benefit.
 
 ## Objections
 
