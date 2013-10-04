@@ -5,6 +5,6 @@ A* arg = ...;
 B* bp = dynamic_cast(arg); 
 ~~~
 
-Co ciekawe, C uzywa skladni z nawiasami `((B*)arg;)`, ale nie należy jej stosowac w C++ -- `dynamic_cast` sprawdza, że rzutowany typ jest podtypem tego, na który się rzutuje. Więcej tutaj: [http://www.cplusplus.com/doc/tutorial/typecasting/](http://www.cplusplus.com/doc/tutorial/typecasting/)
+Co ciekawe, C używa składni z nawiasami `((B*)arg;)`, ale nie należy jej stosować w C++ -- `dynamic_cast` sprawdza, że rzutowany typ jest podtypem tego, na który się rzutuje. Więcej tutaj: [http://www.cplusplus.com/doc/tutorial/typecasting/]()
 
-Inne operatory rzutowania w C++: `[reinterpret_cast]()`, `[static_cast]()`, `[const_cast]()`.
+Inne operatory rzutowania w C++: [`reinterpret_cast`](), [`static_cast`](), [`const_cast`]().
