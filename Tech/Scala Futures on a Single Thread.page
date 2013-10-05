@@ -18,7 +18,7 @@ def orderQuote(itemId: Id, quantityRequired: Int): Future[Option[Price]] = for {
 
 Here `price` and `availability` are service calls that can potentially take long time and are meant to be executed in parallel.
 
-However, the usefulness of futures is not restricted to a concurrent setting. They also provide a nice pattern for suspending execution of a sequential algorithm until a certain condition is met. There is nothing inherently concurrent about future implementation either -- the runtime behaviour depends on the instance of [`ExecutionContext`](http://www.scala-lang.org/api/current/index.html#scala.concurrent.ExecutionContext) provided to functions that can spawn new computations.
+However, the usefulness of futures is not restricted to the concurrent setting. They also provide a nice pattern for suspending execution of a sequential algorithm until a certain condition is met. There is nothing inherently concurrent about `Future` implementation either -- the runtime behaviour depends on the instance of [`ExecutionContext`](http://www.scala-lang.org/api/current/index.html#scala.concurrent.ExecutionContext) provided to functions that can spawn new computations.
 
 The example below illustrates how futures and promises facilitate suspension of effects until the required condition -- the availability of price in this case -- is met.
 
