@@ -1,0 +1,20 @@
+Synchronous Dataflow with Scala Futures
+
+[Futures](http://docs.scala-lang.org/sips/pending/futures-promises.html), introduced into Scala standard library in version 2.10, quickly became one of the cornerstones of Scala concurrency. Their main selling point is the ease of composition. A standard example of that involves asynchronous calls to a number of remote services and computation of the answer once all of the responses are collected:
+
+~~~ {.scala}
+def price(itemId: Id): Future[Price] = ???
+
+def availability(itemId: Id): Future[Int] = ???
+
+def orderQuote(itemId: Id, quantityRequired: Int): Future[Option[Price]] = for {
+  unitPrice         <- price(itemId)
+  quantityAvailable <- availability(itemId)
+} yield if (quantityAvailable >= quantityRequired) Some(quantityRequired * unitPrice) else None
+~~~
+
+Here `price` and `availability` are service calls that can potentially take long time and are meant to be executed in parallel.
+
+However, the usefulness of futures is not restricted to a concurrent setting. They also provide a nice pattern for suspending execution of a sequential algorithm until a certain condition is met. There is nothing inherently concurrent about future implementation either -- the runtime behaviour depends on the instance of [`ExecutionContext`](http://www.scala-lang.org/api/current/index.html#scala.concurrent.ExecutionContext) provided to functions that can spawn new computations.
+
+<script src="https://gist.github.com/mmakowski/6841280.js"></script>
