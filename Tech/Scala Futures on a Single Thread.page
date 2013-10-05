@@ -17,4 +17,44 @@ Here `price` and `availability` are service calls that can potentially take long
 
 However, the usefulness of futures is not restricted to a concurrent setting. They also provide a nice pattern for suspending execution of a sequential algorithm until a certain condition is met. There is nothing inherently concurrent about future implementation either -- the runtime behaviour depends on the instance of [`ExecutionContext`](http://www.scala-lang.org/api/current/index.html#scala.concurrent.ExecutionContext) provided to functions that can spawn new computations.
 
-<script src="https://gist.github.com/mmakowski/6841280.js"></script>
+~~~ {.scala}
+import scala.concurrent._
+import scala.util.{Success, Failure}
+import java.util.concurrent.Executor
+import scala.collection.mutable
+ 
+implicit val synchronousExecutionContext = ExecutionContext.fromExecutor(new Executor {
+  def execute(task: Runnable) = task.run()
+})
+ 
+object priceService {
+  val prices = mutable.HashMap[String, Int]()
+  val pendingRequests = mutable.HashMap[String, Set[Promise[Int]]]() withDefaultValue Set()
+ 
+  def setPrice(symbol: String, price: Int): Unit = {
+    prices += (symbol -> price)
+    println(s"${Thread.currentThread.getName}: price received: $symbol: $price")
+    pendingRequests(symbol).foreach(_.success(price))
+  }
+ 
+  def price(symbol: String): Future[Int] = 
+    if (prices.contains(symbol)) Future.successful(prices(symbol))
+    else {
+      val request = Promise[Int]()
+      if (pendingRequests.contains(symbol)) pendingRequests += (symbol -> (pendingRequests(symbol) + request))
+      else                                  pendingRequests += (symbol -> Set(request))
+      request.future
+    }
+}
+ 
+def publishValuation(symbol: String, quantity: Int): Unit = 
+  priceService.price(symbol).map(_ * quantity).onComplete {
+    case Success(value) => println(s"${Thread.currentThread.getName}: $quantity x $symbol: $value)")
+    case Failure(e)     => println(s"error: $e")
+  }
+ 
+priceService.setPrice("AAA", 1013)
+publishValuation("AAA", 20)
+publishValuation("BBB", 30)
+priceService.setPrice("BBB", 221)
+~~~
