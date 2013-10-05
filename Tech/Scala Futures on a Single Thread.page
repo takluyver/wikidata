@@ -1,4 +1,7 @@
-Synchronous Dataflow with Scala Futures
+---
+title: Scala Futures on a Single Thread
+categories: blog, scala
+...
 
 [Futures](http://docs.scala-lang.org/sips/pending/futures-promises.html), introduced into Scala standard library in version 2.10, quickly became one of the cornerstones of Scala concurrency. Their main selling point is the ease of composition. A standard example of that involves asynchronous calls to a number of remote services and computation of the answer once all of the responses are collected:
 
@@ -17,17 +20,22 @@ Here `price` and `availability` are service calls that can potentially take long
 
 However, the usefulness of futures is not restricted to a concurrent setting. They also provide a nice pattern for suspending execution of a sequential algorithm until a certain condition is met. There is nothing inherently concurrent about future implementation either -- the runtime behaviour depends on the instance of [`ExecutionContext`](http://www.scala-lang.org/api/current/index.html#scala.concurrent.ExecutionContext) provided to functions that can spawn new computations.
 
+The example below illustrates how futures and promises facilitate suspension of effects until the required condition -- the availability of price in this case -- is met.
+
 ~~~ {.scala}
+import java.util.concurrent.Executor
+
+import scala.collection.mutable
 import scala.concurrent._
 import scala.util.{Success, Failure}
-import java.util.concurrent.Executor
-import scala.collection.mutable
- 
+
+// thanks to being implicit this execution context will be used by all Future methods that 
+// can spawn new Futures, making all spawned computations synchronous
 implicit val synchronousExecutionContext = ExecutionContext.fromExecutor(new Executor {
   def execute(task: Runnable) = task.run()
 })
  
-object priceService {
+object PriceService {
   val prices = mutable.HashMap[String, Int]()
   val pendingRequests = mutable.HashMap[String, Set[Promise[Int]]]() withDefaultValue Set()
  
@@ -41,20 +49,32 @@ object priceService {
     if (prices.contains(symbol)) Future.successful(prices(symbol))
     else {
       val request = Promise[Int]()
-      if (pendingRequests.contains(symbol)) pendingRequests += (symbol -> (pendingRequests(symbol) + request))
-      else                                  pendingRequests += (symbol -> Set(request))
+      val updatedRequests = if (pendingRequests.contains(symbol)) pendingRequests(symbol) + request
+                            else                                  Set(request)
+      pendingRequests += (symbol -> updatedRequests)
       request.future
     }
 }
  
 def publishValuation(symbol: String, quantity: Int): Unit = 
-  priceService.price(symbol).map(_ * quantity).onComplete {
+  PriceService.price(symbol).map(_ * quantity).onComplete {
     case Success(value) => println(s"${Thread.currentThread.getName}: $quantity x $symbol: $value)")
     case Failure(e)     => println(s"error: $e")
   }
  
-priceService.setPrice("AAA", 1013)
+PriceService.setPrice("AAA", 1013)
 publishValuation("AAA", 20)
 publishValuation("BBB", 30)
-priceService.setPrice("BBB", 221)
+PriceService.setPrice("BBB", 221)
 ~~~
+
+This code prints out:
+
+~~~
+main: price received: AAA: 1013
+main: 20 x AAA: 20260)
+main: price received: BBB: 221
+main: 30 x BBB: 6630)
+~~~
+
+demonstrating that unfulfilled condition doesn't block the program even though only a single thread is used -- and all that happens without breaking the abstraction boundaries between `PriceService` and the valuation publishing code.
