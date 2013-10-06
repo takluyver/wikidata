@@ -1,0 +1,21 @@
+---
+categories: statistics
+...
+
+In statistics, a coefficient that denotes the level of correlation between two variables, symbolised by $r$. Ranges from -1 (perfect inverse correlation) to 1 (perfect correlation). Used for measuring correlation between two contiguous variables.
+
+## Formula
+
+$r = \frac{SP_{xy}}{\sqrt{SS_x\times SS_y}}$
+
+Where:
+
+$SP_{xy} = \sum\limits_{i=1}^n (x_i - M_x)\times (y_i - M_y)$
+
+$SS_x = \sum\limits_{i=1}^n (x_i - M_x)^2$
+
+$M_x =$ mean of $x$
+
+## References
+
+* Statistics 1 coursera course [lecture](https://class.coursera.org/stats1-002/lecture/39)
