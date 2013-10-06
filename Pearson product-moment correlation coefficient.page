@@ -16,6 +16,10 @@ $SS_x = \sum\limits_{i=1}^n (x_i - M_x)^2$
 
 $M_x =$ mean of $x$
 
+## Relationship with Covariance
+
+$r$ is normalised covariance ($SP_xy/n$), similar to how [standard deviation]() is normalised variance.
+
 ## References
 
 * Statistics 1 coursera course [lecture](https://class.coursera.org/stats1-002/lecture/39)
