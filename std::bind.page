@@ -1,0 +1,5 @@
+A C++ operator for (long-winded and inconvenient) partial function application.
+
+## References
+
+* the [C++ Reference](http://en.cppreference.com/w/cpp/utility/functional/bind)
