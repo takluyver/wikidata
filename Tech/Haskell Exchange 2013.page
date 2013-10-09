@@ -1,0 +1,313 @@
+---
+title: Haskell Exchange 2013
+categories: it blog haskell
+...
+
+The second edition of Haskell Exchange has seen over 70 enthusiasts -- primarily from London area, but Hungarian and German contingents were noticeable as well -- gathered in a crypt of a church in Clerkenwell. The schedule was intense, so unlike with the events I related in the past I won't attempt to describe all of the talks in detail, but will just focus on the ones which I found particularly intriguing -- i.e. ones that had included neat tricks and were scheduled early enough for my attention not to wander in unexpected directions.
+
+## Lenses
+
+**Simon Peyton Jones** usually speaks about his work on new developments in GHC. This time round he decided it'll be more fun to speak about something he has had little involvement with and picked the `lens` library by Edward Kmett. Over the last year or so the library has been gaining popularity as a generic solution for manipulating nested data structures. The motivating example was access to a piece of data embedded in nested records, which is not well supported by Haskell, as can be seen in `setPostcode` function below:
+
+~~~ {.haskell}
+data Person = P { name :: String 
+                , addr :: Address 
+                }
+data Address = A { street :: String
+                 , city :: String
+                 , postcode :: String 
+                 }
+
+setPostcode :: String -> Person -> Person
+setPostcode pc p = p { addr = addr p { postcode = pc }}
+~~~
+
+Lenses address this by providing `view` (i.e. get), `set` and `over` (i.e. update) functions corresponding to fields of the structure. The first impressive insight is that they can be represented as a single function parameterised over a functor:
+
+~~~ {.haskell}
+type Lens s a = forall f. Functor f => (a -> f a) -> s -> f s
+~~~
+
+With the help of two functors, `Identity` and `Const`:
+
+~~~ {.haskell}
+newtype Identity a = Identity a
+instance Functor Identity where
+  fmap f (Identity x) = Identity (f x)
+
+newtype Const v a = Const v
+instance Functor (Const v) where
+  fmap f (Const x) = Const x
+~~~
+
+we can define:
+
+~~~ {.haskell}
+runIdentity :: Identity s -> s
+runIdentity (Indentity x) = x
+
+getConst :: Const v a -> v
+getConst (Const x) = x
+
+view :: Lens s a -> (s -> a)
+view ln s = getConst (ln Const s)
+
+set :: Lens s a -> (a -> s -> s)
+set ln x = runIdentity . ln (Identity . const x)
+
+over :: Lens s a -> ((a -> a) -> s -> s)
+over ln f = runIdentity . ln (Identity . f)
+~~~
+
+The advantage of this representation is that lens composition -- e.g. combining the lens for an element of an inner structure with the lens for an element of the outer structure -- is just function composition. It also sets the stage for another deep insight: if instead of a Functor we require an Applicative, we'll get a multi-focus lens, i.e. a lense that can point to a number of elements at once. Magic.
+
+Usefulness of lenses is not restricted to operating on nested records. Map lookup and update can be expressed as a lens, Edward's library also provides lenses that e.g. allow access to individual bits of a piece of data.
+
+In the talk Simon demonstrated that he can be just as enthusiastic about someone else's work as he is about his own. While he did indicate that some of the aspects of the library seem obscure to him ("I wouldn't write it point-free", "I have no idea what this Prefunctor thing is!"), it was all good natured and highlighted an interesting difference between Haskell and Scala language stewardship: while Simon seemed genuinely thrilled that users of Haskell push the boundaries and use language features in previously unexpected ways, members of Typesafe team distance themselves from the FP part of the community and Martin Odersky [explicitly declared](https://twitter.com/odersky/status/382631339188428800) his lack of interest in improving the experience of FP library writers.
+
+## Uniplate
+
+**Neil Mitchell** explained HLint benefits from the use of a generics library. HLint processes Haskell source code and provides hints on how to improve it by removing redundant bits, migrating off deprecated features and making it more idiomatic. As such, the tool relies on traversing AST of the Haskell module being analysed (the AST is provided by functions in `haskell-src-exts` package) and while doing so applying a set of rules. Given that in the AST `Decl` has 27, `Exp` has 45 and `Pat` has 23 constructors writing each rule for each of these cases would require lots of boilerplate code.
+
+This is where generics libraries come into the picture. Their purpose is to abstract away the traversal code so that the logic can be stated in terms of the usual pattern and exceptions from that pattern. Uniplate is one such library. It provides four functions that operate on instances of `Uniplate` type class:
+
++---------+------------------+---------------+
+|         | Query            | Transform     |
++---------+------------------+---------------+
+| Deep    | `universe`       | `transform`   |
++---------+------------------+---------------+
+| Shallow | `children`       | `descend`     |
++---------+------------------+---------------+
+
+The use of these is prehaps best illustrated by examples from HLint:
+
+~~~ {.haskell}
+transform :: (on -> on) -> on -> on
+
+-- eliminate redundant parentheses
+lessParen :: Exp -> Exp
+lessParen = transform f
+  where f (Paren (Paren x)) = Paren x
+        f (Paren (List x))  = List x
+        f x                 = x
+~~~
+
+~~~ {.haskell}
+universe :: on -> [on]
+
+-- determine if a language extension is used
+redundantExtension :: Module -> Bool
+redundantExtension m = 
+  viewPats == 0 && "ViewPatterns" `elem` exts
+  where
+    viewPats = length[() | PViewPat {} <- universeBi m]
+    exts = [prettyPrint x | LanguagePragma _ xs <- universeBi m, x <- xs]
+~~~
+
+~~~ {.haskell}
+descend :: (on -> on) -> on -> on
+
+-- eliminate conditionals with constant condition
+eval :: Exp -> Exp
+eval x = case x of
+  Lambda{} -> x
+  If c t f | prettyPrint c == "True" -> eval t
+           | prettyPrint c == "False" -> eval f
+  x -> descend eval x
+~~~
+
+~~~ {.haskell}
+children :: on -> [on]
+
+-- find the names of all free variables
+freeVars :: Exp -> [String]
+freeVars (Var x) = [prettyPrint x]	
+freeVars (Lambda _ x bod) = freeVars bod \\ boundVars x
+freeVars x = nub $ concatMap freeVars $ children x
+~~~
+
+How are these functions implemented? `universe` and `transform` can be implemented in terms of the shallow primitives that give more control:
+
+~~~ {.haskell}
+universe x = x : concatMap universe (children x)
+transform f = f . descend (transform f)
+~~~
+
+`children` and `descend` rely on an instance of `Uniplate` type class for the type they are to operate on -- `Exp` in the case of the examples above:
+
+~~~ {.haskell}
+class Uniplate on where
+  uniplate :: on -> ([on],       -- children 
+                     [on] -> on) -- a fn that puts the children together back into the parent
+
+instance Uniplate Exp where
+  uniplate (App x y) - ([x,y], \[x,y] -> App x y)
+  -- and so on for all other type constructors
+
+children = fst . uniplate
+descend f x = gen $ map f cs
+  where (cs, gen) = uniplate x
+~~~
+
+This means all constructors need to be handled just in a single place, when the type class instace is defined, and from then on generic type traversal functions can be used. While there is a number of other generic programming solutions out there, notably `GHC.Generics` and `Data.Data`, Uniplate is simple, concise and performant.
+
+## Free Monads
+
+According to **Andres Löh**, everything is an EDSL. Even though some things don't look like this on the first sight, they usually greatly benefit from language-like treatment. Over time DSLs have appeared in a number of domains such as parsing, GPU computations and music. When developing an EDSL it is preferable to embed it deeply, i.e. be able to treat the program as data in the host language, so that it can be inspected, transformed and interpreted in various ways. Andres illustrated an evolution of a very simple, imperative language, from a shallow embedding to a deep embedding and the abstract constructs that could be extracted from that exercise. I am going to repeat all the steps of this derivation as it is very educational.
+
+If our language provided just two constructs, `say` and `ask`, we could write a program in it like this:
+
+~~~ {.haskell}
+do
+  say "What's your name?"
+  name <- ask
+  say ("Hello " ++ name)
+~~~
+
+and implement it, via shallow embedding, like this:
+
+~~~ {.haskell}
+say = putStrLn
+ask = getLine
+~~~
+
+This works, but does not bring the benefits associated with deep embedding. To realise them we have to model our language as a data type and execute the code above in a custom monad:
+
+~~~ {.haskell}
+data Interaction a
+instance Monad Interaction
+
+say :: String -> Interaction ()
+ask :: Interaction String
+
+data Interaction :: * -> * where
+  Say    :: String -> Interaction ()
+  Ask    :: Interaction String
+  Return :: a -> Interaction a
+  Bind   :: Interaction a -> (a -> Interaction b) -> Interaction b
+
+instance Monad Interaction where
+  return = Return
+  (>>=) = Bind
+
+run :: Interaction a -> IO a
+run (Say s)    = putStrLn s
+run Ask        = getLine
+run (Return x) = return x
+run (Bind i f) = (run i) >>= (run . f)
+~~~
+
+This is going to work, but sadly, `Interaction` is not really a monad, as it does not abide by the monad laws, as return and bind just wrap the arguments in further layers of constructors; e.g. by left associatvity law `return x >>= f` must equal `f x`, but `Bind (Return x) f` is not the same as `f x`. One could argue that as long as the interpretation functions preserve this property we are good, but it is a tricky argument to make and it's much preferable to guarantee good behaviour by construction.
+
+To achieve this we can first observe that by the monad laws every monadic computation has a normal form which consists of a sequence of atomic operations followed by a single `return`:
+
+~~~ {.haskell}
+do
+  x1 <- step1
+  ..
+  xn <- stepn
+  return something
+~~~
+
+so a way to guarantee conformance of our monad to the laws would be to construct it so that it represents such a normalised computation. Our language consists of two atomic operations, `Say` and `Ask`, so all we need to do is guarantee that `Bind` can only operate on one of these two. To guarantee that, let's replace it with its partial applications to the two atomic commands:
+
+~~~ {.haskell}
+say' msg = Bind (Say msg)
+ask' = Bind Ask
+
+data Interaction :: * -> * where
+  Return :: a -> Interaction a
+  Say'   :: String -> (() -> Interaction b) -> Interaction b
+  Ask'   :: (String -> Interaction b) -> Interaction b
+~~~
+
+This is still an instance of a monad:
+
+~~~ {.haskell}
+instance Monad Interaction where
+  return = Return
+  Return x   >>= f = f x
+  Say' msg k >>= f = Say' msg ((>>= f) . k)
+  Ask' k     >>= f = Ask' ((>>= f) . k)
+~~~
+
+Furthermore, it now fulfills the laws, and the interpreter is still straightforward:
+
+~~~ {.haskell}
+run (Return x) = return x
+run (Say' msg k) = putStrLn msg >>= run . k
+run (Ask' k) = readLn >>= run . k
+~~~
+
+With this sorted out we can now thing about how to extract the underlying pattern into something reusable. A good place to start would be splitting the construct into two parts: the generic monad that describes normal form and the set of concrete atomic operations, `InteractionOp`:
+
+~~~ {.haskell}
+data Interaction :: * -> * where
+  Return :: a -> Interaction a
+  Wrap   :: InteractionOp a -> Interaction a
+
+data InteractionOp :: * -> * where
+  Say' :: String -> (() -> Interaction b) -> InteractionOp b
+  Ask' :: (String -> Interaction b) -> InteractionOp b
+~~~
+
+The type variable `b` is only used as the argument to `Interaction`, so without any loss of generality `Interaction b` can be replaced by a single variable `r`:
+
+~~~ {.haskell}
+data InteractionOp :: * -> * where
+  Say' :: String -> (() -> r) -> InteractionOp r
+  Ask' :: (String -> r) -> InteractionOp r
+~~~
+
+Finally, we break `Interaction` free from `InteractionOp` by parameterising it by the data type it will operate on, at the same time renaming it to `Free`:
+
+~~~ {.haskell}
+data Free :: (* -> *) -> * -> * where
+  Return :: a -> Free f a
+  Wrap   :: f (Free f a) -> Free f a
+~~~
+
+When is `Free` a monad? Definitely, whenever `f` is a functor:
+
+~~~ {.haskell}
+instance Functor f => Monad (Free f) where
+  return :: a -> Free f a
+  return = Return
+
+  (>>=) :: Free f a -> (a -> Free f b) -> Free f b
+  Return x >>= f = f x
+  Wrap c   >>= f = Wrap (fmap (>>= f) c)
+~~~
+
+What remains to be shown is that `InteractionOp` is a functor, which is left as an exercise for the reader.
+
+What have we achieved here? Given a functor we get a monad for free! It turns out that many well known monads, such as _Identity_ and _Maybe_, are isomorphic to a free monad. But primarily, we've defined a flexible scheme for writing deeply embedded EDSLs. The power of this construct can be witnessed in this example of a custom scheduler for a simple concurrent process language:
+
+~~~ {.haskell}
+data ProcessF :: * -> * where
+  Atomically :: IO a -> (a -> r) -> ProcessF r
+  Fork :: Process () -> r -> ProcessF r
+
+type Process = Free ProcessF
+
+atomically :: IO a -> Process a
+atomically m = Wrap (Atomically m Return)
+
+fork :: Process () -> Process ()
+fork p - Wrap (Fork p (Return ()))
+
+-- we can define the scheduling however we want!
+schedule :: [Process ()] -> IO ()
+schedule []                         = return ()
+schedule (Return _ : ps)            = schedule ps
+schedule (Wrap (Atomically m k):ps) = do 
+                                        x <- m
+                                        schedule (ps ++ [k x])
+schedule (Wrap (Fork p1 p2) : ps)   = schedule (ps ++ [p2, p1])
+~~~
+
+I recommend as an exercise implementing a simple program that uses `atomically` and `fork`, run it through `schedule` and see what comes out; then experimenting with other implementations of `schedule`.
+
+## Other Talks
+
+EDSLs were definitely a big theme of the day, with **Gracjan Polak** and **Bas van Dijk** describing how they naturally evolved in the course of hacking at the start-ups they are involved in (Scrive and Erudify, respectively). **Simon Marlow** related how Haskell's support for abstracting the execution details makes writing spam detection rules easier at another "small Haskell startup" (Facebook). **Adam Bergmark** talked about JavaScript related woes of web startup life and how Fay, a Haskell to JavaScript compiler, addresses them. Finally, in a park bench discussion, the panelists broadely agreed that hiring Haskell developers is easy and the quality of candidates is excellent. There was a disagreement though on laziness vs. strictness and on whether the programmers need to be aware of the evaluation strategy.
