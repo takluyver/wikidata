@@ -5,6 +5,9 @@ SPJ
 * it's more fun to talk about things I don't know about
 * only learned about it in the last couple of weeks
 * discussed with Ed Kmett at ICFP
+
+## What are lenses?
+
 * `Lens` gives access to a particular piece of a data structure
 
 ~~~ {.haskell}
@@ -30,7 +33,9 @@ view :: Lens' s a -> s -> a
 set :: Lens' s a -> a -> s -> s
 ~~~
 
-How could we implement it? E.g. by having viewR and setR as members of lens:
+### How could we implement it? 
+
+E.g. by having `viewR` and `setR` as members of lens:
 
 ~~~ {.haskell}
 data LensR = L { viewR :: s -> a
@@ -63,6 +68,8 @@ need a lot of specialised functions -- where do we stop? Let's generalise:
 ~~~ {.haskell}
 modF :: Functor f => (a -> f a) -> s -> f s
 ~~~
+
+### First insight
 
 But now, it turns out we can express other functions in terms of `modF`:
 
@@ -128,7 +135,7 @@ view ln = getConst . ln Const
 
 `Const` is a bit of a strange functor, since it doesn't use the second type arg at all.
 
-How do we make a lens?
+### How do we make a lens?
 
 ~~~ {.haskell}
 data Person = P { _name :: Strng, _salary :: Int }
@@ -140,6 +147,77 @@ view name fred
 set name "Bill" fred
 ~~~
 
-## 
+Note: this is efficient, newtypes are free (no construction and deconstruction of Identity and Const values), getConst will be inlined.
+
+### How do we compose lenses?
+
+Simply:
+
+~~~ {.haskell}
+composeL = (.)
+~~~
+
+Making users aware of this leaks the abstraction, but that's the first time SPJ has seen a compelling reason for opening up the abstraction. (What is that reason?)
+
+### Can we get rid of the boilerplate? 
+
+~~~ {.haskell}
+import Control.Lens.TH
+
+$(makeLenses ''Person)
+~~~
+
+### More line noise
+
+* `(.~)` = `set`
+
+There is a lot of these symbols in the library.
+
+### Not just nested records
+
+~~~ {.haskell}
+data Temp = T { _fahrenheit :: Float }
+
+centigrade :: Lens Temp Float
+
+data Time = T { _hours :: Int, _mins :: Int )
+
+over mins (+ 4) now -- should roll the hour correctly, this can be encoded in the lens
+                    -- note: it violates lens law which says we should get what we set
+
+at :: Ord k => k -> Lens' (Map k v) (Maybe v) -- focuses on the value under given key
+
+bitAt :: Int -> Lens' Int Bool -- gives access to particular bit of an int
+~~~
+
+Some of these are provided by the Lens library.
+
+### Second insight
+
+If we change `Functor` to `Applicative` we get a multi-focus lens!:
+
+data Address = A { _road :: String
+                 , _city :: String
+                 , _postcode :: String
+                 }
+
+addr_strs :: Traversal' Address String
+addr_strs elt_fn (A r c p) = (\r' c' -> A r' c' p) <$> (elt_fn r) <*> (elt_fn c)
+
+over :: Traversal' s a -> (a -> a) -> s -> s
+over ln f = runIdentity . ln (Identity . f)
+
+For this to work we just need `Identity` to be an instance of `Applicative` -- which it trivially is! Const can also be an `Applicative` if it is over a monoid.
+
+This is an example of why having the type not abstract is good -- it opens up the possibility of sticking in other type classes. Also it allows us to write a lens without depending on lens library.
+
+### This has all been a lie
+
+or rather, a simplification; in fact the types are much more complex, the library contains 194 type synonyms.
+
+### Q/A
+
+* we will be able to have multiple records with the same field name (not related to lenses)
+
 
 ##
