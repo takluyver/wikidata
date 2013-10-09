@@ -762,3 +762,116 @@ sqlSelect "documents" $ do
 it was easy to grow it to support `sqlOrderBy`, `sqlWhereExists` etc.
 
 Bonus: we can generate diagnostic queries from this; e.g. a query that checks which of the conditions evaluated to false.
+
+## Erudify
+
+* founded in 2011
+* Zurich based
+* 16 people, 10 engineers, most use Haskell
+* corporate training
+* TypeScript in front end (single page app)
+* Haskell (Snap) on the back end
+* PostgreSQL with a list of idempotent migrations defining the schema
+* runs on AWS
+* extend a number of open source libraries: aeson-extended, base-extended etc. The plan is to push them upstream or open source the extended library.
+* Jenkins for CI
+
+The build script:
+
+~~~
+cabal clean
+cabal update
+cabal install --only-dependencies --upgrade-depencencies --force-reinstsalls --mar-backjumps=-1
+cabal configure --enable-tests -r
+cabal build -r
+cabal haddock
+cabal test --test-option=--plain
+cabal sdist
+~~~
+
+* run their own hackage (full mirror)
+
+A walk through evolution of transaction handling code -- initiall mistakes due to issues with lack of nested transactions, finally arrived at:
+
+~~~ {.haskell}
+newtype Transaction m a = Trnsaction (ReaderT Connection m a)
+  deriving (Functor, Applicative, Monad, MonadTrans, MonadIO, MonadBase b)
+
+runTransaction = ...
+~~~
+
+not many tests
+
+### Haxe
+
+_Simon Marlow_
+
+Haskell at Facebook.
+
+Use case: identifying which actions coming from the frontend are spam.
+
+site integrity engineers push new rules to the service hundreds of times a day (there's also machine learning, but it's often too slow so manual intervention is needed). The rules need to be written in some language.
+
+There are data dependencies in computation. A computation depends on fetching some data which in turn depends on other data -- a hierarchy. The code tends to follow this hierarchy. However, when it's run, it would be good to slice these layers so that e.g. we can batch requests to the same data source, cache requests for the same data etc.
+
+Different data sources have different API: async/sync, batch/non-batch etc.
+
+Computing the number of common friends: we'd like to write it as: `length (intersect (friendsOf x) (friendsOf y))`. TAO is a data source that implements Facebook's data model (graph store), so `friendsOf` makes a request to TAO. We'd like to be able to batch it. We also need to cache it to ensure purity of `friendsOf`.
+
+Solution: FXL -- pure functional language
+
+~~~ {.haskell}
+newtype Haxl a = Haxl { unHax :: Result a }
+
+data Result a = Done a 
+              | Blocked (Haxl a)
+
+instance Monad Haxl where
+  return a = HAxl (Done a)
+  m >>= k = Haxl $
+    case unHaxl m of
+      Done a -> unHaxl (k, a)
+      Blocked r -> Blocked (k r)
+~~~
+
+This in fact is a free monad.
+
+... a bit about how applicative semantics suit our problem better ...
+
+Haxl being applicative we can 
+
+~~~ {.haskell}
+commonFriends x y = length <$> (intersect <$> (friendsOf x) <*> (friendsOf y))
+~~~
+
+but then someone can write:
+
+~~~ {.haskell}
+do
+  fx <- friendsOf x
+  fy <- friendsOf y
+  return (length (intersect f))
+~~~
+
+and it will only get blocked on the first request, which is wrong.
+
+Looking forward to `Applicative` becoming superclass of `Monad`, that will fix this issue.
+
+~~~ {.haskell}
+class ExampleReq a where
+  CountAardvarks :: String -> ExampleReq [Int]
+  ListMembers    :: Id -> ExampleReq [Id]
+~~~
+
+Haxl monad gives us:
+
+* guarantee of no side effects except for `dataFetch`
+* caching 
+* ability to replay requests
+
+### Hot code swapping
+
+* ~2000 machines, new code pushed many times per day
+* use GHC's built-in linker, but modified so that it knows when it is safe to release new code and can also serve new requests with new code while still handling old ones with old code
+
+* still not deployed on the large scale, but hot code swapping and scaling have been prototyped
