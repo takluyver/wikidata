@@ -196,6 +196,7 @@ Some of these are provided by the Lens library.
 
 If we change `Functor` to `Applicative` we get a multi-focus lens!:
 
+~~~ {.haskell}
 data Address = A { _road :: String
                  , _city :: String
                  , _postcode :: String
@@ -206,6 +207,7 @@ addr_strs elt_fn (A r c p) = (\r' c' -> A r' c' p) <$> (elt_fn r) <*> (elt_fn c)
 
 over :: Traversal' s a -> (a -> a) -> s -> s
 over ln f = runIdentity . ln (Identity . f)
+~~~
 
 For this to work we just need `Identity` to be an instance of `Applicative` -- which it trivially is! Const can also be an `Applicative` if it is over a monoid.
 
