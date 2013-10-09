@@ -1,0 +1,145 @@
+## Lenses
+
+SPJ
+
+* it's more fun to talk about things I don't know about
+* only learned about it in the last couple of weeks
+* discussed with Ed Kmett at ICFP
+* `Lens` gives access to a particular piece of a data structure
+
+~~~ {.haskell}
+Lens DateTime Mins
+Lens DateTime Hours
+~~~
+
+* composable (structure inside a structure): `composeL`
+* why do we want this? For working with nested records:
+
+~~~ {.haskell}
+data Person = P {... addr :: Address ...}
+data Address = A {... postcode: String ...}
+
+setPostcode :: String -> Person
+setPostcode pc p = p { addr = addr p { postcode = pc }}
+~~~
+
+With lens:
+
+~~~ {.haskell}
+view :: Lens' s a -> s -> a
+set :: Lens' s a -> a -> s -> s
+~~~
+
+How could we implement it? E.g. by having viewR and setR as members of lens:
+
+~~~ {.haskell}
+data LensR = L { viewR :: s -> a
+               , setR :: a -> s -> s}
+
+composeL (L v1 u1) (L v2 u2)
+  = L (\s -> v (v1 s))
+      (\a s -> u1 (u2 a (v1 s)) s)
+~~~
+
+But that would be inefficient if we wanted to do an update:
+
+~~~ {.haskell}
+over :: LensR s a -> (a -> a) -> s -> s
+~~~
+
+How do we fix it?
+
+~~~ {.haskell}
+L { viewR :: s -> a
+  , setR :: a -> s -> s}
+  , mod :: (a -> a) -> s -> s
+  , modM :: (a -> Maybe a) -> s -> Maybe s
+  , modIO :: (a -> IO a) -> s -> IO s
+  }
+~~~
+
+need a lot of specialised functions -- where do we stop? Let's generalise:
+
+~~~ {.haskell}
+modF :: Functor f => (a -> f a) -> s -> f s
+~~~
+
+But now, it turns out we can express other functions in terms of `modF`:
+
+~~~ {.haskell}
+type Lens' s a = forall f. Funtcor f => (a -> f a) -> s -> f s
+
+lensToLensR :: Lens' s a -> LensR s a
+lensRToLens :: LensR s a -> Lens' s a
+
+set :: Lens' s a -> (a -> s -> s)
+set ln a s = ?
+
+newtype Identity a = Identity a
+runIdentity :: Identity s -> s
+runIdentity (Indentity x) = x
+
+instance Functor Identity where
+  fmap f = ...
+~~~
+
+`Identity` is a functor, so:
+
+~~~ {.haskell}
+set ln x s = 
+  runIdentity (ln set_fld s)
+  where
+    set_fld :: a -> Identity a
+    set_fld _ = Identity x
+~~~
+
+or, point-free:
+
+~~~ {.haskell}
+set ln x = runIdentity . ln (Identity . const x)
+~~~
+
+Now, `over` is very similar, it just doesn't discard value:
+
+~~~ {.haskell}
+over ln f = runIdentity . ln (Identity . f)
+~~~
+
+How about view?
+
+~~~ {.haskell}
+newtype Const v a = Const v
+
+getConst :: Const v a -> v
+getConst (Const x) = x
+
+instance Functor (Const v) where
+  fmap f (Const x) = Const x
+
+view :: Lens' s a -> (s -> a)
+view ln s = getConst (ln Const s)
+~~~
+
+Or, point-free:
+
+~~~ {.haskell}
+view ln = getConst . ln Const
+~~~
+
+`Const` is a bit of a strange functor, since it doesn't use the second type arg at all.
+
+How do we make a lens?
+
+~~~ {.haskell}
+data Person = P { _name :: Strng, _salary :: Int }
+
+name elt_fn (P n s) = (\n' -> P n' s) <$> (elt_fn n)
+
+let fred = P "Fred" 100
+view name fred
+set name "Bill" fred
+~~~
+
+## 
+
+##
