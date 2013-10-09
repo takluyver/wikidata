@@ -472,3 +472,115 @@ pipes between client and server
 
 ## Monads for Free!
 
+_Andres Loeh_
+
+Everything is an (E)DSL. Even though some things don't look like a programming language at the first sight, they really benefit from that treatment.
+
+Examples:
+
+* parser combinators
+* pretty-printing combinators
+* music
+* GPU computations
+
+Hutton's Razor: minimal expression language
+
+~~~ {.haskell}
+data Expr = Lit Int | Add Expr Expr
+~~~
+
+Deep embedding: everything is represented as data. Very convenient! We can inspect and transform them. E.g.:
+
+~~~ {.haskell}
+eval :: Expr -> Int  -- evaluate
+eval :: Expr -> String -- pretty print
+~~~
+
+How do we embed an imperative language? With shallow embedding, we can just use IO, e.g.:
+
+do
+  say "Hello"
+  name <- ask
+  say ("Hello " ++ name)
+
+say = putStrLn
+ask = getLine
+
+What if we wanted a deep embedding?
+
+data Interaction a
+instance Monad Interaction
+
+say :: String -> Interaction ()
+ask :: Interaction String
+
+data Interaction :: * -> * where
+  Say :: String - Interaction ()
+  Ask :: Interaction String
+  Return :: a -> Interaction a
+  Bid :: Interaction a -> (a -> Interaction b) -> Interaction b
+
+instance Monad Interaction where
+  return = Return
+  (>>=) = Bind
+
+run :: Interaction a -> IO a
+
+That's pretty good, but this is not a proper monad as it does not abide by monad laws -- because we are wrapping everything in `Return`s and `Bind`s, so the results will be different if we e.g. wrap stuff in extra `Return`. We could argue that if the interpretation functions resolve this it's all fine, but it would be much nicer if we could guarantee that by construction.
+
+Aside: why do we want laws? So that:
+
+do
+  say "Tell!"
+  something <- ask
+  return something
+
+do
+  say "Tell"
+  ask
+
+behave the same. I.e. we meet the expectations of users of our language.
+
+Monad laws actuall ysay that every monadic computation can be normalised into a sequence of atomic steps:
+
+do
+  x1 <- step1
+  ..
+  xn <- stepn
+  return something
+
+with one return at the end and atomic steps before. If we can define data type that represents that normal form we should be fine.
+
+in our example the atomic steps were `Say` and `Ask`. We would like to restrict `Bind` to only take atomic action:
+
+say' msg = Bind (Say msg)
+ask' = Bind Ask
+
+We now don't need `Say`, `Ask` and `Bind`:
+
+data Interaction :: * -> * where
+  Return :: a -> Interaction a
+  Say'   :: String -> (() -> Interacdtion b) -> Interaction b
+  Ask'   :: (String -> Interaction b) -> Interaction b
+
+Note: we don't need GADT any more, but we'll still use the syntax as it reads nicely.
+
+Is it still a monad?
+
+instance Monad Interaction where
+  return = Return
+  Return x   >>= f = f x
+  Say' msg k >>= f = Say' msg ((>>= f) . k)
+  Ask' k     >>= f = Ask' ((>>= f) . k)
+
+this fulfills the monad laws.
+
+run (Return x) = return x
+run (Say' msg k) = putStrLn msg >>= run . k
+run (Ask' k) = readLn >>= run . k
+
+we can also write a different interpreter:
+
+simulate :: Interaction a -> [String] -> [String]
+
+That's much better than having a shallow embedding that just runs in `IO`!
