@@ -392,4 +392,83 @@ As we generate NSIS from haskell, we get a lot of redundant stuff we want to opt
 * Geniplate
 * Lenses
 
-##
+## Fay -- Compiling Haskell to Javascript
+
+_Adam Bergmark_
+
+* from Silk
+* very fat client -- more and more we see we don't want to write JavaScript. Wrote a couple of libraries for arrows etc., but it would be really nice to be able to e.g. use pipes and have static verification 
+* Chris Done released Fay 0.1 in July 2012
+* covers only a subset of Haskell
+
+### Constraints and Goals
+
+* it's important to be able to understand the output JavaScript (for debugging)
+* needs to be compressable
+* it should be possible to reuse JavaScript libraries such as jQuery
+* we should be able to reuse code between server and client
+* cabal needs to be supported
+* it should be possible to call library compiled by Fay from plain JavaScript
+* support by the major web frameworks
+
+### Alternatives
+
+* JavaScript
+* CoffeeScript -- just solves the syntax problem, which is not the biggest issue
+* TypeScript -- types, classes, better scoping rules, but typechecker has issues (_any_ type)
+* Idris -- nice, but there is a lot of tooling that is missing (package manager etc.)
+* GHCJS -- JS backend for GHC, supports almost all Haskell (why not this?)
+
+### Tooling and Architecture
+
+Initially:
+
+* `haskell-src-exts`
+* `haskell-suite`
+* custom JS AST
+
+Compiler passes:
+
+* parsing (haskell-src-exts)
+* desugaring (Fay)
+* name resolution (haskell-names
+* preprocessing 
+* coge genration (Fay)
+* optimisation (custom JS AST)
+* printing (Fay)
+* compression (Google Closure)
+
+### FFI
+
+transcodes functions and fay actions
+
+~~~ {.haskell}
+ffi :: String -> ?
+~~~
+
+e.g.:
+
+~~~ {.haskell}
+add :: Double -> Double -> Double
+add = ffi "%1 + %2"
+~~~
+
+### Restrictions
+
+* type classes are not supported in general
+* but will be working pretty soon
+* but when there is a value to dispatch on (e.g. as with `Show`), that will work
+
+### Safe client-server communication
+
+pipes between client and server
+
+### Output
+
+* keeps names the same
+* compatible with Google Closure
+* experimental work on source maps
+
+
+## Monads for Free!
+
