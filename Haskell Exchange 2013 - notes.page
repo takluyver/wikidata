@@ -6,7 +6,7 @@ _SPJ_
 * only learned about it in the last couple of weeks
 * discussed with Ed Kmett at ICFP
 
-## What are lenses?
+### What are lenses?
 
 * `Lens` gives access to a particular piece of a data structure
 
@@ -498,6 +498,7 @@ eval :: Expr -> String -- pretty print
 
 How do we embed an imperative language? With shallow embedding, we can just use IO, e.g.:
 
+~~~ {.haskell}
 do
   say "Hello"
   name <- ask
@@ -505,9 +506,11 @@ do
 
 say = putStrLn
 ask = getLine
+~~~
 
 What if we wanted a deep embedding?
 
+~~~ {.haskell}
 data Interaction a
 instance Monad Interaction
 
@@ -525,11 +528,13 @@ instance Monad Interaction where
   (>>=) = Bind
 
 run :: Interaction a -> IO a
+~~~
 
 That's pretty good, but this is not a proper monad as it does not abide by monad laws -- because we are wrapping everything in `Return`s and `Bind`s, so the results will be different if we e.g. wrap stuff in extra `Return`. We could argue that if the interpretation functions resolve this it's all fine, but it would be much nicer if we could guarantee that by construction.
 
 Aside: why do we want laws? So that:
 
+~~~ {.haskell}
 do
   say "Tell!"
   something <- ask
@@ -538,49 +543,165 @@ do
 do
   say "Tell"
   ask
+~~~
 
 behave the same. I.e. we meet the expectations of users of our language.
 
-Monad laws actuall ysay that every monadic computation can be normalised into a sequence of atomic steps:
+Monad laws actually say that every monadic computation can be normalised into a sequence of atomic steps:
 
+~~~ {.haskell}
 do
   x1 <- step1
   ..
   xn <- stepn
   return something
+~~~
 
 with one return at the end and atomic steps before. If we can define data type that represents that normal form we should be fine.
 
 in our example the atomic steps were `Say` and `Ask`. We would like to restrict `Bind` to only take atomic action:
 
+~~~ {.haskell}
 say' msg = Bind (Say msg)
 ask' = Bind Ask
+~~~
 
 We now don't need `Say`, `Ask` and `Bind`:
 
+~~~ {.haskell}
 data Interaction :: * -> * where
   Return :: a -> Interaction a
   Say'   :: String -> (() -> Interacdtion b) -> Interaction b
   Ask'   :: (String -> Interaction b) -> Interaction b
+~~~
 
 Note: we don't need GADT any more, but we'll still use the syntax as it reads nicely.
 
 Is it still a monad?
 
+~~~ {.haskell}
 instance Monad Interaction where
   return = Return
   Return x   >>= f = f x
   Say' msg k >>= f = Say' msg ((>>= f) . k)
   Ask' k     >>= f = Ask' ((>>= f) . k)
+~~~
 
-this fulfills the monad laws.
+this fulfills the monad laws. The interpreter is straightforward:
 
+~~~ {.haskell}
 run (Return x) = return x
 run (Say' msg k) = putStrLn msg >>= run . k
 run (Ask' k) = readLn >>= run . k
+~~~
 
 we can also write a different interpreter:
 
+~~~ {.haskell}
 simulate :: Interaction a -> [String] -> [String]
+~~~
 
 That's much better than having a shallow embedding that just runs in `IO`!
+
+### Can this be generalised?
+
+Abstracting from `Say` and `Ask`:
+
+~~~ {.haskell}
+data Interaction :: * -> * where
+  Return :: a -> Interaction a
+  Wrap :: InteractionOp a -> Interaction a
+
+data InteractionOp :: * -> * where
+  Say'   :: String -> (() -> Interacdtion b) -> Interaction b
+  Ask'   :: (String -> Interaction b) -> Interaction b
+~~~
+
+but `b` is only used as param to `Interaction`, so it can be rewritten as:
+
+~~~ {.haskell}
+data Interaction :: * -> * where
+  Return :: a -> Interaction a
+  Wrap :: InteractionOp (Interaction a) -> Interaction a
+
+data InteractionOp :: * -> * where
+  Say'   :: String -> (() -> r) -> InteractionOp r
+  Ask'   :: (String -> r) -> InteractionOp r
+~~~
+
+we can now parameterise `Interaction` further (and rename to `Free`):
+
+~~~ {.haskell}
+data Free :: (* -> *) -> * -> * where
+  Return :: a -> Free f a
+  Wrap :: f (Free f a) -> Free f a
+
+data InteractionOp :: * -> * where
+  Say'   :: String -> (() -> r) -> InteractionOp r
+  Ask'   :: (String -> r) -> InteractionOp r
+~~~
+
+Now, `Free f` is a monad wherever `f` is a functor!
+
+~~~ {.haskell}
+instance Functor f => Monad (Free f) where
+  return :: a -> Free f a
+  return = Return
+
+  (>>=) :: Free f a -> (a -> Free f b) -> Free f b
+  Return x >>= f = f x
+  Wrap c >>= f = Wrap (fmap (>>= f) c)
+~~~
+
+Is `InteractionOp` a functor?
+
+~~~ {.haskell}
+instance Functor InteractionOp where
+-- ... yes
+~~~
+
+so
+
+~~~ {.haskell}
+type Interaction = Free InteractionOp
+~~~
+
+What have we achieved? Given a functor we get a monad for free!
+
+### Examples
+
+* `Free (Const Void)` is identity monad
+* `Free (Const ())` is `Maybe`
+
+~~~ {.haskell}
+data ProcessF :: * -> * where
+  Atomically :: IO a -> (a -> r) -> ProcessF r
+  Fork :: Process () -> r -> ProcessF r
+
+type Process = Free Process F
+
+atomically :: IO a -> Process a
+atomically m = Wrap (Atomically m Return)
+
+fork :: Process () -> Process ()
+fork p - Wrap (Fork p (Return ()))
+
+-- we can define the scheduling however we want!
+schedule :: [Process ()] -> IO ()
+schedule [] = return ()
+schedule (Return _:ps) = schedule ps
+schedule (Wrap (Atomically m k):ps) = do 
+                                        x <- m
+--                                      ...
+~~~
+
+### Remarks
+
+* Free monads can be generalised to monad transformers
+* it might lead to inefficient representation (but you might specify other, more efficient implementation of `Free`)
+* `free` package by Ed Kmett is the nicest one out there
+* `operational` package takes a bit different approach
+* applications: effects, parsing, coroutines, games, ...
+* `IOspec`, `free-game` (OpenGL interpreter), `sunroof` (EDSL for JavaScript)
+* other free structures, e.g. free applicatives (free monad is the largest monad over a functor that still fulfills monad laws)
+* cofree comonads
