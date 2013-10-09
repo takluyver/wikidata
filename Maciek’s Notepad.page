@@ -4,14 +4,11 @@ toc: no
 
 # [Technology](Tech)
 
-## [Scala Futures on a Single Thread](Tech/Scala Futures on a Single Thread)
+## [Haskell Exchange 2013](Tech/Haskell Exchange 2013)
 
-<a href="Tech/Scala Futures on a Single Thread"><img src="/Tech/code.png" width="150" height="150" class="frontpage-thumbnail"></a>
+<a href="Tech/Haskell Exchange 2013"><img src="/Tech/code.png" width="150" height="150" class="frontpage-thumbnail"></a>
 
-The usefulness of futures is not restricted to the concurrent setting. They also provide a nice pattern for suspending execution of a sequential algorithm until a certain condition is met. There is nothing inherently concurrent about `Future` implementation either -- the runtime behaviour depends on the instance of `ExecutionContext` provided to functions that can spawn new computations.
- 
-
- 
+EDSLs were definitely a big theme of the day, with Gracjan Polak and Bas van Dijk describing how they naturally evolved in the course of hacking at the start-ups they are involved in (Scrive and Erudify, respectively). Simon Marlow related how Haskell’s support for abstracting the execution details makes writing spam detection rules easier at another “small Haskell startup” (Facebook). Adam Bergmark talked about JavaScript related woes of web startup life and how Fay, a Haskell to JavaScript compiler, addresses them. 
 
 # [Travel]()
 
