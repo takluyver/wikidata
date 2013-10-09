@@ -1,6 +1,6 @@
 ## Lenses
 
-SPJ
+_SPJ_
 
 * it's more fun to talk about things I don't know about
 * only learned about it in the last couple of weeks
@@ -209,7 +209,7 @@ over :: Traversal' s a -> (a -> a) -> s -> s
 over ln f = runIdentity . ln (Identity . f)
 ~~~
 
-For this to work we just need `Identity` to be an instance of `Applicative` -- which it trivially is! Const can also be an `Applicative` if it is over a monoid.
+For this to work we just need `Identity` to be an instance of `Applicative` -- which it trivially is! `Const` can also be an `Applicative` if it is over a monoid.
 
 This is an example of why having the type not abstract is good -- it opens up the possibility of sticking in other type classes. Also it allows us to write a lens without depending on lens library.
 
@@ -221,5 +221,175 @@ or rather, a simplification; in fact the types are much more complex, the librar
 
 * we will be able to have multiple records with the same field name (not related to lenses)
 
+
+## Writing HLint with Uniplate
+
+_Neil Mitchell_
+
+Generics library allows us to split the code into two parts: dull and interesting.
+
+* HLint -- Haskell linter, currently has about 400-500 rules
+* Uniplate -- a generics library
+
+HLint examples: remove unused language pragma, replace direct recursion with recursion schema (e.g. `foldr`) -- a code review tool.
+
+How do we add a new hint?
+
+Example:
+
+instead of `mdo { Q; e}` write `do { rec Q; e }`
+
+e.g.
+
+~~~ {.haskell}
+mdo x <- foo y
+    y <- bar x
+    return (x+y)
+
+do rec x <- foo y
+   y <- bar x
+   return (x+y)
+~~~
+
+use `haskell-src-exts`
+
+~~~ {.haskell}
+renameMDo :: Exp -> Exp
+removeMDo (MDo []) = Do []
+removeMdo (MDo xs) = ...
+
+parseFile :: FilePath -> IO (ParseResult Module)
+
+Module ... [Decl]
+
+onModule :: 
+
+onDecl :: Dec -> Decl
+~~~
+
+lots of code to write for various cases such as `ClassDecl`, `InstDecl` -- 26 functions looking at 107 constructors
+
+~~~ {.haskell}
+import Data.Generics.Uniplate.Data
+
+removeMDo :: Exp -> Exp
+removeMDo (MDo []) = Do []
+removeMDo (MDo xs) = ...
+removeMDo x = x
+
+onModule = transformBi removeMDo
+~~~
+
+that's all!
+
+Generics library allows us to express a pattern and exceptions. Uniplate is one of the simplest generics libraries.
+
+### Four patterns
+
+~~~ {.asciiart}
+         Query               Transform
+Deep     universe            transform
+         (find all)          (global replacement)
+Shallow  children            descend
+         (reduce to a value) (top-down with control)
+~~~
+
+~~~ {.haskell}
+transform :: (on -> on) -> on -> on
+
+lessParen :: Exp -> Exp
+lessParen = transform f
+  where f (Paren (Paren x)) = Paren x
+        f (Paren (List x))  = List x
+        f x                 = x
+~~~
+
+there are also monadic versions, `transformM` and `transformBiM`
+
+~~~ {.haskell}
+universe :: on -> [on]
+
+redundantExtension :: Module -> Bool
+redundantExtension m = 
+  viewPats == 0 && "ViewPatterns" `elem` exts
+  where
+    viewPats = length[() | PViewPat{} <- universeBi m]
+    exts = [prettyPrint x | LanguagePragma _ xs <- universeBi m, x <- xs]
+~~~
+
+~~~ {.haskell}
+descend :: (on -> on) -> on -> on
+
+eval :: Exp -> Exp
+eval x = case x of
+  Lambda{} -> x
+  If c t f | prettyPrint c == "True" -> eval t
+           | prettyPrint c == "False" -> eval f
+  x -> descend eval x
+~~~
+
+~~~ {.haskell}
+children :: on -> [on]
+
+freeVars :: Exp -> [String]
+freeVars (Var x) = [prettyPrint x]
+freeVars (Lambda _ x bod) = freeBars bod \\ boundVars x
+freeVars x = nub $ concatMap freeVars $ children x
+~~~
+
+### When to use?
+
+If w have recursive type with >3 constructors, i.e. any AST, compiler etc.
+
+### How is Uniplate implemented?
+
+Simple!
+
+~~~ {.haskell}
+universe x = x : concatMap universse (children x)
+transform f = f . descend (transform f)
+
+class Uniplate on where
+  uniplate :: on -> ([on],  -- children 
+                     [on] -> on) -- a fn that puts the children together back into the parent
+
+instance Uniplate Exp where
+  uniplate (App x y) - ([x,y], \[x,y] -> Ap x y)
+  ...
+
+children = fst. uniplate
+descend f x = gen $ map f cs
+  where (cs, gen) = uniplate x
+~~~
+
+### Use in HLint
+
+Decl has 27, Exp has 45, Pat has 23 constructors, and we never want to have cases for all of them.
+
+Uniplate is 
+
+* simple
+* concise
+* performant
+* I'm the author!
+
+### Correctness
+
+143 hints have been proven correct with Isabell/HOCL? theorem prover
+
+### Other uses of Uniplate
+
+* NSIS -- windows installer, goto with fixed unmer of string reisters
+* Haskell EDSL to restore sanity
+
+As we generate NSIS from haskell, we get a lot of redundant stuff we want to optimise away
+
+### Other Generics solutions
+
+* GHC.Generics
+* Data.Data
+* Uniplate Direct
+* Geniplate
+* Lenses
 
 ##
