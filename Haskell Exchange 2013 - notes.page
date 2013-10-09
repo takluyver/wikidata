@@ -705,3 +705,60 @@ schedule (Wrap (Atomically m k):ps) = do
 * `IOspec`, `free-game` (OpenGL interpreter), `sunroof` (EDSL for JavaScript)
 * other free structures, e.g. free applicatives (free monad is the largest monad over a functor that still fulfills monad laws)
 * cofree comonads
+
+## EDSLs at Scrive
+
+_Gracjan Polak_
+
+### JSON
+
+initially just string concatenation, but it was unwieldy for conditional fields, so:
+
+~~~ {.haskell}
+json = genJSON $ do
+  value "key1" 123
+  object "key2" $ do
+    value "key3" 555
+  when flag $ do
+    value "key4" 789
+~~~
+
+### Routing
+
+Standard Happstack:
+
+~~~ {.haskell}
+router = choice
+   [ dir "user" $ dir "login" handleLogin 
+   , dir 'user" $ dir "logout" handleLogout
+   ]
+~~~
+
+The same code can be run in a different monad that will check for duplicates and ambiguities.
+
+Lessons:
+
+* we usually want deep embedding
+* usually easy to get from shallow ot deep embedding
+
+### SQL
+
+~~~ {.sql}
+select title
+from documents
+where id = ?
+  and author = ?
+  and deleted = False
+~~~
+
+~~~ {.haskell}
+sqlSelect "documents" $ do
+  sqlResult "title"
+  sqlWhereEq "id" docid
+  sqlWhereEq "author" userid
+  sqlWhereEq "deleted" False
+~~~
+
+it was easy to grow it to support `sqlOrderBy`, `sqlWhereExists` etc.
+
+Bonus: we can generate diagnostic queries from this; e.g. a query that checks which of the conditions evaluated to false.
