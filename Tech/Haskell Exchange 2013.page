@@ -239,7 +239,7 @@ run (Say' msg k) = putStrLn msg >>= run . k
 run (Ask' k) = readLn >>= run . k
 ~~~
 
-With this sorted out we can now thing about how to extract the underlying pattern into something reusable. A good place to start would be splitting the construct into two parts: the generic monad that describes normal form and the set of concrete atomic operations, `InteractionOp`:
+With this sorted out we can now think about how to extract the underlying pattern into something reusable. A good place to start would be splitting the construct into two parts: the generic monad that describes normal form and the set of concrete atomic operations, `InteractionOp`:
 
 ~~~ {.haskell}
 data Interaction :: * -> * where
