@@ -197,7 +197,7 @@ run (Return x) = return x
 run (Bind i f) = (run i) >>= (run . f)
 ~~~
 
-This is going to work, but sadly, `Interaction` is not really a monad, as it does not abide by the monad laws, as return and bind just wrap the arguments in further layers of constructors; e.g. by left associatvity law `return x >>= f` must equal `f x`, but `Bind (Return x) f` is not the same as `f x`. One could argue that as long as the interpretation functions preserve this property we are good, but it is a tricky argument to make and it's much preferable to guarantee good behaviour by construction.
+This is going to work, but sadly, `Interaction` is not really a monad, as it does not abide by the monad laws. Since `return` and `>>=` just wrap the arguments in further layers of constructors, e.g. left associatvity law (`return x >>= f` must equal `f x`) is violated: `Bind (Return x) f` is not the same as `f x`. One could argue that as long as the interpretation functions preserve this property we are good, but it is a tricky argument to make and it's much preferable to guarantee good behaviour by construction.
 
 To achieve this we can first observe that by the monad laws every monadic computation has a normal form which consists of a sequence of atomic operations followed by a single `return`:
 
