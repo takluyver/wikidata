@@ -67,7 +67,7 @@ In the talk Simon demonstrated that he can be just as enthusiastic about someone
 
 ## Uniplate
 
-**Neil Mitchell** explained HLint benefits from the use of a generics library. HLint processes Haskell source code and provides hints on how to improve it by removing redundant bits, migrating off deprecated features and making it more idiomatic. As such, the tool relies on traversing AST of the Haskell module being analysed (the AST is provided by functions in `haskell-src-exts` package) and while doing so applying a set of rules. Given that in the AST `Decl` has 27, `Exp` has 45 and `Pat` has 23 constructors writing each rule for each of these cases would require lots of boilerplate code.
+**Neil Mitchell** explained how HLint benefits from the use of a generics library. HLint processes Haskell source code and provides hints on how to improve it by removing redundant bits, migrating off deprecated features and making it more idiomatic. As such, the tool relies on traversing AST of the Haskell module being analysed (the AST is provided by functions in `haskell-src-exts` package) and while doing so applying a set of rules. Given that in the AST `Decl` has 27, `Exp` has 45 and `Pat` has 23 constructors writing each rule for each of these cases would require lots of boilerplate code.
 
 This is where generics libraries come into the picture. Their purpose is to abstract away the traversal code so that the logic can be stated in terms of the usual pattern and exceptions from that pattern. Uniplate is one such library. It provides four functions that operate on instances of `Uniplate` type class:
 
