@@ -59,7 +59,7 @@ over :: Lens s a -> ((a -> a) -> s -> s)
 over ln f = runIdentity . ln (Identity . f)
 ~~~
 
-The advantage of this representation is that lens composition -- e.g. combining the lens for an element of an inner structure with the lens for an element of the outer structure -- is just function composition. It also sets the stage for another deep insight: if instead of a Functor we require an Applicative, we'll get a multi-focus lens, i.e. a lense that can point to a number of elements at once. Magic.
+The advantage of this representation is that lens composition -- e.g. combining the lens for an element of an inner structure with the lens for an element of the outer structure -- is just function composition. It also sets the stage for another deep insight: if instead of a _Functor_ we require an _Applicative_, we'll get a multi-focus lens, i.e. a lens that can point to a number of elements at once. Magic.
 
 Usefulness of lenses is not restricted to operating on nested records. Map lookup and update can be expressed as a lens, Edward's library also provides lenses that e.g. allow access to individual bits of a piece of data.
 
