@@ -153,7 +153,7 @@ This means all constructors need to be handled just in a single place, when the 
 
 ## Free Monads
 
-According to **Andres Löh**, everything is an EDSL. Even though some things don't look like this on the first sight, they usually greatly benefit from language-like treatment. Over time DSLs have appeared in a number of domains such as parsing, GPU computations and music. When developing an EDSL it is preferable to embed it deeply, i.e. be able to treat the program as data in the host language, so that it can be inspected, transformed and interpreted in various ways. Andres illustrated an evolution of a very simple, imperative language, from a shallow embedding to a deep embedding and the abstract constructs that could be extracted from that exercise. I am going to repeat all the steps of this derivation as it is very educational.
+According to **Andres Löh**, everything is an EDSL. Even though some things don't look like this on the first sight, they usually greatly benefit from language-like treatment, so over time we have seen DSLs taking over domains such as parsing, GPU computations and music. When developing an EDSL it is preferable to embed it deeply, i.e. be able to treat the program as data in the host language, so that it can be inspected, transformed and interpreted in various ways. Andres illustrated an evolution of a very simple, imperative language, from a shallow embedding to a deep embedding and the abstract constructs that could be extracted from that exercise. I am going to repeat all the steps of this derivation as it is very educational.
 
 If our language provided just two constructs, `say` and `ask`, we could write a program in it like this:
 
