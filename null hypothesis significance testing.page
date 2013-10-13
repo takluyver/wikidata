@@ -2,7 +2,7 @@
 categories: statistics
 ...
 
-Assume that there is no correlation calculate the probability of observing data that we gathered in experiments given there is no correlation. If the probability is low then reject the null hypothesis, otherwise carry on with it.
+Assume that there is no correlation calculate the probability of observing data that we gathered in experiments given there is no correlation. If the probability is very low (e.g. <0.05) then reject the null hypothesis, otherwise carry on with it.
 
 ## References
 
