@@ -14,7 +14,7 @@ TODO
 
 where
 
-$B_i=r\times \frac{\sigma_Y}{\sigma_X}
+$B_i=r\times \frac{\sigma_Y}{\sigma_X}$
 
 Where $r$ is the [Pearson product-moment correlation coefficient]().
 
