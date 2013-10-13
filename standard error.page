@@ -6,6 +6,12 @@ categories: statistics
 
 $SE = \frac{\sigma}{\sqrt{n}}$
 
+Alternative formulation, used in [null hypothesis significance testing]():
+
+$SE = \sqrt{\frac{\sum e^2}{n-2}}$
+
+Where $e$ are the residuals (differences between predicted and actual values).
+
 ## References
 
 * Statistcs 1 Coursera course [lecture](https://class.coursera.org/stats1-002/lecture/153)
