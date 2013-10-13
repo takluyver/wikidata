@@ -10,13 +10,15 @@ A statistical technique for predicting values of random variable assuming its re
 
 If we are predicting variable $Y$ from $X$:
 
-TODO
+$Y=B_0+B_1X_1+e$
 
-where
+When $Y$ and $X$ is given we can solve for $B_0$ and $B_1$. $B_0$ -- regression constant, $B_1$ -- regression coefficient.
 
-$B_i=r\times \frac{\sigma_Y}{\sigma_X}$
+$B_1=r\times \frac{\sigma_Y}{\sigma_X}$
 
 Where $r$ is the [Pearson product-moment correlation coefficient]().
+
+TODO: how is $B_0$ calculated? Using [ordinary least squares estimation]()?
 
 ## in R
 
