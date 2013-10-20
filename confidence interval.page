@@ -2,7 +2,7 @@
 categories: statistics
 ...
 
-When we report a certain statistic from a sample, e.g. a mean, or a correlation, this is just a _point estimate_, i.e. a value of that statistic that might be true for the entire poopulation, but perhaps isn't. To give a better idea of the confidence we have in that value we can report a _confidence interval_, i.e. a range of values the sought value falls into with established probability. The probability that is often used when reporting conficence intervales is 0.95, and that's the default in R.
+When we report a certain statistic from a sample, e.g. a mean, or a correlation, this is just a _point estimate_, i.e. a value of that statistic that might be true for the entire poopulation, but perhaps isn't. To give a better idea of the confidence we have in that value we can report a _confidence interval_, i.e. a range of values the sought value falls into with established probability. The probability that is often used when reporting conficence intervales is 0.95, and that's the default in R. The width of the interval is proportional to [standard error]() (i.e. proportional to [standard deviation]() and inveresely proportional to the square root of sample size).
 
 ## References
 
