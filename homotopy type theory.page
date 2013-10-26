@@ -1,0 +1,18 @@
+A combination of homotopy theory (a part of topology) to [type theory]() touted as a potential new foundation for mathematics. In type theory types are often thought of as sets, and $t: A$ is understood as $t$ being a member of set $A$. In HoTT types are modeled as spaces, so $t$ is a point in space $A$. Furthermore, certain spaces can be considered equivalent up to a [homotopy]().
+
+## Application to Mathematics
+
+Traditional encoding of mathematics in terms of set theory is very cumbersome, as intricate constructions are required for more advanced concepts and in practice mathmaticians don't do it.
+Voevodsky says that HoTT allows for formalisation of mathematics that is much closer to informal approach taken by many mathematicians when developing proofs. Furthermore, with such derivations being easily mechanisable (see Martin-Loef types, [Coq]()) it allows for much easier machine-checking of mathematical results.
+
+## Univalence Axiom
+
+Simplifying, univalence axiom says that we don't need to be concerned with identity, just equivalence:
+
+$(A=B)\simeq(A\simeq B)$
+
+## References
+
+* [Robert Harper's blog](http://existentialtype.wordpress.com/2013/06/22/whats-the-big-deal-with-hott/)
+* [Scientific American blog](http://blogs.scientificamerican.com/guest-blog/2013/10/01/voevodskys-mathematical-revolution/)
+* [the book](http://homotopytypetheory.org/book/)
