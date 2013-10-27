@@ -34,13 +34,24 @@ A simple example, after [http://msenux.redwoods.edu/math/R/regression.php]():
 age <- 18:29
 height <- c(76.1, 77, 78.1, 78.2, 78.8, 79.7, 79.9, 81.1, 81.2, 81.8, 82.8, 83.5)
 # find coefficients:
-line = lm(height ~ age)
+model = lm(height ~ age)
+# show the summary
+summary(model)
 # plot the points:
 plot(age, height)
 # plot the line:
-abline(line)
+abline(model)
+~~~
+
+A plot with confidence intervals:
+
+~~~ {.r }
+# if required: install.packages("ggplot2")
+library("ggplot2")
+# TODO: construct data from age and height
+ggplot(data, aes(x = age, y = height)) + geom_smooth(method = "lm") + geom_point() 
 ~~~
 
 ## References
 
-* Statistics 1 Courser course lecture 7
+* Statistics 1 Courser course lectures 7 and 11
