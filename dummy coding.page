@@ -1,0 +1,30 @@
+---
+categories: statistics
+...
+
+In [statistics](), a way to code categorical variables so that they can be plugged into [multiple regression](linear regression).
+
+## Example
+
+We want to predict number of publications from group professor is in. There are four groups: Cognitive, Clinical, Developmental, Social. We choose a reference group, say, Cognitive, then create one additional dummy variable for each other group:
+
+------------- -- -- --
+group         D1 D2 D3
+------------- -- -- --
+Cognitive      0  0  0
+
+Clinical       1  0  0
+
+Developmental  0  1  0
+
+Social         0  0  1
+------------- -- -- --
+
+Now we can use D1, D2 and D3 in multiple regression:
+
+$Y = B0 + B_1D_1 + B_2D_2 + B_3D_3 + e$
+
+
+## References
+
+* Statistics 1 Coursera course [lecture 13](https://class.coursera.org/stats1-002/lecture/69)
