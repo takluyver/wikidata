@@ -2,7 +2,9 @@
 categories: statistics
 ...
 
-In [statistics](), a way to code categorical variables so that they can be plugged into [multiple regression](linear regression).
+In [statistics](), a way to code categorical variables so that they can be plugged into [multiple regression](linear regression). 
+
+*Note*: this is only useful if we have some categorical and some continuous predictors. If all predictors are categorical then a better model is a one-way [ANOVA]().
 
 ## Example
 
@@ -24,6 +26,7 @@ Now we can use D1, D2 and D3 in multiple regression:
 
 $Y = B0 + B_1D_1 + B_2D_2 + B_3D_3 + e$
 
+Note: the results will be with Cognitive as a reference. If we want the reference to be the average for all groups then we can use [effects coding]().
 
 ## References
 
