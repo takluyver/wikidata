@@ -26,6 +26,10 @@ In simple regression we had one predictor ($X$), in multiple we can have many:
 
 $Y=B_0+\sum\limits_{i=1}^n B_iX_i+e$
 
+## Interpretation
+
+The regression constant is the predicted value when all Xs are 0. the regression coefficient $B_i$ is the increase of $Y$ per unit increase in $X_i$ when all other Xs are at their average values. Therefore we need to be careful not to make too far reaching inference from these coefficients. E.g. if the sample is skewed in distribution of some of the variables we can't really say much about the correlation between $Y$ and $X_i$ -- as in the lecture, where the question whether male or female professors have higher salary could not be anwered based on the model because it could be that most of the women had shorter tenure than men.
+
 ## in R
 
 A simple example, after [http://msenux.redwoods.edu/math/R/regression.php]():
