@@ -24,7 +24,7 @@ TODO: how is $B_0$ calculated? Using [ordinary least squares estimation]()?
 
 In simple regression we had one predictor ($X$), in multiple we can have many:
 
-$Y=B_0+\sum\limits_{i=1}^n B_iX_i$
+$Y=B_0+\sum\limits_{i=1}^n B_iX_i+e$
 
 ## in R
 
