@@ -24,7 +24,16 @@ TODO: how is $B_0$ calculated? Using [ordinary least squares estimation]()?
 
 In simple regression we had one predictor ($X$), in multiple we can have many:
 
-$Y=B_0+\sum\limits_{i=1}^n B_iX_i+e$
+$Y=B_0+\sum\limits_{i=1}^k B_iX_i+e$
+
+How are Bs calculated? Assuming standardised values $B_0$ is 0, $B$ is a vector of $k$ coefficients (i.e. $k\times 1$ matrix), $\hat{Y}$ is a vector of $n$ predicted values and $X$ is a matrix $n\times k$ of values of the predictor variables, then:
+
+$\hat{Y}=BX$
+
+To solve for B, take $Y$ instead of $\hat{Y}$ (which is unknown) and pre-multiply both sides by $(X^TX)^{-1}X^T$:
+
+$B=(X^TX)^{-1}X^TY$
+
 
 ## Interpretation
 
