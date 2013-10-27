@@ -20,6 +20,12 @@ Where $r$ is the [Pearson product-moment correlation coefficient]().
 
 TODO: how is $B_0$ calculated? Using [ordinary least squares estimation]()?
 
+### Multiple Regression
+
+In simple regression we had one predictor ($X$), in multiple we can have many:
+
+$Y=B_0+\sum\limits_{i=1}^n B_iX_i$
+
 ## in R
 
 A simple example, after [http://msenux.redwoods.edu/math/R/regression.php]():
