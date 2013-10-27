@@ -1,0 +1,13 @@
+---
+categories: curious
+...
+
+> God told me to stick with 640x480 16 color,  a single audio voice and kept 
+> me from zombie-walking into making child windows like Windows.
+
+A ring-0 only, identity-mapped operating system written by Terry Davis. Terry is a schisophrenic and apparently developed the OS to talk to God. In templeOS all processes have access to all memory (as in Commodore 64 and DOS) but the OS is 64 bit to allow identity mapping i.e. avoid memory segmentation that was present in DOS. Terry is apparently very highly skilled in low-level programming. Due to his condition he lives on welfare and thus manages to commit a lot of time to the develpment of TempleOS.
+
+## References
+
+* [TempleOS website](http://www.templeos.org/)
+* [Reddit](http://www.reddit.com/user/GodOSV107)
