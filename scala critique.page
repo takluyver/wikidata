@@ -1,0 +1,7 @@
+---
+categories: scala
+...
+
+* Stephen Colebourne (Joda Stephen) [criticised Scala](http://blog.joda.org/2011/11/scala-feels-like-ejb-2-and-other.html) for a number of things, among them many ways to achieve the same thing and the attitude of community
+* Paul Phillips says [scala will never be any good, because the compiler is difficult to modify](https://www.youtube.com/watch?v=TS1lpKBMkgg)
+* Edward Kmett [enumerated pain points](http://www.reddit.com/r/haskell/comments/1pjjy5/odersky_the_trouble_with_types_strange_loop_2013/cd3bgcu) of a functional programmer
