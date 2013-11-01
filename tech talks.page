@@ -1,4 +1,5 @@
-* [Paul Phillips on what's wrong with Scala and what programming environments should be like](https://www.youtube.com/watch?v=TS1lpKBMkgg)
-* [Greg Young on functional data store](http://skillsmatter.com/podcast/scala/greg-young)
-* [Martin Odersky on simplifying type-related language constructs with DOT](http://www.infoq.com/presentations/data-types-issues)
-* [Bret Victor on the future of programming](http://vimeo.com/71278954)
+* [Paul Phillips on what's wrong with Scala and what programming environments should be like](https://www.youtube.com/watch?v=TS1lpKBMkgg) -- rant, inspirational
+* [Greg Young on functional data store](http://skillsmatter.com/podcast/scala/greg-young) -- pattern, product
+* [Martin Odersky on simplifying type-related language constructs with DOT](http://www.infoq.com/presentations/data-types-issues) -- technical, specific
+* [Bret Victor on the future of programming](http://vimeo.com/71278954) -- fun, inspirational
+* [Andres Löh on free monad-based EDSL interpreters](http://skillsmatter.com/podcast/scala/monads-for-free) -- pattern, insightful
