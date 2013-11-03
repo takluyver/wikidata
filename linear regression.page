@@ -51,6 +51,17 @@ Centering is also necessary if we want to preserve the interpretation of coeffic
 
 Another reason for centering: helps avoid multicolinearity, i.e. two predictors being very highly correlated, which causes numerical issues in matrix computations when solving regression equation.
 
+## Mediation
+
+Sometimes one of the variables helps explain the outcome; e.g. when we are measuring the effect of a threat on IQ, we can also measure the effect on working memory, and thus explain the IQ results:
+
+1. `lm(IQ ~ threat)`
+2. `lm(working_memory ~ threat)`
+3. `lm(IQ ~ threat + working_memory)`
+
+If the results of models 1. and 2. are significant and in model 3. `threat` is not significant then `working_memory` is the mediator.
+
+
 ## in R
 
 A simple example, after [http://msenux.redwoods.edu/math/R/regression.php]():
