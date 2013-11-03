@@ -2,7 +2,13 @@
 categories: statistics
 ...
 
-In [statistics](), a variable $Z$ that explains the relationship between the independent variable $X$ and dependent variable $Y$; i.e. the relationship between $X$ and $Y$ is a function of $Z$.
+In [statistics](), a variable $Z$ that explains the relationship between the independent variable $X$ and dependent variable $Y$; i.e. the relationship between $X$ and $Y$ is a function of $Z$. In case of [linear regression](), where we have the equation:
+
+$Y = B_0 + B_1X + e$
+
+in the presence of moderating variable $Z$ $B_1$ is not constant but a function of $Z$, so the equation becomes:
+
+$Y = B_0 _ B_1(Z)X + e$
 
 ## References
 
