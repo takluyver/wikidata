@@ -47,6 +47,10 @@ The correlation between values predicted by regression model and actual values i
 
 Regression constant $B_0$ is the predicted value when all predictor variables are 0. This is usually not meaningful because of the scale of the variables (e.g. age). We can center the predictors by taking $X' = X - M_X$ and then the constant will tell us predicted score at average values of all predictors.
 
+Centering is also necessary if we want to preserve the interpretation of coefficients as change in predicted variable per unit of predictor at mean levels of other predictors in the presence of [moderation](moderator variable).
+
+Another reason for centering: helps avoid multicolinearity, i.e. two predictors being very highly correlated, which causes numerical issues in matrix computations when solving regression equation.
+
 ## in R
 
 A simple example, after [http://msenux.redwoods.edu/math/R/regression.php]():
@@ -75,4 +79,4 @@ ggplot(data, aes(x = age, y = height)) + geom_smooth(method = "lm") + geom_point
 
 ## References
 
-* Statistics 1 Courser course lectures 7 and 11
+* Statistics 1 Courser course [lectures](https://class.coursera.org/stats1-002/lecture/index) 7, 11 and 13
