@@ -61,6 +61,22 @@ Sometimes one of the variables helps explain the outcome; e.g. when we are measu
 
 If the results of models 1. and 2. are significant and in model 3. `threat` is not significant then `working_memory` is the mediator.
 
+In a graphical model this can be shown as:
+
+~~~ {.dot}
+digraph G {
+  X [shape=rect];
+  Y [shape=rect];
+  M [shape=rect];
+  1 [shape=triangle];
+  X -> Y [label="B_1"];
+  1 -> Y [label="B_0"];
+  e_1 -> Y [label="1"];
+  e_2 -> M [label="1"];
+  X -> M;
+  M -> Y;
+}
+~~~
 
 ## in R
 
