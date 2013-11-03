@@ -14,7 +14,11 @@ In practice we can test for non-additive effect such as moderation using standar
 
 $Y = B_0 + B_1X + B_2Z + B_3XZ + e$
 
-Here, if it turns out that $XZ$ is significant in the model, then there is a non-additive effect.
+and comparing it with the basic model:
+
+$Y = B_0 + B_1X + B_2Z + e$
+
+Here, if it turns out that $XZ$ is significant (improves the model) then there is a non-additive effect.
 
 ## References
 
