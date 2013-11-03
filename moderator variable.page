@@ -8,7 +8,7 @@ $Y = B_0 + B_1X + e$
 
 in the presence of moderating variable $Z$ $B_1$ is not constant but a function of $Z$, so the equation becomes:
 
-$Y = B_0 _ B_1(Z)X + e$
+$Y = B_0 + B_1(Z)X + e$
 
 ## References
 
