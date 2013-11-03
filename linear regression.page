@@ -43,6 +43,10 @@ The regression constant is the predicted value when all Xs are 0. the regression
 
 The correlation between values predicted by regression model and actual values is denoted by $R$. Then $R^2$ is the percentage of variance in $Y$ explained by the regression model.
 
+## Centering Predictors
+
+Regression constant $B_0$ is the predicted value when all predictor variables are 0. This is usually not meaningful because of the scale of the variables (e.g. age). We can center the predictors by taking $X' = X - M_X$ and then the constant will tell us predicted score at average values of all predictors.
+
 ## in R
 
 A simple example, after [http://msenux.redwoods.edu/math/R/regression.php]():
