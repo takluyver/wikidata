@@ -10,6 +10,12 @@ in the presence of moderating variable $Z$ $B_1$ is not constant but a function 
 
 $Y = B_0 + B_1(Z)X + e$
 
+In practice we can test for non-additive effect such as moderation using standard multiple regression formula but with synthetic variables created by multiplying existing variables:
+
+$Y = B_0 + B_1X + B_2Z + B_3XZ + e$
+
+Here, if it turns out that $XZ$ is significant in the model, then there is a non-additive effect.
+
 ## References
 
 * Statistics 1 Coursera course [lecture](https://class.coursera.org/stats1-002/lecture/71)
