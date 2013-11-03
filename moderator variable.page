@@ -18,7 +18,7 @@ and comparing it with the basic model:
 
 $Y = B_0 + B_1X + B_2Z + e$
 
-Here, if it turns out that $XZ$ is significant (improves the model) then there is a non-additive effect.
+Here, if it turns out that $XZ$ is significant (improves the model in terms of $R^2$) then there is a non-additive effect.
 
 ## References
 
