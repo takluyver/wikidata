@@ -1,3 +1,6 @@
+---
+categories: lsug scala
+...
 
 *13/11/2013, Patrick Wendell, Databricks*
 
@@ -16,8 +19,6 @@ APIs are available in Scala, Java and Python, there's also an interactive shell.
 
 Map-reduce was a big step forward in terms of scaling out and fault tolerance, but soon users started asking for more: sophisticated, machine learning algorithms, ability to run ad-hoc queries, and stream processing. Spark aims to address these requirements.
 
-## Overview
-
 Key idea: *resilient distributed datasets (RDDs)* -- like sequence in scala, but distributed.
 
 Operations on RDD: 
@@ -25,25 +26,61 @@ Operations on RDD:
 * transformations: map, filter, groupBy -- these are lazy
 * actions: count, collect, save -- materialise the output
 
-### Example: log mining
+## Example: log mining
 
 ~~~ {.python}
 lines = spark.textFile("hdfs://...")
 errors = lines.filter(lambda s: s.startswith("ERROR"))
 messages = errors.map(lambda s: s.split("\t")[2])
 messages.cache()
-
 messages.filter(lambda s: "foo" in s).count() 
-# ^ this is an action that triggers actual processing
 ~~~
 
-This allows full-text search of Wikipedia in half a second.
+Caching is instrumental in making this efficient. It allows full-text search of Wikipedia in half a second.
+
+## Example: logistic regression
+
+Goal: find best line separating two sets of points. 
+
+Algorithm: start with random line, then iteratively improve on it.
+
+~~~ {.scala}
+val data = spark.textFile(...).map(readPoint).cache()
+var w = Vector.random(dimensions)
+
+for (i <- 1 to iterations) {
+  val gradient = data.map(p =>
+    (1 / (1 + exp(-p.y * (w dot p.x))) - 1) * p.y * p.x).reduce(_ + _)
+  w -= gradient
+}
+
+println("Final w: " + w)
+~~~
+
+(a benchmark against Hadoop shows superlinear increase in Hadoop and roughly no increase in Spark)
+
+## Execution
+
+The high-level operations are compiled into execution plans. This involves pipelining of operations that can be performed within partition boundaries.
 
 ## Spark Streaming
 
+Idea: run streaming computations as a series of small, deterministic batch jobs. Overhead of launching a task is a few milliseconds, so it's feasible.
+
+Advantages:
+
+* the same recovery modes work
+* the same programming model for online and offline analytics
 
 ## Shark SQL
 
+Hive takes SQL queries and compiles them to map/reduce jobs. Shark does the same thing but for Spark execution engine.
+
 ## MLLib
 
+High level library providing classification, regression, collaborative filtering, clustering and optimisation algorithms.
+
 ## GraphX
+
+Graph processing library, allows running things like [Page Rank](page rank).
+
