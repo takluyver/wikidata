@@ -84,3 +84,13 @@ High level library providing classification, regression, collaborative filtering
 
 Graph processing library, allows running things like [Page Rank](page rank).
 
+## Scala Experience
+
+* best feature: Java interop
+* bad: DSL bias, lack of binary compatibility, REPL not easy to extend
+
+## Q&A
+
+Q: does Hadoop code need to be rewritten?
+
+A: currently yes, but we are working on compatibility layer for map/reduce
