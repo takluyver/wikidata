@@ -1,0 +1,49 @@
+
+*13/11/2013, Patrick Wendell, Databricks*
+
+Spark committer
+
+Spark is one of the largest open source Scala projects; it often hits bugs in the compiler and language before anyone else.
+
+Spark: a runtime for distributed data analytics, compatible with Hadoop.
+
+Focus on efficiency:
+
+- general execution graphs
+- in-memory store
+
+APIs are available in Scala, Java and Python, there's also an interactive shell.
+
+Map-reduce was a big step forward in terms of scaling out and fault tolerance, but soon users started asking for more: sophisticated, machine learning algorithms, ability to run ad-hoc queries, and stream processing. Spark aims to address these requirements.
+
+## Overview
+
+Key idea: *resilient distributed datasets (RDDs)* -- like sequence in scala, but distributed.
+
+Operations on RDD: 
+
+* transformations: map, filter, groupBy -- these are lazy
+* actions: count, collect, save -- materialise the output
+
+### Example: log mining
+
+~~~ {.python}
+lines = spark.textFile("hdfs://...")
+errors = lines.filter(lambda s: s.startswith("ERROR"))
+messages = errors.map(lambda s: s.split("\t")[2])
+messages.cache()
+
+messages.filter(lambda s: "foo" in s).count() 
+# ^ this is an action that triggers actual processing
+~~~
+
+This allows full-text search of Wikipedia in half a second.
+
+## Spark Streaming
+
+
+## Shark SQL
+
+## MLLib
+
+## GraphX
