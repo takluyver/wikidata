@@ -12,7 +12,7 @@ categories: statistics
 
 $t=\frac{M}{SE}$
 
-where $M$ is the mean observed value and $SE$ is the standard error.
+where $M$ is the mean difference between observed values for each subject and $SE$ is the standard error of the differences.
 
 ### Effect size
 
@@ -20,9 +20,46 @@ Measured by *Cohen's d*:
 
 $d=\frac{M}{\sigma}$
 
+I.e. "how much did people change in terms of standard deviation?"
+
+### In R
+
+~~~ {.r}
+t.test(measurement1, measurement2, paired=T)
+cohensD(measurement1, measurement2, method='paired')
+~~~
+
 ## independent
 
 When measuring difference between two different groups: take difference between mean scores of both groups.
+
+
+### t-value
+
+*t-value* is again as *(observed - expected) / standard error*, and again for [NHST](null hypothesis significance testing) we take *expected* = 0. However, we now have two samples to compare:
+
+$t=\frac{M_1-M_2}{SE}$
+
+$SE=\frac{SE_1+SE_2}{2}$
+
+### Effect size
+
+$d=\frac{M_1-M_2}{\sigma_{pooled}}$
+
+$\sigma_{pooled}=\frac{\sigma_1+\sigma_2}{2}$
+
+Note: for $\sigma_{pooled}$ to be well defined both groups have to have the same amount of variance. If this assumption is violated the entire test is bogus. The validity of this assumption can be tested with *Lavene's test*:
+
+~~~ {.r}
+leveneTest(independentVar ~ dependentVar)
+~~~
+
+### In R
+
+~~~ {.r}
+t.test(measurement1, measurement2, var.equal=T)
+cohensD(measurement1, measurement2, method='pooled')
+~~~
 
 ## References
 
