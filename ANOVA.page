@@ -2,7 +2,14 @@
 categories: statistics
 ...
 
-ANOVA = analysis of [variance](). Most appropriate when all independent variables are categorical and the dependent variable is continuous. Common application is analysis of data from randomised controlled experiments.
+ANOVA = analysis of [variance](). Most appropriate when all independent variables are categorical and the dependent variable is continuous. Common application is analysis of data from randomised controlled experiments. When there are just two independent variables a [t-test]() is simpler.
+
+It typically involves [NHST](null hypothesis significance testing):
+
+$F=\frac{MS_{between}}{MS_{within}}$
+
+Where $MS_{between}$ is variance (mean squres) between groups (the "good variance", systematic) and $MS_{within}$ is variance within groups (the "bad variance", non-systematic). Null hypothesis is that $F$ is 0.
+
 
 ## References
 
