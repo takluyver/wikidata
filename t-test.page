@@ -4,8 +4,26 @@ categories: statistics
 
 ## dependent
 
-When measuring the same sample twice: take the difference between results for each individual then average it.
+(or paired-subjects test) When measuring the same sample twice: take the difference between results for each individual then average it.
+
+### t-value
+
+*t-value* is defined as *(observed - expected) / standard error*. When applied to [NHST](null hypothesis significance testing) *expected* is 0, so the formua is simplified to
+
+$t=\frac{M}{SE}$
+
+where $M$ is the mean observed value and $SE$ is the standard error.
+
+### Effect size
+
+Measured by *Cohen's d*:
+
+$d=\frac{M}{\sigma}$
 
 ## independent
 
 When measuring difference between two different groups: take difference between mean scores of both groups.
+
+## References
+
+* Statistics 1 Coursera course [lecture 15](https://class.coursera.org/stats1-002/lecture/81)
