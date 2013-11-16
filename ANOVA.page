@@ -10,6 +10,28 @@ $F=\frac{MS_{between}}{MS_{within}}$
 
 Where $MS_{between}$ is variance (mean squres) between groups (the "good variance", systematic) and $MS_{within}$ is variance within groups (the "bad variance", non-systematic). Null hypothesis is that $F$ is 0.
 
+## Effect size
+
+$\eta^2=\frac{SS_A}{SS_{total}}$ -- the percentage of variance in dependent variable explained by the independent variables. ($SS$ -- sum of squares, TODO)
+
+## Assumptions
+
+As for independent [t-test](): 
+
+* dependent variable is continuous
+* dependent variable is normally distributed
+* *within-group* variance is homogenous between groups (can be tested with Lavine's test)
+
+## *Post-hoc* tests
+
+If ANOVA returns a significant result that only tells us that some of the groups compared were different, but doesn't say how many or which ones. Post-hoc tests are used to make pairwise comparisons. Special procedures are required for such comparisons, since a doing it naively (i.e. with [t-tests](t-test) would inflating the probabilitites and lead to [type I error](null hypothesis significance testing)). There is a number of procedures, a commonly used one is Tukey's. Bonferroni's is the most conservative.
+
+## In R
+
+~~~ {.r}
+a <- aov(dependentVar ~ independentVar)
+summary(a)
+~~~
 
 ## References
 
