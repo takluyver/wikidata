@@ -4,6 +4,11 @@ categories: statistics
 
 Assume that there is no correlation calculate the probability of observing data that we gathered in experiments given there is no correlation. If the probability is very low (e.g. <0.05) then reject the null hypothesis, otherwise carry on with it.
 
+## Type I and II errors
+
+* Type I error: incorrect rejection of null hypothesis
+* Type II error: failure to reject incorrect null hypothesis
+
 ## Problems
 
 * samples size bias: $p \sim \frac{1}{t}$, $t \sim \frac{1}{SE}$, $SE \sim \sqrt{\frac{1}{n}}$ (see [standard error]()) so a very large $n$ will lead to rejection of null hypothesis.
