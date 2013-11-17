@@ -1,0 +1,5 @@
+In lambda calculus the order of $\beta$-reductions does not matter, the end result will always be the same.
+
+## References
+
+* Reactive Programming Coursera course [lecture](https://class.coursera.org/reactive-001/lecture/47)
