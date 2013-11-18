@@ -54,6 +54,8 @@ Note: for $\sigma_{pooled}$ to be well defined both groups have to have the same
 leveneTest(independentVar ~ dependentVar)
 ~~~
 
+If the reported probability is > 0.05 we are good to go.
+
 ### In R
 
 ~~~ {.r}
