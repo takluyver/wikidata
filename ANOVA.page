@@ -47,6 +47,8 @@ There will be three $F$ ratios: $F_{dd}$, $F_{cd}$, $F_{dd\times cd}$.
 
 *Interaction effect*: when effect of one IV depends on the other. Like [moderation in multiple regression](linear regression).
 
+When $\eta^2$ is calculated it can be calculated as partial or complete. Partial removes effects of individual variables and only leaves the interaction.
+
 ## In R
 
 ~~~ {.r}
