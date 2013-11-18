@@ -51,11 +51,18 @@ When $\eta^2$ is calculated it can be calculated as partial or complete. Partial
 
 If there is significant interaction we should do simple effect analysis, e.g. simple effect of driving difficulty at each level of conversation demand. This can be done as a series of [t-tests](t-test).
 
+## Repeated Measures
+
+When the same subject is measured multiple times, as in [dependent t-test](t-test). Customarily line plots are used instead of bar plots, to signify that it's the same subject measured multiple times.
+
 ## In R
 
 ~~~ {.r}
 a <- aov(dependentVar ~ independentVar)
 summary(a)
+
+# repeated measures:
+aov(dep ~ indep + Error(factor(subject)/indep)))
 ~~~
 
 ## References
