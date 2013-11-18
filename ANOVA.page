@@ -49,6 +49,8 @@ There will be three $F$ ratios: $F_{dd}$, $F_{cd}$, $F_{dd\times cd}$.
 
 When $\eta^2$ is calculated it can be calculated as partial or complete. Partial removes effects of individual variables and only leaves the interaction.
 
+If there is significant interaction we should do simple effect analysis, e.g. simple effect of driving difficulty at each level of conversation demand. This can be done as a series of [t-tests](t-test).
+
 ## In R
 
 ~~~ {.r}
