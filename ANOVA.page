@@ -55,6 +55,12 @@ If there is significant interaction we should do simple effect analysis, e.g. si
 
 When the same subject is measured multiple times, as in [dependent t-test](t-test). Customarily line plots are used instead of bar plots, to signify that it's the same subject measured multiple times.
 
+Error depends on the design, so we can't use one error term for all post-hoc comparisons. R has a convenient function to print out all pairwise comparisons using "holm" procedure:
+
+~~~ {.r}
+with(data, pairwise.t.test(dep, indep, paired=T))
+~~~
+
 ## In R
 
 ~~~ {.r}
