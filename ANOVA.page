@@ -26,6 +26,10 @@ As for independent [t-test]():
 
 If ANOVA returns a significant result that only tells us that some of the groups compared were different, but doesn't say how many or which ones. Post-hoc tests are used to make pairwise comparisons. Special procedures are required for such comparisons, since a doing it naively (i.e. with [t-tests](t-test) would inflating the probabilitites and lead to [type I error](null hypothesis significance testing)). There is a number of procedures, a commonly used one is Tukey's. Bonferroni's is the most conservative.
 
+## Factorial ANOVA
+
+When there is more than one independent variable.
+
 ## In R
 
 ~~~ {.r}
