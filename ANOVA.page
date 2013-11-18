@@ -28,7 +28,24 @@ If ANOVA returns a significant result that only tells us that some of the groups
 
 ## Factorial ANOVA
 
-When there is more than one independent variable.
+When there is more than one independent variable. Example: 
+
+independents: 
+
+* driving difficulty
+* conversation demand
+
+dependent:
+
+* driving errors
+
+There will be three $F$ ratios: $F_{dd}$, $F_{cd}$, $F_{dd\times cd}$.
+
+*Simple effect*: the effect of one IV at a particular level of other IV. If it changes as a result of changes in the other IV then there is interaction.
+
+*Main effect*: the effect of one IV averaged across the levels of the other IV.
+
+*Interaction effect*: when effect of one IV depends on the other. Like [moderation in multiple regression](linear regression).
 
 ## In R
 
