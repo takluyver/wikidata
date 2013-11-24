@@ -12,18 +12,33 @@ $\chi^2 = \sum{\frac{(O - E)^2}{E}}$
 
 where $O$ -- observed frequency, $E$ -- expected ($\frac{1}{n}$ for [NHST](null hypothesis significance testing))
 
-### Effect size
-
-Cramer's V (or $\Phi$).
-
 ## Test of independence
 
-Is there a relationship between two categorical variables? E.g. relationship between the gender of the voter and the candidate they prefer?
+Is there a relationship between two categorical variables? E.g. relationship ("contingency") between the gender of the voter and the candidate they prefer?
+
+Null hypothesis: there is no relationship.
+
+$\chi^2$ formula is the same as for goodness of fit, but degrees of freedom are calculated differently:
+
+degrees of freedom = (number ofrows -1) $\times$ (number of columns - 1)
+
+## Effect size
+
+Cramer's V (or $\Phi$):
+
+$\Phi_C=\sqrt{\frac{\chi^2}{N(k-1)}}$
+
+Where $N$ -- sample size, $k$ -- number of categories (differs for fit and independence tests)
 
 ## In R
 
 ~~~ {.r}
+# fit
 observed <- table(poll$candidate)
+chisq.test(observed)
+
+# independence
+observed <- table(poll$candidate, poll$gender)
 chisq.test(observed)
 ~~~
 
