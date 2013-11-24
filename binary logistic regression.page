@@ -1,0 +1,13 @@
+---
+categories: statistics
+...
+
+When outcome (dependent variable) is categorical but predictors (independent variables) are either categorical or continuous ([chi-square tests]() are often used when both predictor and outcome are categorical). Binary regression is only applicable if the outcome has two possible levels; when there are more *multinomial regression* is required.
+
+In [multiple regression](linear regression) we assumed continuous outcome. In logistic we use the [logistic curve]() to map arbitrary input to $(0, 1)$ range:
+
+$logit=ln\frac{P(outcome)}{1-P(outcome)}$
+
+## References
+
+* Statistics I Coursera course [lecture](https://class.coursera.org/stats1-002/lecture/101)
