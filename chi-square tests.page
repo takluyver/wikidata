@@ -1,0 +1,32 @@
+---
+categories: statistics
+...
+
+Used when dependent variable is categorical, e.g. the polio vaccine tests, election polls.
+
+## Goodness of fit statistic
+
+Null hypothesis: the results are split equally between all output categories.
+
+$\chi^2 = \sum{\frac{(O - E)^2}{E}}$
+
+where $O$ -- observed frequency, $E$ -- expected ($\frac{1}{n}$ for [NHST](null hypothesis significance testing))
+
+### Effect size
+
+Cramer's V (or $\Phi$).
+
+## Test of independence
+
+Is there a relationship between two categorical variables? E.g. relationship between the gender of the voter and the candidate they prefer?
+
+## In R
+
+~~~ {.r}
+observed <- table(poll$candidate)
+chisq.test(observed)
+~~~
+
+## References
+
+* Statistics I Coursera course [lecture](https://class.coursera.org/stats1-002/lecture/97)
