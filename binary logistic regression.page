@@ -8,6 +8,44 @@ In [multiple regression](linear regression) we assumed continuous outcome. In lo
 
 $logit=ln\frac{P(outcome)}{1-P(outcome)}$
 
+## Example
+
+Mock jury research: mock jurors watched a video of sentencing of a murderer and were to decide if the defendant deserved the death penalty. Data was collected pre-deliberation.
+
+Outcome variable (Y):
+
+* 1 = voted for the death penalty
+* 0 = voted against the death penalty
+
+Predictors (Xs):
+
+* perceived danger
+* belief in the importance of rehabilitation
+* belief in the importance of punishment
+* belief in the importance of general deterrence
+* belief in the importance of specific deterrence
+* belief in the importance of incapacitation
+
+We will do the *logit* transformation. This is an example of a *[generalised linear model]()* (not to be confused with *general linear model*, which is less general!)
+
+~~~ {.r}
+# the model:
+lrfit = glm(formula = verdict ~ danger + rehab + punish + gendet + specdet + incap, family = binomial)
+
+# -- to evaluate individual predictors we use odds ratios and Wald tests
+
+# odds ratios:
+exp(coef(lrfit))
+
+# Wald test:
+wald.test(b = coef(lrfit), Sigma = vcov(lrfit), Terms = 2) # danger
+
+# -- to evaluate the entire model we use classification success and model chi-square
+
+# how well does this model classify cases?
+ClassLog(lrfit, verdict)
+~~~
+
 ## References
 
 * Statistics I Coursera course [lecture](https://class.coursera.org/stats1-002/lecture/101)
