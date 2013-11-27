@@ -1,0 +1,153 @@
+---
+categories: haskell lhug
+...
+
+*Simon Peyton Jones, 27/11/2013*
+
+GHC Haskell is complicated. Compiler is also big, so how can SPJ stay sane?
+
+large language -> typecheck -> desugar -> small language -> rest of GHC
+
+Core:
+
+* explicitly typed
+* every binder is type-annotated
+* simple and fast type checking
+* simple rules for well-typeness
+
+GHC Haskell has ad-hoc restrictions, such as monomorphic recursion, to make type inference possible. These are not necessary in core.
+
+GHC is unique in having a strongly typed intermediate language. The design of Core is probably GHC's most significant achievement.
+
+Base for Core: typed lambda calculus
+
+System F is used to deal with problem of unbound type variables:
+
+~~~ {.haskell}
+A abc. \f: b -> c . \g: a -> b . \x: a .
+   let tmp: b = g x
+   in f tmp
+
+neg :: Int -> Int
+isPos :: Int -> Bool
+
+compose Int Int Bool neg isPos
+~~~
+
+Big lamdbas (here written as `A`) are applied to types just as little lambdas are applied to values. That's all there is to System F.
+
+in addition, Core has:
+
+* algebraic data type declarations
+* data constructors in terms: `\x: Int. Just (Just x)`
+* case expressions
+* let expressions
+
+Every type variable binding has its kind defined.
+
+### AST
+
+~~~ {.haskell}
+data Expr = Var Var
+          | Lit Literal
+          | App Expr Expr
+          | Lam Var Expr
+          | Let Bind Expr
+          | Case Expr Var Type [(AltCon, [Var], Expr)]
+          | Type Type
+
+data Var = Id    Name Type
+         | TyVar Name Kind
+
+data Type = TyVarTy Var
+          | LitTy TyLit
+          | AppTy Type Type
+          | TyConApp TyCon [Type]
+          | FunTy Type Type
+          | ForAllTy Var Type
+
+type Kind = Type
+~~~
+
+Lennart suggested that it could be made even smaller by unifying `Expr` and `Type`.
+
+This language is very amenable to transformations.
+
+### Evidence Terms
+
+We can't encode GADTs in presented core (example with deriving type of Bool argument based on the case). We need to capture evidence of types and then use it in place where we need the knowledge of type
+
+~~~ {.haskell}
+data T a where
+  T1 :: Boole -> T Bool
+  T2 :: T a
+
+f = Aa. \(x:T a) (y: a).
+  case x of
+    T1 (c: a~Bool) (z: Bool) -- c is an evidence (proof object)
+      -> let (v:Bool) = not (y |> c) in v && z -- here we use the evidence to ensure that y is a Bool
+    T2 -> False
+
+-- T1 :: \forall a.(a~Bool) -> Bool -> T a
+~~~
+
+Required extensions:
+
+~~~ {.haskell}
+data Expr = ...
+          | Coercion Coercion
+          | Cast     Expr Coercion
+
+data Var = ...
+         | CoVar Name Type Type
+~~~
+
+Sometimes we need to transform a proof `a~Bool` to `Bool~a`. `sym` function does it. Evidence can be composed: `Maybe (sym c)` is an evidence of `Maybe Bool ~ Maybe a`.
+
+All these coercions are erased at runtime.
+
+### Axioms
+
+It turned out evidence variables nicely solve other problems. What does 
+
+~~~ {.haskell}
+newtype Age = MkAge Int
+
+bumpAge : Age -> Int -> Age
+bumpAge (MkAge a ) n = MkAge (a + n)
+~~~
+
+look like in Core? The distinction between Age and Int used to be a hack in the compiler, but now:
+
+~~~ {.haskell}
+axiom ageInt :: Age ~ Int
+bumpAge = \(a:Age) (n:Int) .
+  (a |> ageInt + n) |> sym ageInt
+~~~
+
+It's also used for type families.
+
+What would happen if we said:
+
+~~~ {.haskell}
+axiom bogus :: Int ~ Bool
+~~~
+
+Axioms have to be consistent, i.e. we must not be able to prove that two different data types are the same. But checking for consistency in a set of axioms is difficult. Instead, we guarantee consistency by construction: in Core axioms can only be generated from Haskell source. Here restrictions such as *overlapping type instances* come into play, ensuring that we don't get inconsistent axiom sets.
+
+Tricky example:
+
+~~~ {.haskell}
+type instance Loop = [Loop]
+type instance F a a = Bool
+type instance F b [B] = Char
+
+-- now
+
+F Loop Loop ~ Bool
+F Loop Loop ~ F Loop [Loop] ~ Char
+~~~
+
+How do we fix this? Try to unify left sides without occurs check -- if that unifies, we get en overlap.
+
+Conjecture: if LHS are distinct under unify_inf then the set of axioms is consistent.
