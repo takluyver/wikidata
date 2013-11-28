@@ -1,3 +1,22 @@
+## Console
+
+### Upgrading release
+
+~~~
+sudo apt-get update
+sudo apt-get upgrade
+sudo do-release-upgrade
+~~~
+
+### Connecting to wifi
+
+If network settings have been saved previously:
+
+~~~
+nmcli c list
+nmcli c up id <id>
+~~~
+
 ## Troubleshooting
 
 ### Low graphics mode
