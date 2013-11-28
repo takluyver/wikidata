@@ -26,3 +26,5 @@ Intermittent "low graphics mode" after restart on desktop with Ubuntu 12.10 (mig
 * Log in with CTRL+ALT+F1 and issue command "sudo service lightdm restart"
 * Add some sleep to /etc/init/lightdm.conf
 * Install and use GDM instead of lightdm
+
+The problem has gone away after one of driver reinstalls.
