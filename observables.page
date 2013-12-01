@@ -48,6 +48,12 @@ There are two types of observables:
 
 *Unsubscribing* leaves the observable running, *cancellation* cancels the source observable so that all other subscribers will stop receiving notifications.
 
+## Subjects
+
+`Subject` is to `Observable` like `Promise` is to a `Future`. It creates a channel by wrapping an `Observer` (input) and `Observable` output such that the callbacks on the observer cause firing of events on the observable.
+
+Subjects make cold observables hot.
+
 ## References
 
 * Reactive Programming Coursera courese [lecture](https://class.coursera.org/reactive-001/lecture/61)
