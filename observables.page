@@ -1,3 +1,7 @@
+---
+categories: programming scala reactive_programming
+...
+
 An asynchronous version of `Iterable`, similarly to how `Future` is an asynchronous version of `Try`.
 
 ~~~ {.scala}
