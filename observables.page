@@ -50,7 +50,7 @@ There are two types of observables:
 
 ## Subjects
 
-`Subject` is to `Observable` like `Promise` is to a `Future`. It creates a channel by wrapping an `Observer` (input) and `Observable` output such that the callbacks on the observer cause firing of events on the observable.
+`Subject` is to `Observable` like `Promise` is to a `Future`. It creates a channel by wrapping an `Observer` (input) and `Observable` output such that the callbacks on the observer cause firing of events on the observable. The difference in the interface is that a `Subject` *is* an `Observable` os unlike with `Promise` where we needed to say `promise.future` to get hold of the producer end, we can just refer to subject directly.
 
 Subjects make cold observables hot.
 
