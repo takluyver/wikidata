@@ -63,7 +63,7 @@ Types of subjects:
 
 ## Blocking
 
-`toBlockingObservable` or `BlockingObservable.from`
+`toBlockingObservable` or `BlockingObservable.from`. Blocking observable can be converted to list, so to debug we can do: `observable.toBlockingObservable.toList`.
 
 ## References
 
