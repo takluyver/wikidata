@@ -54,6 +54,13 @@ There are two types of observables:
 
 Subjects make cold observables hot.
 
+Types of subjects:
+
+* publish subject -- always sends out the current value
+* replay subject -- caches and sends all values since the beginning on every subscription
+* async subject -- caches and sends the final value to every subscription
+* behaviour subject -- caches and sends the latest value to every subscription
+
 ## References
 
 * Reactive Programming Coursera courese [lecture](https://class.coursera.org/reactive-001/lecture/61)
