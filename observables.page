@@ -61,6 +61,10 @@ Types of subjects:
 * async subject -- caches and sends the final value to every subscription
 * behaviour subject -- caches and sends the latest value to every subscription
 
+## Blocking
+
+`toBlockingObservable` or `BlockingObservable.from`
+
 ## References
 
 * Reactive Programming Coursera courese [lecture](https://class.coursera.org/reactive-001/lecture/61)
