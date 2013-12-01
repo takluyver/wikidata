@@ -39,6 +39,15 @@ def concat: Observable[Observable[T]] => Observable[T]
 
 Concatenates nested observables preserving the order of top-level observable. The downside is that it might need to buffer potentially unbounded prefixes of observables that are further down in the top level sequence, if they produce results quicker than the first observable.
 
+## Subscriptions
+
+There are two types of observables: 
+
+* *hot* -- ones that run independently of whether anyone observes them; e.g. the mouse moves
+* *cold* -- ones that only make sense if someone observes them; e.g. a stream of earthquake data coming from a web service
+
+*Unsubscribing* leaves the observable running, *cancellation* cancels the source observable so that all other subscribers will stop receiving notifications.
+
 ## References
 
 * Reactive Programming Coursera courese [lecture](https://class.coursera.org/reactive-001/lecture/61)
