@@ -63,7 +63,12 @@ Types of subjects:
 
 ## Blocking
 
-`toBlockingObservable` or `BlockingObservable.from`. Blocking observable can be converted to list, so to debug we can do: `observable.toBlockingObservable.toList`.
+`toBlockingObservable` or `BlockingObservable.from`. Blocking observable can be converted to list or , if we know it produces exactly one element, to that element, so to debug we can do: 
+
+~~~ {.scala}
+multiObservable.toBlockingObservable.toList
+singleObservable.toBlockingObservable.single
+~~~
 
 ## References
 
