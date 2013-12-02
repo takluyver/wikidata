@@ -26,7 +26,7 @@ trait Subscription {
 ### `merge`
 
 ~~~ {.scala}
-def flatten: (Observable[T], Observable[T]) => Observable[T]
+def merge: (Observable[T], Observable[T]) => Observable[T]
 ~~~
 
 Merges two observables on first-come-firs-served basis -- i.e. the values from the first and the second argument can arrive interleaved.
