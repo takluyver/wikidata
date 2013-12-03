@@ -1,0 +1,11 @@
+---
+categories: statistics
+...
+
+An alternative to [parametric statistics]() that do not assume any characteristics structure of the data ([normal distribution]() etc.). These cover alternative procedures for common parametric procedures:
+
+* [correlation](inter-item correlation): e.g. Spearman's rank correlation coefficient
+* [regression](linear regression)
+* [t-tests](t-test): Mann-Whitney U test, Wilcoxan signed-rank test
+* [ANOVA](): Kruskal-Wallis one-way, Friedman two-way
+* [chi-square tests](): Fisher's exact test, McNEmar's test
