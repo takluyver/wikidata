@@ -6,6 +6,31 @@ An alternative to [parametric statistics]() that do not assume any characteristi
 
 * [correlation](inter-item correlation): e.g. Spearman's rank correlation coefficient
 * [regression](linear regression)
-* [t-tests](t-test): Mann-Whitney U test, Wilcoxan signed-rank test
+* [t-tests](t-test): Mann-Whitney U test, Wilcoxan's signed-rank test
 * [ANOVA](): Kruskal-Wallis one-way, Friedman two-way
-* [chi-square tests](): Fisher's exact test, McNEmar's test
+* [chi-square tests](): Fisher's exact test, McNemar's test
+
+## Examples
+
+### Wilcoxan's ranking method
+
+Null hypothesis: median difference between pairs is 0 (median is a better measure of central tendency than mean for distributions that are not normal).
+
+       Red   White  Sign    ABS    rank  s*r
+-----  ----  ----- ------  -----  ----  ----
+1      65    60     -1      5      1     -1
+2      60    70     +1      10     2      2
+3      65    80     +1      15     3      3
+4      85    65     -1      20     4     -4
+
+if s*r sums to 0 then we maintain the null hypothesis.
+
+In R: `wilcox.text(fance.red, fance.white, paired=TRUE)`; `V` value is the sum of s*r.
+
+### Mann-Whitney U test
+
+Just a modification of Wilcoxan's procedure.
+
+## References
+
+* Statistics 1 Coursera course [lecture](https://class.coursera.org/stats1-002/lecture/111)
