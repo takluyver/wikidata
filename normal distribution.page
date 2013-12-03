@@ -1,0 +1,28 @@
+---
+categories: statistics
+...
+
+also *Gaussian function*, *bell curve*.
+
+## Testing
+
+To test for "normality" in R:
+
+~~~ {.r}
+> data <- read.table(path)
+> library(psych)
+> describe(data)
+
+        var  n  mean    sd median trimmed   mad  min   max range skew kurtosis
+PID       1 42 21.50 12.27  21.50   21.50 15.57 1.00 42.00 41.00 0.00    -1.29
+Prime     2 42  1.50  0.51   1.50    1.50  0.74 1.00  2.00  1.00 0.00    -2.05
+Haste     3 42  2.00  0.83   2.00    2.00  1.48 1.00  3.00  2.00 0.00    -1.57
+Helping   4 42  1.87  1.29   1.78    1.78  1.31 0.04  4.66  4.62 0.43    -0.79
+          se
+PID     1.89
+Prime   0.08
+Haste   0.13
+Helping 0.20
+~~~
+
+Rule of thumb: if skew is greater than 3 or (absolute?) kurtosis is greater than 10 then the distribution is not normal.
