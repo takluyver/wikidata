@@ -2,4 +2,4 @@
 categories: statistics
 ...
 
-Statistics that measure or estimate parameters of the population. Opposite of [non-parametric statistics]().
+Statistics that measure or estimate parameters of the population. Relies on a number of assumptions (such as homogeneity of variance) that have to be met for the statistic to be valid. Opposite of [non-parametric statistics]().
