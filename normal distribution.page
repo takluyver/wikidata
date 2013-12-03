@@ -29,7 +29,7 @@ Rule of thumb: if skew is greater than 3 or (absolute?) kurtosis is greater than
 
 ## Achieving
 
-Most basic statistical methods (TODO: correlation measurement, [linear regression](), [t-tests](), ) assume normal distribution of the outcome variable. There are ways to massage the data if it's not normally distributed so that it fits the assumption:
+Most basic statistical methods ([correlation](inter-item correlation) measurement, [linear regression](), [t-test]()) assume normal distribution of the outcome variable. There are ways to massage the data if it's not normally distributed so that it fits the assumption:
 
 For positive skew:
 
@@ -38,6 +38,8 @@ For positive skew:
 * inverse ($\frac{1}{x}$)
 
 For negative skew: take the opposite, then deal with positive skew.
+
+While these transformations change the variance and distance between cases they maintain the relative order of cases.
 
 ## References
 
