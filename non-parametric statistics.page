@@ -25,11 +25,20 @@ Null hypothesis: median difference between pairs is 0 (median is a better measur
 
 if s*r sums to 0 then we maintain the null hypothesis.
 
-In R: `wilcox.text(fance.red, fance.white, paired=TRUE)`; `V` value is the sum of s*r.
+In R: `wilcox.test(fance.red, fance.white, paired=TRUE)`; `V` value is the sum of s*r.
 
 ### Mann-Whitney U test
 
 Just a modification of Wilcoxan's procedure.
+
+Arrange all the observations, regardless of group, into a single ranked series
+
+* R = sum of ranks from one group
+* U = sum - R
+
+If U value is ~ 1/2 of the highest possible sum ($\frac{n(n+1)}{2}$) then we maintain null hypothesis.
+
+In R: `wilcox.test(autraslia.white, france.white, paired=FALSE)`. p-value tells us if null hypothesis holds.
 
 ## References
 
