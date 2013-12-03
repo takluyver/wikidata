@@ -26,3 +26,19 @@ Helping 0.20
 ~~~
 
 Rule of thumb: if skew is greater than 3 or (absolute?) kurtosis is greater than 10 then the distribution is not normal.
+
+## Achieving
+
+Most basic statistical methods (TODO: correlation measurement, [linear regression](), [t-tests](), ) assume normal distribution of the outcome variable. There are ways to massage the data if it's not normally distributed so that it fits the assumption:
+
+For positive skew:
+
+* square root
+* logarithm
+* inverse ($\frac{1}{x}$)
+
+For negative skew: take the opposite, then deal with positive skew.
+
+## References
+
+* Statistics 1 Coursera course [lecture](https://class.coursera.org/stats1-002/lecture/107)
