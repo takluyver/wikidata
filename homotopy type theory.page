@@ -5,6 +5,10 @@ A combination of homotopy theory (a part of topology) and [type theory](), toute
 Traditional encoding of mathematics in terms of set theory is very cumbersome, as intricate constructions are required for more advanced concepts and in practice mathmaticians don't do it.
 Voevodsky says that HoTT allows for formalisation of mathematics that is much closer to informal approach taken by many mathematicians when developing proofs. Furthermore, with such derivations being easily mechanisable (see Martin-Loef types, [Coq]()) it allows for much easier machine-checking of mathematical results.
 
+## Type-Theoretical Angle
+
+If we take Per-Martin Löf's [intuitionistic type theory]() as the base, then [intensional type theory]() (ITT) is its basic extension. Built on top of that is [extensional type theory]() (ETT) that adds and models types as sets -- it's in effect ITT + equality reflection + uniqueness of equality proofs. ETT can be seen as constructive set theory, with types modeled as sets. HoTT is a different extension of ITT, incompatible with ETT: it's ITT + higher inductive types + univalence axiom. Types are modeled as weak $\infty$-groupoids -- kinds of spaces, essentially -- but no necessarily topological spaces.
+
 ## Univalence Axiom
 
 Simplifying, univalence axiom says that we don't need to be concerned with identity, just equivalence:
@@ -16,3 +20,4 @@ $(A=B)\simeq(A\simeq B)$
 * [Robert Harper's blog](http://existentialtype.wordpress.com/2013/06/22/whats-the-big-deal-with-hott/)
 * [Scientific American blog](http://blogs.scientificamerican.com/guest-blog/2013/10/01/voevodskys-mathematical-revolution/)
 * [the book](http://homotopytypetheory.org/book/)
+* [CMU course](http://www.cs.cmu.edu/~rwh/courses/hott/)
