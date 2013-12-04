@@ -1,0 +1,32 @@
+A consequence of [Brouwer's constructivism](), it's "logic as if people mattered": a proposition is only true if it has a proof (not a *formal proof* -- these are dodgy as per Goedel). 
+
+## Negative Fragment
+
+$\frac{.}{T prop}$ -- trivially true proposition (truth formation)
+
+$\frac{.}{T true}$ -- trivially true proposition is true
+
+there is no "truth elimination" -- we can't eliminate a proof
+
+$\frac{A prop B prop}{A\wedge B prop}$ -- conjunction introduction
+
+$\frac{A true B true}{A\wedge B true}$
+
+$\frac{A\wedge B true}{A true}$
+
+$\frac{A\wedge B true}{B true}$
+
+$\frac{A prop B prop}{A\rightarrow B prop}$
+
+$\frac{A true\vdash B true}{A\rightarrow B true}$
+
+$\frac{A\rightarrow B true A true}{B true}$ -- modus ponens
+
+Logical entailment ($\vdash$) is prior to implication ($\rightarrow$).
+
+## References
+
+* CMU HoTT course [lecture](http://scs.hosted.panopto.com/Panopto/Pages/Viewer/Default.aspx?id=0945cc7f-48b7-4803-81af-e7193a3f461d)
+
+
+
