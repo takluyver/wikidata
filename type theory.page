@@ -1,0 +1,21 @@
+---
+categories: logic mathematics computer_science
+...
+
+An analysis and codification of [Brouwer's intuitionism](constructivism).
+
+* based on Gentzen's proof theory
+* types classif admissible forms of construction
+* introduction rules "effect" a construction (how to make)
+* elimination rules "deconstruct" a construction (how to take it apart)
+* inversion principle (or principle of conservation of proof): elim is a post-invers to intro
+
+What (statics): introduction/elimination
+
+How (dynamics): inversion principle
+
+Intention: programmatically encompass all known mathematical constructions in particular forms of proof.
+
+## References
+
+* CMU HoTT course [lecture](http://scs.hosted.panopto.com/Panopto/Pages/Viewer/Default.aspx?id=0945cc7f-48b7-4803-81af-e7193a3f461d)
