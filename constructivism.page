@@ -14,9 +14,11 @@ Consequence:
 
 proof (not to be confused with formal proof!) is a mathematical object.
 
-## Trivia
+## Law of Excluded Middle
 
 Hilbert was vehemently opposed to this approach. According to Robert Harper he was mistaken: he though Brouwer was negating all achievements of maths to date. Instead, he just didn't want ot affirm the [law of excluded middle](); so if something could be proven in his system, it would have been a stronger result than with LEM.
+
+Why this particular assumption was denied? Because it prevents construction. TODO
 
 ## References
 
