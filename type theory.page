@@ -16,6 +16,12 @@ How (dynamics): inversion principle
 
 Intention: programmatically encompass all known mathematical constructions in particular forms of proof.
 
+## Computability
+
+According to Robert Harper type theory is the ultimate theory of computation. [Turing Machines](Turing machine) are an insufficient model, because they are only about numbers, and computation is a broader concept. [Homotopy Type Theory](homotopy type theory) deals with these higher-order objects.
+
+There is a complete correspondence between [category theory](), [proof theory]() and type theory.
+
 ## References
 
 * CMU HoTT course [lecture](http://scs.hosted.panopto.com/Panopto/Pages/Viewer/Default.aspx?id=0945cc7f-48b7-4803-81af-e7193a3f461d)
