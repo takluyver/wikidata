@@ -4,7 +4,7 @@ categories: mathematics computer_science logic philosophy
 
 (or intuitionism)
 
-Brouver postulated that:
+Brouwer postulated that:
 
 * mathematics is a human activity that is about communicating ideas, so we should focus on the language
 * fundamental human faculty is the concept of an algorithm (for performing a construction)
@@ -13,6 +13,10 @@ Brouver postulated that:
 Consequence:
 
 proof (not to be confused with formal proof!) is a mathematical object.
+
+## Trivia
+
+Hilbert was vehemently opposed to this approach. According to Robert Harper he was mistaken: he though Brouwer was negating all achievements of maths to date. Instead, he just didn't want ot affirm the [law of excluded middle](); so if something could be proven in his system, it would have been a stronger result than with LEM.
 
 ## References
 
