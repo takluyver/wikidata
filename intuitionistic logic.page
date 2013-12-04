@@ -1,3 +1,7 @@
+---
+categories: logic mathematics
+...
+
 A consequence of [Brouwer's constructivism](constructivism), it's "logic as if people mattered": a proposition is only true if it has a proof (not a *formal proof* -- these are dodgy as per Goedel). 
 
 ## Negative Fragment
