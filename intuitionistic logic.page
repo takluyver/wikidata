@@ -16,9 +16,7 @@ $\frac{A\:prop\;B\:prop}{A\wedge B\:prop}$ -- conjunction introduction
 
 $\frac{A\:true\;\;B\:true}{A\wedge B\:true}$
 
-$\frac{A\wedge B\:true}{A\:true}$
-
-$\frac{A\wedge B\:true}{B\:true}$
+$\frac{A\wedge B\:true}{A\:true}$ $\frac{A\wedge B\:true}{B\:true}$
 
 $\frac{A\:prop\;B\:prop}{A\rightarrow B\:prop}$
 
