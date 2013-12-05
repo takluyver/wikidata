@@ -1,0 +1,9 @@
+---
+categories: it database nosql
+...
+
+All writes are timestamped at the client and later overwrite (upsert) on top of the former, so [requires clocks to be synchronised on all clients](http://www.datastax.com/documentation/cassandra/2.0/webhelp/index.html#cassandra/dml/dml_about_inserts_c.html#concept_ds_xvr_knw_zj).
+
+## References
+
+* DataStax 2.0 [docs](http://www.datastax.com/documentation/cassandra/2.0/webhelp/)
