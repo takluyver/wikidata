@@ -8,3 +8,5 @@ While the coordinates on the [celestial sphere]() describe positions of stars re
 * azimuth: the angle from the *local meridian*, which is a line going from throught the zenith and north and south poles of the celestial sphere (East is 90 degrees, West 270 degrees) -- corresponds to longitude on Earth.
 
 The zenith at any point is the point on the celestial sphere whose [declination]() is equal to our latitude. The [right ascension]() of the zenith (and hence local meridian) is [sidereal time]().
+
+The best time to watch a star is when it is on the local meridian, i.e. at the maximal altitude.
