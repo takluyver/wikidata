@@ -1,0 +1,8 @@
+---
+categories: astronomy
+...
+
+While the coordinates on the [celestial sphere]() describe positions of stars relative to each other, to describe what we see at any given moment we use the local view coordinates. These are: 
+
+* altitude: the angle from the horizon (zenith is at 90 degrees) -- corresponds to latitude on Earth
+* azimuth: the angle from the *prime meridian*, which is a line going from throught the zenith and north and south poles of the celestial sphere -- corresponds to longitude on Earth.
