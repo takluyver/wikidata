@@ -5,4 +5,6 @@ categories: astronomy
 While the coordinates on the [celestial sphere]() describe positions of stars relative to each other, to describe what we see at any given moment we use the local view coordinates. These are: 
 
 * altitude: the angle from the horizon (zenith is at 90 degrees) -- corresponds to latitude on Earth
-* azimuth: the angle from the *prime meridian*, which is a line going from throught the zenith and north and south poles of the celestial sphere (East is 90 degrees, West 270 degrees) -- corresponds to longitude on Earth.
+* azimuth: the angle from the *local meridian*, which is a line going from throught the zenith and north and south poles of the celestial sphere (East is 90 degrees, West 270 degrees) -- corresponds to longitude on Earth.
+
+The zenith at any point is the point on the celestial sphere whose [declination]() is equal to our latitude. The [right ascension]() of the zenith (and hence local meridian) is [sidereal time]().
