@@ -16,7 +16,7 @@ To deal with that problem we introduce unique bitcoin numbers and a bank that as
 
 ### Distributed Bank
 
-The cetral bank can be done away with if everyone in the network kept track of who owns what bitcoin. Instead of checking with the bank Bob would then check his record and also broadcast a query to the network, and after enough responses came back confirming that the transaction is legitimate, accept the transfer. Checking with the network is required to prevent Alice from sending the same bitcoin to two different recipients at the same time in the hope they will accept before they become aware of the duplication of the transfer. However, another function of the central bank was assigning the unique numbers. Where do these come from in the distributed world?
+The cetral bank can be done away with if everyone in the network kept track of who owns what bitcoin. Instead of checking with the bank Bob would then check his record and also broadcast a query to the network, and after enough responses came back confirming that the transaction is legitimate, accept the transfer. Checking with the network is required to prevent Alice from sending the same bitcoin to two different recipients at the same time in the hope they will accept before they become aware of the duplication of the transfer. However, another function of the central bank was assigning the unique numbers. Where do these come from in the distributed world? Furthermore, checking with the network still does not guarantee security: Alice could have taken over the network by setting up large number of nodes that will authorise all her double-spending.
 
 ## Gossip
 
