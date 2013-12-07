@@ -26,7 +26,7 @@ The latter issue can be addressed by making issuing confirmation of transactions
 
 We can address this by introducing a reward for successful confirmation of a block. Initially it was set to 50 bitcoin per validated block and halfs with every 210,000 blocks validated globally. That halving has happend once so far, so as of the time this is written (2013) the reward is 25 bitcoin. In 2140 the reward will fall below $10^{-8}$ which is the minimal unit of Bitcoin. known as *satoshi*. How would the miners -- as are the ones who do the work confirming transaction blocks known -- be rewarded then? Bitcoin makes it possible to set aside some amount of currency in the transaction as a transaction fee. So far these have mostly been either zero or very low, but it is thought that with time the fees will take over the incentive role from the rewards. 
 
-To control the supply of currency we can't reward everyone who happens to confirm a block. In effect the miners are competing for the confirmation, so while it makes it expensive for Alice to forge the confirmation, if she controlled, say 1% of computational resources in the network, she would still stand a 1% chance of fraudulently confirming transactions. We want to have 100% confidence in the confirmations being genuine. Also, what happens when two miners broadcast their solutions for the same (or different) blocks simultaneously?
+To control the supply of currency we can't reward everyone who happens to confirm a block. In effect the miners are competing for the confirmation, so while it makes it expensive for Alice to forge the confirmation, if she controlled, say 1% of computational resources in the network, she would still stand a 1% chance of fraudulently confirming transactions. We want to have much higher confidence in the confirmations being genuine. Also, what happens when two miners broadcast their solutions for the same (or different) blocks simultaneously?
 
 To recap, we have three open problems:
 
@@ -38,6 +38,13 @@ To recap, we have three open problems:
 
 Let us deal with the last problem first. Participants in the network store the block in a chain and each subsequent published block specifies who is its parent. If two blocks are received both of whom have the same parent, a fork is created. The participants in the network then carry on working on whichever fork is longer -- or on the first block in the fork that was received, in case both are the same length. Quickly the network agrees on which fork should be continued and which should be discarded. In Bitcoin a transaction is not considered confirmed until it is part of a block in the longest fork and there are at least five blocks following its block.
 
+### Security
+
+It turns out that the "six confirmations" requirements also addresses the double spending problem. Suppose Alice wanted to give herself back the bitcoin she already transferred to Bob. For the transfer to Bob to be confirmed its chain must be at least six blocks long. For Alice to catch up with that fork she would have to do all the mining work on that chain on her own, since other miners will carry on work on the longer chain. To even keep up she will have to control over 50% of computational resources on the network. She could catch up if she was very lucky, but the chance of that is $a^6$, where $a$ is the percentage of computational resources she controls. For realistic scenarios this is infinitesimally small, and that forms the basis of Bitcoin security.
+
+## Security
+
+As described in the derivation above, the security relies on the cost of controlling enough resources to fabricate fraudulent confirmations at sufficient rate to overtake the honest part of the network. To date (Dec 2013) there has been no formal security analysis of the protocol and some plausible attacks have been proposed.
 
 ## Gossip
 
