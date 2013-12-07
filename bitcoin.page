@@ -4,7 +4,7 @@ categories: cryptography economy
 
 ## Derivation
 
-The below is an almost exact copy of [Michael Nielsen's description](http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/). We can arrive at Bitcoin by trying the following steps of development of cryptocurrency protocol:
+The below is a rephrasing of [Michael Nielsen's description](http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/). We can arrive at Bitcoin by trying the following steps of development of cryptocurrency protocol:
 
 ### Letter of Intent
 
@@ -17,6 +17,10 @@ To deal with that problem we introduce unique bitcoin numbers and a bank that as
 ### Distributed Bank
 
 The cetral bank can be done away with if everyone in the network kept track of who owns what bitcoin. Instead of checking with the bank Bob would then check his record and also broadcast a query to the network, and after enough responses came back confirming that the transaction is legitimate, accept the transfer. Checking with the network is required to prevent Alice from sending the same bitcoin to two different recipients at the same time in the hope they will accept before they become aware of the duplication of the transfer. However, another function of the central bank was assigning the unique numbers. Where do these come from in the distributed world? Furthermore, checking with the network still does not guarantee security: Alice could have taken over the network by setting up large number of nodes that will authorise all her double-spending.
+
+### Proof of Work
+
+The latter issue can be addressed by making issuing confirmation of transactions expensive. For example, we might require that whoever confirms transactions as genuine has to solve a hard computational problem. With enough participants in the network, this would make the takeover described prohibitively expensive. In Bitcoin a node (David) checks entire block of transactions. The block is labeled with a transaction label *l* -- a string of bytes. Once he verifies them as genuine he has to find a *nonce* (*n*; another string of bytes) such that the SHA-256 hash of the concatenation of *l* and *n* is smaller than a given number. This is calibrated so that this search takes 10 minutes on average. Once David finds the correct nonce he can broadcast to the network that the transactions are okay, and include the nonce in his message as the proof of work.
 
 ## Gossip
 
