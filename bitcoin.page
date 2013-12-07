@@ -12,7 +12,11 @@ Alice broadcast a message saying "I'm giving X amount of bitcoin to Bob" and sig
 
 ### Serial Numbers
 
-To deal with that problem we introduce unique bitcoin numbers and a bank that assigns these. Everyone dealing in Bitcoin has an account with the bank and when Alice wants to pay Bob the bank reduces her balance and assigns unique numbers to withdrawn bitcoin. She then sends her message with the numbers included. Bob check with the bank that the bitcoin belongs to Alica and has not already been spent, and if so, accepts the transfer registering it with the bank that reassigns given numbers to Bob.
+To deal with that problem we introduce unique bitcoin numbers and a bank that assigns these. Everyone dealing in Bitcoin has an account with the bank and when Alice wants to pay Bob the bank reduces her balance and assigns unique numbers to withdrawn bitcoin. She then sends her message with the numbers included. Bob check with the bank that the bitcoin belongs to Alica and has not already been spent, and if so, accepts the transfer registering it with the bank that reassigns given numbers to Bob. The downside of this approach is that there is now a central institution that controls the supply and flow of the currency. (TODO: why is it bad?)
+
+### Distributed Bank
+
+The cetral bank can be done away with if everyone in the network kept track of who owns what bitcoin. Instead of checking with the bank Bob would then check his record and also broadcast a query to the network, and after enough responses came back confirming that the transaction is legitimate, accept the transfer. Checking with the network is required to prevent Alice from sending the same bitcoin to two different recipients at the same time in the hope they will accept before they become aware of the duplication of the transfer. However, another function of the central bank was assigning the unique numbers. Where do these come from in the distributed world?
 
 ## Gossip
 
