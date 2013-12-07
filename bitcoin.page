@@ -1,0 +1,21 @@
+---
+categories: cryptography economy
+...
+
+A cryptocurrency. A thoroug explanation can be found in [Michael Nielsen's blog](http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/).
+
+## Derivation
+
+After Michael Nielsen, we can arrive at Bitcoin by trying the following steps of development of cryptocurrency protocol:
+
+1. letter of intent: Alice broadcast a message saying "I'm giving X amount of bitcoin to Bob" and signs it with her private key. Everyone can verify that Alice indended to give Bob bitcoin and that it is not a forgery. However, Alice could send the same message N times and it would not be clear whether she intended to give Bob N*X bitcoin or if the message was just duplicated.
+2. To deal with that problem we introduce unique bitcoin numbers and a bank that assigns these. Everyone dealing in Bitcoin has an account with the bank and when Alice wants to pay Bob the bank reduces her balance and assigns unique numbers to withdrawn bitcoin. She then sends her message with the numbers included. Bob check with the bank that the bitcoin belongs to Alica and has not already been spent, and if so, accepts the transfer registering it with the bank that updates his balance.
+
+## Gossip
+
+* someone threw away a harddisk with 7 million USD worth of bitcoin on it
+* cashing out is difficult and the rates paid are nowhere near officially quoted exchange rates
+
+## References
+
+* [Michael Nielsen's blog](http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/)
