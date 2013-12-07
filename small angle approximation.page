@@ -4,4 +4,6 @@ categories: geometry astronomy
 
 When side BC of triangle ABC is much shorter than AB and AC we can approximate it by $R\alpha$, where $R$ is the length of AB or AC (we can approximate they are the same because BC is very short) and $\alpha$ is the angle (in radians) between AB and AC.
 
+## References
 
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/237)
