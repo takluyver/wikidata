@@ -2,7 +2,7 @@
 categories: statistics
 ...
 
-Not to be confused with [general linear model](), which is less general! Generalised model is an extension that allows for non-normal distributions in the outcome variable.
+Not to be confused with [general linear model](), which is less general! Generalised model is an extension that allows for non-normal distributions in the outcome variable. Often we can achieve [normal distribution]() by transformation of variables, but sometimes it is not feasible. Generalised model to the rescue!
 
 ## Link Function
 
