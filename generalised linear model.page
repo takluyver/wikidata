@@ -4,6 +4,14 @@ categories: statistics
 
 Not to be confused with [general linear model](), which is less general! Generalised model is an extension that allows for non-normal distributions in the outcome variable.
 
+## Link Function
+
+Generalised model differs from the general model by introduction of link function. E.g. in [binary logistic regression]():
+
+$ln\frac{Y}{1-Y}=B_0+\sum B_kX_k$
+
+the term to the left of the equals sign is the link function.
+
 ## References
 
 * Statistics I Coursera course [lecture](https://class.coursera.org/stats1-002/lecture/113)
