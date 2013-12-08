@@ -10,7 +10,7 @@ Generalised model differs from the general model by introduction of link functio
 
 $ln\frac{Y}{1-Y}=B_0+\sum B_kX_k$
 
-the term to the left of the equals sign is the link function.
+the term to the left of the equals sign is the link function. Instead of $Y$ we use some function of $Y$ -- in this case the logistic function.
 
 ## References
 
