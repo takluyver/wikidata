@@ -13,6 +13,8 @@ Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an un
 
 `select count(*) from postings limit 100000000;` after the writes described above took ~10 mins to return.
 
+`create index account_idx on postings (account_id)` was instantaneous. So were queries using this index (returned ~3 rows on average).
+
 ## References
 
 * DataStax 2.0 [docs](http://www.datastax.com/documentation/cassandra/2.0/webhelp/)
