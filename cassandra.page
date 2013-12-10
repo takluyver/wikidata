@@ -8,7 +8,7 @@ All writes are timestamped at the client and later overwrite (upsert) on top of 
 
 Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an unindexed table on an SSD:
 
-* 9 GB on disk
+* 9 GB (8 GB not counting commit logs and saved caches) on disk
 * 4h 51m
 
 ## References
