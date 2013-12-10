@@ -11,6 +11,8 @@ Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an un
 * 9 GB (8 GB not counting commit logs and saved caches) on disk
 * 4h 51m
 
+`select count(*) from postings limit 100000000;` after the writes described above took ~10 mins to return.
+
 ## References
 
 * DataStax 2.0 [docs](http://www.datastax.com/documentation/cassandra/2.0/webhelp/)
