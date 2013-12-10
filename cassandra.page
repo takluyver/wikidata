@@ -6,7 +6,7 @@ All writes are timestamped at the client and later overwrite (upsert) on top of 
 
 ## Benchmark
 
-Writing 100m small rows (5 cols, char(1)/int/bigint/timestamp) rows to an unindexed table on an SSD:
+Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an unindexed table on an SSD:
 
 * 9 GB on disk
 * 4h 51m
