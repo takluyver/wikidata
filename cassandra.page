@@ -13,7 +13,7 @@ Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an un
 
 `select count(*) from postings limit 100000000;` after the writes described above took ~10 mins to return.
 
-`create index account_idx on postings (account_id)` is asynchronous -- kicks off indexing in the background.
+`create index account_idx on postings (account_id)` is asynchronous -- kicks off indexing in the background. Took over 8 hours, the index added 3 GB to disk usage.
 
 ## References
 
