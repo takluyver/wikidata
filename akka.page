@@ -1,0 +1,17 @@
+### Logging message receptions
+
+~~~ {.scala}
+import akka.event.LoggingReceive
+
+class MyActor extends Actor {
+  def receive = LoggingReceive {
+    case _ => ???
+  }
+}
+~~~
+
+Then run with `-Dakka.loglevel=DEBUG -Dakka.actor.debug.receive=on`.
+
+## References
+
+* PRP Coursera course [lecture](https://class.coursera.org/reactive-001/lecture/77)
