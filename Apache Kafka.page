@@ -1,0 +1,9 @@
+---
+categories: it middleware
+...
+
+A distributed message broker system. Partitions the messages so that it can serve data from different partitions in parallel. Guarantees the order of messages within a partition. Replicates partitions for HA. Uses [ZooKeeper]().
+
+## References
+
+* the [documentation](https://kafka.apache.org/documentation.html#gettingStarted)
