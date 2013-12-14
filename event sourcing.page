@@ -1,0 +1,9 @@
+---
+categories: it architecture
+...
+
+Instead of modifying local state directly, emit events that describe *what has happened* and log them. On restart the log is replayed to reconstitute the state. See also [command sourcing]().
+
+## References
+
+* PRP Coursera course [lecture](https://class.coursera.org/reactive-001/lecture/91)
