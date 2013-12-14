@@ -1,0 +1,9 @@
+---
+categories: it architecture
+...
+
+Commands describe what *should* happen with an entity -- in contrast to [*events*](event sourcing), which describe what *has* happened. In command sourcing the commands are stored before being applied and are replied on restart to reconstitute the state. It means that all side-effects of processing these commands are reexecuted.
+
+## References
+
+* PRP Coursera course [lecture](https://class.coursera.org/reactive-001/lecture/91)
