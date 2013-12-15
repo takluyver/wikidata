@@ -1,0 +1,23 @@
+---
+categories: astronomy
+...
+
+Assistant of Tycho Brache. First proposed the model where plantes move alongside elliptical orbits.
+
+## Second Law
+
+The area of ellipse corresponding to the part of the orbit completed in a unit of time is constant.
+
+## Third Law
+
+For all planets in the solar system:
+
+$P^2=Ka^3$
+
+* $P$ -- the period (around the Sun)
+* $a$ -- the length of semimajor axis
+* $K$ -- a constant
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/241)
