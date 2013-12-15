@@ -1,0 +1,16 @@
+---
+category: physics astronomy
+...
+
+As Newton discovered, any two objects attracts each other and the force of attraction is given by the following formula:
+
+$F=\frac{Gm_1m_2}{R^2}$
+
+Where $m_i$ are the masses, $R$ is the distance and $G$ is the Newton's constant: 
+
+$G=6.67\times 10^{-11}\frac{Nm^2}{kg^2}$
+
+## References
+
+* Introduction to Astronomy Coursere course [lecture](https://class.coursera.org/introastro-002/lecture/249)
+
