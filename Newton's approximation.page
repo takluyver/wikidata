@@ -4,7 +4,7 @@ categories: physics astronomy mathematics
 
 $(1+x)^a \sim 1+ax$ for $|ax|\ll 1$
 
-Applicable to terms $(A+B)^a$ when $|\frac{B}{A}|\ll 1$.
+Applicable to terms $(A+B)^a$ when $|\frac{B}{A}|\ll 1$: it's approximately $A^a(1+a\frac{B}{A})$
 
 ## References
 
