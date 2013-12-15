@@ -1,0 +1,9 @@
+---
+categories: physics
+...
+
+Acceleration of a body that moves with constant speed along a circle. As such, its [velocity]() $v$ constantly changes; this change is described by acceleration $a$. The direction of $a$ is always from the body towards the cetre of the circle and the magnitude is $a=\frac{v^2}{R}$, where $R$ is the radius of the circle.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/243)
