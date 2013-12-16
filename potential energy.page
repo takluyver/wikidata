@@ -2,4 +2,11 @@
 categories: physics
 ...
 
-$E=mgh$
+Formula for Earth:
+
+$U=mgh$
+
+General formula:
+
+$U=-G\frac{m_1M_2}{r}$ where $G$ is the [gravitational constant](gravity).
+
