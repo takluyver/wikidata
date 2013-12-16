@@ -2,7 +2,7 @@
 categories: astronomy
 ...
 
-Parameter that determines how much the shape of an orbit differs from circle. 0 is a perfect circle, between 0 and 1 is ellptical orbit, 1 is a parabolic escape orbit and greater than 1 is a hyperbola.
+Parameter that determines how much the shape of an orbit differs from circle. 0 is a perfect circle, between 0 and 1 is elliptical orbit, 1 is a parabolic escape orbit and greater than 1 is a hyperbola.
 
 Eccentricity of Earth's orbit is 0.02. In solar system the most eccetric planetary orbit is that of Mercury with eccentricity of 0.2. Comets have highly eccentric orbits.
 
