@@ -24,3 +24,4 @@ Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an un
 ## References
 
 * DataStax 2.0 [docs](http://www.datastax.com/documentation/cassandra/2.0/webhelp/)
+* [Blog post](http://bigdatanoob.blogspot.co.uk/2012/11/hbase-vs-cassandra.html) comparing Cassandra and HBase
