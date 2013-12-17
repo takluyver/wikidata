@@ -4,6 +4,8 @@ categories: it database nosql
 
 All writes are timestamped at the client and later overwrite (upsert) on top of the former, so [requires clocks to be synchronised on all clients](http://www.datastax.com/documentation/cassandra/2.0/webhelp/index.html#cassandra/dml/dml_about_inserts_c.html#concept_ds_xvr_knw_zj).
 
+Does not support range scans.
+
 ## Benchmark
 
 Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an unindexed table on an SSD:
