@@ -1,0 +1,7 @@
+---
+categories: physics astronomy
+...
+
+For a given distance between bodies, the speed at which body will break out of the gravitational influence of another body. It's the speed at which the sum of [kinetic energy]() and gravitational [potential energy]() is zero; hence:
+
+$v_e=\sqrt{\frac{2GM}{R}}$
