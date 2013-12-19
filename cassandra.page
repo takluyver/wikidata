@@ -6,6 +6,12 @@ All writes are timestamped at the client and later overwrite (upsert) on top of 
 
 Does not support range scans.
 
+## Data Layout
+
+### Composite Primary Keys
+
+According to [a blog post](http://planetcassandra.org/blog/post/composite-keys-in-apache---cassandra) with single-column primary key the data is stored one record per row. With composite primary key it's stored one record per column, i.e. all records in one row. It's not clear what implications it has and whether this is still the case with Cassandra 2 (the post was about version 1).
+
 ## Benchmark
 
 Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an unindexed table on an SSD:
@@ -25,3 +31,4 @@ Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an un
 
 * DataStax 2.0 [docs](http://www.datastax.com/documentation/cassandra/2.0/webhelp/)
 * [Blog post](http://bigdatanoob.blogspot.co.uk/2012/11/hbase-vs-cassandra.html) comparing Cassandra and HBase
+* [Blog post](http://planetcassandra.org/blog/post/composite-keys-in-apache---cassandra) on composite primary keys
