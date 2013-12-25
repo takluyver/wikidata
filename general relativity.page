@@ -1,0 +1,13 @@
+---
+categories: physics
+...
+
+[Special relativity](special relativity) extended with [gravity]().
+
+## GPS
+
+The positioning in GPS works by receiving signals from three different satellites and calculating the time the signal from each takes. It relies on synchronised clocks and has to account for the fact that time in weaker [gravity]() flows faster -- according to general theory of relativity.
+
+## References
+
+* Sean Carroll, *The Particle at the End of the Universe*
