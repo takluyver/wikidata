@@ -19,3 +19,15 @@ $F=\sigma T^4$
 $F$ -- flux of an object (rate of radiation), in Watts per $m^2$.
 
 $\sigma=5.67\times 10^{-8} \frac{W}{m^2K^4}$
+
+## Spectrum
+
+The spectrum of a black body is continuous, i.e. there is an emission in every wave length (within the range corresponding to the temeperature). Fraunhofer discovered that Sun's spectrum has gaps. Bunsen discovered lines in glowing gas spectra. 
+
+Helium was first discovered as unidentified line in the spectrum of the sun.
+
+When a black body is observed through a cloud of gas there are dark lines in the spectrum that correspond to the elements in the cloud. When light emitted by the cloud is observed (cloud is lit from the side) only the lines are visible, everything else is dark.
+
+## References
+
+* Introduction to Astronomy Coursera course lecture
