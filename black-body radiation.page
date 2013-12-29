@@ -1,0 +1,21 @@
+---
+categories: physics astronomy
+...
+
+Hot object radiates. For dense dark objects radiation is completely characterised by temperature.
+
+## Wien's Law
+
+$\lambda_{max}T=b$
+
+where $b=2.9\times 10^{-3} mK$
+
+So hotter objects emit shorter wave length radiation (light).
+
+## Stefan-Boltzmann Relation
+
+$F=\sigma T^4$
+
+$F$ -- flux of an object (rate of radiation), in Watts per $m^2$.
+
+$\sigma=5.67\times 10^{-8} \frac{W}{m^2K^4}$
