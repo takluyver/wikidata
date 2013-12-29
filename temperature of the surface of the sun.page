@@ -1,0 +1,17 @@
+---
+categories: astronomy
+...
+
+We can measure the *brightness* of the Sun on earth by measuring how much it heats up 1 $m^2$ of dark material. It turns out to be $b = 1361 \frac{W}{m^2}$ (i.e. can power a small hair dryer). We can then calculate the *luminosity*:
+
+$L = 4\pi D^2b$
+
+Where $D$ is the distance from Earth to Sun. This turns out to be $3.83\times 10^{26} W$
+
+*Flux* is luminosity divided by surface area, i.e $F=\frac{4\pi D^2b}{4\pi R^2}=b\left(\frac{D}{R}\right)^2=6.29\times 10^7 \frac{W}{m^2}$
+
+From [Stefan-Boltzmann relation](https://notepad.mmakowski.com/black-body%20radiation#stefan-boltzmann-relation) we have $T=\left(\frac{F}{\sigma}\right)^{\frac{1}{4}}=5770K$
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/271)
