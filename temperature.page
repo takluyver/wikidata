@@ -1,0 +1,15 @@
+---
+categories: physics
+...
+
+A measure of average random motion of atoms and molecules in an object.
+
+## Ideal Gas
+
+$\left<\frac{mv^2}{2}\right>=\frac{3}{2}k_BT$
+
+where $k_B=1.381\times 10^{-23}\frac{J}{K}$ and angle brackets signify the average value.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/259)
