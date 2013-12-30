@@ -4,6 +4,18 @@ categories: physics
 
 The lines that can be observed in the spectrum when white light shines through a cloud of atoms can reveal the internal structure of those atoms. This is because it tells us which frequencies a given atom can interact with and that interaction is determined by the layout of electrons.
 
+Each photon carries a quantum of energy related to the frequency of light it represents:
+
+$E=hf$
+
+When photons "hit" electrons the transferred energy moves the electron to a higher energy level. The possible energy levels of electrons are discrete:
+
+$E_n=\frac{-K}{n^2}$
+
+So the energy of the absorbed photon corresponds to the difference in energy between the two levels:
+
+$hf=E_n-E_m$
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/287)
