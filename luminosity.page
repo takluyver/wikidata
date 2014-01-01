@@ -4,7 +4,7 @@ categories: astronomy
 
 ## Of a Star
 
-$L=\frac{b}{4\pi R^2}$
+$L=4\pi R^2b$
 
 $b$ is apparent brightness ([flux](black-body radiation)) so if we know the temperature at the surface of the star we can calculate $b=\sigma T^4$ and take $R$ to be the radius of the star.
 
