@@ -2,6 +2,8 @@
 categories: physics astronomy
 ...
 
+Every isotope is characterised by its half-life ($t_{1/2}) -- the time after which half the number of its atoms in a given body will have [decayed](nuclear decay) to ligher elements. We can link the number of remaining atoms with the time that has passed:
+
 $N_t=2^{\frac{-t}{t_{1/2}}}N_0$
 
 
