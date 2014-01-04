@@ -2,7 +2,7 @@
 categories: physics
 ...
 
-When the source of the [wave]() moves with velocity $v$:
+When the source of the [wave]() moves with velocity $v$ and the average velocity of the wave in medium under consideration is $c$:
 
 $\lambda=\lambda_0(1-\frac{v}{c})$
 
