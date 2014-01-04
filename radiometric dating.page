@@ -4,7 +4,11 @@ categories: physics astronomy
 
 Every isotope is characterised by its half-life ($t_{1/2}) -- the time after which half the number of its atoms in a given body will have [decayed](nuclear decay) to ligher elements. We can link the number of remaining atoms with the time that has passed:
 
-$N_t=2^{\frac{-t}{t_{1/2}}}N_0$
+$N(t)=2^{\frac{-t}{t_{1/2}}}N(0)$
+
+Typically we don't know N(0); however, we can establish the time given relative abundance of the heavier isotope and the element it decays to -- that is assuming that initially the lighter element was not present:
+
+$\frac{N_h(t)}{N_l(t)}=2^{\frac{t}{t_{1/2}}}-1$
 
 
 ## References
