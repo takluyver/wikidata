@@ -20,9 +20,9 @@ Where $R_H$ is the [Rydberg constant]().
 
 **TODO**: the below formula [turned out to be wrong](https://class.coursera.org/introastro-002/forum/thread?thread_id=589). Why? Equating the energy seems to make sense.
 
-So the energy of the absorbed photon corresponds to the difference in energy between the two levels:
-
-$hf=E_n-E_m$
+> So the energy of the absorbed photon corresponds to the difference in energy between the two levels:
+> 
+> $hf=E_n-E_m$
 
 ## References
 
