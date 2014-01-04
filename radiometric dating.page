@@ -6,10 +6,11 @@ Every isotope is characterised by its half-life ($t_{1/2}$) -- the time after wh
 
 $N(t)=2^{\frac{-t}{t_{1/2}}}N(0)$
 
-Typically we don't know N(0); however, we can establish the time given relative abundance of the heavier isotope and the element it decays to -- that is assuming that initially the lighter element was not present:
+Typically we don't know N(0); however, we can establish the time given relative abundance of the heavier isotope and the element it decays to:
 
 $\frac{N_h(t)}{N_l(t)}=2^{\frac{t}{t_{1/2}}}-1$
 
+That is assuming that initially the lighter element was not present. This is e.g. the case where the lighter element escapes from molten magma but stays in solid rock, so it can tell us how long ago the rock solidified.
 
 ## References
 
