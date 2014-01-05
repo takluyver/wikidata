@@ -1,5 +1,5 @@
 ---
-categories: physics
+categories: physics astronomy
 ...
 
 A measure of average random motion of atoms and molecules in an object.
@@ -9,6 +9,14 @@ A measure of average random motion of atoms and molecules in an object.
 $\left<\frac{mv^2}{2}\right>=\frac{3}{2}k_BT$
 
 where $k_B$ is [Boltzmann constant]() and angle brackets signify the average value.
+
+## A Planet
+
+From [Stefan-Boltzmann relation](https://notepad.mmakowski.com/black-body%20radiation#stefan-boltzmann-relation) and the formula for [luminosity]() we can estimate the equilibrium temperature -- temperature at which the body receives the same amount of energy from star irradiation as it emits:
+
+$T_e=T_{star}\sqrt{\frac{R_{star}}{2D}}$
+
+Note that it only depends on the properties of the start and the distance $D$ from the star.
 
 ## References
 
