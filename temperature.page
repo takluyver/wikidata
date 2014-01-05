@@ -16,7 +16,7 @@ From [Stefan-Boltzmann relation](https://notepad.mmakowski.com/black-body%20radi
 
 $T_e=T_{star}\sqrt{\frac{R_{star}}{2D}}$
 
-Note that it only depends on the properties of the start and the distance $D$ from the star.
+Note that it only depends on the properties of the start and the distance $D$ from the star. Also it does not take into account the [albedo]() and atmosphere (if any) of the body in question.
 
 ## References
 
