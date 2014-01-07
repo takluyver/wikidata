@@ -1,0 +1,13 @@
+---
+categories: astronomy
+...
+
+Withing this distance the tidal force will tear forming moon apart.
+
+$D=R_p\left(\frac{2\rho_p}{\rho_m}\right)^{\frac{1}{3}}$
+
+where $\rho$ is density.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/305)
