@@ -1,0 +1,9 @@
+---
+categories: haskell modularity
+...
+
+A module system for [Haskell](haskell). [First paper](http://plv.mpi-sws.org/backpack/backpack-paper.pdf) published in 2014.
+
+## References
+
+* [website](http://plv.mpi-sws.org/backpack/)
