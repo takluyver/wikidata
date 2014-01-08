@@ -2,7 +2,11 @@
 categories: astronomy
 ...
 
+1-40% of sun-like stars have planets.
+
 ## Detection
+
+The most effective methods (see below) are most sensitive to "hot Jupiters" -- large planets that orbit close to their star.
 
 ### Imaging
 
@@ -16,7 +20,7 @@ $R_s = (M_p/M)R$
 
 Only one planet found with this method. It's difficult to observe small movements of distant stars.
 
-### Radio Velocity Measurements
+### Radial Velocity Measurements
 
 If the planet orbits in such a plane that the velocity vector is directed from/away from earth then thanks to [Doppler effect]() the [spectrum](spectroscopy) of the star will change as it orbits the common centre of mass.
 
@@ -27,6 +31,22 @@ and from $R_s = (M_p/M)R$ we get
 $v_s = \sqrt{\frac{GM}{R}}\times\frac{M_p}{M}$
 
 Weavelengths can be measured with great accuracy; most of the plantes have been found this way.
+
+### Transiting
+
+The star dims periodically as the planet orbits it. Again, depends on the orbiting plane being aligned in a convenient way.
+
+Kepler space telescope has 2321 candidate planets in 1290 systems.
+
+Transit method is not considered a "complete" detecion, needs to be verified by other means.
+
+### Gravitational Lensing
+
+16 planets in 15 systems.
+
+### Transit Timing Variation
+
+Allows prediction of other planets in a system where a planet is found based on discrepancies in transit times.
 
 ## References
 
