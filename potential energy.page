@@ -1,5 +1,5 @@
 ---
-categories: physics
+categories: physics astronomy
 ...
 
 Formula for Earth:
@@ -10,3 +10,4 @@ General formula:
 
 $U=-G\frac{m_1M_2}{r}$ where $G$ is the [gravitational constant](gravity).
 
+Gravitational potential energy is complementary to [gravitational binding energy]().
