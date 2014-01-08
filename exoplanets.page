@@ -16,15 +16,17 @@ $R_s = (M_p/M)R$
 
 Only one planet found with this method. It's difficult to observe small movements of distant stars.
 
-### Spectroscopy
+### Radio Velocity Measurements
 
-If the planet orbits in such a plane that the velocity vector is directed from/away from earth then thanks to [Doppler effect]() the spectrum of the star will change as it orbits the common centre of mass.
+If the planet orbits in such a plane that the velocity vector is directed from/away from earth then thanks to [Doppler effect]() the [spectrum](spectroscopy) of the star will change as it orbits the common centre of mass.
 
 $v_s^2=\frac{GM_pR_s}{R^2}$
 
 and from $R_s = (M_p/M)R$ we get
 
 $v_s = \sqrt{\frac{GM}{R}}\times\frac{M_p}{M}$
+
+Weavelengths can be measured with great accuracy; most of the plantes have been found this way.
 
 ## References
 
