@@ -1,0 +1,31 @@
+---
+categories: astronomy
+...
+
+## Detection
+
+### Imaging
+
+36/900 planets found this way.
+
+### Astrometry
+
+The planet and the star orbit common centre of mass:
+
+$R_s = (M_p/M)R$
+
+Only one planet found with this method. It's difficult to observe small movements of distant stars.
+
+### Spectroscopy
+
+If the planet orbits in such a plane that the velocity vector is directed from/away from earth then thanks to [Doppler effect]() the spectrum of the star will change as it orbits the common centre of mass.
+
+$v_s^2=\frac{GM_pR_s}{R^2}$
+
+and from $R_s = (M_p/M)R$ we get
+
+$v_s = \sqrt{\frac{GM}{R}}\times\frac{M_p}{M}$
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/301)
