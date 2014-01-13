@@ -2,12 +2,12 @@
 categories: astronomy
 ...
 
-Change in wave length of radiation emitted by objects that move away from us, caused by Doppler effect. Used to determine the distance of astronomical objects from Earth, as the further an object is, the faster it moves away. This only works for objects that are outside of Milky Way.
+Change in wave length of radiation emitted by objects that move away from us, caused by [Doppler effect](). Used to determine the distance of astronomical objects from Earth, as the further an object is, the faster it moves away. This only works for objects that are outside of Milky Way.
 
 ## Calculation
 
 * measure the spectrum of observed object
-* compare measured spectrum (intensity of various frequencies of radiation) with signatures of known elements -- various elements cause characteristic patterns due to emission or absorption of certain ranges of frequencies
+* compare measured [spectrum](spectroscopy) (intensity of various frequencies of radiation) with signatures of known elements -- various elements cause characteristic patterns due to emission or absorption of certain ranges of frequencies
 * the shifting of absorption/emission lines shows how much the frequencies have lengthened
 
 ## References
