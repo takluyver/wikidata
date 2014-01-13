@@ -16,7 +16,7 @@ So hotter objects emit maximum of radiation (light) in shorter wave length.
 
 $F=\sigma T^4$
 
-$F$ -- flux of an object (rate of radiation; [luminosity]()), in Watts per $m^2$.
+$F$ -- flux of an object (rate of radiation), in Watts per $m^2$. [Luminosity](luminosity) is flux times surface area.
 
 $\sigma=5.67\times 10^{-8} \frac{W}{m^2K^4}$
 
