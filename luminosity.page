@@ -8,6 +8,14 @@ $L=4\pi R^2b$
 
 $b$ is apparent brightness ([flux](black-body radiation)) so if we know the temperature at the surface of the star we can calculate $b=\sigma T^4$ and take $R$ to be the radius of the star.
 
+## Of a Planet
+
+If a planet of radius $R$ and [albedo]() $a$ is at distance $D$ from a star with luminosity $L_S$:
+
+$L_P=\frac{aL_S}{4}\left(\frac{R}{D}\right)^2$
+
+This formula can be derived by calculating the amount of radiation received by each $m^2$ of a sphere at distance $D$ and multiplying it by by cross section ($2\pi R$) of the planet.
+
 ## Of the Sun
 
 We can measure the *brightness* of the Sun on earth by measuring how much it heats up 1 $m^2$ of dark material. It turns out to be $b = 1361 \frac{W}{m^2}$ (i.e. can power a small hair dryer). We can then calculate the luminosity:
