@@ -1,0 +1,19 @@
+---
+categories: physics astronomy
+...
+
+Or *proton-proton chain reaction*. The process that powers the stars.
+
+1H + 1H -> 2H + positron + neutrino
+
+Normally it would produce 2He which is very unstable and just decays back into two 1H. Very rarely one of th protons undergoes [beta-decay](nuclear decay).
+
+2H + 1H -> 3He + gamma ray 
+
+3He + 3He -> 4He + 1H + 1H
+
+The energy comes form positrons annihilating with electrons and from photons emitted as gamma rays in stage 2. The process requires temperatures of in the order of 10 million K. Otherwise the velocities of protons are not high enough to make them crash with each other.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/331)
