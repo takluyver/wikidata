@@ -1,0 +1,17 @@
+---
+categories: astronomy
+...
+
+The effect whereby the closer object moves respective to more distant background as the observer moves. Used by humans to avoid obstacles (difference between left and right eye). 
+
+## Distance to stars
+
+Also used to measure the distance to stars: the nearby stars play the role of the reference point. As the Earth orbits the Sun we can observe the same region of the sky from very different places -- as the eyes. We can then use the [small angle approximation]() to find the distance to observed star given the parallax angle:
+
+D/1AU = 206265"/p
+
+Where p is the parallax angle.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture about measuring distances to stars](
