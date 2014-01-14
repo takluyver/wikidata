@@ -1,0 +1,38 @@
+---
+categories: astronomy
+...
+
+## Structure
+
+### Observing
+
+Helioseismology: shifts in [spectra](spectroscopy) tell us how different regions fluctuate and move with respect to one another.
+
+### Regions
+
+#### Core
+
+to 1/4 of the radius. Temperatures 15-16 million K. Density of Hydrogen: 150 times the density of water. Contains 40% of the mass of the Sun. It is in stable equilibrium, because when the rate of fusion decreases the core cools, contracts, the gravity increases and rate of fusion increases. *Luminosity is determined by how much they hydrogen is compressed, ie. the total mass of a star*.
+
+#### Radiation Zone
+ 
+between .25R  and .7 R. Consists of [plasma](). Temperature 2 million K. Energy transfer mode: radiation diffusion: gamma rays from core are absorbed and reemitted and reabsorbed and reemitted... it takes a photon 170 000 years to travel through this region.
+
+#### Convection Zone (Photosphere)
+
+Between .7 to 1R. Temperature decreases to 5700 K at the surface and density decreases from density of water to near zero. Plasma becomes opaque and the most efficient mode of heat transfer is through convection cells. That's why the surface appears granular. The cells have sizes of thousands of kilometers.
+
+#### Chromosphere
+
+h <= 2000 km. Temperature rises to 50 thousand K. Very tenuous and not visible.
+
+#### Corona
+
+h between 200 km and 1.3 R
+
+Temperature of 2 million K. Best visible in UV and X-Ray. Source of the [solar wind]().
+
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture on Solar structure](https://class.coursera.org/introastro-002/lecture/335)
