@@ -1,0 +1,15 @@
+---
+categories: astronomy
+...
+
+*Proper motion* of stars is the motion over and above the [parallax]() osciallation. Tangential velocity can be measured by observing the proper motion:
+
+$v_T=4.74\mu D_{pc}$
+
+Where $\mu$ is the proper movement in arcseconds per year. Radial velocity (towards/away from the [Sun]()) can be calculated from [Doppler effect]() ([redshift]()):
+
+$v_r=c(\lambda/\lambda_0-1)$
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture on motion of stars](https://class.coursera.org/introastro-002/lecture/347)
