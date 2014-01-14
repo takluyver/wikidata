@@ -1,0 +1,15 @@
+---
+categories: it
+...
+
+Systems programming language with compiler-provided safety guarantees.
+
+Features:
+
+* optional garbage collection (opt-in, per thread)
+* ...
+
+## References
+
+* [introductory presentation](http://www.youtube.com/watch?v=gfCtbGiHcg0)
+* [introduction](http://words.steveklabnik.com/a-30-minute-introduction-to-rust) by Steve Klabnik
