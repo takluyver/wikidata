@@ -6,6 +6,13 @@ Very little mass, only weakly interacting. Discovered as missing energy in [neut
 
 $n \rightarrow p + e + \bar{\nu}_e$
 
+There are three types: electron, muon and tau neutrinos. They spontanously oscillate between these types.
+
+## Detection
+
+First detector: Chlorine tank in gold mine. Very rarely a neutrino will hit a neutron and trigger a decay into proton and electron. As a result the chlorine should decay into argon. Every couple of months there should be a dozen or so argon atoms. It turned out there were fewer, and that's because this reaction is only triggered by electron neutrinos. Only electron neutrinos are [produced in the Sun](pp process), but by the time they reach Earth two thirds will have oscillated into other types. This led to discovery of other types of neutrinos.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/329)
+* Introduction to Astronomy Coursera course [lecture about neutrinos](https://class.coursera.org/introastro-002/lecture/333)
