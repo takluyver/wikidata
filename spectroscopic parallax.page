@@ -1,0 +1,23 @@
+Technique used to calculate distance to stars which are too far for [parallax]() measurement. Typical error is around 10%.
+
+## Example 
+
+How to calculate the distance to Alphecca (dim white star)?
+
+$b_{\alpha CB}=2.63\times10^{-12}b_{sun}$ (via photometric measurement)
+
+spectrum classifies it as A0V, so $T_{\alpha CB}=9700K$
+
+luminosity (From [H-R](main sequence stars)): $L_{\alpha CB}=74L_{sun}$
+
+Now we can calculate distance:
+
+$D_{\alpha CB}=\sqrt{\frac{L_{\alpha CB}}{L_{sun}}\ \frac{b_{sun}}{b_{\alpha CB}}}AU=25.7pc$
+
+And radius:
+
+$R_{\alpha CB} = \left(\frac{L_{\alpha CB}}{L_{sun}}\right)^{1/2}\left(\frac{T_{\alpha CB}}{T_{sun}}\right)^{-2} = 3R_{sun}$
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture about stellar stats](https://class.coursera.org/introastro-002/lecture/349)
