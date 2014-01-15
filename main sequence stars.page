@@ -4,6 +4,10 @@ categories: astronomy
 
 In a scatterplot of star [temperature]() vs. [luminosity]() most of the stars lie along a diagonal going from hot and luminous stars to cool and dim ones. This is called *main sequence*.
 
+*Red giants*: above main sequence: Large, hence more luminous than main sequence stars of comparable tempereature.
+
+*White dwarfs*: below main sequence. Small, hence not that luminous for their temperature.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about stellar stats](https://class.coursera.org/introastro-002/lecture/349)
