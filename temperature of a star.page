@@ -4,7 +4,18 @@ categories: astronomy
 
 If we know the dominant colour of the light emitted by a star then the temperature can be estimated from [Wien's law](black-body%20radiation#wiens-law), but measurement of the intensity at various wavelengths is unreliable since the spectrum is broad and subject to distortion by medium. What is much more reliable are the [spectral lines](spectroscopy). For example absence of hydrogen line can tell us that it's so hot that all hydrogen atoms are ionised or that it's so cold that all atoms are in base state, i.e. absorb in ultraviolet, not blue.
 
-Stars are classified into groups according to their spectra.
+Stars are classified into groups according to their spectra:
+
+
+Type  Colour               Temperature    Lines                                  Prevalence  Examples
+----- -------------------- -------------- -------------------------------------- ----------- -------------
+O     blue                 >33,000        He0, He+, weak H                       <0.00003%   Orion's Belt
+B     blue-white           10,000-33,000  He0, strong H                          0.13%       Spica
+A     white to blue-white  7,500-10,000   no He, very strong H, some metal ions  0.6%        Sirius
+F     white                6,000-7,500    strong H, many metal ions              3%          Procyon
+G     yellowish white      5,200-6,000    weak H, many metals                    7.6%        Sun
+K     orange               3,700-5,200    neutral metals                         12.1%       Aldebaran
+M     red                  2,000-3,700    neutral metals, molecular bands        76.5%       Betelgeuse
 
 ## References
 
