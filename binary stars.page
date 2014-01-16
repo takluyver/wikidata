@@ -1,0 +1,12 @@
+---
+categories: astronomy
+...
+
+Given period and radius of the orbit we can find the mass of the system:
+
+$\frac{M_1+M_2}{M_{sun}}=\left(\frac{R}{1AU}\right)^3\left(\frac{P}{1y}\right)^{-2}$
+
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture about binary stars](https://class.coursera.org/introastro-002/lecture/351)
