@@ -8,6 +8,13 @@ In a scatterplot of star [temperature]() vs. [luminosity]() (Hertzsprung-Russell
 
 *White dwarfs*: below main sequence. Small, hence not that luminous for their temperature.
 
+## Mass-Luminosity Relation
+
+$\frac{L}{L_{sun}}=\left(\frac{M}{M_{sun}}\right)^{3.5}$
+
+As a result, big stars run out of hydrogen much faster. Conclusion: large, hot stars are very young since their total lifetime is tens of millions of years.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about stellar stats](https://class.coursera.org/introastro-002/lecture/349)
+* Introduction to Astronomy Coursera course [lecture about mass-luminosity relation](https://class.coursera.org/introastro-002/lecture/357)
