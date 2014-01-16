@@ -14,7 +14,7 @@ $M_1R_1=M_2R_2$
 
 And from these two equations we can find individual masses of the stars.
 
-## Spectroscopic Binaries
+## Spectroscopy
 
 Some binary systems are indistinguishable visually, but [spectroscopy]() to the rescue! If we find periodic shifts of lines that move in oposite directions then it suggests a binary system. We can measure $v1$, $v2$ and $P$ directly from the spectrum (note: $v$s are only radial components of velocity). Then:
 
@@ -28,7 +28,12 @@ Or, relative to [Sun]():
 
 $M_1=\frac{P}{1y}\ \frac{v_2(v_1+v_2)^2}{(29.78 km/s)^3}M_{sun}$
 
+## Transiting
+
+Light curve tells us a lot about the stars, and combined with [Doppler](Doppler effect) measurements we can learn a lot! Typically the light curve will have two dips, when star A transits B and vice versa. The ratio of the depths of these dips will tell us about the ratio of temperatures.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about binary stars](https://class.coursera.org/introastro-002/lecture/351)
 * Introduction to Astronomy Coursera course [lecture about binary star spectroscopy](https://class.coursera.org/introastro-002/lecture/353)
+* Introduction to Astronomy Coursera course [lecture about binary eclipses](https://class.coursera.org/introastro-002/lecture/355)
