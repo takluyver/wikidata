@@ -6,6 +6,11 @@ Given period and radius of the orbit we can find the mass of the system:
 
 $\frac{M_1+M_2}{M_{sun}}=\left(\frac{R}{1AU}\right)^3\left(\frac{P}{1y}\right)^{-2}$
 
+If we know the radia at which both of the planets orbit the centre of mass:
+
+$M_1R_1=M_2R_2$
+
+And from these two equations we can find individual masses of the stars.
 
 ## References
 
