@@ -2,6 +2,8 @@
 categories: astronomy
 ...
 
+## Measuring Masses
+
 Given period and radius of the orbit we can find the mass of the system:
 
 $\frac{M_1+M_2}{M_{sun}}=\left(\frac{R}{1AU}\right)^3\left(\frac{P}{1y}\right)^{-2}$
@@ -12,6 +14,21 @@ $M_1R_1=M_2R_2$
 
 And from these two equations we can find individual masses of the stars.
 
+## Spectroscopic Binaries
+
+Some binary systems are indistinguishable visually, but [spectroscopy]() to the rescue! If we find periodic shifts of lines that move in oposite directions then it suggests a binary system. We can measure $v1$, $v2$ and $P$ directly from the spectrum (note: $v$s are only radial components of velocity). Then:
+
+$R_{i}=\frac{v_{i}P}{2\pi}$
+
+$M=M_1+M_2=M_1\frac{v_2 + v_1}{v_2}$ (because $M_1v_1=M_2v_2$)
+
+$M_1=\frac{v_2P}{2\pi G}(v_1+v_2)^2$
+
+Or, relative to [Sun]():
+
+$M_1=\frac{P}{1y}\ \frac{v_2(v_1+v_2)^2}{(29.78 km/s)^3}M_{sun}$
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about binary stars](https://class.coursera.org/introastro-002/lecture/351)
+* Introduction to Astronomy Coursera course [lecture about binary star spectroscopy](https://class.coursera.org/introastro-002/lecture/353)
