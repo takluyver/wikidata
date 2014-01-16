@@ -2,7 +2,7 @@
 categories: astronomy
 ...
 
-In a scatterplot of star [temperature]() vs. [luminosity]() (Hertzsprung-Russell diagram) most of the stars lie along a diagonal going from hot and luminous stars to cool and dim ones. This is called *main sequence*.
+In a scatterplot of star [temperature]() vs. [luminosity]() (Hertzsprung-Russell diagram) most of the stars lie along a diagonal going from hot and luminous stars to cool and dim ones. This is called *main sequence*. Some 85% of know stars are on this sequence.
 
 *Red giants*: above main sequence: Large, hence more luminous than main sequence stars of comparable tempereature.
 
@@ -32,3 +32,4 @@ Sun is now 25% brighter than when it formed. In 1-3 billion years the Earth will
 
 * Introduction to Astronomy Coursera course [lecture about stellar stats](https://class.coursera.org/introastro-002/lecture/349)
 * Introduction to Astronomy Coursera course [lecture about mass-luminosity relation](https://class.coursera.org/introastro-002/lecture/357)
+* Introduction to Astronomy Coursera course [lecture on main sequence stars](https://class.coursera.org/introastro-002/lecture/359)
