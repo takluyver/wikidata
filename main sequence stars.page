@@ -14,6 +14,14 @@ $\frac{L}{L_{sun}}=\left(\frac{M}{M_{sun}}\right)^{3.5}$
 
 As a result, big stars run out of hydrogen much faster. Conclusion: large, hot stars are very young since their total lifetime is tens of millions of years.
 
+## Structure of Heat Transfer
+
+Depends on the mass:
+
+* < 0.5 solar masses: convection throughout the star
+* 0.5 to 1.5 solar masses: radiation in the core, convection outside
+* > 1.5 solar masses: convection in the core, radiation outside
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about stellar stats](https://class.coursera.org/introastro-002/lecture/349)
