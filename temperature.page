@@ -4,7 +4,7 @@ categories: physics astronomy
 
 A measure of average random motion of atoms and molecules in an object.
 
-## Ideal Gas
+## [Ideal Gas](ideal gas)
 
 $\left<\frac{mv^2}{2}\right>=\frac{3}{2}k_BT$
 
