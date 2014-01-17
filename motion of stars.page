@@ -6,7 +6,7 @@ categories: astronomy
 
 $v_T=4.74\mu D_{pc}$
 
-Where $\mu$ is the proper movement in arcseconds per year. Radial velocity (towards/away from the [Sun]()) can be calculated from [Doppler effect]() ([redshift]()):
+Where $\mu$ is the proper movement in arcseconds per year and $v_T$ is expressed in km/s. Radial velocity (towards/away from the [Sun]()) can be calculated from [Doppler effect]() ([redshift]()):
 
 $v_r=c(\lambda/\lambda_0-1)$
 
