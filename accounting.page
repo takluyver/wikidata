@@ -26,9 +26,37 @@ With debits on the left side and credits on the right side.
 ## Example
 
 1. I get a loan of £2000 from Andrew
+
+~~~ {.asciiart}
+Loan from A (L) Cash (A)
+-----+-----     -----+-----
+     |*2000     *2000|
+~~~
+
 2. I buy a van for £500
+
+~~~ {.asciiart}
+Cash            Van (A)
+-----+-----     -----+-----
+ 2000|          *500 |
+     | *500
+~~~
+
 3. I buy flowers for £500 and have them delivered to me for £100
+
+~~~ {.asciiart}
+Cash            Flowers (A)    Delivery (E)
+-----+-----     -----+-----    -----+-----
+ 2000|          *500 |         *100 |
+     |  500
+     | *500
+     | *100
+~~~
+
 4. I sell flowers for £750 with payment at the end of the month
+
+TODO
+
 5. I receive the payment
 
 TODO
