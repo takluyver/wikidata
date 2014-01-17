@@ -1,0 +1,38 @@
+## Accounts
+
+Four types of accounts:
+
+* _asset_
+* _liability_
+* _income_
+* _expense_
+
+Two types of actions on a given account
+
+* _debit_
+* _credit_
+
+For every accounting operation the sum of debits must be equal to the sum of credits. Going forward we will write
+
+~~~ {.asciiart}
+Account name
+-----+------
+100  |
+     | 200
+~~~
+
+With debits on the left side and credits on the right side.
+
+## Example
+
+1. I get a loan of £2000 from Andrew
+2. I buy a van for £500
+3. I buy flowers for £500 and have them delivered to me for £100
+4. I sell flowers for £750 with payment at the end of the month
+5. I receive the payment
+
+TODO
+
+## References
+
+* training session at BAML
