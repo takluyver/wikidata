@@ -1,0 +1,13 @@
+---
+categories: astronomy
+...
+
+If we know the distance and luminosity of a star we can calculate its brightness from:
+
+$\frac{D}{1AU}=\sqrt{\frac{L}{L_{sun}}\ \frac{b_{sun}}{b}}$
+
+See also: [spectral parallax]().
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture about stellar stats](https://class.coursera.org/introastro-002/lecture/349)
