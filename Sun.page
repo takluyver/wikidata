@@ -6,6 +6,16 @@ categories: astronomy
 
 According to models formed through [gravitational collapse of a gas cloud](solar system). Initially an opaque, radiating *photosphere* of size about 5AU and temperature 300K forms, then collapsed to twice the radius of the Sun and temperature rises to 4000K, while the luminosity of about 10 times current sun luminosity is maintained. That luminosity is fuelled by [Kelvin-Helmholtz processes]() and detuerium fusion. At this stage the Sun became a [pre-main sequence star](). From this point it moved towards the [main sequence](main sequence stars), first by decreasing the luminosity, then, once the hydrogen fusion is ignited, by increasing temperature and finally decreasing luminosity again. This process took about 10 million years -- the amount of time that KH processes would provide the energy for.
 
+## Death
+
+After some 10 billion years there will be a large ball of helium in the centre of the core and the fusion will only be taking place in a shell around it. At the same time the rate of fusion will be much higher increasing the [luminosity]() and puffing up the envelope. At the peak the luminosity will reach over 2000 current sun luminosity and the radius will increase to 166 solar radia, completely subsuming [Mercury](). At the same time the sun will lose up to 28% of its mass due to weaker gravitational binding and increased solar wind. It will become a [red giant](), a cool, large and luminous star to the upper-right of the [main sequence](main sequence stars). This phase lasts some 600 million years.
+
+When the rate of fusion can no longer be maintained the core will star to collapse. This collapse will cease due to [electron degeneracy]() pressure.
+
+$P_e=K_e\rho^{5/3}$
+
+$K_e\sim 3.2\times 10^6 \frac{Nm^{-2}}{(kg\ m^{-2})^{5/3}}$
+
 ## Structure
 
 ### Observing
