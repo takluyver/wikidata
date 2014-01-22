@@ -16,7 +16,9 @@ $P_e=K_e\rho^{5/3}$
 
 $K_e\sim 3.2\times 10^6 \frac{Nm^{-2}}{(kg\ m^{-2})^{5/3}}$
 
-Note that the pressure in degenerate core does not depend on the temperature. As the temperature exceeds 10^8 K [helium fusion]() ignites. This spreads rapidly through the helium core briefly increasing the luminosity hundreds thousands times. This [helium flash]() does not make it out of the star though, as the outer layers absorb the released energy.
+Note that the pressure in degenerate core does not depend on the temperature. As the temperature exceeds 10^8 K [helium fusion]() ignites. This spreads rapidly through the helium core briefly increasing the luminosity hundreds thousands times. This [helium flash]() does not make it out of the star though, as the outer layers absorb the released energy. As a result the envelope contracts to about 10 current solar radia and luminosity decreases to about 41 current solar luminosities. This phase lasts few hundred million years. As a result the core will accumulate inert carbon and oxygen which will eventually collapse into degeneracy. The sun expands again, to about 180 current radia and the luminosity increases to 3000 the current value. Over the next 100 thousand years a series of pulses will take place: as the inert helium in a shell between helium and hydrogen fusion becomes degenerate and starts fusing, it expands the hydrogen fusing shell, decreasing the energy output of the fusion in there and contracting the star. That in turn increases the pressure and fusion rate. In this phase the peak radius reaches 213 current radia (reaching today's Earth orbit -- byt the time this happens Earth's orbit would have increased due to smaller mass of the sun) and luminosity 5200 times the current value. At the same time there is a rapid mass loss due to superwind. 
+
+Eventually the outer layers are stripped and what is left is the extremely hot carbon-oxygen core, which will gradually cool down and become a [white dwarf]().
 
 ## Structure
 
