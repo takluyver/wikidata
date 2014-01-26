@@ -10,6 +10,8 @@ In a scatterplot of star [temperature]() vs. [luminosity]() ([Hertzsprung-Russel
 
 It is estimated that main sequence stars can form from gas clouds of mass between 0.7 and 265 solar masses. Below 0.7 a [brown dwarf]() would form, above 265 the radiation pressure would fragment the cloud. The upper limit is still pushed higher, recent discovery of R136A in Tarantula Nebula in [Large Magellanic Cloud]() has pushed it to 265.
 
+The evolution can be observed in star clusters, where the formation starts at the same point in time but more massive stars evolve much faster.
+
 ## Mass-Luminosity Relation
 
 $\frac{L}{L_{sun}}=\left(\frac{M}{M_{sun}}\right)^{3.5}$
