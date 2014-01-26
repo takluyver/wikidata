@@ -1,0 +1,13 @@
+---
+categories: astronomy
+...
+
+Stars whose brightness changes periodically. Occupy a linear strip (*instability strip*) on [HR diagram](Hertzsprung-Russell diagram) that is traversed by most massive stars during their [post-main sequence](post-main sequence stars) phase. Three groups:
+
+* **classic cepheids**: [population I](star populations), periods of days. Variable due to size oscillation. Eddington suggested that compression increases opacity and the radiation pressure pushes the boundary out so that the energy can escape. The compression normally would increase temperature, but here the compression ionises Helium and expansion reduces ionisation: $\kappa$-mechanism. They are good [standard candles](standard candle) due to known (logarithmic) relationship between period and luminosity.
+* **W Virginis variables**: [population II](star populations), periods of days. At same period as classic ones are less luminous. Often found in [globular clusters](globular cluster).
+* **RR Lyrae variables**: [population II](star populations) [HB](Hertzsprung-Russell diagram), periods of hours. Thanks to small variation of luminosity (factor of two) can serve as [standard candles](standard candle).
+
+## References
+
+* Introduction to Astronomy Coursera course lecture about variable stars
