@@ -32,8 +32,13 @@ $M_1=\frac{P}{1y}\ \frac{v_2(v_1+v_2)^2}{(29.78 km/s)^3}M_{sun}$
 
 Light curve tells us a lot about the stars, and combined with [Doppler](Doppler effect) measurements we can learn a lot! Typically the light curve will have two dips, when star A transits B and vice versa. The ratio of the depths of these dips will tell us about the ratio of temperatures.
 
+## Mass Transfer
+
+In close binary systems there can be a mass transfer. That can explain e.g. Algol, where the lighter star is post-main sequence while the more massive is still on the main sequence. This happens when one of the stars grows so that it exceeds its [Roche lobe](Roche potential) and the outer layers start leaking out to the other star.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about binary stars](https://class.coursera.org/introastro-002/lecture/351)
 * Introduction to Astronomy Coursera course [lecture about binary star spectroscopy](https://class.coursera.org/introastro-002/lecture/353)
 * Introduction to Astronomy Coursera course [lecture about binary eclipses](https://class.coursera.org/introastro-002/lecture/355)
+* Introduction to Astrnoomy Coursera course lecture on mass transfer
