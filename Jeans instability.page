@@ -2,7 +2,7 @@
 categories: astronomy
 ...
 
-Gas clouds in space can maintain their shape and not collapse as a result of [thermal pressure](temperature) -- if the velocity of molecules in the cloud is similar to [escape velocity]() then the chaotic movement prevents collapse. An instability introduced in such a cloud -- e.g. as a result of sound wave from supernova explosion -- can create denser regions. Once the stability of the cloud is created the gravity will overcome thermal pressure and a runaway collapse will occur. Specifically, if this condition is true:
+Gas clouds in space can maintain their shape and not collapse as a result of [thermal pressure](temperature) -- if the velocity of molecules in the cloud is similar to [escape velocity]() then the chaotic movement prevents collapse. An instability introduced in such a cloud -- e.g. as a result of sound wave from [supernova]() explosion -- can create denser regions. Once the stability of the cloud is created the gravity will overcome thermal pressure and a runaway collapse will occur. Specifically, if this condition is true:
 
 $k_BT<\frac{GMm}{R}$
 
