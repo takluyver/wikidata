@@ -2,11 +2,28 @@
 categories: astronomy
 ...
 
-Type Ia: when a [white dwarf]() accretes matter so that it approaches [Chandrasekhar limit](), the pressure and temperature increases to the point where Carbon fusion is ignited. Due to [degeneracy](electron degeneracy) the heating does not lead to expansion which causes a violent fusion of substantial fraction of the star in a couple of seconds. Internal temperature exceeds $10^9K$ and $10^{44}J$ of energy is released (as much as a million [novae](nova)). The [luminosity]() reaches $10^{9-10}$ solar luminosities -- about a luminosity of entire galaxy. Spectrum has absorption lines of Si, but little H and He. In the shock wave very heavy elements such as Uranium get formed and  contribute to luminosity over coming months.
+## Type Ia
+
+When a [white dwarf]() accretes matter so that it approaches [Chandrasekhar limit](), the pressure and temperature increases to the point where Carbon fusion is ignited. Due to [degeneracy](electron degeneracy) the heating does not lead to expansion which causes a violent fusion of substantial fraction of the star in a couple of seconds. Internal temperature exceeds $10^9K$ and $10^{44}J$ of energy is released (as much as a million [novae](nova)). The [luminosity]() reaches $10^{9-10}$ solar luminosities -- about a luminosity of entire galaxy. Spectrum has absorption lines of Si, but little H and He. In the shock wave very heavy elements such as Uranium get formed and  contribute to luminosity over coming months.
 
 The nature of mass donor in case of supernova is unclear: the rate of mass accretion must be so fast that nova does not get a chance to occur. Two potential scenarios: single degenerate (donor is main sequence star or a giant) or double degenerate, where the donor is another white dwarf ripped apart by [tidal forces](tidal force).
 
 Ia type supernovae are good [standard candles](standard candle) since their luminosity (corrected by [light curve]()) is almost the same (and very high): complete fusion of CO object of mass about 1.44 solar masses.
+
+## Type II
+
+As stars more massive than 8 solar masses burn out their supply of hydrogen and create a helium core. This then fuses to Carbon, which fuses to Oxygen etc through Neon, Magnesium, Nickel, Sillicone, eventually to Iron, which does not fuse any more because that would require additional energy. The core collapses in 0.1s from Earth size to a few km in diameter. $\Gamma$ rays are emitted as a result of temperature $3.5\times 10^9K$. Outer layers fall inward at speeds up to 0.15c. The [electron degeneracy]() pressure is overcome, electrons effectively disappear. The final density is super-nuclear: $8\times 10^{17}kg/m^3$. Very little light can escape, energy is carried off by [neutrinos](neutrino). The power emitted in these exceeds the combined luminosities of all known stars in the universe for 10 seconds! The shock wave results in fusion that produces heavy elements. Finally the light can escape releasing energy of $10^{47}J$ at luminosity $3\times 10^8$ solar.
+
+This type of supernova is gravitational in origin. Strong Hydrogen lines in the spectrum.
+
+Crab Nebula (M1) is a remnant of supernova noticed in 1054. 
+
+## Type Ib and Ic
+
+Formed like type II but from stars where the Hydrogen and Helium envelope has been lost. As a result these have weak or no H lines (that's why they are clssified as type-I):
+
+* Ib: weak H, strong He
+* Ic: weak Si, no H or He
 
 ## References
 
