@@ -1,0 +1,14 @@
+---
+categories: astronomy
+...
+
+Type Ia: when a [white dwarf]() accretes matter so that it approaches [Chandrasekhar limit](), the pressure and temperature increases to the point where Carbon fusion is ignited. Due to [degeneracy](electron degeneracy) the heating does not lead to expansion which causes a violent fusion of substantial fraction of the star in a couple of seconds. Internal temperature exceeds $10^9K$ and $10^{44}J$ of energy is released (as much as a million [novae](nova)). The [luminosity]() reaches $10^{9-10}$ solar luminosities -- about a luminosity of entire galaxy. Spectrum has absorption lines of Si, but little H and He. In the shock wave very heavy elements such as Uranium get formed and  contribute to luminosity over coming months.
+
+The nature of mass donor in case of supernova is unclear: the rate of mass accretion must be so fast that nova does not get a chance to occur. Two potential scenarios: single degenerate (donor is main sequence star or a giant) or double degenerate, where the donor is another white dwarf ripped apart by [tidal forces](tidal force).
+
+Ia type supernovae are good [standard candles]() since their luminosity (corrected by [light curve]()) is almost the same (and very high): complete fusion of CO object of mass about 1.44 solar masses.
+
+## References
+
+* Introduction to Astrnomy Coursera course [lecture on mass transfer](https://class.coursera.org/introastro-002/lecture/381)
+
