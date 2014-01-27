@@ -1,0 +1,9 @@
+---
+categores: distributed_systems computer_science
+...
+
+An algorithm for agreeing on a consensus value in a distributed system in the presence of potential node or message delivery failure, but no malice or message corruption.
+
+## References
+
+* [a simple explanation](http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf) by Leslie Lamport
