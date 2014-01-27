@@ -2,7 +2,7 @@
 categories: astronomy
 ...
 
-[Degenerate](degenerate matter) core of former main sequence star of original mass up to 8 solar masses; remaining mass is between 0.42 and 0.7 solar masses. Consists mostly of products of Helium fusion, i.e. Carbon and Oxygen. There is no Hydrogen fusion, hence low luminosity. As it slowly cools the carbon crystallises, turning it into a giant diamond. 
+[Degenerate](degenerate matter) core of former main sequence star of original mass up to 8 solar masses (stars with mass less than solar mass could also theoretically form white dwarfs, but they live so long that this has not yet happened since the beginning of the universe); remaining mass is between 0.42 and 0.7 solar masses. Consists mostly of products of Helium fusion, i.e. Carbon and Oxygen. There is no Hydrogen fusion, hence low luminosity. As it slowly cools the carbon crystallises, turning it into a giant diamond. 
 
 First discovery: Sirius B, in XIX century. Only 3% solar luminosity. Temperature measured 50 years later (at the next maximum separation from Sirius A) to be 27000K. From this it was calculated that the radius is less than that of Earth while the mass was about the same as that of the Sun.
 
@@ -24,7 +24,7 @@ cannot have a white dwarf of mass larger than about 1.44 solar mass ([Chandrasek
 
 ## Nova
 
-In a [binary system](binary stars) the white dwarf can acquire some of its partner's mass through mass transfer. Due to immense gravity the accreted gas reaches $10^7K$ and The entire atmosphere fuses to Helium simultanuously through [CNO fusion](CNO chain). Temperature reaches $10^8K$ and luminosity $10^5$ solar luminosities. Radiation pressure ejects remaining material with energy emission in the order of $10^{38}J$ over period of months (this is comparable energy to Sun's emission over its main sequence life). The ejected material initially glows at 9000K. This process can recur in $10^5$ years.
+In a [binary system](binary stars) the white dwarf can acquire some of its partner's mass through mass transfer. Due to immense gravity the accreted gas reaches $10^7K$ and The entire atmosphere fuses to Helium simultaneously (due to degeneracy) through [CNO fusion](CNO chain). Temperature reaches $10^8K$ and luminosity $10^5$ solar luminosities. Radiation pressure ejects remaining material with energy emission in the order of $10^{38}J$ over period of months (this is comparable energy to Sun's emission over its main sequence life). The ejected material initially glows at 9000K. This process can recur in $10^5$ years.
 
 ## References
 
