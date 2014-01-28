@@ -1,0 +1,15 @@
+---
+categories: astronomy
+...
+
+Prevailing theory is that it's a [neutron star]() (because the rate of rotation is so high that othery type of star would be ripped apart by the centripetal force):
+
+$P = 2\pi\sqrt{\frac{R^3}{GM}}$
+
+For a period around a second a [white dwarf]() would not survive. 
+
+The radio emission is along the magnetic axis which does not need to be aligned with rotation axis. When that's the case, whenever Earth is captured in the cone of radiation from one of the poles we see a signal blip.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture on neutron stars](https://class.coursera.org/introastro-002/lecture/391)
