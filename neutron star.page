@@ -2,9 +2,35 @@
 categories: astronomy
 ...
 
+Remnant of the core of a massive star.
+
+## Discovery
+
+In 1967 [pulsars](pulsar) were discovered -- first thought to be radio signals from alien civilisation.
+
 ## Formation
 
 In [type-II supernova](supernova) explosion.
+
+## Properties
+
+Rapid rotation, due to conservation of angular momentum:
+
+$P_{ns}=P_{c}\left(\frac{R_{ns}}{R_{c}}\right)^2\sim 0.005s$
+
+Similarly, intense magnetic field:
+
+$B_{ns}\sim B_c\left(\frac{R_{ns}}{R_c}\right)^2\sim 10^{12}B_{sun}$
+
+High temperature:
+
+$T\sim 10^6K\lambda_{max}=2.9nm$
+
+Luminosity about a quarter of that of the Sun, in x-rays.
+
+## [Chandrasekhar Limit](Chandrasekhar limit)
+
+2.2-2.9 solar masses.
 
 ## References
 
