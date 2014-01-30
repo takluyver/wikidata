@@ -6,6 +6,10 @@ Where we draw the motion of an object as a function of time; for two dimensions:
 
 $r(t)=(x(t), y(t))$
 
+Point in space-time is an *event*.
+
+*World line*: a single-dimensional line in the graph describing all events in the life of an object.
+
 ## References
 
 * Introduction to Astronomy Coursera course lecture about space-time
