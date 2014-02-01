@@ -1,0 +1,45 @@
+---
+categories: physics astronomy
+...
+
+$x'=\frac{x-vt}{\sqrt{1-v^2/c^2}}$
+
+$t'=\frac{t-vx/c^2}{\sqrt{1-v^2/c^2}}$
+
+Note that for $v<< c$ and $x$ not too large
+
+$x'\sim x-vt$
+
+$t'\sim t$
+
+I.e. Galilean transformations. Lorentz transformations are counterintuitive, because our intuition has been developed while observing speeds that are much slower than the speed of light and relatively short distances, so we have to rely on maths for relativistic speeds and distances.
+
+## Derivation
+
+Given two observers moving at relative velocity $v$ whose time and positions are described by $(x, t)$ and $(x', t')$, we synchronise their positions and clocks so that $x=t=0$ at the same [event](space-time) as $x'=t'=0$. We assume that the transformation will be linear:
+
+$x'=Ax+Bt$
+
+$t'=Cx+Dt$
+
+because otherwise physics would not be the same between the two observers. $A$, $B, $C$ and $D$ depend on $v$.
+
+at $x'=0$ $x$ should be equal to $vt$ ($x'=0$ is the "here" of the second observer, so should be moving relative to "here" of the first observer at velocity $v$). Sticking this into the first equation we get $B=-Av$. Analoguously, taking $x=0$ we get $x'=Bt$ and $t'=Dt$ hence $B=-Dv$. From that we get
+
+$x'=A(x-vt)$
+
+$t'=Cx+At$
+
+So far this is consistent with [Galilean relativity](). But how do we find $C$? We send a light pulse. Now we know that both observers will measure the same speed: $x=ct$ iff $x'=ct'$. Plugging this in we get $C=-A\frac{v}{c^2}$. Result:
+
+$x'=A(v)(x-vt)$
+
+$t'=A(v)\left(t-\frac{vx}{c^2}\right)$
+
+One last thing to determine is $A$. This can be calculated by transforming into equations for $x$ and $t$ and equating them to corresponding linear equations derived in the same way as those for $x'$ and $t'$. In addition we assume that $A(v)=A(-v)$ because the properties of the universe should not depend on direction in which we move. As a result:
+
+$A(v)=\frac{1}{\sqrt{1-v^2/c^2}}$
+
+## References
+
+* Introduction to Astronomy Coursera course lecture on this topic
