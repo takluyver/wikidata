@@ -10,7 +10,7 @@ $t'=t$
 
 This worked for sound waves, but not for Maxwell's electromagnetic equations -- they only hold at a specific speed of light, so if two observers measure different speeds of light the equations will work for at most one of them. Maxwell's proposed solution was [aether]() and assumptions that the equations hold for observers stationary wrt. aether. Measurements with a [light clock]() confirmed that the speed of light did not depend on whether the clock was moving, i.e. there was no aether.
 
-Einstein postulated that electromagnetic wave propagates through space at constant velocity $c$ relative to all *intertial* observers. Everyone for whom Newton's [first law](TODO) holds can use Maxwell's equations and observes the same speed of light. I.e. Galilean relativity is wrong. In particular, velocity addition does not work and to calculate relative velocities we need to use [Lorentz transformations]() instead of Galilean transformation.
+Einstein postulated that electromagnetic wave propagates through space at constant velocity $c$ relative to all *intertial* observers. Everyone for whom Newton's [first law](Newton's laws) holds can use Maxwell's equations and observes the same speed of light. I.e. Galilean relativity is wrong. In particular, velocity addition does not work and to calculate relative velocities we need to use [Lorentz transformations]() instead of Galilean transformation.
 
 ## References
 
