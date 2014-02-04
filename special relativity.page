@@ -13,6 +13,19 @@ categories: physics astronomy
 
 TODO: plots
 
+## Invariant Interval
+
+From [Lorentz](Lorentz transformations): $s^2=c^2t'^2-x'^2=c^2t^2-x^2$
+
+This defines the [light cone](), with inside where $s^2>0$ and outside where $s^2<0$.
+
+## Proper time
+
+Time interval measured by a clock that is present at both start and end event. 
+
+TODO: how is it related to invariant interval?
+
 ## References
 
 * Introduction to Astronomy Coursera course lecture about relativity
+* Introduction to Astronomy Coursera course [lecture about invariant interval](https://class.coursera.org/introastro-002/lecture/403)
