@@ -1,0 +1,18 @@
+---
+categories: physics astronomy
+...
+
+[Lorentz transformations]() only make sense with $v<c$, so we assume that two observers can never move wrt. each other faster than light.
+
+## Consequences of Lorentz Transformations
+
+* simultainety is relative: $t'=0 \rightarrow t=vx/c^2$
+* [length contraction]()
+* [time dilation]()
+* [Doppler effect]() is different depending on whether object moves tangentially (transversely): $\lambda=\frac{\lambda_0}{\sqrt{1-v^2/c^2}}$ (caused purely by time dilation) or radially away from/towards us (longitudinally): $\lambda=\lambda_0\sqrt{\frac{1+v/c}{1-v/c}}$ (caused by time dilation and length contraction).
+
+TODO: plots
+
+## References
+
+* Introduction to Astronomy Coursera course lecture about relativity
