@@ -21,9 +21,7 @@ This defines the [light cone](), with inside where $s^2>0$ and outside where $s^
 
 ## Proper time
 
-Time interval measured by a clock that is present at both start and end event. 
-
-TODO: how is it related to invariant interval?
+Time interval measured by a clock that is present at both start and end event: $\tau=\sqrt{\frac{s^2}{c}}$.
 
 ## References
 
