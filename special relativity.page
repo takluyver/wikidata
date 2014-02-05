@@ -23,6 +23,14 @@ This defines the [light cone](), with inside where $s^2>0$ and outside where $s^
 
 Time interval measured by a clock that is present at both start and end event: $\tau=\sqrt{\frac{s^2}{c}}$.
 
+## Proper distance
+
+For events that lie outside of the light cone we can find an observer whose $x'$ axis goes both through our origin and the even in question; i.e. that event and our origin are *simultaneous*. The distance between these events measured by that observer is called *proper distance*: $\sqrt{-s^2}=x'$.
+
+## Causality
+
+From the above we can infer that observers slower than the "simultaneous" observer will think of a particular order of events, and for faster observers this order will be reversed. For this reason it is assumed that no material particle or information can propagate faster than light.
+
 ## References
 
 * Introduction to Astronomy Coursera course lecture about relativity
