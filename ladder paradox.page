@@ -4,6 +4,8 @@ categories: physics astronomy
 
 We want to fit a ladder of length L in a garage of length G<L. If we take the ladder and run very fast into garage the ladder will [contract](length contraction) to $L\sqrt{1-v^2/c^2}$, so for high enough $v$ will fit in the garage. Now, imagine that someone is sitting on the ladder as we run with it. In the frame of this observer the garage is moving and contracting. So will the ladder fit, or not?
 
+![](https://notepad.mmakowski.com/ladder_paradox.svg)
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about paradoxes of relativity](https://class.coursera.org/introastro-002/lecture/407)
