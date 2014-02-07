@@ -19,17 +19,33 @@ From [Lorentz](Lorentz transformations): $s^2=c^2t'^2-x'^2=c^2t^2-x^2$
 
 This defines the [light cone](), with inside where $s^2>0$ and outside where $s^2<0$.
 
-## Proper time
+## Proper Time
 
 Time interval measured by a clock that is present at both start and end event: $\tau=\sqrt{\frac{s^2}{c}}$.
 
-## Proper distance
+## Proper Distance
 
 For events that lie outside of the light cone we can find an observer whose $x'$ axis goes both through our origin and the even in question; i.e. that event and our origin are *simultaneous*. The distance between these events measured by that observer is called *proper distance*: $\sqrt{-s^2}=x'$.
 
 ## Causality
 
 From the above we can infer that observers slower than the "simultaneous" observer will think of a particular order of events, and for faster observers this order will be reversed. For this reason it is assumed that no material particle or information can propagate faster than light.
+
+## Conservation Laws
+
+In Newtonian physics momentum and energy were conserved. To preserve these properties we must modify the definitions of these:
+
+----  -----------        -----------------
+      Newtonian          Relativistic
+$p=$   $mv$              $\frac{mv}{\sqrt{1-v^2/c^2}}$
+$E=$   $\frac{mv^2}{2}$  $\frac{mc^2}{2\sqrt{1-v^2/c^2}}$
+----  -----------        -----------------
+
+When these values are conserved for one Lorentz observer they will be conserved for every other Lorentz observer.
+
+For small values of $v$ the relativistic momentum can be approximated by $mv(1+v^2/c^2)$. The complete relativistic momentum formula is sometimes interpreted as velocity times "relativistic mass", but most physicists don't like the idea of mass changing with velocity.
+
+For small velocities the relativistic energy is $nc^2+\frac{mv^2}{2}$. For a given object $mc^2$ is a constant and shifting energy by a constant does not affect conservation properties. The $mc^2$ term is the ratio of conversion of mass to energy.
 
 ## References
 
