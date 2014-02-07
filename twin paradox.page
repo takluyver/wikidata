@@ -1,0 +1,19 @@
+---
+categories: physics astronomy
+...
+
+Two twins live until certain age together on Earth. Then one of them jumps onto a spaceship that travels with relativistic speed in some direction. After certain time the ship turns back and travels with the same speed back to Earth. When the twins are reunited, are they of the same age?
+
+$c^2T_1^2-x_1^2=c^2T_1'^2-x_1'^2$
+
+$2T_1 = \frac{2T_1'}{\sqrt{1-v^2/c^2}}$
+
+$T_2=T_1'\sqrt{1-v^2/c^2}$
+
+![](/twin_paradox.png)
+
+At point $1$ the travelling twin experienced acceleration. At that point line of simultaneity changed so that while initially $1$ was simultaneous with $2$ at the time of change of direction it became simultaneous with $3$; i.e. in this instant stationary twin aged the time difference between $3$ and $2$.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture about paradoxes of relativity](https://class.coursera.org/introastro-002/lecture/407)
