@@ -13,13 +13,13 @@ $x= \frac{x'+vt'}{\sqrt{1-v^2/c^2}}$  $t= \frac{t'+vx'/c^2}{\sqrt{1-v^2/c^2}}$
 
 If we take $x_2=G$ and $x_2'=L$ (the description of $x_2$ in two frames) and plug that to the equation for $x'$, we'll get $vt_2=G-L\sqrt{1-v^2/c^2}$. As we have chosen sufficiently large $v$, we know that this is $>0$; i.e. the ladder is inside for $0\le t\le t_2$. On the other hand plugging these into equation for $x$ gives us negative $vt_2'$.
 
-However:
+## Solution
 
-$c^2t^2-x^2=c^2t'^2-x'^2$ i.e. the scales of the x,t and x',t' axes are different; primes have larger scales, because invariant intervals are hyperbolic.
+Note that the scales of $x,t$ and $x',t'$ axes are different; primes have larger scales, because invariant intervals are hyperbolic. If we draw the coordinates for both garage and ladder frame we see that in one frame $x_2$ happens after $x_1$ but in the other the events occur in opposite order:
 
-TODO: picture
+![](/ladder_paradox.png)
 
-What if we close the door at the right? The right end will stop, but the left end will continue to travel until the information that the right end stopped reaches it (and it can propagate at most with speed $c$).
+What if we close the door at the right? The right end will stop, but the left end will continue to travel until the information that the right end stopped reaches it (and it can propagate at most with speed $c$, which is at 45 degrees to x axis).
 
 Lesson: thinking of object as having definite length in relativistic sense is a bad idea.
 
