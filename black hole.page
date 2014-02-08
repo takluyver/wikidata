@@ -4,7 +4,13 @@ categories: astronomy
 
 ## Formation
 
-Can't be observed. What we see is the collapsing star dimming and contracting slower and slower. By our clocks the collapse takes an infinite amount of time.
+Can't be observed. What we see is the collapsing star dimming and contracting slower and slower. By our clocks the collapse takes an infinite amount of time. 
+
+## Singularity
+
+At event horizon the time stands still -- as seen from afar; but for an observer free falling into the hole the horizon is the world line tilted at 45 degrees. Horizon in this sense seems not like a "place" but as a light beam. For a similar reason, the *singularity* at the centre of the black hole is not a "place" but a time -- in particular, future of everything that falls beyond $R_S$.
+
+Watching an animated Minkowski diagram helps understand this.
 
 ## Orbits
 
@@ -12,4 +18,4 @@ Stable orbits exist for $R\ge 3R_S$ ($R_S$ is the [Schwarzschild radius](), or *
 
 ## Tidal Forces
 
-Extreme at small distances. At $R_S$ the tidal accelleration $a_T$ for object of radial length $d$ is roughly $\frac{2GMd}{R_S^3}=\frac{dc^6}{4G^2M^2}$
+Extreme at small distances. At $R_S$ the tidal accelleration $a_T$ for object of radial length $d$ is roughly $\frac{2GMd}{R_S^3}=\frac{dc^6}{4G^2M^2}$. So more massive black holes lead to smaller tidal effects.
