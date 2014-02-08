@@ -5,3 +5,11 @@ categories: astronomy
 ## Formation
 
 Can't be observed. What we see is the collapsing star dimming and contracting slower and slower. By our clocks the collapse takes an infinite amount of time.
+
+## Orbits
+
+Stable orbits exist for $R\ge 3R_S$ ($R_S$ is the [Schwarzschild radius](), or *event horizon*). At $R=1.5R_S$ light is in unstable circular orbit -- *photosphere*.
+
+## Tidal Forces
+
+Extreme at small distances. At $R_S$ the tidal accelleration $a_T$ for object of radial length $d$ is roughly $\frac{2GMd}{R_S^3}=\frac{dc^6}{4G^2M^2}$
