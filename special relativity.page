@@ -38,7 +38,7 @@ In Newtonian physics momentum and energy were conserved. To preserve these prope
 ----  -----------        -----------------
       Newtonian          Relativistic
 $p=$   $mv$              $\frac{mv}{\sqrt{1-v^2/c^2}}$
-$E=$   $\frac{mv^2}{2}$  $\frac{mc^2}{2\sqrt{1-v^2/c^2}}$
+$E=$   $\frac{mv^2}{2}$  $\frac{mc^2}{\sqrt{1-v^2/c^2}}$
 ----  -----------        -----------------
 
 When these values are conserved for one Lorentz observer they will be conserved for every other Lorentz observer.
