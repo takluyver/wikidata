@@ -4,7 +4,11 @@ categories: astronomy
 
 ## Formation
 
-Can't be observed. What we see is the collapsing star dimming and contracting slower and slower. By our clocks the collapse takes an infinite amount of time. 
+In collapse of a star of mass larger than three solar masses. Can't be observed. What we see is the collapsing star dimming and contracting slower and slower. By our clocks the collapse takes an infinite amount of time.
+
+## Supermassive Black Holes
+
+Black holes that formed in star collapse have masses up to hundreds of solar masses. Supermassive black holes of masses of millions to hundreds of millions of solar masses live in centres of galaxies (for Milky Way it's Saggitarius A*).
 
 ## Singularity
 
@@ -14,7 +18,6 @@ At event horizon the time stands still -- as seen from afar; but for an observer
 
 ![In this diagram the gray area is the singularity and blue lines are lines of constant value of $R$ -- distance from the black hole. After rossing the horizon changin $R$ is no longer motion in space but motion in time.](http://upload.wikimedia.org/wikipedia/commons/6/6b/KruskalKoords.gif)
 
-
 ## Orbits
 
 Stable orbits exist for $R\ge 3R_S$ ($R_S$ is the [Schwarzschild radius](), or *event horizon*). At $R=1.5R_S$ light is in unstable circular orbit -- *photosphere*.
@@ -22,3 +25,11 @@ Stable orbits exist for $R\ge 3R_S$ ($R_S$ is the [Schwarzschild radius](), or *
 ## Tidal Forces
 
 Extreme at small distances. At $R_S$ the tidal accelleration $a_T$ for object of radial length $d$ is roughly $\frac{2GMd}{R_S^3}=\frac{dc^6}{4G^2M^2}$. So more massive black holes lead to smaller tidal effects.
+
+## Observation
+
+Easiest in close binary with mass transfer: the mass forms a disk extending up to $3R_S$ that is extrmely hot and emits X-rays. First discovered: Cygnus X-1.
+
+## References
+
+* Introduction to Astronomy Coursera course lectures
