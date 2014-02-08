@@ -1,0 +1,14 @@
+---
+categories: physics astronomy
+...
+
+When a pulse of light is emitted inside a spaceship of length $H$ accellerating with accelleration $g$ near the tail of the ship and is measured at the front of the ship a redshift will be observed: $\lambda=\lambda_0(1+gH/c^2)$. That's because the observer is receding from the source of the pulse.
+
+According to *principle of equivalence*, the same phenomenon can be observed in a building of height $H$ standing on the surface of Earth. Other consequences: clocks at the ground floor run slower than higher up. 
+
+* Redshift has been measured by Pound Rebka in 1959. 
+* GPS needs to account for this effect.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture about Einstein's happy thought](https://class.coursera.org/introastro-002/lecture/409)
