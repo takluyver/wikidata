@@ -2,6 +2,8 @@
 categories: physics astronomy
 ...
 
+$L'=L\sqrt{1-v^2/c^2}$
+
 The effect of lengths of observed objects moving at [relativistic velocities](special relativity) being shorter than what would be measured if the object was stationary. The magnitude can be calculated from [Lorentz transformations](). This is consistent with [Maxwell's equations](): the length is determined by electromagnetic forces and these are compressed along the direction of motion. In fact, this is how Lorentz discovered his transformation.
 
 ![Length contraction illustrated on a Minkowski diagram](http://upload.wikimedia.org/wikipedia/commons/4/4f/Minkowski_diagram_-_length_contraction.svg)
