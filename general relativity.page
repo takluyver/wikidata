@@ -24,11 +24,15 @@ TODO: picture
 
 $R_{\mu\nu}-g_{\mu\nu}R=\frac{8\pi G}{c^4}T_{\mu\nu}$
 
-The left side are bits of Riemann tensor and describe the curvature of spacetime. $T_{\mu\nu}$ is energy-momentu stress tensor and describes the flow of energy and momentum at a given event.
+The left side are bits of Riemann tensor and describe the curvature of spacetime. $T_{\mu\nu}$ is energy-momentu stress tensor and describes the flow of energy and momentum at a given event. 
+
+This is inspired by Maxwell's equations. There is a complication though: a system of Earth and Sun is a bit less than the sum of masses. I.e. the gravitational field of the system is different from the sum of fields; gravitational fields gravitate! As a consequence superposition of waves does not hold and solving the equations is difficult.
 
 ## Limit of Newton's Gravity
 
-When curvature is small (i.e. not too close to a massive object) Newton's [gravity]() equation holds.
+When curvature is small (i.e. not too close to a massive object) Newton's [gravity]() equation holds. For $v\ll c$: 
+
+$V_{eff}(r)\sim -\frac{GMm}{r}(1-v^2/c^2)+\frac{mv^2}{2}$
 
 ## GPS
 
