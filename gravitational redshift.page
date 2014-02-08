@@ -13,7 +13,7 @@ The relativistic formula at further distances is
 
 $\lambda=\frac{\lambda_0}{\sqrt{1-\frac{2GM}{Rc^2}}}$
 
-Which by Newton's approximation is roughly $\lambda_0\left(1+\frac{GM}{Rc^2}\right)$.
+Which by Newton's approximation for $R\gg R_s=\frac{2GM}{c^2}$ (for Earth about 9mm from the centre) is roughly $\lambda_0\left(1+\frac{GM}{Rc^2}\right)$. $R_s$ is [Schwarzschild radius]() -- the distance at which light cannot escape.
 
 ## References
 
