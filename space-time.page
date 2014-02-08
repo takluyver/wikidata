@@ -8,7 +8,7 @@ $r(t)=(x(t), y(t))$
 
 Point in space-time is an *event*.
 
-*World line*: a single-dimensional line in the graph describing all events in the life of an object.
+*World line*: a single-dimensional line in the graph describing all events in the life of an object. Note: for a given observer we can always choose the coordinates so that the time axis is the world line.
 
 ## References
 
