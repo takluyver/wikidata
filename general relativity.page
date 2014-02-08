@@ -26,6 +26,10 @@ $R_{\mu\nu}-g_{\mu\nu}R=\frac{8\pi G}{c^4}T_{\mu\nu}$
 
 The left side are bits of Riemann tensor and describe the curvature of spacetime. $T_{\mu\nu}$ is energy-momentu stress tensor and describes the flow of energy and momentum at a given event.
 
+## Limit of Newton's Gravity
+
+When curvature is small (i.e. not too close to a massive object) Newton's [gravity]() equation holds.
+
 ## GPS
 
 The positioning in GPS works by receiving signals from three different satellites and calculating the time the signal from each takes. It relies on synchronised clocks and has to account for the fact that time in weaker [gravity]() flows faster -- according to general theory of relativity.
