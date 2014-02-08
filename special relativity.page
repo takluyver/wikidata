@@ -45,7 +45,7 @@ When these values are conserved for one Lorentz observer they will be conserved 
 
 For small values of $v$ the relativistic momentum can be approximated by $mv(1+v^2/c^2)$. The complete relativistic momentum formula is sometimes interpreted as velocity times "relativistic mass", but most physicists don't like the idea of mass changing with velocity.
 
-For small velocities the relativistic energy is $nc^2+\frac{mv^2}{2}$. For a given object $mc^2$ is a constant and shifting energy by a constant does not affect conservation properties. The $mc^2$ term is the ratio of conversion of mass to energy.
+For small velocities the relativistic energy is $mc^2+\frac{mv^2}{2}$. For a given object $mc^2$ is a constant and shifting energy by a constant does not affect conservation properties. The $mc^2$ term is the ratio of conversion of mass to energy.
 
 Remarks:
 
