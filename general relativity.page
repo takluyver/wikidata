@@ -4,6 +4,8 @@ categories: physics
 
 [Special relativity](special relativity) extended with [gravity]().
 
+Small regions of curved space appear like flat space and can be described with usual coordinates; e.g. a city can be perceived as being flat even though Earth's surface is curved. At any point for a given direction there is a unique geodesic ("straight" line) starting at that point in specified direction. E.g. on a sphere great circles are these geodesics. Positive curvature (such as surface of the Earth) leads to converging geodesics while negative one to diverging geodesics.
+
 ## GPS
 
 The positioning in GPS works by receiving signals from three different satellites and calculating the time the signal from each takes. It relies on synchronised clocks and has to account for the fact that time in weaker [gravity]() flows faster -- according to general theory of relativity.
