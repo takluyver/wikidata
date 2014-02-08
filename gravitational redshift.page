@@ -9,6 +9,12 @@ According to *principle of equivalence*, the same phenomenon can be observed in 
 * Redshift has been measured by Pound Rebka in 1959. 
 * GPS needs to account for this effect.
 
+The relativistic formula at further distances is 
+
+$\lambda=\frac{\lambda_0}{\sqrt{1-\frac{2GM}{Rc^2}}}$
+
+Which by Newton's approximation is roughly $\lambda_0\left(1+\frac{GM}{Rc^2}\right)$.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about Einstein's happy thought](https://class.coursera.org/introastro-002/lecture/409)
