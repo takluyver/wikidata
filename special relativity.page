@@ -57,6 +57,20 @@ Remarks:
 * the [ladder paradox]()
 * the [twin paradox]()
 
+## Gravity
+
+$F=\frac{GMm}{R^2}$ is not a good relativistic formula. For example, how is $R$ measured?
+
+Maxwell's solution: $F=\frac{kQq}{R^2}$ for electromagnetic field. This, however, relies on conservation of $q$, and in Einstein's theory $m$ is not conserved, so Maxwell's equation can't be applied directly. What is conserved in relativity is energy-momentum (and even that is not invariant between observers).
+
+With electromagnetism we can measure the force by comparing interaction that an object and same object but with opposite charge have and the difference in behaviour can be attributed to electric charge. With gravity we can't perform the same trick because gravity is universally attractive. 
+
+Einstein's "happy thought": 
+
+> When you jump from a roof, there is no gravity until you hit the ground.
+
+Conclusion: gravity is accelleration. Consequence: [gravitational redshift]().
+
 ## References
 
 * Introduction to Astronomy Coursera course lecture about relativity
