@@ -6,6 +6,26 @@ categories: physics
 
 Small regions of curved space appear like flat space and can be described with usual coordinates; e.g. a city can be perceived as being flat even though Earth's surface is curved. At any point for a given direction there is a unique geodesic ("straight" line) starting at that point in specified direction. E.g. on a sphere great circles are these geodesics. Positive curvature (such as surface of the Earth) leads to converging geodesics while negative one to diverging geodesics.
 
+The idea is that presence of a massive object deforms the spacetime around this object and the motion of free-falling objects happens along geodesics. 
+
+## Visualisations
+
+The common visualisation of a rubber sheet deformed by a heavy ball and a ping-pong ball circling around it is misleading on a number of levels:
+
+* in general relativity it's not just space that gets deformed, but [spacetime](space-time).
+* intertial orbits are not geodesics of space, but of spacetime: the helixes are straightest lines available in this curved spacetime
+* there is no universally useful system of coordinates in spacetime.
+
+A better visualisation: a funnel.
+
+TODO: picture
+
+## Einstein's Equation 
+
+$R_{\mu\nu}-g_{\mu\nu}R=\frac{8\pi G}{c^4}T_{\mu\nu}$
+
+The left side are bits of Riemann tensor and describe the curvature of spacetime. $T_{\mu\nu}$ is energy-momentu stress tensor and describes the flow of energy and momentum at a given event.
+
 ## GPS
 
 The positioning in GPS works by receiving signals from three different satellites and calculating the time the signal from each takes. It relies on synchronised clocks and has to account for the fact that time in weaker [gravity]() flows faster -- according to general theory of relativity.
