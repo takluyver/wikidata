@@ -18,6 +18,26 @@ At event horizon the time stands still -- as seen from afar; but for an observer
 
 ![In this diagram the gray area is the singularity and blue lines are lines of constant value of $R$ -- distance from the black hole. After rossing the horizon changin $R$ is no longer motion in space but motion in time.](http://upload.wikimedia.org/wikipedia/commons/6/6b/KruskalKoords.gif)
 
+Hawking and Penrose proved that singularity is a real consequence of [general relativity](). It used to be thought that all singularities are hidden inside horizons (*cosmic censorship conjecture*), but recent research suggests that there can in fact exist *naked singularities*.
+
+## Wormholes
+
+There is a conjecture that close to a black hole spacetime curvature could be such that an Einstein-Rosen bridge forms and provides access to other universe or a distant part of our universe. This has not been observed but is theoretically possible.
+
+## Radiation
+
+Hawking radiation is [black-body](black-body radiation) at $T\sim M^{-1}$. As a black hole loses heat it heats up. Because of this they would evaporate and for 5 solar masses that would take $10^62$ years. Perhaps proton-mass black hole (if such a thing could be produced) would evaporate much quicker?
+
+## Properties
+
+Black hole is completely characterised by three properties:
+
+* mass
+* angular momentum
+* electric charge (usually neutral)
+
+E.g. chemical composition and age don't matter.
+
 ## Orbits
 
 Stable orbits exist for $R\ge 3R_S$ ($R_S$ is the [Schwarzschild radius](), or *event horizon*). At $R=1.5R_S$ light is in unstable circular orbit -- *photosphere*.
