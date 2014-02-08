@@ -34,6 +34,19 @@ When curvature is small (i.e. not too close to a massive object) Newton's [gravi
 
 $V_{eff}(r)\sim -\frac{GMm}{r}(1-v^2/c^2)+\frac{mv^2}{2}$
 
+## Light Deflection
+
+The angle at which light is deflected (bent) by a massive object:
+
+$\theta=\frac{4GM}{rc^2}$
+
+Gives raise to [gravitational lensing]().
+
+## Direct Evidence
+
+* Mercury orbit precesses $1.5^{o}$ per century. Planetary contributions explain all but $43"$.This remaining figure is due to $1-v^2/c^2$ factor.
+* Gravity Probe B measured tiny fluctuations in Earth's gravity
+
 ## GPS
 
 The positioning in GPS works by receiving signals from three different satellites and calculating the time the signal from each takes. It relies on synchronised clocks and has to account for the fact that time in weaker [gravity]() flows faster -- according to general theory of relativity.
