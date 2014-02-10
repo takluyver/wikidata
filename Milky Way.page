@@ -8,6 +8,24 @@ Early XX century: Shapley estimated 100 Kpc, Kapteyn 8.5x1.7 Kpc. Shapley overes
 
 Also, they thought they were estimating the size of entire universe.
 
+## Radiation Emissions
+
+Seven interesting low-frequency bands:
+
+-----------  --------------------------------
+408KHz       relativistic electrons
+1.4GHz       neutral atomic Hydrogen (HI)
+2.7GHz       ionised gas and fast electrons
+115GHz       CO, signals presence of H2
+3-25e3GHz    warm dust
+86-240e3GHz  cool giants
+460e3GHz     hot stars
+-----------  --------------------------------
+
+The low frequency bands are useful because they are not absorbed and not as much scattered by interstellar dust.
+
+![](http://web.utah.edu/astro/astroinfo/MultiwavelengthMilkyWay.jpg)
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about Milky Way](https://class.coursera.org/introastro-002/lecture/433)
