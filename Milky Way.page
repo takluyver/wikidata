@@ -35,7 +35,7 @@ The low frequency bands are useful because they are not absorbed and not as much
 * thin disk: 6e10 solar masses, young stars (<8Gy), 25x.35kpc
 * thick disk: 3e9 solar masses older stars (10-11Gy), 25x1kpc
 * central bulge: 10e10 solar masses, stars of all ages, 5x2kpc
-* halo: 3e9 solar masses, oldest stars (11-13Gy)
+* halo: 3e9-6e10 solar masses, oldest stars (11-13Gy) and hot gas (?)
 
 ### Disk
 
@@ -44,6 +44,24 @@ The low frequency bands are useful because they are not absorbed and not as much
 Recognising structure: how do we know about the arms when we look edge-on? From 21cm (HI) emissions. It's a very sharp line, so peaks in distribution of doppler shifts tell us that there are clouds. Current understanding is that there are two main arms emerging from galactic bar in the centre. From observation of other galaxies we can conjecture the structure of our own.
 
 5e9 solar masses in the disk comes from interstellar gas, of which 77% is HI, 17% is H2 and 6% is HII (ionised hydrogen).
+
+### Bulge
+
+Difficult to study due to dust and gas obstruction. There is a bar and ongoing star formation. Oldest stars in the bulge have high metallicity.
+
+### Core
+
+Difficult to study still. Dense central cluster including 10e6 solar luminosities of OB stars can be seen in IR. At the very centre a supermassive [black hole](), relatively quiescent.
+
+### Halo
+
+150 globular clusters and field stars, 40% in retrograde orbits. Most within 50kpc (twice the size of disk radius). Warm gas (10,000-100,000K). According to a new discovery (2012) there is also a hot  (1MK) gas component that extends up to 100kpc and weighs 6e10 solar masses.
+
+## Neighbours
+
+* several dwarf galaxies being ripped apart by tidal forces
+* magellanic clouds
+
 ## References
 
-* Introduction to Astronomy Coursera course [lecture about Milky Way](https://class.coursera.org/introastro-002/lecture/433)
+* Introduction to Astronomy Coursera course [lecture about Milky Way](https://class.coursera.org/introastro-002/lecture/433) and other lectures in that week
