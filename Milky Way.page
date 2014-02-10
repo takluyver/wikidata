@@ -8,18 +8,27 @@ Early XX century: Shapley estimated 100 Kpc, Kapteyn 8.5x1.7 Kpc. Shapley overes
 
 Also, they thought they were estimating the size of entire universe.
 
+## Structure
+
+![](http://www.profjohn.com/courses/ast1004/milkyway/milkywaystruct.jpg)
+
+* thin disk: 6e10 solar masses, young stars (<8Gy), 25x.35kpc
+* thick disk: 3e9 solar masses older stars (10-11Gy), 25x1kpc
+* central bulge: 10e10 solar masses, stars of all ages, 5x2kpc
+* halo: 3e9 solar masses, oldest stars (11-13Gy)
+
 ## Radiation Emissions
 
 Seven interesting low-frequency bands:
 
 -----------  --------------------------------
-408KHz       relativistic electrons
+408MHz       relativistic electrons
 1.4GHz       neutral atomic Hydrogen (HI)
 2.7GHz       ionised gas and fast electrons
 115GHz       CO, signals presence of H2
 3-25e3GHz    warm dust
 86-240e3GHz  cool giants
-460e3GHz     hot stars
+460e3GHz     (visible light) hot stars
 -----------  --------------------------------
 
 The low frequency bands are useful because they are not absorbed and not as much scattered by interstellar dust.
