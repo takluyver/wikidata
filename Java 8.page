@@ -1,0 +1,43 @@
+---
+categories: it programming_languages
+...
+
+## What's New
+
+### Lambda Expressions
+
+~~~ {.java}
+(int x, int y) -> x + y
+~~~
+
+### Method References
+
+~~~ {.java}
+// static
+Arrays.sort(items, Util::compareItems);
+// specific instance
+items.forEach(System.err::println);
+// current instance
+items.forEach(Item::publish);
+~~~
+
+### Default Methods
+
+~~~ {.java}
+interface Descriptive {
+    default String desc() {
+        return toString();
+    }
+}
+~~~
+
+### Streams
+
+~~~ {.java}
+List<String> strings = ...
+strings.stream().filter(x -> !x.isEmpty()).count();
+~~~
+
+## References
+
+* [Java 8 cheatsheet](http://www.java8.org/)
