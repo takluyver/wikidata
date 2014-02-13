@@ -1,0 +1,9 @@
+---
+categories: finance
+...
+
+Tax on financial transactions. Originally intended to discourage high-frequency trading, had the opposite effect: as transactions can be netted intraday, high-frequency traders who start and end the day flat don't pay any tax.
+
+## Risks
+
+If HFT was to be hit, that would reduce liquidity in the market. Companies prefer to issue shares in liquid market (they get more accurate valuation there and have a better chance of raising more capital), so that would encourage an exodus to markets that are not covered by this regulation. Such migrations are very difficult to reverse, as the US learned in 60s/70s, when they attempted to tax [eurodollar]() issues. This resulted in American banks offloading this activity to subsidiaries in London and made London a major global financial centre.
