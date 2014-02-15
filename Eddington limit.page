@@ -6,6 +6,8 @@ The limit of luminosity at which additional accretion of matter can not occur, b
 
 $L_E=\frac{4\pi cGMm}{\sigma_T}$
 
+$\sigma_T$ is the "cross-section" and corresponds to probability of photons from the radiation beam interacting with a particle of the matter.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/465)
