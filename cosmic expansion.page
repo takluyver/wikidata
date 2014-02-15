@@ -1,0 +1,10 @@
+---
+categories: astronomy
+...
+
+Hubble [noticed](galactic distance measurement) that the further a galaxy is the faster it recedes from us. This suggests that distances between all galaxies increase with time, specifically:
+
+$D(t) =D(t_0)(1+H_0(t-t_0))$
+
+This is valid for objects that are not gravitationally bound; eg. the solar system and the Milky Way are not expanding. Note that this motion is superimposed on *peculiar motion*,  so galaxies can still collide if their peculiar motion is stronger than this general runaway trend. 
+If we set the time difference to 13.8 billion years then we get $D(t)=0$ -- [big bang](). 
