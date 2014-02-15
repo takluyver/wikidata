@@ -14,6 +14,8 @@ $t'\sim t$
 
 I.e. [Galilean transformations](Galilean relativity). Lorentz transformations are counterintuitive, because our intuition has been developed while observing speeds that are much slower than the speed of light and relatively short distances, so we have to rely on maths for relativistic speeds and distances.
 
+$\frac{1}{\sqrt{1-v^2/c^2}}$ is often referred to as $\gamma$ -- the *Lorentz factor*.
+
 ## Derivation
 
 Given two observers moving at relative velocity $v$ whose time and positions are described by $(x, t)$ and $(x', t')$, we synchronise their positions and clocks so that $x=t=0$ at the same [event](space-time) as $x'=t'=0$. We assume that the transformation will be linear:
