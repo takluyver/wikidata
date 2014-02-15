@@ -10,6 +10,14 @@ Change in wave length of radiation emitted by objects that move away from us, ca
 * compare measured [spectrum](spectroscopy) (intensity of various frequencies of radiation) with signatures of known elements -- various elements cause characteristic patterns due to emission or absorption of certain ranges of frequencies
 * the shifting of absorption/emission lines shows how much the frequencies have lengthened
 
+## Formula
+
+$\frac{\lambda}{\lambda_0}=\sqrt{\frac{1+v/c}{1-v/c}}\sim 1+v/c$
+
+## Cosmological Shift
+
+$\frac{\lambda_{em}}{\lambda_{obs}} = \frac{D(t_{em})}{D(t_0)}$ ie.  the redshift can be thought of not as a Doppler shift but as a *cosmological shift* -- wavelengths of light stretch just as every other distance. 
+
 ## References
 
 * [table translating redshift to age of objects](http://apod.nasa.gov/apod/ap130408.html)
