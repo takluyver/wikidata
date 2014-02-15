@@ -8,6 +8,16 @@ The most distant, and most luminous, objects known. [z](galactic distance measur
 
 Quasars are useful because their [spectrum](spectroscopy) exhibits [Lyman-alpha forest](). This gives us one of the best sources of data on the amount of hydrogen in the universe, and since hydrogen is by far the most ubiquitous element in the universe, of the amount of stuff in the universe in total.
 
+## Size
+
+Since quasars are variable, we can put an upper bound on their size by taking into account that beyond certain size the information could not travel from one end of the quasar to the other fast enough to make it variable in concert. In particular:
+
+$R\sim c\Delta t'=\frac{c\Delta t}{\gamma(1+v/c)}$
+
+Where $\gamma$ is the [relativistic factor](Lorentz transformations) and $(1+v/c)$ is due to [Doppler shift](Doppler effect).
+
+For $\Delta t$ of one day and $v/c$ around 1/3 we get 60 AU. How can we pack the luminosity of trillion suns in the space of a solar system?
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture about active galactic nuclei](https://class.coursera.org/introastro-002/lecture/463)
