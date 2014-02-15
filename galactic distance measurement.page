@@ -1,0 +1,17 @@
+---
+categories: astronomy
+...
+
+Initially various methods were used:
+
+* Tully-Fisher relationship relates rotation speed in spiral galaxies with luminosity
+* *fundamental plane* for elliptical galaxies relates luminosity to size and velocity dispersion
+* [type-I supernovae](supernova) can be used as standard candles -- if they exist in the galaxy we are interested in
+
+Hubble discovered the relationship between radial velocity and distance: $v=H_0D$,  and $v$ can be measured from [redshift](). The exact value of $H_0$ is still being refined, it's usually written as 100h km/Mpc*s where h=0.71+/- 0.03. 
+ 
+Typically we write $\lambda=(1+z)\lambda_0$ where $z$ is the redshift which is used as a surrogate for distance. 
+
+$v/c=H_0D/c=\frac{(1+z)^2+1}{(1+z)^2-1}\sim z$
+
+Hubble's law leads to the theory of [cosmic expansion]().
