@@ -4,6 +4,8 @@ categories: astronomy
 
 The limit of luminosity at which additional accretion of matter can not occur, because the radiation pressure (the force exercised by photons impinging upon atoms of the mass to be accreted) blows away any accreting matter.
 
+$L_E=\frac{4\pi cGMm}{\sigma_T}$
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/465)
