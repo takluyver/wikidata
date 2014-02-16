@@ -42,6 +42,8 @@ E.g. chemical composition and age don't matter.
 
 Stable orbits exist for $R\ge 3R_S$ ($R_S$ is the [Schwarzschild radius](), or *event horizon*). At $R=1.5R_S$ light is in unstable circular orbit -- *photosphere*.
 
+In rotating black holes there is also a second, inner horizon. Bodies orbiting there have gravitational energy of $0.423mc^2$ -- i.e. that much energy is available for conversion to e.g. radiation.
+
 ## Tidal Forces
 
 Extreme at small distances. At $R_S$ the tidal accelleration $a_T$ for object of radial length $d$ is roughly $\frac{2GMd}{R_S^3}=\frac{dc^6}{4G^2M^2}$. So more massive black holes lead to smaller tidal effects.
