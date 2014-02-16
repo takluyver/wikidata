@@ -12,6 +12,6 @@ Hubble discovered the relationship between radial velocity and distance: $v=H_0D
  
 Typically we write $\lambda=(1+z)\lambda_0$ where $z$ is the redshift which is used as a surrogate for distance. 
 
-$v/c=H_0D/c=\frac{(1+z)^2+1}{(1+z)^2-1}\sim z$
+$v/c=H_0D/c=\frac{(1+z)^2-1}{(1+z)^2+1}\sim z$
 
 Hubble's law leads to the theory of [cosmic expansion]().
