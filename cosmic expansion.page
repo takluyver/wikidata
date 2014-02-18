@@ -7,4 +7,21 @@ Hubble [noticed](galactic distance measurement) that the further a galaxy is the
 $D(t) =D(t_0)(1+H_0(t-t_0))$
 
 This is valid for objects that are not gravitationally bound; eg. the solar system and the Milky Way are not expanding. Note that this motion is superimposed on *peculiar motion*,  so galaxies can still collide if their peculiar motion is stronger than this general runaway trend. 
-If we set the time difference to 13.8 billion years then we get $D(t)=0$ -- [big bang](). 
+If we set the time difference to 13.8 billion years then we get $D(t)=0$ -- [big bang]().
+
+## Uniform Expansion
+
+If an object is at distance $D_0$ now then we can calculate its distance at other points in time: $D(t) =a(t) D_0$, where $a\sim 1+H_0t$ for small $H_0t$ ($H_0$ is [Hubble constant](Hubble flow)) . 
+
+The cosmological [redshift]() can then be estimated from:
+ $1+z=\frac{\lambda_{obs}}{\lambda_{em}}=\frac{a(t_{obs})}{a(t_{em})}=\frac{1}{a(t_{em})}\sim 1-H_0t_{em}$
+
+to be $z\sim -H_0t_{em}$.
+
+## Future Rate of Expansion
+
+What will the expansion factor be at future time $t^*$? 
+
+$a(t)\sim a'(t^*)(t-t^*)$
+
+For $v(t^*) =H(t^*)D(t^*)$ $H(t^*)$ must be $\frac{a'(t^*)}{a(t^*)}$. So constant expansion (constant $a'$) means decreasing Hubble "constant". 
