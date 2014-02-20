@@ -25,3 +25,7 @@ What will the expansion factor be at future time $t^*$?
 $a(t)\sim a'(t^*)(t-t^*)$
 
 For $v(t^*) =H(t^*)D(t^*)$ $H(t^*)$ must be $\frac{a'(t^*)}{a(t^*)}$. So constant expansion (constant $a'$) means decreasing Hubble "constant". 
+
+## References
+
+* Introduction to Astronomy Coursera course lectures
