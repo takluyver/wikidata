@@ -36,6 +36,22 @@ Objects in the past (i.e. ones whose light reaches us today) are:
 
 than they appear.
 
+## Expansion Bounds
+
+If we consider a shell of thickness $w$ with inner radius $D$ then the total (Newtonian) energy for the shell is proportional to mass times the inner radius:
+
+$\frac{\epsilon}{a(t)^2}=\frac{2E}{mD(t)^2}=H(t)^2-\frac{8\pi G}{3}\rho(t)$
+
+Now, if $\epsilon>0$ then all shells are unbound, i.e. the universe will be expanding idenfinitely. If $\epsilon<0$ the expansion will stop. It can be expressed as a critical density that gives $\epsilon=0$:
+
+$\rho_c(t)=\frac{3H(t)^2}{8\pi G}$
+
+If we take $\Omega(t)=\frac{\rho(t)}{\rho_c(t)}$ then $\epsilon=H_0^2(1-\Omega_0)$.
+
+![The predicted expansion/contraction of the universe can be seen in this plot](http://www.astro.ljmu.ac.uk/courses/phys134/pic/cosmo/omega.jpg)
+
+Actual estmate from observation (including [dark matter]()) is $\Omega_0=0.256$, but from this we get an estimate on age of the universe of 8 billion years. Suspicion is actual $\Omega_0$ is very close to 1.
+
 ## References
 
 * Introduction to Astronomy Coursera course lectures
