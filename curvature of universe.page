@@ -1,0 +1,15 @@
+---
+categories: astronomy
+...
+
+Positive or negative curvature can be measured by measuring sum of angles (or, equivalently, area) of a triangle: 
+
+* positive (sphere): closed, geodesics converge, $R=\frac{R_0}{a^2}$
+* negative (hyperboloid): open, geodesics diverge $R=-\frac{R_0}{a^2}$
+* flat (plane): open?, geodesics parallel $R=0$
+
+Only these three are possible if space is [isotropic and homogeneous](cosmological principle). All three solutions can be expressed as $R=k\frac{R_0}{a^2}$ for $k\in\left{-1,0,1\right}$.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/481)
