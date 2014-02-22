@@ -7,7 +7,7 @@ Specifies the behaviour of a programming language by defining an abstract machin
 * small step (*structural operational semantics*): transitions make a single step in term simplification
 * big step (*natural semantics*): a single transition evaluates the term to the final result
 
-Operational semantics is useful in implementing interpreters and compilers. It also avoids some of the problems more abstract ([operational](operational semantics), [axiomatic](axiomatic semantics)) styles have, such as expressing non-determinism, concurrency (operational) or procedures (axiomatic).
+Operational semantics is useful in implementing interpreters and compilers. It also avoids some of the problems more abstract styles have, such as expressing non-determinism, concurrency ([denotational](denotational semantics)) or procedures ([axiomatic](axiomatic semantics)).
 
 ## References
 
