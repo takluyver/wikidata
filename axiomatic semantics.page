@@ -1,0 +1,9 @@
+---
+categories: computer_science programming_languages
+...
+
+[Operational](operational semantics) and [denotational](denotational semantics) semantics specifies the behaviour of programs from which certain laws can be inferred. Axiomatic style takes the opposite approach and states the laws that programs satisfy. This is very elegant and useful since focuses the attention on what can be proven about the program.
+
+## References
+
+* Benjamin C. Pierce, *Types and Programming Languages*
