@@ -2,13 +2,19 @@
 categories: astronomy
 ...
 
+## Three Possibilities
+
 Positive or negative curvature can be measured by measuring sum of angles (or, equivalently, area) of a triangle: 
 
 * positive (sphere): closed, geodesics converge, $R=\frac{R_0}{a^2}$
 * negative (hyperboloid): open, geodesics diverge $R=-\frac{R_0}{a^2}$
 * flat (plane): open?, geodesics parallel $R=0$
 
-Only these three are possible if space is [isotropic and homogeneous](cosmological principle). All three solutions can be expressed as $R=k\frac{R_0}{a^2}$ for $k\in\left{-1,0,1\right}$.
+Only these three are possible if space is [isotropic and homogeneous](cosmological principle). All three solutions can be expressed as $R=k\frac{R_0}{a^2}$ for $k\in\left{-1,0,1\right}$. Observations suggest that on average $k=0$.
+
+## Changes in Time
+
+In Robertson-Walker geometry space is homogeneous and scale factor $a(t)$ gives distance between *comoving* observers: $D(t)=a(t)D_0$. Light moves along godesics of space at $c$ as measured by any observer. [Redshift](redshift) is *cosmological*, not a [Doppler effect](Doppler effect). There is no [gravitational blueshift](gravitational redshift), the shift is symmetric.
 
 ## References
 
