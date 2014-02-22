@@ -1,0 +1,9 @@
+---
+categories: computer_science programming_languages
+...
+
+Maps terms to some mathematical objects from chosen *semantic domains* -- e.g. a function or a number. Has the advantage of allowing to reason about properties of the language and proving that two programs have the same behaviour.
+
+## References
+
+* Benjamin C. Pierce, *Types and Programming Languages*
