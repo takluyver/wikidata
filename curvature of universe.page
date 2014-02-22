@@ -24,6 +24,30 @@ $D_L=D_0(1+z)$
 
 $z=\frac{H_0D_0}{c}$
 
+## Relativistic Approach
+
+It's convenient to use energy density $\rho(t)$ (including mass and radiation energy) and constant pressure $P$ (from relativistic motion of particles; for massless particles, $P=\rho c^2/3$). 
+
+*Einstein equation*:
+
+$R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R=\frac{8\pi G}{c^4}T_{\mu\nu}$
+
+*Friedmann equations* are derived from Einstein's: 
+
+$\left(\frac{a'}{a}\right)^2=H^2=\frac{8\pi G}P{3}\rho(t)-\frac{kR_0c^2}{a(t)^2}$
+
+the $-\frac{kR_0c^2}{a(t)^2}$ term describes the curvature of space.
+
+$\frac{a''}{a}=H'+H^2=\frac{-4\pi G}{3}\left(\rho+\frac{3P}{c^2}\right)$
+
+Further, if we assume a model where the universe is filled with dust and radiation, we can split the energy density into two, one coming from mass and the other from radiation:
+
+$\rho_D(t)=\rho_{D_0}a(t)^{-3}$
+
+$\rho_R(t)=\rho_{R_0}a(t)^{-4}$
+
+Einstein assumed the universe does not expand ($H=0$) so from the first Friedmann equation derived positive curvature of the space. However, the second Friedman equation would imply a collapsing universe, so Einstein modified his equation by adding a term $g_{\mu\nu}\frac{\Lambda}{c^2}$ to the left hand side -- the *cosmological constant*. When propagated to Friedmann's equations this added a term $\frac{\Lambda c^2}{3}$ and allowed to counter the negative term in the second equation.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/481)
