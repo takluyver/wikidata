@@ -16,6 +16,14 @@ Only these three are possible if space is [isotropic and homogeneous](cosmologic
 
 In Robertson-Walker geometry space is homogeneous and scale factor $a(t)$ gives distance between *comoving* observers: $D(t)=a(t)D_0$. Light moves along godesics of space at $c$ as measured by any observer. [Redshift](redshift) is *cosmological*, not a [Doppler effect](Doppler effect). There is no [gravitational blueshift](gravitational redshift), the shift is symmetric.
 
+## Angular and Luminosity Distances
+
+$D_A=\frac{D_0}{1+z}$
+
+$D_L=D_0(1+z)$
+
+$z=\frac{H_0D_0}{c}$
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/481)
