@@ -32,6 +32,8 @@ It's convenient to use energy density $\rho(t)$ (including mass and radiation en
 
 $R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R=\frac{8\pi G}{c^4}T_{\mu\nu}$
 
+### Friedmann Equations
+
 *Friedmann equations* are derived from Einstein's: 
 
 $\left(\frac{a'}{a}\right)^2=H^2=\frac{8\pi G}P{3}\rho(t)-\frac{kR_0c^2}{a(t)^2}$
@@ -46,7 +48,17 @@ $\rho_D(t)=\rho_{D_0}a(t)^{-3}$
 
 $\rho_R(t)=\rho_{R_0}a(t)^{-4}$
 
+### Cosmological Constant
+
 Einstein assumed the universe does not expand ($H=0$) so from the first Friedmann equation derived positive curvature of the space. However, the second Friedman equation would imply a collapsing universe, so Einstein modified his equation by adding a term $g_{\mu\nu}\frac{\Lambda}{c^2}$ to the left hand side -- the *cosmological constant*. When propagated to Friedmann's equations this added a term $\frac{\Lambda c^2}{3}$ and allowed to counter the negative term in the second equation.
+
+How can this constant be interpreted? The left hand side of Einstein's equation corresponds to mass and the right to energy, so if we stick it on the left then it means there is some sort of "anti-gravity" that reduces the effect of mass, and if we subtract it from the right then it represents *dark energy*.
+
+$\rho_\Lambda=\frac{c^2}{8\pi G}\Lambda$
+
+$P_\Lambda=-\rho_\Lambda c^2$
+
+Later on, when Einstein learned of Hubble's discovery of expanding universe, he called introduction of $\Lambda$ "his biggest blunder".
 
 ## References
 
