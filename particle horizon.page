@@ -4,6 +4,13 @@ categories: astronomy
 
 The size of observable universe, i.e. everything in our [light cone](special relativity) stretching back to the [big bang](). In other words, everything that could have causally influenced us.
 
+* in [radiation era](curvature of universe) (when radiation density dominated): $D_h(t)=2ct$
+* in matter era: $D_h(t)=3ct$
+* today: $D_h(t_0)=46$ Gly
+* in [exponential expansion](future of the universe): $D_h(t)\rightarrow\sqrt{3/\Lambda a(t)}=62a(t)$ Gly -- we will never see anything that is more than 62 billion light years from us!
+
+![](http://i.imgur.com/yiBDa.png)
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/487)
