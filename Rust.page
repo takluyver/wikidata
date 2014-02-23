@@ -42,6 +42,15 @@ then build with `rust build hello.rs`. This will produce executable `hello` in t
 
 See [doc on github](https://github.com/mozilla/rust/wiki/Doc-unit-testing).
 
+## Memory Ownership
+
+Two types of pointers: 
+
+* owned (`~int`)
+* borrowed (`&int`)
+
+When an owned pointer goes out of scope the memory it points to is freed.
+
 ## References
 
 * [introductory presentation](http://www.youtube.com/watch?v=gfCtbGiHcg0)
