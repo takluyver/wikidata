@@ -60,6 +60,22 @@ $P_\Lambda=-\rho_\Lambda c^2$
 
 Later on, when Einstein learned of Hubble's discovery of expanding universe, he called introduction of $\Lambda$ "his biggest blunder".
 
+### Another Form of Friedmann
+
+If we define:
+
+$\rho_c=\frac{3H(t)^2}{8\pi G}$
+
+$\Omega_i=\frac{\rho_i}{\rho_c}$
+
+$\Omega=\Omega_D+\Omega_R+\Omega_\Lambda$
+
+then the Friedmann equation can be written
+
+$H(t)^2(1-\Omega(t))=-kR_0c^2$
+
+Where $R_0$ is the currently observed curvature of the universe.
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/481)
