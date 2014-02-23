@@ -1,0 +1,13 @@
+---
+categories: astronomy
+...
+
+At late times the [cosmological term](universe curvature) dominates:
+
+$a(t)\sim e^{\sqrt{\Lambda/3ct}}$
+
+$H$ becomes a constant. As a result the *coordinate* speed of light becomes attenuated: $c/a(t)\sim ce^{-Ht}$. Even if we wait forever, the photon will not get to a place that is far enough.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture on the future of the universe](https://class.coursera.org/introastro-002/lecture/485)
