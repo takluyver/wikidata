@@ -28,7 +28,7 @@ $z=\frac{H_0D_0}{c}$
 
 It's convenient to use energy density $\rho(t)$ (including mass and radiation energy) and constant pressure $P$ (from relativistic motion of particles; for massless particles, $P=\rho c^2/3$). 
 
-*Einstein equation*:
+[Einstein equation](general relativity):
 
 $R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R=\frac{8\pi G}{c^4}T_{\mu\nu}$
 
