@@ -38,6 +38,10 @@ fn main() {
 
 then build with `rust build hello.rs`. This will produce executable `hello` in the same directory.
 
+## Unit Testing
+
+See [doc on github](https://github.com/mozilla/rust/wiki/Doc-unit-testing).
+
 ## References
 
 * [introductory presentation](http://www.youtube.com/watch?v=gfCtbGiHcg0)
