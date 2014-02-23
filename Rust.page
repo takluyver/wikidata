@@ -46,3 +46,4 @@ See [doc on github](https://github.com/mozilla/rust/wiki/Doc-unit-testing).
 
 * [introductory presentation](http://www.youtube.com/watch?v=gfCtbGiHcg0)
 * [introduction](http://words.steveklabnik.com/a-30-minute-introduction-to-rust) by Steve Klabnik
+* [a blog post](http://paulkoerbitz.de/posts/Understanding-Pointers-Ownership-and-Lifetimes-in-Rust.html) on ownership
