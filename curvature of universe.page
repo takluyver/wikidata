@@ -44,9 +44,11 @@ $\frac{a''}{a}=H'+H^2=\frac{-4\pi G}{3}\left(\rho+\frac{3P}{c^2}\right)$
 
 Further, if we assume a model where the universe is filled with dust and radiation, we can split the energy density into two, one coming from mass and the other from radiation:
 
-$\rho_D(t)=\rho_{D_0}a(t)^{-3}$
+$\rho_D(t)=\rho_{D,0}a(t)^{-3}$
 
-$\rho_R(t)=\rho_{R_0}a(t)^{-4}$
+$\rho_R(t)=\rho_{R,0}a(t)^{-4}$
+
+I.e. in this model the radiation and mass densities are diluted with time (mass with the power of 3, radiation with 4.
 
 ### Cosmological Constant
 
@@ -57,6 +59,8 @@ How can this constant be interpreted? The left hand side of Einstein's equation 
 $\rho_\Lambda=\frac{c^2}{8\pi G}\Lambda$
 
 $P_\Lambda=-\rho_\Lambda c^2$
+
+Note that $\rho_\Lambda$ is constant in time, i.e. with time it will make up bigger and bigger part of the total density due to dilution of mass and radiation densities.
 
 Later on, when Einstein learned of Hubble's discovery of expanding universe, he called introduction of $\Lambda$ "his biggest blunder".
 
@@ -75,6 +79,15 @@ then the Friedmann equation can be written
 $H(t)^2(1-\Omega(t))=-kR_0c^2$
 
 Where $R_0$ is the currently observed curvature of the universe.
+
+### Current Data
+
+* $\Omega_{Db,0}=0.044$ (baryonic mass)
+* $\Omega_{D,0}=0.256$ (total mass)
+* $\Omega_{R,0}=4.765\times 10^{-5}$ ([CMB](cosmic microwave background), negligible)
+* $\Omega_{\Lambda,0}=0.74$
+
+$\Omega=1$ i.e. the universe is flat.
 
 ## References
 
