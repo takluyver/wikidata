@@ -51,6 +51,10 @@ Two types of pointers:
 
 When an owned pointer goes out of scope the memory it points to is freed.
 
+## Traits
+
+Like Haskell's type classes.
+
 ## References
 
 * [introductory presentation](http://www.youtube.com/watch?v=gfCtbGiHcg0)
