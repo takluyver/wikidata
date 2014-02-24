@@ -14,7 +14,7 @@ Features:
 ~~~
 sudo add-apt-repository ppa:hansjorg/rust
 sudo apt-get update
-sudo apt-get install rust-0.8
+sudo apt-get install rust-0.9
 ~~~
 
 ## Test program
@@ -36,7 +36,7 @@ fn main() {
 }
 ~~~
 
-then build with `rust build hello.rs`. This will produce executable `hello` in the same directory.
+then build with `rustc build hello.rs`. This will produce executable `hello` in the same directory.
 
 ## Unit Testing
 
