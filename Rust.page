@@ -55,6 +55,15 @@ When an owned pointer goes out of scope the memory it points to is freed.
 
 Like Haskell's typeclasses.
 
+## Macros
+
+*macro by example*; TODO: example
+
+## Visibility Rules
+
+* private items are visible in all descendant modules
+* public items are visible in all modules
+
 ## References
 
 * [introductory presentation](http://www.youtube.com/watch?v=gfCtbGiHcg0)
