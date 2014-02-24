@@ -53,7 +53,7 @@ When an owned pointer goes out of scope the memory it points to is freed.
 
 ## Traits
 
-Like Haskell's type classes.
+Like Haskell's typeclasses.
 
 ## References
 
