@@ -32,7 +32,7 @@ Objects in the past (i.e. ones whose light reaches us today) are:
 
 * smaller: $D_A=\frac{D_0}{1+z}$
 * less luminous: $b=\frac{L}{4\pi D_L^2}$ where $D_L=D_0(1+z)$
-* hotter: $T_{obs}=\frac{T_em}{1+z}$
+* hotter: $T_{obs}=\frac{T_{em}}{1+z}$
 
 than they appear.
 
