@@ -6,6 +6,10 @@ After big bang radiation was emitted in the form of gamma rays. Due to [redshift
 
 The observed radiation matches exactly the [black-body radiation]() with $T_0=2.726K$. It is isotropic, thus validating [cosmological principle](). In fact observed from Earth it's not the same in all directions, because we are not in the rest frame of the universe. This can be attributed to the motion of our local cluster towards [Virgo](Great Attractor).
 
+Cobe satellite measured in 1992 that CMB is not completely homogeneous: it is to the accuracy of 1/100000, but beyond that there are regions in the sky that are hotter and cooler. That's the earliest image of some structure in the universe. Statistical analysis of the distribution of hotter and cooler regions reveals a number of peaks at certain (small) distances. The fluctuations in temperature correspond to fluctuations in density of the primordial plasma, and these propagated with the speed of sound in plasma,  which we know to be $c/\sqrt{3}$. In addition we know that the size of the region that could collapse and expand together is limited by the [horizon distance](particle horizon) (wrt. the speed of sound in plasma).  Armed with this knowledge we can calculate the distance a photon emitted at the time of ionisation would have travelled: $D=3ct_0(1-a_{ion}^{1/2})$. We can calculate $a_{ion}$ from known temperature of ionisation (3000K) and current CMB temperature,  to be $\frac{1}{1100}$. Now,  $D_A=D/(1+z)$ (we need to take into account the expansion of the universe). From all that,  assuming flat (Euclidean) universe,  we can predict the angular size of the thermal features in CMB to be around 0.97 degree.  It turns out to match the observed peak in the distribution of hot spots very closely.  Conclusion: **the universe is flat**. 
+
+The denser regions appear as cooler.  This,  bearing in mind [ideal gas law](TODO) is counterintuitive,  but can be explained by deeper gravity well in denser regions causing deeper redshift. 
+
 ## References
 
 * Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/479)
