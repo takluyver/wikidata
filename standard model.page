@@ -6,9 +6,41 @@ categories: physics
 
 ## Elementary Particles
 
-* electrons
-* quarks
+### Leptons
+
+* electron
+* muon
+* tau
+* electron neutrino
+* muon neutrino
+* tau neutrino
+
+### Quarks
+
+Coloured, interact through gluons.
+
+* up
+* down
+* charm
+* strange
+* top
+* bottom
+
+### Gauge Bosons
+
+Coloured.
+
+* gluon
+* photon
+* Z boson
+* W boson
+* Higgs boson
+
+## Composite Particles
+
+Hadrons (baryons, mesons) are bound states of quarks.
 
 ## References
 
 * Sean Carroll, *The Particle at the End of the Universe*
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/505)
