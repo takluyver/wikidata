@@ -19,6 +19,8 @@ categories: physics
 
 Coloured, interact through gluons.
 
+*Flavours*:
+
 * up
 * down
 * charm
@@ -26,11 +28,13 @@ Coloured, interact through gluons.
 * top
 * bottom
 
+Never detected directly. Each comes in three colours: *red*, *green* and *blue*. All have their anti-particles: *anti-red*, *anti-green*, *anti-blue*.
+
 ### Gauge Bosons
 
 Coloured.
 
-* gluon
+* gluon -- carries strong force
 * photon
 * Z boson
 * W boson
@@ -38,7 +42,11 @@ Coloured.
 
 ## Composite Particles
 
-Hadrons (baryons, mesons) are bound states of quarks.
+Hadrons (baryons, mesons) are bound states of quarks. 
+
+## Colour Neutrality
+
+All known hadrons are combinations of three quarks with different colours or a pair of quark and anti-quark (e.g. positively charged pi-meson is up+anti-down).
 
 ## References
 
