@@ -1,0 +1,9 @@
+---
+categories: computer_science programming_languages compilation
+...
+
+A technique of compilation of functional languages, described in [a tutorial](http://research.microsoft.com/en-us/um/people/simonpj/Papers/pj-lester-book/) by SPJ et al.
+
+## References
+
+* [tutorial](http://research.microsoft.com/en-us/um/people/simonpj/Papers/pj-lester-book/)
