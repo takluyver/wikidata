@@ -1,0 +1,21 @@
+---
+categories: computer_science programming_languages
+...
+
+In [lambda calculus](), a reduction strategy where the $\beta$-reductions are performed outside in :
+
+~~~ {.asciiart}
+id(id(\z.id z)) ->
+---------------
+id(\z.id z) ->
+-----------
+\z.id z ->
+   ----
+\z.z
+~~~
+
+See also [call by value]() and [call by name]().
+
+## References
+
+* Benjamin C. Pierce *Types and Programming Languages* 5.1
