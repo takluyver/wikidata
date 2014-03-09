@@ -1,0 +1,20 @@
+---
+categories: computer_science programming_languages
+...
+
+In [lambda calculus](), a reduction strategy where reduction inside abstractions is not allowed and the reductions are performed outside in (as in [normal order](normal order evaluation strategy):
+
+~~~ {.asciiart}
+
+id(id(\z.id z)) ->
+---------------
+id(\z.id z) ->
+-----------
+\z.id z
+~~~
+
+See also [call by value]().
+
+## References
+
+* Benjamin C. Pierce *Types and Programming Languages* 5.1
