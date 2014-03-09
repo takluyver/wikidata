@@ -1,0 +1,21 @@
+---
+categories: computer_science programming_languages
+...
+
+In [lambda calculus](), a reduction strategy where reduction inside abstractions is not allowed and the reductions are performed inside out:
+
+~~~ {.asciiart}
+id(id(\z.id z)) ->
+  -------------
+id(\z.id z) ->
+-----------
+\z.id z
+~~~
+
+This evaluation strategy is most common in programming languages.
+
+See also [call by name]().
+
+## References
+
+* Benjamin C. Pierce *Types and Programming Languages* 5.1
