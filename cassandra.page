@@ -2,10 +2,6 @@
 categories: it database nosql
 ...
 
-All writes are timestamped at the client and later overwrite (upsert) on top of the former, so [requires clocks to be synchronised on all clients](http://www.datastax.com/documentation/cassandra/2.0/webhelp/index.html#cassandra/dml/dml_about_inserts_c.html#concept_ds_xvr_knw_zj).
-
-Does not support range scans.
-
 ## Documentation
 
 * cassandra.apache.org outdated
@@ -117,6 +113,14 @@ Useful commands:
 * `source <script path>`
 * `copy <table name> (<column names ...>) from '<csv file path>'`
 
+### `cassandra-cli`
+
+Legacy tool, useful for peeking at the physical layout of data.
+
+Useful commands
+
+* `list <table name> limit <limit>`
+
 ### `ccm`
 
 Useful for spinning up a local cluster for development:
@@ -126,7 +130,10 @@ TODO: commands to initialise cluster.
 ~~~
 ccm populate -n 3
 ccm start
+ccm status
 ~~~
+
+Then `ccm node1 cqlsh` or `ccm node1 cli` will give us `cqlsh`/`cassandra-cli` on given node.
 
 ## Data Model
 
@@ -137,16 +144,6 @@ ccm start
 * time
 * collections
 * other (e.g. uuid)
-
-### Primary Key
-
-Key choice: natural key is ok if available. Surrogate is a common choice. Sequences are not supported due to distributed nature. `uuid` and `timeuuid` are available in Cassandra, with the latter providing k-order.
-
-Compound primary keys are allowed. In such cases the first column of primary key is the *partition key*.
-
-### Partition Key
-
-A.k.a *row key*. Each partition key designates a single storage engine row, so all writes for a single partition key happen atomically in isolation. In the logical view the row is then split by *primary key* int separate logical rows (groups of columns).
 
 ### Storage
 
@@ -159,18 +156,46 @@ ca58ee3c...    EC:created   EC:start_price  FISI:created  FISI:start_price
 ca58ee34...    ATR:created  ATR:start_price 
                2013-08-12   4.31
 
-
-Each cell contains a name, value and timestamp. Cell name can hold data (i.e. a component of the key).
+Each cell contains a name, value and timestamp. Cell name can hold data (i.e. a component of the key). The cell are stored in alphabetical order of name (ascending by default; this is controlled by `with clustering order by` clause of `create table`). This allows range queries on components of primary key that are not the partition key.
 
 `cqlsh` hides that from us, but we can take a peek at it using legacy `cassandra-cli`:
+
+How wide can rows be? It has to be stored on a single machine, so better for it not to run into gigabytes. Rule of thumb: no more than 100 MB.
 
 ~~~
 list watchlistitem limit 2;
 ~~~
 
+A common pattern for e.g. arbitrary searches is to create a dedicated table with primary key composed of search criteria columns, e.g. *stock_by_industry_by_sector*.
+
+### Primary Key
+
+Key choice: natural key is ok if available. Surrogate is a common choice. Sequences are not supported due to distributed nature. `uuid` and `timeuuid` are available in Cassandra, with the latter providing k-order.
+
+Compound primary keys are allowed. In such cases the first column of primary key is the *partition key*.
+
+~~~ {.sql}
+primary key (stock_symbol, trade_id)
+~~~
+
+### Partition Key
+
+A.k.a *row key*. Each partition key designates a single storage engine row, so all writes for a single partition key happen atomically in isolation. In the logical view the row is then split by *primary key* int separate logical rows (groups of columns).
+
+To avoid huge rows we might want to use composite partition keys:
+
+~~~ {.sql}
+primary key ((stock_symbol, trade_date), trade_id)
+~~~
+
 ### Writes
 
 All inserts are actually upserts. There is no way to find out if any data was overwritten as a result of an insert.
+
+#### Batching
+
+* atomic, i.e. the cluster will be retrying the batch until writes for all rows succeed; but:
+* not isolated -- others can read the parts already written even if the batch has not been written fully
 
 ### Reads
 
