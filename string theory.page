@@ -1,0 +1,21 @@
+---
+categories: physics astronomy
+...
+
+A way to address the problem of singularity in [general relativity]() -- the conditions in which the curvature is infinite and the equations break down. In physics we often neglect effects which are insignificant. It might be that GR ignores certain effects that become significant in conditions such as [black hole](black holes) or [big bang](). What are these? Quantum effects.
+
+The problem is that application of traditional methods of quantisation fails when applied to gravity.
+
+An approximation: instead of particles the fundamental building blocks are strings. A loop of string can simulate a particle pretty well, but can also can vibrate and wiggle -- much more than a particle. There is just one kind of string and different states of if represent different particles. Strings can also be open. Processes such as electron + positron merging into photon and then photon decaying back into electron and positron can be modelled as two string loops merging into one loop and the that splitting.
+
+Strings are very small, $10^{-33}cm$. What's the point of considering them, if everything looks like a particle anyway? Because quantum string theory is well-behaved, it provides a consistent quantum theory of gravity. Graviton is a massless spin 2 particle -- never observed, but predicted by this theory. In fact, the only experimental prediction of string theory is gravity!
+
+![Pair of pants: diagram of two strings merging.](http://www.sukidog.com/jpierre/strings/vertex.gif)
+
+Infinite number of degrees of freedom of a string make it a very complex theory and mean we don't really know what a string is and we don't have a complete description. It's still helpful when we think about what happens when a string is close to a singularity, which we can picture as the tip of a cone. Far from the tip the behaviour is pretty much like particles -- they move along geodesics -- but near the tip it is possible for a string to close a loop around the tip, i.e. we are getting reasonable and non-divergent string dynamics. Note: there are still spaces where the string dynamics become singular.
+
+String theories suggest 10 spacetime dimensions.
+
+## References
+
+* Introduction to Astronomy Coursera course [lecture](https://class.coursera.org/introastro-002/lecture/511)
