@@ -6,6 +6,11 @@ All writes are timestamped at the client and later overwrite (upsert) on top of 
 
 Does not support range scans.
 
+## Documentation
+
+* cassandra.apache.org outdated
+* DataStax most up to date
+
 ## Architecture 
 
 ### Overview
@@ -38,7 +43,7 @@ Does not support range scans.
 * Transport mechanism: historically: [Thrift](Apache Thrift). Since 1.2 a native binary protocol which is much more flexible and efficient. Native is recommended.
 * Log storage -- no in-place updates, append only, allows for very fast writes
 * manages its own storage locally -- tight integration with storage (unlike HBase), allows optimisations
-* new nodes can be added while online
+* new nodes can be added while online, but it should be done before the cluster is close to running out of capacity
 
 ### Cluster Structure
 
@@ -51,6 +56,8 @@ The nodes are organised in a logical ring that represents the hash space in [DHT
 * ByteOrderPartitioner -- deprecated, not recommended
 
 When client sends a request it is sent to a node (which one depends on policy, random by default) and that node assumes the role of a coordinator. If that node fails another node will be contacted. The coordinator computes the partition key using hash function and communicates with the node which holds the token for that partition key (and all replicas). It will participate in all the communication between the client and nodes responsible for the data. New drivers can be aware of cluster topology and can send requests directly to node responsible for the partition.
+
+Virtual Nodes: instead of being responsible for a single token, node can get a number (256 is a good default) of tokens. It makes admin tasks such as rebalancing of the cluster much easier.
 
 ### Replication
 
@@ -65,9 +72,23 @@ Placement of replicas is determined by replication strategy:
 
 ### Consistency
 
-Updates might not propagate to all replicas immediately. What if a read occurs before an update is propagated to all replicas? There is consistency requirement setting on writes and reads (*tunable consistency*) which determines how many replicas need to respond before we are happy with the result. This can be set at anything from *any* (we don't care how many) to *all* (all replicas have to respond, i.e. immediate consistency). *Quorum* is typically a reasonable default that offers good writer performance and read consistency, if used for both writes and reads. In general, if *read consistency level* + *write consistency level* > *replication factor* we get strong consistency.
+Updates might not propagate to all replicas immediately. What if a read occurs before an update is propagated to all replicas? There is consistency requirement setting on writes and reads (*tunable consistency*) which determines how many replicas need to respond before we are happy with the result. This can be set at anything from *any* (we don't care how many) to *all* (all replicas have to respond, i.e. immediate consistency). *Quorum* offers strong consistency, if used for both writes and reads. In general, if *read consistency level* + *write consistency level* > *replication factor* we get strong consistency.
 
-What happens when a replica is down? Coordinator stores a hint that a given write needs to be sent and sends them when replica comes back online (*hinted handoff*). What if the coordinator dies and the hints are lost? Read-repair addresses it.
+Levels useful in practice:
+
+* *any* -- only applies to writes; for data that we can lose
+* *one* -- high availability and performance
+* *quorum* -- strong consistency
+* *local quorum* -- minimises latency with within-datacentre consistency
+* *each quorum* -- ?
+
+Noone uses *all* in practice; if we need that level of consistency we are typically better off with a different product.
+
+What happens when a replica is down? Coordinator stores a hint that a given write needs to be sent and sends them when replica comes back online (*hinted handoff*). What if the coordinator dies and the hints are lost? Read-repair addresses it. Note that hinted handoff only applies to situation when consistency level of write is lower than *all*. We always have the option to retry in the app if write at high consistency level fails and we need assurance about consistency.
+
+### Gossip
+
+Each node has a list of seed nodes it will try to contact in order to bootstrap. Every second every node picks three random nodes and sends the latest information it has about all nodes in the cluster (e.g. their key ranges, ping time etc.). Protocol described in more detail in Dynamo paper.
 
 ## Configuration
 
@@ -89,11 +110,72 @@ Useful commands:
 
 Command-line interface for executing CQL. Replaces `cassandra-cli`.
 
-## Data Layout
+Useful commands:
 
-### Composite Primary Keys
+* `describe keyspaces;`
+* `describe keyspace <keyspace name>`
+* `source <script path>`
+* `copy <table name> (<column names ...>) from '<csv file path>'`
 
-According to [a blog post](http://planetcassandra.org/blog/post/composite-keys-in-apache---cassandra) with single-column primary key the data is stored one record per row. With composite primary key it's stored one record per column, i.e. all records in one row. It's not clear what implications it has and whether this is still the case with Cassandra 2 (the post was about version 1).
+### `ccm`
+
+Useful for spinning up a local cluster for development:
+
+TODO: commands to initialise cluster.
+
+~~~
+ccm populate -n 3
+ccm start
+~~~
+
+## Data Model
+
+### Data types
+
+* numbers
+* text
+* time
+* collections
+* other (e.g. uuid)
+
+### Primary Key
+
+Key choice: natural key is ok if available. Surrogate is a common choice. Sequences are not supported due to distributed nature. `uuid` and `timeuuid` are available in Cassandra, with the latter providing k-order.
+
+Compound primary keys are allowed. In such cases the first column of primary key is the *partition key*.
+
+### Partition Key
+
+A.k.a *row key*. Each partition key designates a single storage engine row, so all writes for a single partition key happen atomically in isolation. In the logical view the row is then split by *primary key* int separate logical rows (groups of columns).
+
+### Storage
+
+Physical row is a set of cells:
+
+partition key  clustered 1  clustered 1     clustered 2   clustered 2
+-------------  -----------  --------------  ------------  -----------------
+ca58ee3c...    EC:created   EC:start_price  FISI:created  FISI:start_price
+               2013-08-29   44.88           2013-08-29    19.69
+ca58ee34...    ATR:created  ATR:start_price 
+               2013-08-12   4.31
+
+
+Each cell contains a name, value and timestamp. Cell name can hold data (i.e. a component of the key).
+
+`cqlsh` hides that from us, but we can take a peek at it using legacy `cassandra-cli`:
+
+~~~
+list watchlistitem limit 2;
+~~~
+
+### Writes
+
+All inserts are actually upserts. There is no way to find out if any data was overwritten as a result of an insert.
+
+### Reads
+
+* Materialised views for queries
+* Predicates on primary key can only be equality
 
 ## Benchmark
 
