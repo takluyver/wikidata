@@ -170,7 +170,7 @@ A common pattern for e.g. arbitrary searches is to create a dedicated table with
 
 ### Primary Key
 
-Key choice: natural key is ok if available. Surrogate is a common choice. Sequences are not supported due to distributed nature. `uuid` and `timeuuid` are available in Cassandra, with the latter providing k-order.
+Key choice: natural key is ok if available. Surrogate is a common choice. Sequences are not supported due to distributed nature. `uuid` and `timeuuid` are available in Cassandra, with the latter providing k-order. Note: `timeuuid` is preferable to `timestamp` when we need the ability to order by time and guarantee of uniqueness but don't need the actual timestamp value.
 
 Compound primary keys are allowed. In such cases the first column of primary key is the *partition key*.
 
