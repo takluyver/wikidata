@@ -188,6 +188,24 @@ To avoid huge rows we might want to use composite partition keys:
 primary key ((stock_symbol, trade_date), trade_id)
 ~~~
 
+### Indices
+
+Partition key index (primary index) is used for random access to table data. 
+
+#### Secondary Indices
+
+"Beginner's index". Implemented as an internal, non-replicated table (per node). Not very performant, querying it requires querying all the nodes, becaus each stores a portion of the index that corresponds to the keys it is responsible for. For those reasons they are not recommended in general, but can be useful for low cardinality of indexed values. In other cases we need to maintain our own tables that represent the indices we want to query by.
+
+### Counters
+
+Special column type in CQL. Not completely accurate due to distributed nature and inherent lack of idempotence. Offer good performance at consistency level *one*, at higher levels there is a performance hit due to required reads from multiple replicas. Do not support secondary indices and TTL.
+
+Update:
+
+~~~ {.sql}
+update stockcount set watch_count = watch_count + 1 where ...
+~~~
+
 ### Writes
 
 All inserts are actually upserts. There is no way to find out if any data was overwritten as a result of an insert.
