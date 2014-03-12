@@ -76,7 +76,7 @@ Levels useful in practice:
 * *one* -- high availability and performance
 * *quorum* -- strong consistency
 * *local quorum* -- minimises latency with within-datacentre consistency
-* *each quorum* -- ?
+* *each quorum* -- ensures consistency in the face of total datacentre loss
 
 Noone uses *all* in practice; if we need that level of consistency we are typically better off with a different product.
 
@@ -86,11 +86,28 @@ What happens when a replica is down? Coordinator stores a hint that a given writ
 
 Each node has a list of seed nodes it will try to contact in order to bootstrap. Every second every node picks three random nodes and sends the latest information it has about all nodes in the cluster (e.g. their key ranges, ping time etc.). Protocol described in more detail in Dynamo paper.
 
+### Read Repair
+
+When read is requested with consistency lower than all, the responses from fastest replicas will be returned to the client. The coordinator will also send a repair request to other replicas; they will compare their data with a checksum provided by the fastest replicas and if there is a mismatch will attempt to repair.
+
 ## Configuration
 
 * `conf/cassandra.yaml`. Main config. Should be the same for all nodes in a cluster.
 * `conf/cassandra-env.sh`. Sets JVM options. Max recommended heap size: 8G (due to GC pauses and to leave a lot of RAM for OS buffers)
 * `conf/log4j-server.properties`
+
+### Multi-Datacentre
+
+Useful for workload separation -- we might want different number of replicas depending on the type of workload, e.g. Solr with 1 and main database with 3.
+
+*Snitch* determines which DC/rack a node belongs to. Configured at node level, has to be the same for all nodes in a cluster. *PropertyFileSnitch* is commonly used; it reads network topology from a file. An alternative is automatic inference from network addresses.
+
+When using multi-datacentre setup the following need to be taken into consideration when defining the schema and upserts/queries: 
+
+* *keyspace*: must set proper replication strategy and set rf by datacentre class: `with replication = { 'NetworkTopologyStrategy', 'DC1': 3, 'DC2': 3 }`
+* *consistency level*: we might want to use DC-aware, e.g. local quorum or each quorum.
+
+Cassandra will try to minimise cross-datacentre communication -- coordinator will select one replica in remote datacentre as the local coordinator for that datacentre.
 
 ## Tools
 
@@ -121,6 +138,7 @@ Legacy tool, useful for peeking at the physical layout of data.
 Useful commands
 
 * `list <table name> limit <limit>`
+* `get <table name>[<partition key>]`
 
 ### `ccm`
 
@@ -219,11 +237,8 @@ Three collection types:
 
 ~~~ {.sql}
 create table user ( emails set<text> )
-
 insert into ... values ({'a@b.com', 'b@c.com'})
-
 update user set emails = emails + {'a@b.com'}
-
 update user set emails = emails - {'a@b.com'}
 ~~~
 
@@ -236,13 +251,9 @@ Storage: all elements of a set are encoded in the key
 
 ~~~ {.sql}
 create table user ( emails list<text> )
-
 insert into ... values (['a@b.com', 'b@c.com'])
-
 update user set emails = emails + {'a@b.com'} -- append
-
 update user set emails = {'a@b.com'} + emails -- prepend
-
 delete emails[0] from user
 ~~~
 
@@ -250,9 +261,7 @@ delete emails[0] from user
 
 ~~~ {.sql}
 create table user ( phone_nos map<varchar, varchar> )
-
 update user set phone_nos['work'] = '12345'
-
 delete phone_nos['work'] from user
 ~~~
 
@@ -271,7 +280,7 @@ All inserts are actually upserts. There is no way to find out if any data was ov
 
 ### Reads
 
-* Materialised views for queries
+* Materialised views need to be maintained for queries
 * Predicates on primary key can only be equality
 
 ## Benchmark
@@ -296,3 +305,4 @@ Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an un
 * [Blog post](http://bigdatanoob.blogspot.co.uk/2012/11/hbase-vs-cassandra.html) comparing Cassandra and HBase
 * [Blog post](http://planetcassandra.org/blog/post/composite-keys-in-apache---cassandra) on composite primary keys
 * Big Data Partnership course
+* Call me Maybe [blog post](http://aphyr.com/posts/294-call-me-maybe-cassandra/)
