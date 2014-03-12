@@ -112,6 +112,7 @@ Useful commands:
 * `describe keyspace <keyspace name>`
 * `source <script path>`
 * `copy <table name> (<column names ...>) from '<csv file path>'`
+* `trace on` -- enable debug tracing of commands
 
 ### `cassandra-cli`
 
@@ -172,7 +173,7 @@ A common pattern for e.g. arbitrary searches is to create a dedicated table with
 
 Key choice: natural key is ok if available. Surrogate is a common choice. Sequences are not supported due to distributed nature. `uuid` and `timeuuid` are available in Cassandra, with the latter providing k-order. Note: `timeuuid` is preferable to `timestamp` when we need the ability to order by time and guarantee of uniqueness but don't need the actual timestamp value.
 
-Compound primary keys are allowed. In such cases the first column of primary key is the *partition key*.
+Compound primary keys are allowed. In such cases the first column of primary key is the *partition key*, the remaining columns are *clustering columns*.
 
 ~~~ {.sql}
 primary key (stock_symbol, trade_id)
@@ -205,6 +206,59 @@ Update:
 ~~~ {.sql}
 update stockcount set watch_count = watch_count + 1 where ...
 ~~~
+
+### Collections
+
+If we have multiple e-mails per user, in relational db. we'd store them in a separate table. It's not suitable in Cassandra data model. In general we shouldn't be storing more than a couple of thousand elements in a collection due to storage overhead and read/write (in)efficiency.
+
+Each element in a collection can have its own TTL. Collections cannot be nested and cannot be parts of secondary indices.
+
+Three collection types:
+
+#### Set
+
+~~~ {.sql}
+create table user ( emails set<text> )
+
+insert into ... values ({'a@b.com', 'b@c.com'})
+
+update user set emails = emails + {'a@b.com'}
+
+update user set emails = emails - {'a@b.com'}
+~~~
+
+Storage: all elements of a set are encoded in the key
+
+* `emails:a@b.com`
+* `emails:c@d.com`
+
+#### List
+
+~~~ {.sql}
+create table user ( emails list<text> )
+
+insert into ... values (['a@b.com', 'b@c.com'])
+
+update user set emails = emails + {'a@b.com'} -- append
+
+update user set emails = {'a@b.com'} + emails -- prepend
+
+delete emails[0] from user
+~~~
+
+#### Map
+
+~~~ {.sql}
+create table user ( phone_nos map<varchar, varchar> )
+
+update user set phone_nos['work'] = '12345'
+
+delete phone_nos['work'] from user
+~~~
+
+Storage: key in name, value in value
+
+* name: `phone_nos:work` value: `12345`
 
 ### Writes
 
