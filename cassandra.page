@@ -53,7 +53,7 @@ The nodes are organised in a logical ring that represents the hash space in [DHT
 
 When client sends a request it is sent to a node (which one depends on policy, random by default) and that node assumes the role of a coordinator. If that node fails another node will be contacted. The coordinator computes the partition key using hash function and communicates with the node which holds the token for that partition key (and all replicas). It will participate in all the communication between the client and nodes responsible for the data. New drivers can be aware of cluster topology and can send requests directly to node responsible for the partition.
 
-Virtual Nodes: instead of being responsible for a single token, node can get a number (256 is a good default) of tokens. It makes admin tasks such as rebalancing of the cluster much easier.
+Virtual nodes: instead of being responsible for a single token, node can get a number (256 is a good default) of tokens. It makes admin tasks such as rebalancing of the cluster much easier and spreads the load more evenly. Also useful in case of heterogeneous hardware -- more powerful servers can be assigned more vnodes.
 
 ### Replication
 
@@ -290,7 +290,7 @@ All inserts are actually upserts. There is no way to find out if any data was ov
 * Materialised views need to be maintained for queries
 * Predicates on primary key can only be equality
 
-## I/O
+## Storage and I/O
 
 Read and write paths are separate and should not contend with each other in normal conditions. Under prolonged load they might start competing for I/O.
 
@@ -329,8 +329,21 @@ On startup commit log gets replayed and memtables are recreated.
 
 #### Compaction 
 
-Cassandra is designed to absorb load spikes very well. It will just write a lot of separate sstables. In order to maintain good read performance it periodically needs to combine the data from these files. Compaction runs periodically and reads sstables from disk, finds matching partition keys, combines the data and writes into a single file. Can be triggered by flush.
+Cassandra is designed to absorb load spikes very well. It will just write a lot of separate sstables. In order to maintain good read performance and get rid of removed data it periodically needs to combine the data from these files. Compaction runs periodically and reads sstables from disk, finds matching partition keys, combines the data and writes into a single file. Can be triggered by flush.
 
+A compaction strategy selects which files to compact, collates the partition keys, merges rows and writes new sstables. Strategies:
+
+* `SizeTieredCompactionStrategy` (default) -- triggered by appearance of more than 4 files of similar size they are compacted. Simple, but we have no control over when it will happen. Can be triggered with. **Requires 50% of disk space free** as during compaction there might be temporary duplication of all the data.
+* `LeveledCompactionStrategy` -- improves predictability of read performance. Level 0 is initial flush; each subsequent level is 10 times larger than the previous one and from level 1 on there is a fixed sstable size (120MB by default) -- unless a single partition is bigger, in which case it will be in its own file larger than the limit. Invariant for each level: each partition key will be in max one file -- compactions maintain this invariant. Since Cassandra 2.0 it also does size tiered compaction on level 0. Good for read-have workload with updates/deletes, but there is I/O overhead so it might struggle keeping up with write-heavy workload.
+
+Choice of strategy is complex and requires careful analysis.
+
+`nodetool compact` runs a full compaction and creates a single large file per table. Not recommended (unless scheduled regularly) since it prevents regular compaction that uses size tiered strategy from happening.
+
+In addition to these, there is also tombstone compaction that runs when the number of TTL=configured and deleted columns exceeds configured threshold. It runs on a single file and only if all partitions in the file are entire contained in that file.
+
+Tuning the performance of compaction might require setting JVM options such as thread priorities in `cassandra-env.sh`.
+ 
 ### Read Path
 
 #### Participating Components
@@ -353,8 +366,9 @@ Ideally few sstables should be accessed for read. If this is not the case it mig
 
 ## Admin
 
-* cleanup: `nodetool -h <address> -p <port> cleanup` -- i.e. compaction; this also happens automatically
-* decommissionning a node: `nodetool -h <address> -p <port> decommission` 
+* compaction: `nodetool -h <address> -p <port> compact` -- this also happens automatically
+* cleanup: `nodetool -h <address> -p <port> cleanup` -- removes redundant data from node, e.g. after a new node joined cluster and took over a replica
+* decommissioning a node: `nodetool -h <address> -p <port> decommission` 
 * repair: `nodetool -h <address> -p <port> repair` -- required to sort out deletes, so should be scheduled for entire cluster. Expensive, should be rolling through the nodes, not on all at once. Also required after changing replication factor. Takes long time to run.
 * remove node: `nodetool removenode <node id>` -- when node goes down, reallocates key ranges but does not cause the cluster to move the data around accordingly. Repair is needed for that.
 
