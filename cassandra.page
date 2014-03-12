@@ -334,7 +334,7 @@ Cassandra is designed to absorb load spikes very well. It will just write a lot 
 A compaction strategy selects which files to compact, collates the partition keys, merges rows and writes new sstables. Strategies:
 
 * `SizeTieredCompactionStrategy` (default) -- triggered by appearance of more than 4 files of similar size they are compacted. Simple, but we have no control over when it will happen. Can be triggered with. **Requires 50% of disk space free** as during compaction there might be temporary duplication of all the data.
-* `LeveledCompactionStrategy` -- improves predictability of read performance. Level 0 is initial flush; each subsequent level is 10 times larger than the previous one and from level 1 on there is a fixed sstable size (120MB by default) -- unless a single partition is bigger, in which case it will be in its own file larger than the limit. Invariant for each level: each partition key will be in max one file -- compactions maintain this invariant. Since Cassandra 2.0 it also does size tiered compaction on level 0. Good for read-have workload with updates/deletes, but there is I/O overhead so it might struggle keeping up with write-heavy workload.
+* `LeveledCompactionStrategy` -- improves predictability of read performance. Level 0 is initial flush; each subsequent level is 10 times larger than the previous one and from level 1 on there is a fixed sstable size (120MB by default) -- unless a single partition is bigger, in which case it will be in its own file larger than the limit. Invariant for each level: each partition key will be in max one file -- compactions maintain this invariant. Since Cassandra 2.0 it also does size tiered compaction on level 0. Good for read-heavy workload with updates/deletes, but there is I/O overhead so it might struggle keeping up with write-heavy workload.
 
 Choice of strategy is complex and requires careful analysis.
 
@@ -364,9 +364,28 @@ Note: commit log is not read by regular reads.
 
 Ideally few sstables should be accessed for read. If this is not the case it might mean that compaction is not keeping up and that our write rate is too high for system capacity.
 
+### Data Storage
+
+Directory structure: `data`/*keyspace*/*table*/*files...*
+
+File name schema:
+
+*keyspace*-*table*-*version*-*generation*-*component*
+
+* version: denotes cassandra version; newer versions in general can read older; there is a tool for upgrading sstables.
+* generation: higher number = older file
+* component:
+  * `Data` -- sstable
+  * `Index`
+  * `Filter` -- bloom filter 
+
+### Snapshots
+
+Hard links to table files; prevent compaction from removing compacted sstables. Snapshots can be created with `nodetool` on per-node basis. They are not queryable, only useful as restoration points.
+
 ## Admin
 
-* compaction: `nodetool -h <address> -p <port> compact` -- this also happens automatically
+* compaction: `nodetool -h <address> -p <port> compact` -- runs a full compaction, as opposed to incremental one that runs automatically (see [compaction](#compaction))
 * cleanup: `nodetool -h <address> -p <port> cleanup` -- removes redundant data from node, e.g. after a new node joined cluster and took over a replica
 * decommissioning a node: `nodetool -h <address> -p <port> decommission` 
 * repair: `nodetool -h <address> -p <port> repair` -- required to sort out deletes, so should be scheduled for entire cluster. Expensive, should be rolling through the nodes, not on all at once. Also required after changing replication factor. Takes long time to run.
