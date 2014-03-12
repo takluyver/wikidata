@@ -337,7 +337,7 @@ Cassandra is designed to absorb load spikes very well. It will just write a lot 
 
 In the order of access:
 
-* row cache (off heap) -- cache of slices read, entire rows at once; usually disabled or small, because BufferCache or mmap is more efficient. Only suitable for small rows accessed frequently.
+* row cache (off heap) -- cache of slices read, entire rows at once; usually disabled or small, because BufferCache or mmap is more efficient. Only suitable for small rows accessed frequently. To enable: `create table user (...) with caching = 'all'`
 * memtable (on heap)
 * bloom filter (off heap) -- specifies which files can contain parts of the row
 * key cache (if enabled; on heap) -- position of a given key in data file: `(sstable, (key, location))`. Allows us to avoid seek of the index file. Should always be on, has good hit ratio.
@@ -350,6 +350,13 @@ Note: commit log is not read by regular reads.
 #### Performance
 
 Ideally few sstables should be accessed for read. If this is not the case it might mean that compaction is not keeping up and that our write rate is too high for system capacity.
+
+## Admin
+
+* cleanup: `nodetool -h <address> -p <port> cleanup` -- i.e. compaction; this also happens automatically
+* decommissionning a node: `nodetool -h <address> -p <port> decommission` 
+* repair: `nodetool -h <address> -p <port> repair` -- required to sort out deletes, so should be scheduled for entire cluster. Expensive, should be rolling through the nodes, not on all at once. Also required after changing replication factor. Takes long time to run.
+* remove node: `nodetool removenode <node id>` -- when node goes down, reallocates key ranges but does not cause the cluster to move the data around accordingly. Repair is needed for that.
 
 ## Benchmark
 
