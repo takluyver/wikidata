@@ -375,9 +375,9 @@ File name schema:
 * version: denotes cassandra version; newer versions in general can read older; there is a tool for upgrading sstables.
 * generation: higher number = older file
 * component:
-  * `Data` -- sstable
-  * `Index`
-  * `Filter` -- bloom filter 
+    * `Data` -- sstable
+    * `Index`
+    * `Filter` -- bloom filter 
 
 ### Snapshots
 
