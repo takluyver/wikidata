@@ -331,6 +331,26 @@ On startup commit log gets replayed and memtables are recreated.
 
 Cassandra is designed to absorb load spikes very well. It will just write a lot of separate sstables. In order to maintain good read performance it periodically needs to combine the data from these files. Compaction runs periodically and reads sstables from disk, finds matching partition keys, combines the data and writes into a single file. Can be triggered by flush.
 
+### Read Path
+
+#### Participating Components
+
+In the order of access:
+
+* row cache (off heap) -- cache of slices read, entire rows at once; usually disabled or small, because BufferCache or mmap is more efficient. Only suitable for small rows accessed frequently.
+* memtable (on heap)
+* bloom filter (off heap) -- specifies which files can contain parts of the row
+* key cache (if enabled; on heap) -- position of a given key in data file: `(sstable, (key, location))`. Allows us to avoid seek of the index file. Should always be on, has good hit ratio.
+* sstable index summary (on heap) -- position in index file
+* primary indices (on disk)
+* sstables (on disk)
+
+Note: commit log is not read by regular reads.
+
+#### Performance
+
+Ideally few sstables should be accessed for read. If this is not the case it might mean that compaction is not keeping up and that our write rate is too high for system capacity.
+
 ## Benchmark
 
 Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an unindexed table on an SSD:
