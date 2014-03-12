@@ -129,7 +129,7 @@ Useful commands:
 * `describe keyspace <keyspace name>`
 * `source <script path>`
 * `copy <table name> (<column names ...>) from '<csv file path>'`
-* `trace on` -- enable debug tracing of commands
+* `tracing on` -- enable debug tracing of commands
 
 ### `cassandra-cli`
 
@@ -153,6 +153,13 @@ ccm status
 ~~~
 
 Then `ccm node1 cqlsh` or `ccm node1 cli` will give us `cqlsh`/`cassandra-cli` on given node.
+
+### `cassandra-stress`
+
+For running stress tests. Sample commands:
+
+* `cassandra-stress --threads=8 --num-keys=1000000 --keep-going`
+* `cassandra-stress --threads=8 --num-keys=1000000 --keep-going --operation=read`
 
 ## Data Model
 
@@ -283,6 +290,47 @@ All inserts are actually upserts. There is no way to find out if any data was ov
 * Materialised views need to be maintained for queries
 * Predicates on primary key can only be equality
 
+## I/O
+
+Read and write paths are separate and should not contend with each other in normal conditions. Under prolonged load they might start competing for I/O.
+
+### Write Path
+
+#### Components
+
+* memtable: a buffer, one per table
+* commit log: for durability, append-only, fsyncs from time to time. Only once fsync happens the data is durable. Stored in segments (which get recycled) in chronological order.
+* sstable: (sorted string table) files on the disk, write-once.
+
+#### Commit log fsync policies
+
+* Periodic (`CommitLogSyncPeriodicInMS`) -- default; the default time is 10 s.
+* Batch (`CommitLogSyncBatchWindowInMS`) -- only acks after fsync happened; suitable when we are writing in batches.
+
+#### Operation 
+
+In each node taking part in a write:
+
+1. write to memtable
+2. write to commit log (in memory, no fsync required)
+3. signal success to coordinator
+
+When limit is hit for a memtable, the data is transferred to a flush queue which gets flushed to disk in one sequential, efficient operation. The sstable file gets written and is never changed after that; new data (and updates) will be written to a new file. The writes are reconciled in memtable: if two competing updates are received before a flush only one of them will get written to sstable.
+
+On startup commit log gets replayed and memtables are recreated.
+
+#### Failure/slowness reasons:
+
+* commit log is full
+* OOM
+* data partition is full
+* lost a replica set (`UnavailableException`)
+* consistency is too high
+
+#### Compaction 
+
+Cassandra is designed to absorb load spikes very well. It will just write a lot of separate sstables. In order to maintain good read performance it periodically needs to combine the data from these files. Compaction runs periodically and reads sstables from disk, finds matching partition keys, combines the data and writes into a single file. Can be triggered by flush.
+
 ## Benchmark
 
 Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an unindexed table on an SSD:
@@ -304,5 +352,5 @@ Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an un
 * DataStax 2.0 [docs](http://www.datastax.com/documentation/cassandra/2.0/webhelp/)
 * [Blog post](http://bigdatanoob.blogspot.co.uk/2012/11/hbase-vs-cassandra.html) comparing Cassandra and HBase
 * [Blog post](http://planetcassandra.org/blog/post/composite-keys-in-apache---cassandra) on composite primary keys
-* Big Data Partnership course
+* [Big Data Partnership](http://www.bigdatapartnership.com) course
 * Call me Maybe [blog post](http://aphyr.com/posts/294-call-me-maybe-cassandra/)
