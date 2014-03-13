@@ -438,6 +438,7 @@ In addition to commonly used commands:
 * `cfstats` -- stats for column families (tables); read/write latency are not accurate
 * `cfhistograms` -- e.g. shows how many sstables were accessed per op -- we want majority at the top (low numbers);
 * `proxyhistograms` -- latencies as seen from coordinator (for ops that the queried node coordinated)
+* `tpstats` -- pending, blocked and dropped means node is unhealthy
 
 ### Troubleshooting
 
