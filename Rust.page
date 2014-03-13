@@ -64,8 +64,13 @@ Like Haskell's typeclasses.
 * private items are visible in all descendant modules
 * public items are visible in all modules
 
+## Language Gating
+
+Certain features of the language can be turned off or made conditional on presence of other features. This is useful e.g. for writing OS kernel, where all system calls are unavailable.
+
 ## References
 
 * [introductory presentation](http://www.youtube.com/watch?v=gfCtbGiHcg0)
 * [introduction](http://words.steveklabnik.com/a-30-minute-introduction-to-rust) by Steve Klabnik
 * [a blog post](http://paulkoerbitz.de/posts/Understanding-Pointers-Ownership-and-Lifetimes-in-Rust.html) on ownership
+* blog [on writing OS](http://jvns.ca/blog/2014/03/12/the-rust-os-story/) (includes language gating)
