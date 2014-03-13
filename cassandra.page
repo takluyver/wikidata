@@ -398,12 +398,12 @@ digraph cc {
   consistency -> resiliency
   "data model" -> "primary key";
   "data model" -> row;
-  distribution -> node;
+  distribution -> "node";
   distribution -> resiliency;
-  node -> bootstrap;
-  node -> gossip;
-  node -> repair;
-  node -> seed;
+  "node" -> bootstrap;
+  "node" -> gossip;
+  "node" -> repair;
+  "node" -> seed;
   operation -> "read path";
   operation -> repair;
   operation -> "write path";
@@ -420,6 +420,7 @@ digraph cc {
   "read path" -> index;
   "read path" -> sstable;
   "read perf" -> compaction;
+  repair -> "merkel tree";
   resiliency -> redundancy;
   resiliency -> "commit log";
   resiliency -> "hinted handoff";
