@@ -393,13 +393,15 @@ Hard links to table files; prevent compaction from removing compacted sstables. 
 
 ## Admin
 
+### Common Tasks
+
 * compaction: `nodetool -h <address> -p <port> compact` -- runs a full compaction, as opposed to incremental one that runs automatically (see [compaction](#compaction))
 * cleanup: `nodetool -h <address> -p <port> cleanup` -- removes redundant data from node, e.g. after a new node joined cluster and took over a replica
 * decommissioning a node: `nodetool -h <address> -p <port> decommission` 
 * repair: `nodetool -h <address> -p <port> repair` -- required to sort out deletes, so should be scheduled for entire cluster. Expensive, should be rolling through the nodes, not on all at once. Also required after changing replication factor. Takes long time to run.
 * remove node: `nodetool removenode <node id>` -- when node goes down, reallocates key ranges but does not cause the cluster to move the data around accordingly. Repair is needed for that.
 
-## Tuning Tips
+### Sizing and Tuning Tips
 
 * Wide vs. skinny partitions: massive rows can be inefficient, but billions of new small partitions per day is also bad -- need to find partitioning scheme that provides good compromise.
 * Cassandra has a very efficient cache, no need for another cache on top.
@@ -409,6 +411,42 @@ Hard links to table files; prevent compaction from removing compacted sstables. 
 * Try not to exceed 0.5 TB of data per node
 * Memory usage can be controlled by adjusting bloom filter, compression offset map and index summary properties.
 * Compaction can be tuned: `multithreaded_compaction`, `in_memory_compaction_limit_in_mb` etc.
+* if using spinning disks, split commit log and data directories onto separate spindles
+* SSDs are recommended for data; Cassandra's mode of writing doesn't wear them off quickly, consumer-grade SSDs are fine, no need for fusionIO, Violin etc.
+* no need for RAID, Cassandra's replication takes care of redundancy, JBOD (just a bunch of disks) feature is good for improving efficiency
+* Commit log does not benefit from SSD, rotational is fine. Typically no need for more than a couple GB. Could use RAID 1 for redundancy.
+* Node communication puts heavy load on the network, 1Gb/s or higher is recommended.
+
+### Monitoring
+
+* JMX -- tricky in datacentre environment
+* OpsCenter -- DataStax tool
+* logslash
+* `nodetool` -- good for quick glance
+
+#### JMX
+
+* `db` -- storage stats, compaction
+* `internal` -- gossip, hinted handoff
+* `net` -- failure detector, messaging service
+* `request` -- reads, writes, repliction
+
+#### `nodetool`
+
+In addition to commonly used commands:
+
+* `cfstats` -- stats for column families (tables); read/write latency are not accurate
+* `cfhistograms` -- e.g. shows how many sstables were accessed per op -- we want majority at the top (low numbers);
+* `proxyhistograms` -- latencies as seen from coordinator (for ops that the queried node coordinated)
+
+### Troubleshooting
+
+#### Data Corruption
+
+* usually hardware failure
+* don't decommission! It will hand over the corrupt data to other nodes without
+* `nodetool scrub` -- takes a snapshot and rewrites data that can be recovered into new sstables
+* `nodetool repair` -- will bring the missing data onto the node
 
 ## Benchmark
 
