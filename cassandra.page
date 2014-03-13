@@ -389,18 +389,24 @@ Hard links to table files; prevent compaction from removing compacted sstables. 
 ~~~ {.dot}
 digraph cc {
   rankdir = LR;
+
+  bootstrap -> rebalance;
   capacity -> compaction;
   capacity -> "compound primary key";
+  cluster -> "node";
+  cluster -> "rebalance";
   compaction -> sstable;
   compaction -> "layered";
   compaction -> "size tiered";
   consistency -> quorum;
-  consistency -> resiliency
   "data model" -> "primary key";
   "data model" -> row;
-  distribution -> "node";
+  decommission -> rebalance;
+  distribution -> consistency;
+  distribution -> cluster;
   distribution -> resiliency;
   "node" -> bootstrap;
+  "node" -> decommission;
   "node" -> gossip;
   "node" -> repair;
   "node" -> seed;
