@@ -529,7 +529,7 @@ digraph cc {
   "read path" -> tombstone
   "read perf" -> compaction
   rebalance -> "key range"
-  repair -> "merkel tree"
+  repair -> "merkle tree"
   "replication factor" -> replica
   redundancy -> replica
   resiliency -> redundancy
