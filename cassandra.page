@@ -328,6 +328,13 @@ On startup commit log gets replayed and memtables are recreated.
 * lost a replica set (`UnavailableException`)
 * consistency is too high
 
+#### Deletes
+
+Deletes are complicated by the fact that sstables are immutable. Due to distribution a replica can't remove the data as soon as it received the delete (TODO: why?). Instead, it creates a *tombstone* saying "at this time I deleted this key". Read path will then take these into account when returning data to the user. Eventually compaction will get rid of deleted data. 
+
+There needs to be a guarantee that a tombstone gets propagated to all replicas. There is a `gc_grace_period`
+setting (10 days by default) to allow for read repairs to take care of this. This still does not 100% guarantee propagation though, so in production we need to run scheduled repairs on every node more frequently than the grace period. 
+
 #### Compaction 
 
 Cassandra is designed to absorb load spikes very well. It will just write a lot of separate sstables. In order to maintain good read performance and get rid of removed data it periodically needs to combine the data from these files. Compaction runs periodically and reads sstables from disk, finds matching partition keys, combines the data and writes into a single file. Can be triggered by flush.
@@ -400,9 +407,12 @@ digraph cc {
   compaction -> "layered";
   compaction -> "size tiered";  
   consistency -> quorum;
+  consistency -> "read repair";
   coordinator -> "hinted handoff";
   "data model" -> keyspace;
   decommission -> rebalance;
+  delete -> compaction;
+  delete -> tombstone;
   distribution -> consistency;
   distribution -> cluster;
   distribution -> resiliency;
@@ -431,6 +441,7 @@ digraph cc {
   "read path" -> "key cache";
   "read path" -> index;
   "read path" -> sstable;
+  "read path" -> tombstone;
   "read perf" -> compaction;
   rebalance -> "key range";
   repair -> "merkel tree";
@@ -438,7 +449,6 @@ digraph cc {
   resiliency -> redundancy;
   resiliency -> "commit log";
   resiliency -> "hinted handoff";
-  resiliency -> "read repair";
   ring -> "key range";
   row -> cell;
   scalability -> sharding;
@@ -448,6 +458,7 @@ digraph cc {
   table -> "primary key";
   table -> row;
   "write path" -> "commit log";
+  "write path" -> delete;
   "write path" -> memtable;
   "write path" -> sstable;
   "write path" -> index;
