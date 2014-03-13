@@ -438,76 +438,78 @@ digraph cc {
   rankdir = LR
   node [shape=none]
 
-  bootstrap -> rebalance;
-  capacity -> compaction;
-  capacity -> "compound primary key";
-  cluster -> "node";
-  cluster -> rebalance;
-  cluster -> ring;
-  compaction -> sstable;
-  compaction -> "layered";
-  compaction -> "size tiered";  
-  consistency -> quorum;
-  consistency -> "read repair";
-  coordinator -> "hinted handoff";
-  "data model" -> keyspace;
-  decommission -> rebalance;
-  delete -> compaction;
-  delete -> tombstone;
-  distribution -> consistency;
-  distribution -> cluster;
-  distribution -> resiliency;
-  "JVM GC" -> "bloom filter";
-  keyspace -> table;
-  keyspace -> "replication factor";
-  "node" -> bootstrap;
-  "node" -> coordinator;
-  "node" -> decommission;
-  "node" -> gossip;
-  "node" -> "key range";
-  "node" -> repair;
-  "node" -> replica;
-  "node" -> seed;
-  operation -> "read path";
-  operation -> repair;
-  operation -> snapshot;
-  operation -> "write path";
-  "partition key" -> row;
-  performance -> "read perf";
-  performance -> "write perf";
+  bootstrap -> rebalance
+  capacity -> compaction
+  capacity -> "compound primary key"
+  cluster -> "node"
+  cluster -> rebalance
+  cluster -> ring
+  compaction -> sstable
+  compaction -> "layered"
+  compaction -> "size tiered"  
+  consistency -> quorum
+  consistency -> "read repair"
+  consistency -> repair
+  coordinator -> "hinted handoff"
+  coordinator -> replica
+  "data model" -> keyspace
+  decommission -> rebalance
+  delete -> compaction
+  delete -> tombstone
+  distribution -> consistency
+  distribution -> cluster
+  distribution -> resiliency
+  "JVM GC" -> "bloom filter"
+  keyspace -> table
+  keyspace -> "replication factor"
+  "node" -> bootstrap
+  "node" -> coordinator
+  "node" -> decommission
+  "node" -> gossip
+  "node" -> "key range"
+  "node" -> repair
+  "node" -> replica
+  "node" -> seed
+  operation -> "read path"
+  operation -> repair
+  operation -> snapshot
+  operation -> "write path"
+  "partition key" -> row
+  performance -> "read perf"
+  performance -> "write perf"
   performance -> "JVM GC"
-  "primary key" -> "cell";
-  "primary key" -> "compound primary key";
-  "primary key" -> "partition key";
-  "read path" -> "bloom filter";
-  "read path" -> "row cache";
-  "read path" -> "memtable";
-  "read path" -> "key cache";
-  "read path" -> index;
-  "read path" -> sstable;
-  "read path" -> tombstone;
-  "read perf" -> compaction;
-  rebalance -> "key range";
-  repair -> "merkel tree";
-  "replication factor" -> replica;
-  redundancy -> replica;
-  resiliency -> redundancy;
-  resiliency -> "commit log";
-  resiliency -> "hinted handoff";
-  ring -> "key range";
-  row -> cell;
-  scalability -> sharding;
-  scalability -> distribution;
-  sharding -> "partition key";
-  snapshot -> sstable;
-  table -> "primary key";
-  table -> row;
-  "write path" -> "commit log";
-  "write path" -> delete;
-  "write path" -> memtable;
-  "write path" -> sstable;
-  "write path" -> index;
-  "write perf" -> compaction;
+  "primary key" -> "cell"
+  "primary key" -> "compound primary key"
+  "primary key" -> "partition key"
+  "read path" -> "bloom filter"
+  "read path" -> "row cache"
+  "read path" -> "memtable"
+  "read path" -> "key cache"
+  "read path" -> index
+  "read path" -> sstable
+  "read path" -> tombstone
+  "read perf" -> compaction
+  rebalance -> "key range"
+  repair -> "merkel tree"
+  "replication factor" -> replica
+  redundancy -> replica
+  resiliency -> redundancy
+  resiliency -> "commit log"
+  resiliency -> "hinted handoff"
+  ring -> "key range"
+  row -> cell
+  scalability -> sharding
+  scalability -> distribution
+  sharding -> "partition key"
+  snapshot -> sstable
+  table -> "primary key"
+  table -> row
+  "write path" -> "commit log"
+  "write path" -> delete
+  "write path" -> memtable
+  "write path" -> sstable
+  "write path" -> index
+  "write perf" -> compaction
 }
 ~~~
 
