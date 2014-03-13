@@ -7,6 +7,7 @@ categories: it database nosql
 * cassandra.apache.org outdated
 * DataStax most up to date
 
+
 ## Architecture 
 
 ### Overview
@@ -382,6 +383,58 @@ File name schema:
 ### Snapshots
 
 Hard links to table files; prevent compaction from removing compacted sstables. Snapshots can be created with `nodetool` on per-node basis. They are not queryable, only useful as restoration points.
+
+## Concept Map
+
+~~~ {.dot}
+digraph cc {
+  rankdir = LR;
+  capacity -> compaction;
+  capacity -> "compound primary key";
+  compaction -> sstable;
+  compaction -> "layered";
+  compaction -> "size tiered";
+  consistency -> quorum;
+  consistency -> resiliency
+  "data model" -> "primary key";
+  "data model" -> row;
+  distribution -> node;
+  distribution -> resiliency;
+  node -> bootstrap;
+  node -> gossip;
+  node -> repair;
+  node -> seed;
+  operation -> "read path";
+  operation -> repair;
+  operation -> "write path";
+  "partition key" -> row;
+  performance -> "read perf";
+  performance -> "write perf";
+  "primary key" -> "cell";
+  "primary key" -> "compound primary key";
+  "primary key" -> "partition key";
+  "read path" -> "bloom filter";
+  "read path" -> "row cache";
+  "read path" -> "memtable";
+  "read path" -> "key cache";
+  "read path" -> index;
+  "read path" -> sstable;
+  "read perf" -> compaction;
+  resiliency -> redundancy;
+  resiliency -> "commit log";
+  resiliency -> "hinted handoff";
+  resiliency -> "read repair";
+  row -> cell;
+  scalability -> sharding;
+  scalability -> distribution;
+  sharding -> "partition key";
+  "write path" -> "commit log";
+  "write path" -> memtable;
+  "write path" -> sstable;
+  "write path" -> index;
+  "write perf" -> compaction;
+}
+~~~
 
 ## Admin
 
