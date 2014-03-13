@@ -435,7 +435,8 @@ Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an un
 
 ~~~ {.dot}
 digraph cc {
-  rankdir = LR;
+  rankdir = LR
+  node [shape=none]
 
   bootstrap -> rebalance;
   capacity -> compaction;
