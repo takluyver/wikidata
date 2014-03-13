@@ -2,12 +2,6 @@
 categories: it database nosql
 ...
 
-## Documentation
-
-* cassandra.apache.org outdated
-* DataStax most up to date
-
-
 ## Architecture 
 
 ### Overview
@@ -161,6 +155,10 @@ For running stress tests. Sample commands:
 
 * `cassandra-stress --threads=8 --num-keys=1000000 --keep-going`
 * `cassandra-stress --threads=8 --num-keys=1000000 --keep-going --operation=read`
+
+### `sstable2json`
+
+Allows to see the internal structure of sstable, e.g. how tombstones and TTL are represented.
 
 ## Data Model
 
@@ -333,7 +331,9 @@ On startup commit log gets replayed and memtables are recreated.
 Deletes are complicated by the fact that sstables are immutable. Due to distribution a replica can't remove the data as soon as it received the delete (TODO: why?). Instead, it creates a *tombstone* saying "at this time I deleted this key". Read path will then take these into account when returning data to the user. Eventually compaction will get rid of deleted data. 
 
 There needs to be a guarantee that a tombstone gets propagated to all replicas. There is a `gc_grace_period`
-setting (10 days by default) to allow for read repairs to take care of this. This still does not 100% guarantee propagation though, so in production we need to run scheduled repairs on every node more frequently than the grace period. 
+setting (10 days by default) to allow for read repairs to take care of this. This still does not 100% guarantee propagation though, so in production we need to run scheduled repairs on every node more frequently than the grace period.
+
+Deletes have non-obvious performance implications. Ideally deletes should be performed on entire partition. 
 
 #### Compaction 
 
@@ -342,7 +342,7 @@ Cassandra is designed to absorb load spikes very well. It will just write a lot 
 A compaction strategy selects which files to compact, collates the partition keys, merges rows and writes new sstables. Strategies:
 
 * `SizeTieredCompactionStrategy` (default) -- triggered by appearance of more than 4 files of similar size they are compacted. Simple, but we have no control over when it will happen. Can be triggered with. **Requires 50% of disk space free** as during compaction there might be temporary duplication of all the data.
-* `LeveledCompactionStrategy` -- improves predictability of read performance. Level 0 is initial flush; each subsequent level is 10 times larger than the previous one and from level 1 on there is a fixed sstable size (120MB by default) -- unless a single partition is bigger, in which case it will be in its own file larger than the limit. Invariant for each level: each partition key will be in max one file -- compactions maintain this invariant. Since Cassandra 2.0 it also does size tiered compaction on level 0. Good for read-heavy workload with updates/deletes, but there is I/O overhead so it might struggle keeping up with write-heavy workload.
+* `LeveledCompactionStrategy` -- improves predictability of read performance. Level 0 is initial flush; each subsequent level is 10 times larger than the previous one and from level 1 on there is a fixed sstable size (120MB by default) -- unless a single partition is bigger, in which case it will be in its own file larger than the limit. Invariant for each level: each partition key will be in max one file -- compactions maintain this invariant. Since Cassandra 2.0 it also does size tiered compaction on level 0. Good for read-heavy workload with updates/deletes, but there is I/O overhead so it might struggle keeping up with write-heavy workload. It is more memory-efficient since it can get away with less accurate bloom filter (0.1 false positive rate compared with 0.01 for size tiered strategy).
 
 Choice of strategy is complex and requires careful analysis.
 
@@ -361,7 +361,7 @@ In the order of access:
 * row cache (off heap) -- cache of slices read, entire rows at once; usually disabled or small, because BufferCache or mmap is more efficient. Only suitable for small rows accessed frequently. To enable: `create table user (...) with caching = 'all'`
 * memtable (on heap)
 * bloom filter (off heap) -- specifies which files can contain parts of the row
-* key cache (if enabled; on heap) -- position of a given key in data file: `(sstable, (key, location))`. Allows us to avoid seek of the index file. Should always be on, has good hit ratio.
+* key cache (if enabled; on heap) -- position of a given key in data files: `(key, list<(sstable, location)>)`. Allows us to avoid seek of the index file. Should always be on, has good hit ratio.
 * sstable index summary (on heap) -- position in index file
 * primary indices (on disk)
 * sstables (on disk)
@@ -391,6 +391,46 @@ File name schema:
 
 Hard links to table files; prevent compaction from removing compacted sstables. Snapshots can be created with `nodetool` on per-node basis. They are not queryable, only useful as restoration points.
 
+## Admin
+
+* compaction: `nodetool -h <address> -p <port> compact` -- runs a full compaction, as opposed to incremental one that runs automatically (see [compaction](#compaction))
+* cleanup: `nodetool -h <address> -p <port> cleanup` -- removes redundant data from node, e.g. after a new node joined cluster and took over a replica
+* decommissioning a node: `nodetool -h <address> -p <port> decommission` 
+* repair: `nodetool -h <address> -p <port> repair` -- required to sort out deletes, so should be scheduled for entire cluster. Expensive, should be rolling through the nodes, not on all at once. Also required after changing replication factor. Takes long time to run.
+* remove node: `nodetool removenode <node id>` -- when node goes down, reallocates key ranges but does not cause the cluster to move the data around accordingly. Repair is needed for that.
+
+## Tuning Tips
+
+* Wide vs. skinny partitions: massive rows can be inefficient, but billions of new small partitions per day is also bad -- need to find partitioning scheme that provides good compromise.
+* Cassandra has a very efficient cache, no need for another cache on top.
+* Important to be familiar with JMX metrics and monitor them on regular basis. `nodetool` gives an approximate, quick overview.
+* In general, better to have many small nodes instead of few beefy ones. Not so much problem nowadays with better memory management (off heap), but the philosophy is still to have many commodity machines.
+* Heap size should not exceed 8 GB, larger heaps cause long GC pauses.
+* Try not to exceed 0.5 TB of data per node
+* Memory usage can be controlled by adjusting bloom filter, compression offset map and index summary properties.
+* Compaction can be tuned: `multithreaded_compaction`, `in_memory_compaction_limit_in_mb` etc.
+
+## Benchmark
+
+Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an unindexed table on an SSD:
+
+* 9 GB (8 GB not counting commit logs and saved caches) on disk
+* 4h 51m
+
+`select count(*) from postings limit 100000000;` after the writes described above took ~10 mins to return.
+
+`create index account_idx on postings (account_id)` is asynchronous -- kicks off indexing in the background. Took over 8 hours, the index added 3 GB to disk usage.
+
+## Usage
+
+* [Instagram](http://planetcassandra.org/blog/post/instagram-making-the-switch-to-cassandra-from-redis-75-instasavings): auditing data, 12-node cluster of extra large EC2 instances, storing 1.2 TB across the cluster, peak writes 20k/s, reads 15k/s.
+* Netflix: 500 nodes, 30 clusters, 65 TB
+
+## Documentation
+
+* cassandra.apache.org outdated
+* DataStax most up to date
+
 ## Concept Map
 
 ~~~ {.dot}
@@ -417,6 +457,7 @@ digraph cc {
   distribution -> cluster;
   distribution -> resiliency;
   keyspace -> table;
+  keyspace -> "replication factor";
   "node" -> bootstrap;
   "node" -> coordinator;
   "node" -> decommission;
@@ -445,6 +486,7 @@ digraph cc {
   "read perf" -> compaction;
   rebalance -> "key range";
   repair -> "merkel tree";
+  "replication factor" -> replica;
   redundancy -> replica;
   resiliency -> redundancy;
   resiliency -> "commit log";
@@ -465,30 +507,6 @@ digraph cc {
   "write perf" -> compaction;
 }
 ~~~
-
-## Admin
-
-* compaction: `nodetool -h <address> -p <port> compact` -- runs a full compaction, as opposed to incremental one that runs automatically (see [compaction](#compaction))
-* cleanup: `nodetool -h <address> -p <port> cleanup` -- removes redundant data from node, e.g. after a new node joined cluster and took over a replica
-* decommissioning a node: `nodetool -h <address> -p <port> decommission` 
-* repair: `nodetool -h <address> -p <port> repair` -- required to sort out deletes, so should be scheduled for entire cluster. Expensive, should be rolling through the nodes, not on all at once. Also required after changing replication factor. Takes long time to run.
-* remove node: `nodetool removenode <node id>` -- when node goes down, reallocates key ranges but does not cause the cluster to move the data around accordingly. Repair is needed for that.
-
-## Benchmark
-
-Writing 100m small rows (5 cols, char(1)/bigint/decimal/timestamp) rows to an unindexed table on an SSD:
-
-* 9 GB (8 GB not counting commit logs and saved caches) on disk
-* 4h 51m
-
-`select count(*) from postings limit 100000000;` after the writes described above took ~10 mins to return.
-
-`create index account_idx on postings (account_id)` is asynchronous -- kicks off indexing in the background. Took over 8 hours, the index added 3 GB to disk usage.
-
-## Usage
-
-* [Instagram](http://planetcassandra.org/blog/post/instagram-making-the-switch-to-cassandra-from-redis-75-instasavings): auditing data, 12-node cluster of extra large EC2 instances, storing 1.2 TB across the cluster, peak writes 20k/s, reads 15k/s.
-* Netflix: 500 nodes, 30 clusters, 65 TB
 
 ## References
 
