@@ -456,6 +456,7 @@ digraph cc {
   distribution -> consistency;
   distribution -> cluster;
   distribution -> resiliency;
+  "JVM GC" -> "bloom filter";
   keyspace -> table;
   keyspace -> "replication factor";
   "node" -> bootstrap;
@@ -473,6 +474,7 @@ digraph cc {
   "partition key" -> row;
   performance -> "read perf";
   performance -> "write perf";
+  performance -> "JVM GC"
   "primary key" -> "cell";
   "primary key" -> "compound primary key";
   "primary key" -> "partition key";
