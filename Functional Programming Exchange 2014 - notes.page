@@ -394,11 +394,71 @@ If we have separate modules we might need to map errors from one to errors in th
 
 *Anil Madhavapeddy*
 
+Cambridge Uni.
+
+* Compositionality is difficult in distributed systems.
+* APIs such as POSIX are difficult to evolve. The illusion of "standards" no longer holds, we needs bits of POSIX and bits of OS-specific code.
+* Lets assume we have a clean slate and see where we can go
+* why OCaml? Powerful module system very useful for programming at scale. We can build applications as functors across OS functionality such as I/O
+* develop on Unix but compile on specialised 
+* Mirage: 1MB microkernel, including device drivers, TCP and HTTP stack; can run on Xen or public cloud
+
+Current virtual appliances: host OS -> guest OS -> app
+
+Cloud: we don't need all of this flexibility: separate device for web server, db etc. The compiler will link in the network stack, device drivers etc. analyse and optimise everything together. Hypervisor gives us a stable hardware interface.
+
+OCaml modules let us abstract over OS functionality
+
+~~~ {.asciiart}
+       TCP(ETH)
+         |
+         v
+APP <- HTTP <- TCP <- UNIX
+~~~
+
+SAT-solver picks the right modules for a specific target. All libraries are small and focused and compose nicely.
+
+Mirage: library operating system; no isolation between processes, but a lot of control and performance. Flat address space, guraranteed contiguous heap.
+
+The only monad: for concurrency (cooperative threading). Backend on top of Unix system calls or on top of Xen.
+
+Performance
+
+* Incredibly small appliances images: web server under 200 KB.
+* Boot time: 10 ms -- you can boot up a VM for every incoming connection!
+
+opam: precise dependency management:
+
+source + config ---opam---> appliance
+
+personal hosting FTW
 
 
 ## QuickChecking Riak
 
 *John Hughes*
+
+Testing API: random sequence of API calls, if it fails, we shrink the list of calls to minmal one -- reduce noise.
+
+Riak: how do you test eventual consistency? If at the end of the test it's not consistent, perhaps it's not "eventually" yet?
+
+Start with one key: our model of the state of the system involves just one value, that is stored under the key. Now we can generate a sequence of `put` and `get` calls  and compare actual results with computed model.
+
+* discovered that put with new object leads to loss of data due to vector clocks
+
+We don't want to put vector clocks in our model; instead, we record what was each client's last view of the value and add a rule that if we have already interacted with a key then we must update it, not create a new object.
+
+Conflict resolution: in case of write conflict conflicting values are stored and all are returned to the client on next get. Need to include that in the model. That gets complicated because of vector clock optimisation (one clock per collection). But our model gets simpler as a result.
+
+Failures can be modelled by arbitrary node fallbacks on every API call and then performing all handofs.
+
+QuickCheck produced minimal scenario (API calls and network splits) that lead to data loss.
+
+G -> QuickCheck poolboy (80 unit tests, all passing, lots of issues found)
+
+Experiment with students: coming up with QC properties is difficult, but if we are able to do this then they are much more effective at finding issues than unit tests.
+
+Shrinking in presence of non-determinism: run shrunk case lots of times; if it fails at least once it's a valid counterexample.
 
 
 ## Park Bench
