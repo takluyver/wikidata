@@ -318,15 +318,82 @@ What we need:
 * `unsafePerformIO`
 * `EitherT`
 
+Q (Wadler): so how should we design a functional API wrappers?
+
+A: in Scala/Java, it's not hard -- there are mechanisms for dealing with external resources
+
 
 ## Railway Oriented Programming
 
 *Scott Wlaschin*
 
+Happy path programming -- what we see in most FP tutorials: we can just compose a bunch of functions:
+
+* receive request
+* validate and canonicalise request
+* update existing user record
+* send verification email
+* return result to user
+
+But what when an error occurs somewhere in that chain?
+
+* samples of silly errors, hilarious
+
+In imperative code: `try {...} catch {...}`, `if (success) {...}` -- typically 200% extra lines of code, ugly as well
+
+In functional: `Either Success Failure`.
+
+Another monad tutorial -- with railway analogy:
+
+~~~ {.asciiart}
+ validate     update  ...
+--*---success--*----  ...
+   \            \
+----*--failure---*--- ...
+~~~
+
+How do we turn
+
+~~~ {.asciiart}
+---*------
+    \
+     -----
+~~~
+
+into
+
+~~~ {.asciiart}
+---*------
+    \
+-----*----
+~~~
+
+?
+
+`bind` (>>=)
+
+### Categorising errors
+
+~~~ {.haskell}
+data ErrorMessage = EmailMustNotBeBlank
+                  | EmailNotValid EmailAddress
+                  | SmtpTimeout SmtpConnection
+                  | DbUserNotFoundError UserId
+                  | ... -- everything that can go wrong
+
+data Result t = Success t
+              | Failure ErrorMessage
+~~~
+
+List of all errors is useful -- we can discuss with users what should happen, we have to deal with all of them anyway.
+
+If we have separate modules we might need to map errors from one to errors in the other.
+
 
 ## Mirage
 
 *Anil Madhavapeddy*
+
 
 
 ## QuickChecking Riak
