@@ -460,5 +460,4 @@ Experiment with students: coming up with QC properties is difficult, but if we a
 
 Shrinking in presence of non-determinism: run shrunk case lots of times; if it fails at least once it's a valid counterexample.
 
-
-## Park Bench
+How to simulate network failures? That took too much time, so we tested extracted functions which allowed us to tell them when network split occurred. Basho guys later refactored their decision procedures so that this test could be performed on real system without actually shutting down the node.
