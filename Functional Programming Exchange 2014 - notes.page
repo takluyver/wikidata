@@ -1,0 +1,149 @@
+
+
+## A Practical Theory of Language-Integrated Query
+
+*Philip Wadler*
+
+Most important thing about functional languages: they are DSLs (for creating other DSLs). That is because lambda abstraction is built in and the way they work makes it easy to decompose problems. One of the first papers on FP: Landin's "the next 700 programming languages". Worth reading, as well as McCarthy's original Lisp paper.
+
+* Links (the Links in Edinburgh; at the other end of the meadows from Hope; Hope is an early FP language) -- nice research project
+* at the same time Erik Meijer et al. released LINQ -- working thing
+
+How do you compare the two? Build a theory!
+
+Table comparing -- F# 2, 3 and their theory: the theory always works and can be much faster, there is a theorem.
+
+Rejected from DB conference as too theoretical.
+
+Basic idea: quotation.
+
+~~~ {.fsharp}
+{people = [
+	{name = "Alex", age = 60};
+	{name = "Bert", age = 56};
+	{name = "Cora", age = 33};
+	{name = "Drew", age = 31};
+	{name = "Edna", age = 21};
+	{name = "Fred", age = 60};]}
+
+type DB = {people: {name: string; age: int} list}
+
+type Names = {name: string} list
+
+let db: Expr<DB> = <@ database("People") @>
+~~~
+
+Problems with this representation:
+
+* some databases don't fit in memory
+* requires full scans
+
+`<@ ... @>` is a quotation -- the parse tree of the expression between the brackets
+
+`<@ database("People") @>` denotes expression that, if executed, reads in the entire database.
+
+~~~ {.fsharp}
+let range(a: int, b: int): Expr<Names> =
+  <@ for w in (%db).people do
+     if (%lift(a)) <= w.age && w.age < (%lift(b)) then
+     yield {name: w.name} @>
+~~~
+
+now, `run(range(30, 40))` will produce something isomorphic to
+
+~~~ {.sql}
+selectd w.name as name
+from people as w
+where 30 <= w.age and w.age < 40
+~~~
+
+* `%` -- splice: inserts a parse tree at this place
+* `lift` -- makes
+
+More difficult in F#:
+
+~~~ {.fsharp}
+let satisfies: Expr<(int -> bool) -> Names> =
+  <@ fun(p) -> for w in (%db).people do
+     if p(w.age) then
+     yield {name: w.name} @>
+~~~
+
+`run(<@(%satisfies)(fun(x) -> 30 <=x && x < 40))` produces the same query as before.
+
+How about efficiency? We don't care -- the cost is in executing the query, not generating it. We should care about being able to clearly express the intent.
+
+Aside: scala uses type-based quotation which are more fragile than direct quotations.
+
+Now for something really cool: dynamic query generation.
+
+~~~ {.fsharp}
+type Predicate = 
+  | Above of int
+  | Below of int
+  | And of Predicate * Predicate
+  | Or of Predicate * Predicate
+  | Not Predicate
+
+let t_0: PRedicate = And(Above(30), Below(40))
+
+let rec P(t: Predicate): Expr<int -> bool> =
+  match t with
+    | Above(a) -> <@ fun(x) -> (%lift(a)) <= x @>
+    // ...
+    | Not(t)   -> <@ fun(x) -> not(%P(t)(x)) @>
+~~~
+
+This is very, very hard in LINQ.
+
+What our technique supports:
+
+* Join queries
+* Abstractioin over values
+* Abstraction over predicates
+* Composition of queries
+* Dynamic gneeration of queries
+* Nested intermediate data
+* Compiling XPath to SQL
+
+> Don't be afraid of maths. It's a candle in the darkness!
+
+
+
+
+## ParaForming: Forming Parallel Functional Programs Using Refactoring
+
+*Kevin Hammond*
+
+
+## Build Your Own Lisp for Great Justice
+
+*Bodil Stoke*
+
+
+## Data Science using FP
+
+*Amanda Launcher*
+
+
+## Teaching an Old Dog New Tricks: Wrapping Imperative API in a Functional One
+
+*Chris Marshall*
+
+
+## Railway Oriented Programming
+
+*Scott Wlaschin*
+
+
+## Mirage
+
+*Anil Madhavapeddy*
+
+
+## QuickChecking Riak
+
+*John Hughes*
+
+## Park Bench
+
