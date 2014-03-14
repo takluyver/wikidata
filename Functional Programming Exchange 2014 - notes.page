@@ -211,10 +211,90 @@ Book on Skeleton-based approach in Haskell is in the works.
 
 *Bodil Stoke*
 
+Bodol: Clojure + Haskell; pure, immutable, homoiconic, typed
+
+~~~ {.lisp}
+(f fac
+  0 -> 1
+  n -> (* n (fac (- n 1))))
+~~~
+
+Built in clojure. Uses instaparse for parsing, which takes in EBNF.
+
+Elementary functions (after MacCarthy): `cons`, `car`, `cdr`, `cond`, `eq`, `atom`, `lambda`, `lavel`, `quote` 
+
+Eval based on state monad (demo of how to do it in clojure: `reduce-state`)
+
+Pattern matching built using `core.logic`.
+
+Type system also built `core.logic`. Not good, because doesn't give reasons for type errors, just says "no".
+
+~~~ {.clojure}
+(run ! [succ]
+  (fresh [a b +]
+         (== + [:fun :number :number :number]))
+         (== succ [:fun a b])
+         (== + [:fun a :number b]))
+~~~
+
+How to name:
+
+* person's name (Haskell)
+* CS concept
+* append "Script" to a popular language
+* leter increment
+
 
 ## Data Science using FP
 
 *Amanda Launcher*
+
+(Neo4j product demo)
+
+data science: study of generalisable extraction of knowledge from data
+
+science: proving stuff
+
+RDBMS + function chaiing is great to determine a single fact, but changing the functions requires reprocessing everything. Also not very friendly to data scientists.
+
+data complexity = f(size, semi-structure, connectedness)
+
+semi-structure: sparse tables
+connectedness: join tables
+
+graph databases are good for densely-connected, semi-structured domains
+
+* nodes: entities; (instances instead of classes of data)
+* edges: relationships; can have properties
+* labels: e.g. for marking what type of node it is (Person, Address etc.)
+
+### Query Language: Cypher
+
+Matching pattern
+
+~~~
+()-->()
+(:Person)-[:FRIEND]->(:Person)
+(:Person{name:'Peter'})-[:FRIEND]->(:Person{name:'Lucy'})
+(p1:Person{name:'Peter'})-[r:FRIEND]->(p2:Person{name:'Lucy'})
+~~~
+
+Example query:
+
+~~~
+match (:Person{name:'Peter'})-[:FRIEND]->(friend)
+return friends
+~~~
+
+~~~
+match (n) return n limit 100
+~~~
+
+Sample applications:
+
+* dating recommendations
+* fraud detection: taking loans without intention to repay
+
 
 
 ## Teaching an Old Dog New Tricks: Wrapping Imperative API in a Functional One
@@ -235,5 +315,6 @@ Book on Skeleton-based approach in Haskell is in the works.
 ## QuickChecking Riak
 
 *John Hughes*
+
 
 ## Park Bench
