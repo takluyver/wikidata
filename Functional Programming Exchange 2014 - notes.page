@@ -302,6 +302,22 @@ Sample applications:
 
 *Chris Marshall*
 
+Experience report (as opposed to a review/survey) on putting Scala API on top of Java one.
+
+* Furnace -- a java system NIO-based on top of RDBMS
+* transaction id + events to create new one, update existing one etc
+
+What we want:
+
+* Tagged types for transaction id and event id
+* purity
+
+What we need:
+
+* trampolines 
+* `unsafePerformIO`
+* `EitherT`
+
 
 ## Railway Oriented Programming
 
