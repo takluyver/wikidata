@@ -124,10 +124,87 @@ Note: F# only has closed quotations:.
 
 Normalising the query never makes it worse. Published P-LINQ library.
 
+### Q&A
+
+* Erweb makes even stronger guarantees, but requires much more powerful type system
+
+### Lesson
+
+Quotations are amenable to static analysis and theoretical treatment.
+
+
 
 ## ParaForming: Forming Parallel Functional Programs Using Refactoring
 
 *Kevin Hammond*
+
+1985: 12-40 MHz
+1993 Pentium: 60-300 MHz
+2000: Pentium 4 1.3-3.6 GHz
+
+-- frequency wall: power usage increases with cube of frequency. 4 GHz CPU never went into prod, 300 Watts
+
+2006: Core Duo 1.8-3.33 GHz
+2013: Xeon Phi: 60 cores at 1 GHz
+
+### Near Future
+
+* megacore, upt to millions of small cores
+* with hundreds of dedicated lightweight integer units and separate floating point units. Likely to be heterogeneous.
+* not even NUMA, no shared memory at all -- Xeon 5 has no shared memory; message passing between cores, each core running a mini-linux
+
+Samsung Eynos 5 Octa: 8 cores, 4 of which are dark 4 are high-performance, 4 low performance
+
+> If we don't solve the multicore challenge, then no other advances will matter!
+
+3^8 threads created in 5 seconds on 16 core machine. 20k of them were actually executed.
+
+Wrote the first parallel haskell compiler.
+
+> Not every problem can't be prallelised
+
+Really? (example with building a brick wall)
+
+* Linear speedup is extremely hard to achieve (Amdahl's law)
+* The trick to recognise dependencies and break them down to strong ones
+
+How do we make programmers think parallel? New high level programming constructs for dealing with millions of threads.
+
+* deadlocks must be eliminated by design
+* preformance informatin must be included as part of the design -- we can't afford "correct first, optimal later"
+* existing algorithms often don't parallelise well -- need to invent new ones from scratch
+
+Bob Harper: The only thing that works for parallel is FP
+
+concurrency: illusion; parallelism: the real thing
+
+ParaForm:
+
+identify components using semi-automatic refactoring
+identify common patterns (TODO: photo)
+data parallelism/task parallelism
+
+Skel library for Erlang: fully nestable DSL for parallelism. Primitives such as 
+* `pipe`
+* `farm`
+
+ParaPhrase: takes a program and transforms it into code that can be run on heterogeneous parallel machine.
+
+Could be built into IDE: inspections that suggest transformation and refactorings to transform the code.
+
+Example of Wrangler (Emacs-based Erlang refactoring tool).
+
+* productivity improved 10-fold compared to manual refactoring while giving the same performance.
+
+Dependent types allow us to use simple definition of aparllel skeletons at type level.
+
+Implemented in Eclipse for C++(11)
+
+Book on Skeleton-based approach in Haskell is in the works.
+
+[http://www.paraphrase-ict.eu]()
+
+[http://www.project-advance.eu]()
 
 
 ## Build Your Own Lisp for Great Justice
@@ -160,4 +237,3 @@ Normalising the query never makes it worse. Published P-LINQ library.
 *John Hughes*
 
 ## Park Bench
-
