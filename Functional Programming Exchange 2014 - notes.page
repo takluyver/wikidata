@@ -277,6 +277,7 @@ Matching pattern
 (:Person)-[:FRIEND]->(:Person)
 (:Person{name:'Peter'})-[:FRIEND]->(:Person{name:'Lucy'})
 (p1:Person{name:'Peter'})-[r:FRIEND]->(p2:Person{name:'Lucy'})
+(p1:Person{name:'Peter'})-[r:FRIEND*1..2]->(p2:Person{name:'Lucy'})
 ~~~
 
 Example query:
@@ -293,8 +294,8 @@ match (n) return n limit 100
 Sample applications:
 
 * dating recommendations
-* fraud detection: taking loans without intention to repay
-
+* fraud detection: taking loans without intention to repay; can associate people with identification info and find shared bits of id to identify fraud rings.
+* logistics: calculating optimal route for parcel deliveries (demo didn't work)
 
 
 ## Teaching an Old Dog New Tricks: Wrapping Imperative API in a Functional One
