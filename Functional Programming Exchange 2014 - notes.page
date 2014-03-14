@@ -15,7 +15,7 @@ Table comparing -- F# 2, 3 and their theory: the theory always works and can be 
 
 Rejected from DB conference as too theoretical.
 
-Basic idea: quotation.
+Basic idea: **quotation**.
 
 ~~~ {.fsharp}
 {people = [
@@ -52,7 +52,7 @@ let range(a: int, b: int): Expr<Names> =
 now, `run(range(30, 40))` will produce something isomorphic to
 
 ~~~ {.sql}
-selectd w.name as name
+select w.name as name
 from people as w
 where 30 <= w.age and w.age < 40
 ~~~
@@ -108,7 +108,21 @@ What our technique supports:
 
 > Don't be afraid of maths. It's a candle in the darkness!
 
+* closed quotation: `Expr<A -> B>` 
+* open quotation: `Expr<A> -> Expr<B>`
 
+Note: F# only has closed quotations:.
+
+### Theory
+
+* ordinary typing rules for lambda calculus plus `for`, `run` and `lift`, `database`, `antiquote`
+* normalisation rules -- symbolic evaluation; well known rules, always terminate
+* normalisation for ad-hoc rewriting (to generate legal SQL) -- need 
+* theorem: if L has type A then ...
+
+### Practice
+
+Normalising the query never makes it worse. Published P-LINQ library.
 
 
 ## ParaForming: Forming Parallel Functional Programs Using Refactoring
