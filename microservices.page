@@ -1,0 +1,14 @@
+---
+categories: it
+...
+
+## Notes from Scale Summit
+
+Advantage: enables ownership. Everyone on the (small) team is able to own and understand the product end to end.
+
+Netflix: duplication is not bad, internal competition is fine -- e.g. two implementations of basket.
+
+Unix philosophy a good example. Competing tools for doing a single thing well.
+
+Conway's Law: software produced by an organisation reflects the internal politics of that organisation.
+
