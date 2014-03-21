@@ -1,0 +1,46 @@
+~~~
+categories: it nosql database
+...
+
+## Notes from Scale Summit
+
+60 gb logs/day
+injest cluster -> ES cluster (on AWS)
+
+GDS (logstash) + 3 node cluster with 90k docs
+
+3 nodes + network partition -> split brain (open bug)
+recovery from split brain -> kill the part of the cluster that has wrong data.
+
+flexibility: site search and document lookup have different requirements, better to keep them separate.
+
+schema changes are difficult, it's not really schema free
+
+easy changes:
+
+adding field
+adding type
+
+can't change how a field is indexed
+can plug in custom tokeniser (java)
+
+
+2 instances of data losses
+
+no streaming backup, only snapshot
+
+standard practice: index per day, moving older data to slower hardware
+
+noone uses it for large, permanent indexes
+
+gov.uk to migrate content of pages from mongo to ES, so that they manage one data store. Not sure it's a great idea, but no immediate
+
+Lucene index limit: 2.1 billion -- ES started throwing exceptions; (is it a limit per shard?)
+
+Guardian: API, will use as primary store
+
+HTTP access = shell access
+
+* turn off automatic schema creation
+
+is Lucene index fragmentation a problem?
