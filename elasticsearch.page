@@ -1,4 +1,4 @@
-~~~
+---
 categories: it nosql database
 ...
 
@@ -43,4 +43,4 @@ HTTP access = shell access
 
 * turn off automatic schema creation
 
-is Lucene index fragmentation a problem?
+is Lucene index fragmentation a problem? -> you don't want to run above 25% disk space usage!
