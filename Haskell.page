@@ -1,4 +1,3 @@
-
 My playground for learning: [Habaź](https://github.com/mmakowski/habaz)
 
 Tutorial on packaging an app: [http://en.wikibooks.org/wiki/Haskell/Packaging]
@@ -10,6 +9,7 @@ Tutorial on packaging an app: [http://en.wikibooks.org/wiki/Haskell/Packaging]
 `do` is used when the IO block consists of more than one expression
 
 These two have the same result:
+
 ~~~ { .haskell }
 let x = pureValue 
 x <- return pureValue
