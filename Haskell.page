@@ -1,5 +1,4 @@
 
-
 My playground for learning: [Habaź](https://github.com/mmakowski/habaz)
 
 Tutorial on packaging an app: [http://en.wikibooks.org/wiki/Haskell/Packaging]
@@ -33,3 +32,7 @@ x <- return pureValue
 ## Trivia
 
   * `newtype` keyword is for defining thin wrappers for existing types (one value constructor, one field). It can be used to allow the wrapped type to have multiple instances of the same type class; see `ZipList`. It's more efficient than `data`.
+
+## References
+
+* [list of good tutorials on advanced topics](http://www.haskellforall.com/2014/03/introductions-to-advanced-haskell-topics.html)
