@@ -1,0 +1,56 @@
+*LHUG 26/03/2014*nce
+
+Two dominant ways:
+
+* Bayesian inference
+* Maximum likelihood
+
+under certain assumptions the difference between these is philosophical
+
+How do we implement it (in Haskell)?
+
+~~~ {.haskell}
+type Prob a = Seed (a, Seed)
+unit :: Prob Double
+sample :: Prob a -> IO a
+
+instance Monad Prob where
+  return x = \seed -> (x, seed)
+
+normal :: Double -> Double -> Prob Double
+
+myModel = do
+  amp <- gamma 1 1
+  phase <- uniform 0 (2*pi)
+  freq <- gamma 1 1
+  sd <- gamma 1 1
+
+repeatM 100 $ do
+  t <- uniform - 100
+  y <- normal (amp*sin(freq*t+phase)) sd
+  return (t,y)
+
+observedData :: [(Double, Double)]
+p <- estimate myModel observedData
+
+p.freq :: Prob Double
+~~~
+
+Very difficult to achieve in Haskell, so wrote a custom language, Baysig
+
+How to estimate things: to obtain likely values
+
+* Metropolis-Hastings (decent efficiency)
+* Hamiltonian Monte Carlo (fast, requires ggradient)
+
+unfoldM -- hidden Markov model -- the seed values are not observed. Autorgression is a special case: timeseries model where the next value depends on the hidden value.
+
+Geometric Brownian Motion model used for analysis of Black-Scholes.
+
+Nice way of expressing option pricing: just map payoff over the future distribution of price.
+
+What is the unit of composition in data analysis? Model or procedure? In the latter case functional approach is good, otherwise we need more infrastructure support: `estimate` and `update` operators.
+
+## References
+
+* [openbrain.org]()
