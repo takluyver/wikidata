@@ -1,0 +1,74 @@
+---
+categories: computer_science
+...
+
+## Talk by Alex S. Green, LHUG 26/03/2014
+
+QCS Plato project
+
+If we were able to build a quantum computer today, how large (in terms of quantum gates) would it need to be to run interesting quantum algorithms?
+
+Quipper: a language for quantum programming embedded in Haskell.
+
+qubits -- generalisation of bits into quantum realm. Can exist in superposition of 1 and 0 at the same time:
+
+valid states: $\psi=\alpha 0 + \beta 1$ where $\alpha$ and $\beta$ are amplitudes (complex numbers). Normalisation condition $||\alpha||^2 + ||\beta||^2 = 1$.
+
+There is no way to measure the state of an arbitrary qubit, because (Born's rule) measuring collapses the wave function; if we measure we only get 0 or 1.
+
+we can use the amplitudes of a qubit to give us the probabilities of measuring either state; we are left with 0 with probability $||\alpha||^2$; similar for probability of 1.
+
+n qubits: linear superposition of 2^n basic states: a00 + b01 + c10 + d11
+
+quantum programming: making largest amplitudes the states that we want (the answer to the question).
+
+~~~ {.haskell}
+plus_minus :: Bool -> Circ Qubit
+plus_mins b = do
+  q <- qinit b
+  r <- hadamard q
+  return r
+~~~
+
+`Circ` -- circuit (state monad). `hadamard` is a quantum gate -- complex unitary matrix.
+
+~~~ {.haskell}
+print_plus_minus :: IO ()
+print_plus_minus = print_simple PDF (plsu_minus False)
+~~~
+
+~~~ {.haskell}
+share :: Qubit -> Circ (Qubit, Qubit)
+share a = do
+  b <- qinit False
+  b <- qnot b `controlled` a
+  return (a, b)
+~~~
+
+quantum teleporatation: can be done in practice. Given a qubit in arbitrary quantum state we need to send it somewhere else. For that we need to have a shared, entangled state between sender (Alice) and receiver (Bob):
+
+~~~ {.haskell}
+alice :: Qubit -> Qubit -> Circ (Bit, Bit)
+alice q a = do
+  a <- qnot a `controlled` q
+  q <- hadamard q
+  (x,y) <- measure (q,a)
+  return (x,y)
+
+bob :: Qubit -> (Bit, Bit) -> Circ Qubit
+bob b (x,y) = do
+  b <- gate_X b `controlled` y
+  b <- gate_Z b `controlled` x
+  cdiscard (x,y)
+  return b
+
+teleport :: Qubit -> Circ Qubit
+teleport q = do
+  (a, b) <- bell00
+  (x, y) <- alice q a
+  b <- bob b (x,y)
+  return b
+~~~
+
+Qubits can be assembled into quantu data types, eg. `(Qubit, [Qubit])`.
+
