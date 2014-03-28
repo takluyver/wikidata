@@ -1,0 +1,9 @@
+---
+categories: computer_science
+...
+
+In functional programming, data defined as a fixed point of an algebraic data type. 
+
+## References
+
+* blog post [on recursion schemes](http://patrickthomson.ghost.io/an-introduction-to-recursion-schemes/)
